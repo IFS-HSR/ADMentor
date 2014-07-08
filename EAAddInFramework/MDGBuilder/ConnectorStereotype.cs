@@ -72,7 +72,7 @@ namespace EAAddInFramework.MDGBuilder
                     select tv.ToXml()));
         }
     }
-
+    
     public class Connection
     {
         public Connection(ElementStereotype from, ElementStereotype to) : this(from, to, null) { }

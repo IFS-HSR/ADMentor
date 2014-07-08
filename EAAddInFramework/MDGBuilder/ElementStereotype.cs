@@ -89,12 +89,12 @@ namespace EAAddInFramework.MDGBuilder
         public static readonly ElementType Activity = new ElementType("Activity");
         public static readonly ElementType Event = new ElementType("Event");
         public static readonly ElementType Issue = new ElementType("Issue");
+        public static readonly ElementType Requirement = new ElementType("Requirement");
 
-        private ElementType(String name) : base(name) { }
-    }
+        private ElementType(String name) : base(name) {
+            DefaultStereotype = new ElementStereotype(name: "", displayName: Name, type: this);
+        }
 
-    public static class BuiltInElementStereotypes
-    {
-        public static readonly ElementStereotype Issue = new ElementStereotype(name: "Functional", displayName: "Issue", type: ElementType.Issue);
+        public ElementStereotype DefaultStereotype { get; private set; }
     }
 }
