@@ -224,9 +224,12 @@ namespace EAAddInFramework.MDGBuilder
             : base(name)
         {
             DefaultDirecttion = defaultDirection;
+            DefaultStereotype = new ConnectorStereotype(name: "", displayName: Name, type: this);
         }
 
         public Direction DefaultDirecttion { get; private set; }
+
+        public ConnectorStereotype DefaultStereotype { get; private set; }
     }
 
     public sealed class Direction : Enumeration
