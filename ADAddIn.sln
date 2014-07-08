@@ -15,6 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilsTests", "UtilsTests\Ut
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0940038F-D234-4FC5-8CB7-5A7CB675CBA3}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		admentor.snk = admentor.snk
 		ModelTemplates.eap = ModelTemplates.eap
 		readme.md = readme.md

@@ -55,6 +55,7 @@
     <Compile Include="ADTechnology\ConnectorStereotypes.cs" />
     <Compile Include="ADTechnology\Diagrams.cs" />
     <Compile Include="ADTechnology\ElementStereotypes.cs" />
+    <Compile Include="ADTechnology\Technology.cs" />
     <Compile Include="ADTechnology\Toolboxes.cs" />
     <Compile Include="DataAccess\ADModel\ADIssueRepository.cs" />
     <Compile Include="DataAccess\ADModel\ADStereotypes.cs" />
