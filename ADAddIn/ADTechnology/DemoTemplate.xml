@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:AD_Mentor="http://www.sparxsystems.com/profiles/AD_Mentor/1.0.0">
+	<xmi:Documentation exporter="Enterprise Architect" exporterVersion="6.5"/>
+	<uml:Model xmi:type="uml:Model" name="EA_Model" visibility="public">
+		<packagedElement xmi:type="uml:Package" xmi:id="EAPK_BB3B6FC9_760B_4537_BEC3_7705D97D9925" name="AD Mentor Demo" visibility="public">
+			<packagedElement xmi:type="uml:Package" xmi:id="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472" name="AD Mentor Demo" visibility="public">
+				<packagedElement xmi:type="uml:Class" xmi:id="EAID_6205D5A0_2AC1_4243_AFBA_B9D18A288EC6" name="Problem Space : Problem Space" visibility="public"/>
+				<packagedElement xmi:type="uml:Class" xmi:id="EAID_B6F47AA2_1D78_4950_829E_64C46B06AE16" name="Solution Overview : Solution Overview" visibility="public"/>
+				<packagedElement xmi:type="uml:Class" xmi:id="EAID_BD81B2AA_79A6_4950_88E3_219CD839D7A7" visibility="public"/>
+				<packagedElement xmi:type="uml:Package" xmi:id="EAPK_29D339A8_CAF7_4702_8F2D_8426FBA8F97B" name="Problem Space" visibility="public">
+					<packagedElement xmi:type="uml:Activity" xmi:id="EAID_49900470_202B_4a13_9492_613153207B85" name="Document Architectural Decisions" visibility="public" isReadOnly="false" isSingleExecution="false"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Package" xmi:id="EAPK_C30ABD3D_BF54_448f_89A5_CCD45799AC65" name="Solution Overview" visibility="public"/>
+			</packagedElement>
+		</packagedElement>
+		<AD_Mentor:adProblem base_Activity="EAID_49900470_202B_4a13_9492_613153207B85"/>
+	</uml:Model>
+	<xmi:Extension extender="Enterprise Architect" extenderID="6.5">
+		<elements>
+			<element xmi:idref="EAPK_BB3B6FC9_760B_4537_BEC3_7705D97D9925">
+				<packageproperties version="1.0"/>
+				<paths/>
+				<times created="2014-07-03 00:00:00" modified="2014-07-03 00:00:00" lastloaddate="2014-07-03 13:34:36"/>
+				<flags iscontrolled="FALSE" isprotected="FALSE" usedtd="FALSE" logxml="FALSE" packageFlags="isModel=1;"/>
+			</element>
+			<element xmi:idref="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472" xmi:type="uml:Package" name="AD Mentor Demo" scope="public">
+				<model package2="EAID_5164AAA5_0941_42a2_9351_7F370CEF3472" package="EAPK_BB3B6FC9_760B_4537_BEC3_7705D97D9925" tpos="0" ea_localid="20" ea_eleType="package"/>
+				<properties isSpecification="false" sType="Package" nType="0" scope="public"/>
+				<project author="Lukas" version="1.0" phase="1.0" created="2014-07-03 13:37:06" modified="2014-07-03 13:37:06" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="AD Mentor Demo"/>
+				<packageproperties version="1.0"/>
+				<paths/>
+				<times created="2014-07-03 00:00:00" modified="2014-07-03 00:00:00"/>
+				<flags iscontrolled="FALSE" isprotected="FALSE" usedtd="FALSE" logxml="FALSE" packageFlags="isModel=1;"/>
+			</element>
+			<element xmi:idref="EAID_6205D5A0_2AC1_4243_AFBA_B9D18A288EC6" xmi:type="uml:Text" name="Problem Space : Problem Space" scope="public">
+				<model package="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472" tpos="0" ea_localid="115" ea_eleType="element" name="Problem Space : Problem Space"/>
+				<properties documentation="Problem Space : Problem Space" isSpecification="false" sType="Text" nType="0" scope="public"/>
+				<project author="Lukas" version="1.0" phase="1.0" created="2014-07-03 13:38:27" modified="2014-07-03 13:38:27" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="AD Mentor Demo" diagram="EAID_EAEE3833_6761_4282_BA1E_3B98FA264C8A"/>
+			</element>
+			<element xmi:idref="EAID_B6F47AA2_1D78_4950_829E_64C46B06AE16" xmi:type="uml:Text" name="Solution Overview : Solution Overview" scope="public">
+				<model package="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472" tpos="0" ea_localid="116" ea_eleType="element" name="Solution Overview : Solution Overview"/>
+				<properties documentation="Solution Overview : Solution Overview" isSpecification="false" sType="Text" nType="0" scope="public"/>
+				<project author="Lukas" version="1.0" phase="1.0" created="2014-07-03 13:38:36" modified="2014-07-03 13:38:36" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="AD Mentor Demo" diagram="EAID_8224F968_BA88_4fc6_9A21_5B4AE5EDE8EC"/>
+			</element>
+			<element xmi:idref="EAID_BD81B2AA_79A6_4950_88E3_219CD839D7A7" xmi:type="uml:Text" scope="public">
+				<model package="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472" tpos="0" ea_localid="117" ea_eleType="element"/>
+				<properties documentation="AD Mentor Tutorial" isSpecification="false" sType="Text" nType="0" scope="public"/>
+				<project author="Lukas" version="1.0" phase="1.0" created="2014-07-03 13:39:27" modified="2014-07-03 13:39:54" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="AD Mentor Demo"/>
+			</element>
+			<element xmi:idref="EAPK_29D339A8_CAF7_4702_8F2D_8426FBA8F97B" xmi:type="uml:Package" name="Problem Space" scope="public">
+				<model package2="EAID_29D339A8_CAF7_4702_8F2D_8426FBA8F97B" package="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472" tpos="0" ea_localid="9" ea_eleType="package"/>
+				<properties isSpecification="false" sType="Package" nType="0" scope="public"/>
+				<project author="Lukas" version="1.0" phase="1.0" created="2014-07-03 11:35:25" modified="2014-07-03 13:37:09" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="AD Mentor Demo"/>
+				<packageproperties version="1.0"/>
+				<paths/>
+				<times created="2014-07-03 00:00:00" modified="2014-07-03 00:00:00" lastloaddate="2014-07-03 13:34:36" lastsavedate="2014-07-03 13:34:36"/>
+				<flags iscontrolled="FALSE" isprotected="FALSE" batchsave="0" batchload="0" usedtd="FALSE" logxml="FALSE" packageFlags="isModel=1;VICON=2;"/>
+			</element>
+			<element xmi:idref="EAID_49900470_202B_4a13_9492_613153207B85" xmi:type="uml:Activity" name="Document Architectural Decisions" scope="public">
+				<model package="EAPK_29D339A8_CAF7_4702_8F2D_8426FBA8F97B" tpos="0" ea_localid="119" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Activity" nType="0" scope="public" stereotype="adProblem" isAbstract="false"/>
+				<project author="Lukas" version="1.0" phase="1.0" created="2014-07-03 13:40:57" modified="2014-07-03 13:41:13" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={7C9CE1B8-BE71-4e01-8624-9B30128949D5}$XID;$NAM=Stereotypes$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=adProblem;FQName=AD Mentor::adProblem;@ENDSTEREO;$DES;$CLT={49900470-202B-4a13-9492-613153207B85}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="Problem Space"/>
+			</element>
+			<element xmi:idref="EAPK_C30ABD3D_BF54_448f_89A5_CCD45799AC65" xmi:type="uml:Package" name="Solution Overview" scope="public">
+				<model package2="EAID_C30ABD3D_BF54_448f_89A5_CCD45799AC65" package="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472" tpos="0" ea_localid="11" ea_eleType="package"/>
+				<properties isSpecification="false" sType="Package" nType="0" scope="public"/>
+				<project author="Lukas" version="1.0" phase="1.0" created="2014-07-03 13:15:43" modified="2014-07-03 13:37:10" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="AD Mentor Demo"/>
+				<packageproperties version="1.0"/>
+				<paths/>
+				<times created="2014-07-03 00:00:00" modified="2014-07-03 00:00:00" lastloaddate="2014-07-03 13:34:36" lastsavedate="2014-07-03 13:34:36"/>
+				<flags iscontrolled="FALSE" isprotected="FALSE" batchsave="0" batchload="0" usedtd="FALSE" logxml="FALSE" packageFlags="isModel=1;VICON=3;"/>
+			</element>
+		</elements>
+		<connectors/>
+		<primitivetypes>
+			<packagedElement xmi:type="uml:Package" xmi:id="EAPrimitiveTypesPackage" name="EA_PrimitiveTypes_Package" visibility="public"/>
+		</primitivetypes>
+		<profiles>
+			<uml:Profile xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.1/" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmi:id="abcdefab-1" nsPrefix="AD_Mentor" name="AD Mentor" metamodelReference="mmref01">
+				<ownedComment xmi:type="uml:Comment" xmi:id="comment01" annotatedElement="abcdefab-1">
+					<body>Modelling Language for documentation and reuse of architectural decisions Version:1.0.0</body>
+				</ownedComment>
+				<packageImport xmi:id="mmref01">
+					<importedPackage href="http://schema.omg.org/spec/UML/2.1/"/>
+				</packageImport>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="adIsBoundTo" name="adIsBoundTo">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="adIsBoundTo-base_Dependency" name="base_Dependency" association="Dependency_adIsBoundTo">
+						<type href="http://schema.omg.org/spec/UML/2.1/Dependency"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Dependency_adIsBoundTo" name="A_Dependency_adIsBoundTo" memberEnd="extension_adIsBoundTo adIsBoundTo-base_Dependency">
+					<ownedEnd xmi:id="extension_adIsBoundTo" name="extension_adIsBoundTo" type="adIsBoundTo" isComposite="true" lower="0" upper="1" memberEnd="extension_adIsBoundTo adIsBoundTo-base_Dependency"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="adProblemOccurrence" name="adProblemOccurrence">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="adProblemOccurrence-base_Action" name="base_Action" association="Action_adProblemOccurrence">
+						<type href="http://schema.omg.org/spec/UML/2.1/Action"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="adProblemOccurrence-state" name="state">
+						<type href="http://schema.omg.org/spec/UML/2.1/String"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Action_adProblemOccurrence" name="A_Action_adProblemOccurrence" memberEnd="extension_adProblemOccurrence adProblemOccurrence-base_Action">
+					<ownedEnd xmi:id="extension_adProblemOccurrence" name="extension_adProblemOccurrence" type="adProblemOccurrence" isComposite="true" lower="0" upper="1" memberEnd="extension_adProblemOccurrence adProblemOccurrence-base_Action"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="adConflictsWith" name="adConflictsWith">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="adConflictsWith-base_Dependency" name="base_Dependency" association="Dependency_adConflictsWith">
+						<type href="http://schema.omg.org/spec/UML/2.1/Dependency"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Dependency_adConflictsWith" name="A_Dependency_adConflictsWith" memberEnd="extension_adConflictsWith adConflictsWith-base_Dependency">
+					<ownedEnd xmi:id="extension_adConflictsWith" name="extension_adConflictsWith" type="adConflictsWith" isComposite="true" lower="0" upper="1" memberEnd="extension_adConflictsWith adConflictsWith-base_Dependency"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="adProblem" name="adProblem">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="adProblem-base_Activity" name="base_Activity" association="Activity_adProblem">
+						<type href="http://schema.omg.org/spec/UML/2.1/Activity"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Activity_adProblem" name="A_Activity_adProblem" memberEnd="extension_adProblem adProblem-base_Activity">
+					<ownedEnd xmi:id="extension_adProblem" name="extension_adProblem" type="adProblem" isComposite="true" lower="0" upper="1" memberEnd="extension_adProblem adProblem-base_Activity"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="adChallenges" name="adChallenges">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="adChallenges-base_Dependency" name="base_Dependency" association="Dependency_adChallenges">
+						<type href="http://schema.omg.org/spec/UML/2.1/Dependency"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Dependency_adChallenges" name="A_Dependency_adChallenges" memberEnd="extension_adChallenges adChallenges-base_Dependency">
+					<ownedEnd xmi:id="extension_adChallenges" name="extension_adChallenges" type="adChallenges" isComposite="true" lower="0" upper="1" memberEnd="extension_adChallenges adChallenges-base_Dependency"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="adIsAlternativeFor" name="adIsAlternativeFor">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="adIsAlternativeFor-base_Aggregation" name="base_Aggregation" association="Aggregation_adIsAlternativeFor">
+						<type href="http://schema.omg.org/spec/UML/2.1/Aggregation"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Aggregation_adIsAlternativeFor" name="A_Aggregation_adIsAlternativeFor" memberEnd="extension_adIsAlternativeFor adIsAlternativeFor-base_Aggregation">
+					<ownedEnd xmi:id="extension_adIsAlternativeFor" name="extension_adIsAlternativeFor" type="adIsAlternativeFor" isComposite="true" lower="0" upper="1" memberEnd="extension_adIsAlternativeFor adIsAlternativeFor-base_Aggregation"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="adIncludes" name="adIncludes">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="adIncludes-base_Association" name="base_Association" association="Association_adIncludes">
+						<type href="http://schema.omg.org/spec/UML/2.1/Association"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Association_adIncludes" name="A_Association_adIncludes" memberEnd="extension_adIncludes adIncludes-base_Association">
+					<ownedEnd xmi:id="extension_adIncludes" name="extension_adIncludes" type="adIncludes" isComposite="true" lower="0" upper="1" memberEnd="extension_adIncludes adIncludes-base_Association"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="adOption" name="adOption">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="adOption-base_Activity" name="base_Activity" association="Activity_adOption">
+						<type href="http://schema.omg.org/spec/UML/2.1/Activity"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Activity_adOption" name="A_Activity_adOption" memberEnd="extension_adOption adOption-base_Activity">
+					<ownedEnd xmi:id="extension_adOption" name="extension_adOption" type="adOption" isComposite="true" lower="0" upper="1" memberEnd="extension_adOption adOption-base_Activity"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="adOverrides" name="adOverrides">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="adOverrides-base_Association" name="base_Association" association="Association_adOverrides">
+						<type href="http://schema.omg.org/spec/UML/2.1/Association"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Association_adOverrides" name="A_Association_adOverrides" memberEnd="extension_adOverrides adOverrides-base_Association">
+					<ownedEnd xmi:id="extension_adOverrides" name="extension_adOverrides" type="adOverrides" isComposite="true" lower="0" upper="1" memberEnd="extension_adOverrides adOverrides-base_Association"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="adDecision" name="adDecision">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="adDecision-base_Action" name="base_Action" association="Action_adDecision">
+						<type href="http://schema.omg.org/spec/UML/2.1/Action"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="adDecision-state" name="state">
+						<type href="http://schema.omg.org/spec/UML/2.1/String"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Action_adDecision" name="A_Action_adDecision" memberEnd="extension_adDecision adDecision-base_Action">
+					<ownedEnd xmi:id="extension_adDecision" name="extension_adDecision" type="adDecision" isComposite="true" lower="0" upper="1" memberEnd="extension_adDecision adDecision-base_Action"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="adSupports" name="adSupports">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="adSupports-base_Dependency" name="base_Dependency" association="Dependency_adSupports">
+						<type href="http://schema.omg.org/spec/UML/2.1/Dependency"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Dependency_adSupports" name="A_Dependency_adSupports" memberEnd="extension_adSupports adSupports-base_Dependency">
+					<ownedEnd xmi:id="extension_adSupports" name="extension_adSupports" type="adSupports" isComposite="true" lower="0" upper="1" memberEnd="extension_adSupports adSupports-base_Dependency"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="adRaises" name="adRaises">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="adRaises-base_Association" name="base_Association" association="Association_adRaises">
+						<type href="http://schema.omg.org/spec/UML/2.1/Association"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Association_adRaises" name="A_Association_adRaises" memberEnd="extension_adRaises adRaises-base_Association">
+					<ownedEnd xmi:id="extension_adRaises" name="extension_adRaises" type="adRaises" isComposite="true" lower="0" upper="1" memberEnd="extension_adRaises adRaises-base_Association"/>
+				</packagedElement>
+			</uml:Profile>
+		</profiles>
+		<diagrams>
+			<diagram xmi:id="EAID_55464598_FDE6_453a_902C_741BCE7C05F6">
+				<model package="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472" localID="16" owner="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472"/>
+				<properties name="AD Mentor Demo" type="Package"/>
+				<project author="Lukas" version="1.0" created="2014-07-03 13:37:42" modified="2014-07-03 13:46:19"/>
+				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=795;DocSize.cy=1138;ShowDetails=0;Orientation=P;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
+				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;MatrixLineWidth=1;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;SaveTag=4AD3D6DF;"/>
+				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;;cls=0;"/>
+				<matrixitems value="locked=false;matrixactive=false;swimlanesactive=true;width=1;"/>
+				<extendedProperties/>
+				<elements>
+					<element geometry="Left=45;Top=22;Right=285;Bottom=62;" subject="EAID_BD81B2AA_79A6_4950_88E3_219CD839D7A7" seqno="1" style="DUID=025539FF;font=Arial;fontsz=160;bold=1;black=0;italic=0;ul=0;charset=0;pitch=34;"/>
+					<element geometry="Left=55;Top=284;Right=289;Bottom=306;" subject="EAID_B6F47AA2_1D78_4950_829E_64C46B06AE16" seqno="2" style="DUID=42F46AEE;"/>
+					<element geometry="Left=55;Top=106;Right=303;Bottom=128;" subject="EAID_6205D5A0_2AC1_4243_AFBA_B9D18A288EC6" seqno="3" style="DUID=3C757766;"/>
+					<element geometry="Left=48;Top=313;Right=178;Bottom=394;" subject="EAID_C30ABD3D_BF54_448f_89A5_CCD45799AC65" seqno="4" style="DUID=14F672E8;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/>
+					<element geometry="Left=49;Top=138;Right=245;Bottom=218;" subject="EAID_29D339A8_CAF7_4702_8F2D_8426FBA8F97B" seqno="5" style="DUID=EDFE393C;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/>
+				</elements>
+			</diagram>
+			<diagram xmi:id="EAID_EAEE3833_6761_4282_BA1E_3B98FA264C8A">
+				<model package="EAPK_29D339A8_CAF7_4702_8F2D_8426FBA8F97B" localID="4" owner="EAPK_29D339A8_CAF7_4702_8F2D_8426FBA8F97B"/>
+				<properties name="Problem Space" type="Activity"/>
+				<project author="Lukas" version="1.0" created="2014-07-03 13:34:36" modified="2014-07-03 13:41:34"/>
+				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=795;DocSize.cy=1138;ShowDetails=0;Orientation=P;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
+				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;MatrixLineWidth=1;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ProfileData=;MDGDgm=AD Mentor::ProblemSpace;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;SaveTag=1436F2DC;"/>
+				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;;cls=0;"/>
+				<matrixitems value="locked=false;matrixactive=false;swimlanesactive=true;width=1;"/>
+				<extendedProperties ea_hlinksclassified="{6205D5A0-2AC1-4243-AFBA-B9D18A288EC6}"/>
+				<elements>
+					<element geometry="Left=204;Top=120;Right=304;Bottom=190;" subject="EAID_49900470_202B_4a13_9492_613153207B85" seqno="1" style="DUID=A4FBA33A;HideIcon=0;"/>
+				</elements>
+			</diagram>
+			<diagram xmi:id="EAID_8224F968_BA88_4fc6_9A21_5B4AE5EDE8EC">
+				<model package="EAPK_C30ABD3D_BF54_448f_89A5_CCD45799AC65" localID="5" owner="EAPK_C30ABD3D_BF54_448f_89A5_CCD45799AC65"/>
+				<properties name="Solution Overview" type="Activity"/>
+				<project version="1.0" created="2014-07-03 13:34:36" modified="2014-07-03 13:34:36"/>
+				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=0;PPgs.cy=0;DocSize.cx=795;DocSize.cy=1138;ShowDetails=0;Orientation=P;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
+				<style2 value="SaveTag=09EEF4D4;ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=0;MatrixActive=0;SwimlanesActive=1;MatrixLineWidth=1;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ProfileData=;MDGDgm=AD Mentor::SolutionOverview;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;"/>
+				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;;cls=0;"/>
+				<matrixitems value="locked=false;matrixactive=false;swimlanesactive=true;width=1;"/>
+				<extendedProperties ea_hlinksclassified="{B6F47AA2-1D78-4950-829E-64C46B06AE16}"/>
+			</diagram>
+		</diagrams>
+	</xmi:Extension>
+</xmi:XMI>

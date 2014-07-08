@@ -1,0 +1,9 @@
+*/bin/*
+*/obj/*
+TestResults/*
+packages/*
+*.suo
+*.csproj.user
+*.suo
+*/Debug/*
+*/Release/*
