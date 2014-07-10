@@ -57,6 +57,7 @@
     <Compile Include="MDGBuilder\ConnectorStereotype.cs" />
     <Compile Include="MDGBuilder\Diagrams.cs" />
     <Compile Include="MDGBuilder\DiagramTypes.cs" />
+    <Compile Include="MDGBuilder\ElementExtensions.cs" />
     <Compile Include="MDGBuilder\ElementStereotype.cs" />
     <Compile Include="MDGBuilder\Enumeration.cs" />
     <Compile Include="MDGBuilder\Icon.cs" />

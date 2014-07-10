@@ -125,14 +125,6 @@
 				<packageImport xmi:id="mmref01">
 					<importedPackage href="http://schema.omg.org/spec/UML/2.1/"/>
 				</packageImport>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="adIsBoundTo" name="adIsBoundTo">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="adIsBoundTo-base_Dependency" name="base_Dependency" association="Dependency_adIsBoundTo">
-						<type href="http://schema.omg.org/spec/UML/2.1/Dependency"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Dependency_adIsBoundTo" name="A_Dependency_adIsBoundTo" memberEnd="extension_adIsBoundTo adIsBoundTo-base_Dependency">
-					<ownedEnd xmi:id="extension_adIsBoundTo" name="extension_adIsBoundTo" type="adIsBoundTo" isComposite="true" lower="0" upper="1" memberEnd="extension_adIsBoundTo adIsBoundTo-base_Dependency"/>
-				</packagedElement>
 				<packagedElement xmi:type="uml:Stereotype" xmi:id="adProblemOccurrence" name="adProblemOccurrence">
 					<ownedAttribute xmi:type="uml:Property" xmi:id="adProblemOccurrence-base_Action" name="base_Action" association="Action_adProblemOccurrence">
 						<type href="http://schema.omg.org/spec/UML/2.1/Action"/>
@@ -152,6 +144,14 @@
 				<packagedElement xmi:type="uml:Extension" xmi:id="Dependency_adConflictsWith" name="A_Dependency_adConflictsWith" memberEnd="extension_adConflictsWith adConflictsWith-base_Dependency">
 					<ownedEnd xmi:id="extension_adConflictsWith" name="extension_adConflictsWith" type="adConflictsWith" isComposite="true" lower="0" upper="1" memberEnd="extension_adConflictsWith adConflictsWith-base_Dependency"/>
 				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="adBoundTo" name="adBoundTo">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="adBoundTo-base_Dependency" name="base_Dependency" association="Dependency_adBoundTo">
+						<type href="http://schema.omg.org/spec/UML/2.1/Dependency"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Dependency_adBoundTo" name="A_Dependency_adBoundTo" memberEnd="extension_adBoundTo adBoundTo-base_Dependency">
+					<ownedEnd xmi:id="extension_adBoundTo" name="extension_adBoundTo" type="adBoundTo" isComposite="true" lower="0" upper="1" memberEnd="extension_adBoundTo adBoundTo-base_Dependency"/>
+				</packagedElement>
 				<packagedElement xmi:type="uml:Stereotype" xmi:id="adProblem" name="adProblem">
 					<ownedAttribute xmi:type="uml:Property" xmi:id="adProblem-base_Activity" name="base_Activity" association="Activity_adProblem">
 						<type href="http://schema.omg.org/spec/UML/2.1/Activity"/>
@@ -167,14 +167,6 @@
 				</packagedElement>
 				<packagedElement xmi:type="uml:Extension" xmi:id="Dependency_adChallenges" name="A_Dependency_adChallenges" memberEnd="extension_adChallenges adChallenges-base_Dependency">
 					<ownedEnd xmi:id="extension_adChallenges" name="extension_adChallenges" type="adChallenges" isComposite="true" lower="0" upper="1" memberEnd="extension_adChallenges adChallenges-base_Dependency"/>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Stereotype" xmi:id="adIsAlternativeFor" name="adIsAlternativeFor">
-					<ownedAttribute xmi:type="uml:Property" xmi:id="adIsAlternativeFor-base_Aggregation" name="base_Aggregation" association="Aggregation_adIsAlternativeFor">
-						<type href="http://schema.omg.org/spec/UML/2.1/Aggregation"/>
-					</ownedAttribute>
-				</packagedElement>
-				<packagedElement xmi:type="uml:Extension" xmi:id="Aggregation_adIsAlternativeFor" name="A_Aggregation_adIsAlternativeFor" memberEnd="extension_adIsAlternativeFor adIsAlternativeFor-base_Aggregation">
-					<ownedEnd xmi:id="extension_adIsAlternativeFor" name="extension_adIsAlternativeFor" type="adIsAlternativeFor" isComposite="true" lower="0" upper="1" memberEnd="extension_adIsAlternativeFor adIsAlternativeFor-base_Aggregation"/>
 				</packagedElement>
 				<packagedElement xmi:type="uml:Stereotype" xmi:id="adIncludes" name="adIncludes">
 					<ownedAttribute xmi:type="uml:Property" xmi:id="adIncludes-base_Association" name="base_Association" association="Association_adIncludes">
@@ -218,6 +210,14 @@
 				</packagedElement>
 				<packagedElement xmi:type="uml:Extension" xmi:id="Dependency_adSupports" name="A_Dependency_adSupports" memberEnd="extension_adSupports adSupports-base_Dependency">
 					<ownedEnd xmi:id="extension_adSupports" name="extension_adSupports" type="adSupports" isComposite="true" lower="0" upper="1" memberEnd="extension_adSupports adSupports-base_Dependency"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="adAlternativeFor" name="adAlternativeFor">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="adAlternativeFor-base_Aggregation" name="base_Aggregation" association="Aggregation_adAlternativeFor">
+						<type href="http://schema.omg.org/spec/UML/2.1/Aggregation"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Aggregation_adAlternativeFor" name="A_Aggregation_adAlternativeFor" memberEnd="extension_adAlternativeFor adAlternativeFor-base_Aggregation">
+					<ownedEnd xmi:id="extension_adAlternativeFor" name="extension_adAlternativeFor" type="adAlternativeFor" isComposite="true" lower="0" upper="1" memberEnd="extension_adAlternativeFor adAlternativeFor-base_Aggregation"/>
 				</packagedElement>
 				<packagedElement xmi:type="uml:Stereotype" xmi:id="adRaises" name="adRaises">
 					<ownedAttribute xmi:type="uml:Property" xmi:id="adRaises-base_Association" name="base_Association" association="Association_adRaises">

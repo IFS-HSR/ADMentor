@@ -57,29 +57,14 @@
     <Compile Include="ADTechnology\ElementStereotypes.cs" />
     <Compile Include="ADTechnology\Technology.cs" />
     <Compile Include="ADTechnology\Toolboxes.cs" />
-    <Compile Include="DataAccess\ADModel\ADIssueRepository.cs" />
-    <Compile Include="DataAccess\ADModel\ADStereotypes.cs" />
-    <Compile Include="DataAccess\ADModel\ADAlternativeRepository.cs" />
-    <Compile Include="DataAccess\ADModel\ADDecisionRepository.cs" />
-    <Compile Include="DataAccess\IAlternativeRepository.cs" />
-    <Compile Include="DataAccess\IDecisionRepository.cs" />
-    <Compile Include="DataAccess\IIssueRepository.cs" />
-    <Compile Include="DecisionDetails\DecisionDetailView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DecisionDetails\DecisionDetailView.Designer.cs">
-      <DependentUpon>DecisionDetailView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DecisionDetails\DecisionDetailViewComponent.cs" />
-    <Compile Include="Model\Alternative.cs" />
-    <Compile Include="Model\Decision.cs" />
-    <Compile Include="Model\Issue.cs" />
+    <Compile Include="Components\PopulateDependenciesMenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Components\PopulateDependenciesOnNewOccurrences.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EAAddInFramework\EAAddInFramework.csproj">
@@ -124,11 +109,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="DecisionDetails\DecisionDetailView.resx">
-      <DependentUpon>DecisionDetailView.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,7 +1,4 @@
-﻿using AdAddIn.DataAccess;
-using AdAddIn.DataAccess.ADModel;
-using AdAddIn.DecisionDetails;
-using EAAddInFramework;
+﻿using EAAddInFramework;
 using EAAddInFramework.MDGBuilder;
 using NLog;
 using System;
@@ -31,13 +28,9 @@ namespace AdAddIn
 
         public override void bootstrap(IReadableAtom<EA.Repository> repository)
         {
-            var decisions = new ADDecisionRepository(repository);
-            var alternatives = new ADAlternativeRepository(repository);
-            var issues = new ADIssueRepository(repository);
-
             Register(new Menu(technology.Name,
-                new Menu("Sub1", new DummyMenu("Item1"), new DummyMenu("Item2")),
-                new Menu("Sub2", new DummyMenu("Item3"))));
+                new Components.PopulateDependenciesMenuItem(repository)));
+            Register(new Components.PopulateDependenciesOnNewOccurrences());
             //Properties.Settings.CdarUrl = "Some(www.example.com)";
             //Register(new DecisionDetailViewComponent(new DecisionDetailView(), decisions, alternatives, issues));
         }
