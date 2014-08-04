@@ -44,7 +44,7 @@ namespace AdAddIn.ADTechnology
 	                h_align = ""center"";
 	                v_align = ""center"";
 
-                    " + GenerateFillColorCode("state", DecisionState.AllStates.ToDictionary(ds => ds.Name, ds => ds.Color)) + @"
+                    " + GenerateFillColors("state", DecisionState.AllStates.ToDictionary(ds => ds.Name, ds => ds.Color)) + @"
 
 	                Rectangle(0,0,100,100);
 
@@ -101,7 +101,7 @@ namespace AdAddIn.ADTechnology
 	                h_align = ""center"";
 	                v_align = ""center"";
 
-                    " + GenerateFillColorCode("state", ProblemOccurrenceState.AllStates.ToDictionary(ds => ds.Name, ds => ds.Color)) + @"
+                    " + GenerateFillColors("state", ProblemOccurrenceState.AllStates.ToDictionary(ds => ds.Name, ds => ds.Color)) + @"
 
 	                StartPath();
 	                MoveTo(50,0);
@@ -170,7 +170,7 @@ namespace AdAddIn.ADTechnology
             width: 100,
             height: 70);
 
-        private static String GenerateFillColorCode(String property, IDictionary<String, Color> states)
+        private static String GenerateFillColors(String property, IDictionary<String, Color> states)
         {
             return String.Join("\n", states.Select(p =>
                           String.Format(@"if(HasTag(""{0}"", ""{1}"")) {{ SetFillColor({2}, {3}, {4}); }}",

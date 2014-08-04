@@ -34,6 +34,7 @@ namespace EAAddInFramework.MDGBuilder
                using (var zipArchive = new ZipArchive(zipStream, ZipArchiveMode.Update))
                {
                    var scriptEntry = zipArchive.CreateEntry("str.dat", CompressionLevel.NoCompression);
+                   // encoding 1200: UTF-16
                    using (var writer = new StreamWriter(scriptEntry.Open(), Encoding.GetEncoding(1200)))
                    {
                        writer.Write(s);

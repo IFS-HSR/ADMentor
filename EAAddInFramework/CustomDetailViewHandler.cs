@@ -48,7 +48,7 @@ namespace EAAddInFramework
                 var res = customDetailViewComponents
                     .Aggregate(new CustomDetailViewResult(), (acc, component) =>
                     {
-                        var componentResult = component.DisplayCustomElementDetails(element, true);
+                        var componentResult = component.DisplayCustomElementDetails(element, isNew);
                         return new CustomDetailViewResult(acc.EntityChanged || componentResult.EntityChanged,
                             acc.SuppressDefaultDialog || componentResult.SuppressDefaultDialog);
                     });

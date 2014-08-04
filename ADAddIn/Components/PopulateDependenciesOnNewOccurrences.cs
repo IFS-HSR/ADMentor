@@ -14,7 +14,7 @@ namespace AdAddIn.Components
 
         public CustomDetailViewResult DisplayCustomElementDetails(EA.Element e, bool isNew)
         {
-            if (isNew && e.Is(ElementStereotypes.ProblemOccurrence) && e.ClassifierID != 0)
+            if (isNew && e.Is(ElementStereotypes.ProblemOccurrence) && e.IsInstance())
             {
                 DisplayPopulateDependenciesView(e);
                 return new CustomDetailViewResult(entityChanged: true, suppressDefaultDialog: false);

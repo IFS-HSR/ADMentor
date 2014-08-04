@@ -27,7 +27,7 @@ namespace EAAddInFramework.MDGBuilder
             ReverseDisplayName = reverseDisplayName.AsOption();
             Type = type;
             Connects = from c in connects ?? new Connection[] { }
-                       select new Connection(c.From, c.To, this);
+                       select c.WithConnectorStereotype(this);
             Icon = icon.AsOption();
             ShapeScript = shapeScript.AsOption();
             TaggedValues = taggedValues ?? new TaggedValue[] { };
@@ -39,10 +39,19 @@ namespace EAAddInFramework.MDGBuilder
 
         public string DisplayName { get; private set; }
 
+        /// <summary>
+        /// Description of the connector read from the opposite direction
+        /// E.g. the connector "Includes" has the reversed name "Included In"
+        /// Bidirectional connectors have usually no reverse display name
+        /// </summary>
         public Option<string> ReverseDisplayName { get; private set; }
 
         public Enumeration Type { get; private set; }
 
+        /// <summary>
+        /// List of pairs of element stereotypes or element types that are intended to be connected
+        /// by this connector stereotype. This information is used to generate quick link proposals.
+        /// </summary>
         public IEnumerable<Connection> Connects { get; private set; }
 
         public Option<Icon> Icon { get; private set; }
@@ -73,15 +82,31 @@ namespace EAAddInFramework.MDGBuilder
         }
     }
     
+    /// <summary>
+    /// Connections describe what kinds of element types or element stereotypes
+    /// are intended to be conneceted by a given connector stereotype.
+    /// This information is used to generate quick links in EA.
+    /// </summary>
     public class Connection
     {
         public Connection(ElementStereotype from, ElementStereotype to) : this(from, to, null) { }
 
-        internal Connection(ElementStereotype from, ElementStereotype to, ConnectorStereotype connectorStereotype)
+        public Connection(ElementType from, ElementStereotype to) : this(from.DefaultStereotype, to) { }
+
+        public Connection(ElementStereotype from, ElementType to) : this(from, to.DefaultStereotype) { }
+
+        public Connection(ElementType from, ElementType to) : this(from.DefaultStereotype, to.DefaultStereotype) { }
+
+        private Connection(ElementStereotype from, ElementStereotype to, ConnectorStereotype connectorStereotype)
         {
             From = from;
             To = to;
             ConnectorStereotype = connectorStereotype;
+        }
+
+        internal Connection WithConnectorStereotype(ConnectorStereotype connectorStereotype)
+        {
+            return new Connection(From, To, connectorStereotype);
         }
 
         public ElementStereotype From { get; private set; }
@@ -214,7 +239,7 @@ namespace EAAddInFramework.MDGBuilder
         }
     }
 
-    public class ConnectorType : Enumeration
+    public sealed class ConnectorType : Enumeration
     {
         public static readonly ConnectorType Aggregation = new ConnectorType("Aggregation", Direction.SourceToDestination);
         public static readonly ConnectorType Association = new ConnectorType("Association", Direction.Unspecified);
@@ -229,6 +254,10 @@ namespace EAAddInFramework.MDGBuilder
 
         public Direction DefaultDirecttion { get; private set; }
 
+        /// <summary>
+        /// An empty stereotypes that represents connectors of this type without
+        /// a specific stereotype.
+        /// </summary>
         public ConnectorStereotype DefaultStereotype { get; private set; }
     }
 

@@ -79,6 +79,8 @@ namespace EAAddInFramework.MDGBuilder
 
         private static String ToEaColor(Color c)
         {
+            // EA uses the same color codes as MS Access
+            // see also http://stackoverflow.com/questions/16198122/convert-ms-access-color-code-to-hex-in-c-sharp
             return (((((int)c.B * 256) + c.G) * 256) + c.R).ToString();
         }
     }

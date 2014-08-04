@@ -12,5 +12,10 @@ namespace EAAddInFramework.MDGBuilder
         {
             return e.Stereotype == stereotype.Name && e.Type == stereotype.Type.Name;
         }
+
+        public static bool IsInstance(this EA.Element e)
+        {
+            return e.ClassifierID != 0;
+        }
     }
 }
