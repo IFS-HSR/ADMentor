@@ -14,5 +14,10 @@ namespace Utils
                 action(e);
             }
         }
+
+        public static String Join<T>(this IEnumerable<T> es, String separator)
+        {
+            return String.Join(separator, es);
+        }
     }
 }

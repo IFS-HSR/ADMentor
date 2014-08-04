@@ -5,6 +5,7 @@ using Color = System.Drawing.Color;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utils;
 
 namespace AdAddIn.ADTechnology
 {
@@ -170,11 +171,11 @@ namespace AdAddIn.ADTechnology
             width: 100,
             height: 70);
 
-        private static String GenerateFillColors(String property, IDictionary<String, Color> states)
+        private static String GenerateFillColors(String tagName, IDictionary<String, Color> valueColors)
         {
-            return String.Join("\n", states.Select(p =>
-                          String.Format(@"if(HasTag(""{0}"", ""{1}"")) {{ SetFillColor({2}, {3}, {4}); }}",
-                            property, p.Key, p.Value.R, p.Value.G, p.Value.B)));
+            return (from p in valueColors
+                    select String.Format(@"if(HasTag(""{0}"", ""{1}"")) {{ SetFillColor({2}, {3}, {4}); }}",
+                        tagName, p.Key, p.Value.R, p.Value.G, p.Value.B)).Join("\n");
         }
     }
 }
