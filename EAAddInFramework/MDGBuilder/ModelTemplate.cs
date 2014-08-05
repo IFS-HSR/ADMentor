@@ -10,7 +10,7 @@ using Utils;
 namespace EAAddInFramework.MDGBuilder
 {
     /// <summary>
-    /// Model templates as shown in the new model wizard.
+    /// Model templates as used in the "new model" wizard.
     /// 
     /// More infos on the MTS format for model templates:
     /// http://www.sparxsystems.com/enterprise_architect_user_guide/10/extending_uml_models/model_templates2.html

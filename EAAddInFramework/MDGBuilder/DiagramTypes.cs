@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EAAddInFramework.MDGBuilder
 {
-    public class DiagramType : Enumeration
+    public sealed class DiagramType : Enumeration
     {
         public static readonly DiagramType Activity = new DiagramType(typeName: "Activity");
 

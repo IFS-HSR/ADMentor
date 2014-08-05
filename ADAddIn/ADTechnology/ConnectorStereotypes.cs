@@ -121,8 +121,8 @@ namespace AdAddIn.ADTechnology
             type: ConnectorType.Dependency,
             direction: Direction.SourceToDestination,
             connects: new Connection[]{
-                new Connection(from: ElementType.Issue, to: ElementStereotypes.Decision),
-                new Connection(from: ElementType.Requirement, to: ElementStereotypes.Decision)
+                new Connection(from: ElementType.Issue.DefaultStereotype, to: ElementStereotypes.Decision),
+                new Connection(from: ElementType.Requirement.DefaultStereotype, to: ElementStereotypes.Decision)
             });
 
         /// <summary>

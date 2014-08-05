@@ -85,17 +85,11 @@ namespace EAAddInFramework.MDGBuilder
     /// <summary>
     /// Connections describe what kinds of element types or element stereotypes
     /// are intended to be conneceted by a given connector stereotype.
-    /// This information is used to generate quick links in EA.
+    /// This information is used to generate quick linker proposals in EA.
     /// </summary>
     public class Connection
     {
         public Connection(ElementStereotype from, ElementStereotype to) : this(from, to, null) { }
-
-        public Connection(ElementType from, ElementStereotype to) : this(from.DefaultStereotype, to) { }
-
-        public Connection(ElementStereotype from, ElementType to) : this(from, to.DefaultStereotype) { }
-
-        public Connection(ElementType from, ElementType to) : this(from.DefaultStereotype, to.DefaultStereotype) { }
 
         private Connection(ElementStereotype from, ElementStereotype to, ConnectorStereotype connectorStereotype)
         {
@@ -248,15 +242,18 @@ namespace EAAddInFramework.MDGBuilder
         private ConnectorType(string name, Direction defaultDirection)
             : base(name)
         {
-            DefaultDirecttion = defaultDirection;
+            DefaultDirection = defaultDirection;
             DefaultStereotype = new ConnectorStereotype(name: "", displayName: Name, type: this);
         }
 
-        public Direction DefaultDirecttion { get; private set; }
+        /// <summary>
+        /// Default direction of connectors of this type.
+        /// </summary>
+        public Direction DefaultDirection { get; private set; }
 
         /// <summary>
         /// An empty stereotypes that represents connectors of this type without
-        /// a specific stereotype.
+        /// a specified stereotype.
         /// </summary>
         public ConnectorStereotype DefaultStereotype { get; private set; }
     }
@@ -271,11 +268,61 @@ namespace EAAddInFramework.MDGBuilder
         private Direction(String name) : base(name) { }
     }
 
+    /// <summary>
+    /// Represents one of EAs line styles for connectors
+    /// http://www.sparxsystems.com/enterprise_architect_user_guide/10/modeling_basics/connectorstyles.html
+    /// </summary>
     public sealed class LineStyle : Enumeration
     {
-        public static readonly LineStyle Auto = new LineStyle("auto");
-        public static readonly LineStyle TreeLateralHorizontal = new LineStyle("treeLV");
-        public static readonly LineStyle TreeLateralVertical = new LineStyle("treeLH");
+        /// <summary>
+        /// A straight line from element A to element B.
+        /// </summary>
+        public static readonly LineStyle Direct = new LineStyle("direct");
+
+        /// <summary>
+        /// A vertical and horizontal route from A to B with 90-degree bends.
+        /// </summary>
+        public static readonly LineStyle AutoRouting = new LineStyle("auto");
+
+        /// <summary>
+        /// The most flexible option; users can add one or more line points and bend and push the line into virtually any shape.
+        /// </summary>
+        public static readonly LineStyle Custom = new LineStyle("custom");
+
+        /// <summary>
+        /// A smooth curved line from A to B.
+        /// </summary>
+        public static readonly LineStyle Bezier = new LineStyle("bezier");
+
+        /// <summary>
+        /// A line from element A to B with two right-angle bends, and the end points fixed to selected locations on the elements (Horizontal).
+        /// </summary>
+        public static readonly LineStyle TreeHorizontal = new LineStyle("treeH");
+
+        /// <summary>
+        /// A line from element A to B with two right-angle bends, and the end points fixed to selected locations on the elements (Vertical).
+        /// </summary>
+        public static readonly LineStyle TreeVertical = new LineStyle("treeV");
+
+        /// <summary>
+        /// A line from element A to B with a single right-angle bend, and the end points fixed to selected locations on the elements (Horizontal).
+        /// </summary>
+        public static readonly LineStyle TreeLateralHorizontal = new LineStyle("treeLH");
+
+        /// <summary>
+        /// A line from element A to B with a single right-angle bend, and the end points fixed to selected locations on the elements (Vertical).
+        /// </summary>
+        public static readonly LineStyle TreeLateralVertical = new LineStyle("treeLV");
+
+        /// <summary>
+        /// User can add one or more line points and bend and push the line into a variety of shapes.
+        /// </summary>
+        public static readonly LineStyle OrthogonalSquareCorners = new LineStyle("orthogonalS");
+
+        /// <summary>
+        /// User can add one or more line points and bend and push the line into a variety of shapes.
+        /// </summary>
+        public static readonly LineStyle OrthogonalRoundedCorners = new LineStyle("orthogonalR");
 
         private LineStyle(String name) : base(name) { }
     }

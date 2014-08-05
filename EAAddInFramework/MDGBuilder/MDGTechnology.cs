@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Utils;
 
 namespace EAAddInFramework.MDGBuilder
 {
@@ -89,7 +90,7 @@ namespace EAAddInFramework.MDGBuilder
                                    from c in (s as ConnectorStereotype).Connects
                                    from ql in c.GetQuickLinkEntries()
                                    select ql;
-            return String.Join("\n", quickLinkEntries);
+            return quickLinkEntries.Join("\n");
         }
     }
 }

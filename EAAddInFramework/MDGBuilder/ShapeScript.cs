@@ -29,6 +29,9 @@ namespace EAAddInFramework.MDGBuilder
        }
 
        private static string ToBase64EncodedZip(String s){
+           /* Shape scripts are represented in a base64 encoded zip file containing one
+            * file called "str.dat". This file contains the shape script in UTF-16.
+            */
            using (var zipStream = new MemoryStream())
            {
                using (var zipArchive = new ZipArchive(zipStream, ZipArchiveMode.Update))
