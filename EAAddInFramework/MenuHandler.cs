@@ -45,14 +45,17 @@ namespace EAAddInFramework
         public void OnClick(Option<ContextItem> contextItem) { }
     }
 
-    public abstract class MenuItem : IMenuItem
+    public class MenuItem : IMenuItem
     {
-        public MenuItem(String name)
+        public MenuItem(String name, ICommand<Option<ContextItem>, Unit> cmd)
         {
             Name = name;
+            Command = cmd;
         }
 
         public string Name { get; private set; }
+
+        public ICommand<Option<ContextItem>, Unit> Command { get; set; }
 
         public IList<IMenuItem> Children
         {
@@ -66,10 +69,13 @@ namespace EAAddInFramework
 
         public virtual bool IsEnabled(Option<ContextItem> contextItem)
         {
-            return true;
+            return Command.CanExecute(contextItem);
         }
 
-        public abstract void OnClick(Option<ContextItem> contextItem);
+        public void OnClick(Option<ContextItem> contextItem)
+        {
+            Command.Execute(contextItem);
+        }
     }
 
     class MenuHandler

@@ -28,30 +28,15 @@ namespace AdAddIn
 
         public override void bootstrap(IReadableAtom<EA.Repository> repository)
         {
-            Register(new Menu(technology.Name,
-                new Components.PopulateDependenciesMenuItem(repository)));
+            Register(//new Menu(technology.Name,
+                new MenuItem("Foo", Command.Create((Option<ContextItem> arg) =>
+                {
+                    System.Windows.Forms.MessageBox.Show(String.Format("{0}", AdAddIn.Properties.Settings.Default.CdarUrl));
+                    return Unit.Instance;
+                })));
             Register(new Components.PopulateDependenciesOnNewOccurrences());
             //Properties.Settings.CdarUrl = "Some(www.example.com)";
             //Register(new DecisionDetailViewComponent(new DecisionDetailView(), decisions, alternatives, issues));
-        }
-    }
-
-    public class DummyMenu : MenuItem
-    {
-        public DummyMenu(String name) : base(name) { }
-
-        public override void OnClick(Option<ContextItem> contextItem)
-        {
-            //System.Windows.Forms.MessageBox.Show(String.Format("{0} :: {1}", Name, contextItem));
-            System.Windows.Forms.MessageBox.Show(String.Format("{0}", AdAddIn.Properties.Settings.Default.CdarUrl));
-        }
-
-        public override bool IsEnabled(Option<ContextItem> contextItem)
-        {
-            //return contextItem.Match(
-            //    ci => true,
-            //    () => false);
-            return true;
         }
     }
 }

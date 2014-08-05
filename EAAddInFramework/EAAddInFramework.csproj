@@ -53,6 +53,7 @@
     <Compile Include="EAAddIn.cs" />
     <Compile Include="EventPropertiesExtensions.cs" />
     <Compile Include="DataAccess\IProjectVisitor.cs" />
+    <Compile Include="ICommand.cs" />
     <Compile Include="LoggedAtom.cs" />
     <Compile Include="MDGBuilder\ConnectorStereotype.cs" />
     <Compile Include="MDGBuilder\Diagrams.cs" />
