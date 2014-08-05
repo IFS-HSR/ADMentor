@@ -9,6 +9,10 @@ using Utils;
 
 namespace AdAddIn.Navigation
 {
+    /// <summary>
+    /// Navigate to the element that has been used to instantiate the selected element
+    /// if possible.
+    /// </summary>
     public class GoToClassifierCommand : ICommand<Option<ContextItem>, Unit>
     {
         private readonly IReadableAtom<EA.Repository> Repo;

@@ -17,31 +17,13 @@ namespace AdAddIn.ADTechnology
             displayName: "Alternative For",
             reverseDisplayName: "Has Alternative",
             type: ConnectorType.Aggregation,
-            connects: new Connection[]{
+            connects: new[]{
                 new Connection(from: ElementStereotypes.Option, to: ElementStereotypes.Problem),
                 new Connection(from: ElementStereotypes.Decision, to: ElementStereotypes.ProblemOccurrence)
             },
-            shapeScript: @"
-                shape main{
-                    noshadow = true;
-
-                    hidelabel(""middlebottomlabel"");
-                    moveto(0,0);
-                    lineto(100,0);
-                }
-
-                shape target {
-                    rotatable = true;
-
-                    startpath();
-                    moveto(0,0);
-                    lineto(10,5);
-                    lineto(20,0);
-                    lineto(10,-5);
-                    endpath();
-                    fillandstrokepath();
-                }
-            ");
+            taggedValues: new[]{
+                new TaggedValue("compositeKind", TaggedValueType.String.WithDefaultValue("Aggregate at Source"))
+            });
 
         /// <summary>
         /// Option -Raises-> Problem
@@ -52,7 +34,7 @@ namespace AdAddIn.ADTechnology
             reverseDisplayName: "Raised By",
             type: ConnectorType.Association,
             direction: Direction.SourceToDestination,
-            connects: new Connection[]{
+            connects: new[]{
                 new Connection(from: ElementStereotypes.Option, to: ElementStereotypes.Problem),
                 new Connection(from: ElementStereotypes.Decision, to: ElementStereotypes.ProblemOccurrence)
             });
@@ -66,7 +48,7 @@ namespace AdAddIn.ADTechnology
             reverseDisplayName: "Included In",
             type: ConnectorType.Association,
             direction: Direction.SourceToDestination,
-            connects: new Connection[]{
+            connects: new[]{
                 new Connection(from: ElementStereotypes.Problem, to: ElementStereotypes.Problem),
                 new Connection(from: ElementStereotypes.ProblemOccurrence, to: ElementStereotypes.ProblemOccurrence)
             });
@@ -80,7 +62,7 @@ namespace AdAddIn.ADTechnology
             reverseDisplayName: "Supported By",
             type: ConnectorType.Dependency,
             direction: Direction.SourceToDestination,
-            connects: new Connection[]{
+            connects: new[]{
                 new Connection(from: ElementStereotypes.Option, to: ElementStereotypes.Option),
                 new Connection(from: ElementStereotypes.Decision, to: ElementStereotypes.Decision)
             });
@@ -93,7 +75,7 @@ namespace AdAddIn.ADTechnology
             displayName: "Conflicts With",
             type: ConnectorType.Dependency,
             direction: Direction.BiDirectional,
-            connects: new Connection[]{
+            connects: new[]{
                 new Connection(from: ElementStereotypes.Option, to: ElementStereotypes.Option),
                 new Connection(from: ElementStereotypes.Decision, to: ElementStereotypes.Decision)
             });
@@ -106,7 +88,7 @@ namespace AdAddIn.ADTechnology
             displayName: "Bound To",
             type: ConnectorType.Dependency,
             direction: Direction.BiDirectional,
-            connects: new Connection[]{
+            connects: new[]{
                 new Connection(from: ElementStereotypes.Option, to: ElementStereotypes.Option),
                 new Connection(from: ElementStereotypes.Decision, to: ElementStereotypes.Decision)
             });
@@ -120,7 +102,7 @@ namespace AdAddIn.ADTechnology
             reverseDisplayName: "Challenged By",
             type: ConnectorType.Dependency,
             direction: Direction.SourceToDestination,
-            connects: new Connection[]{
+            connects: new[]{
                 new Connection(from: ElementType.Issue.DefaultStereotype, to: ElementStereotypes.Decision),
                 new Connection(from: ElementType.Requirement.DefaultStereotype, to: ElementStereotypes.Decision)
             });
@@ -134,7 +116,7 @@ namespace AdAddIn.ADTechnology
             reverseDisplayName: "Overriden By",
             type: ConnectorType.Association,
             direction: Direction.SourceToDestination,
-            connects: new Connection[]{
+            connects: new[]{
                 new Connection(from: ElementStereotypes.Decision, to: ElementStereotypes.Decision)
             });
     }
