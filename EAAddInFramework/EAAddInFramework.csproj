@@ -58,7 +58,7 @@
     <Compile Include="MDGBuilder\ConnectorStereotype.cs" />
     <Compile Include="MDGBuilder\Diagrams.cs" />
     <Compile Include="MDGBuilder\DiagramTypes.cs" />
-    <Compile Include="MDGBuilder\ElementExtensions.cs" />
+    <Compile Include="ElementExtensions.cs" />
     <Compile Include="MDGBuilder\ElementStereotype.cs" />
     <Compile Include="MDGBuilder\Enumeration.cs" />
     <Compile Include="MDGBuilder\Icon.cs" />
@@ -70,6 +70,7 @@
     <Compile Include="MDGBuilder\TaggedValue.cs" />
     <Compile Include="MDGBuilder\TaggedValueType.cs" />
     <Compile Include="MenuHandler.cs" />
+    <Compile Include="RepositoryExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="EA">

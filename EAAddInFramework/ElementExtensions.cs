@@ -1,10 +1,11 @@
-﻿using System;
+﻿using EAAddInFramework.MDGBuilder;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EAAddInFramework.MDGBuilder
+namespace EAAddInFramework
 {
     public static class ElementExtensions
     {

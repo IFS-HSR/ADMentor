@@ -67,9 +67,18 @@ namespace UtilsTests
         }
 
         [TestMethod]
+        public void TestLinqWith2DifferentSources()
+        {
+            var res = from n in Options.Some(123)
+                      from s in Options.Some("abc")
+                      select n + s.Length == 126;
+            Assert.AreEqual(Options.Some(true), res);
+        }
+
+        [TestMethod]
         public void TestLinqWithEnumerableSource()
         {
-            var greetings = new List<string> { "hi", "hello" };
+            var greetings = new[] { "hi", "hello" };
             var res = from g in greetings
                       from s in Options.Some("!")
                       select g + s;
@@ -80,7 +89,7 @@ namespace UtilsTests
         [TestMethod]
         public void TestLinqWithSecondSourceAsEnumerable()
         {
-            var suffixes = new List<string> { "?", "!" };
+            var suffixes = new[] { "?", "!" };
             var res = from s in Options.Some("Awesome")
                       from suffix in suffixes
                       select s + suffix;
