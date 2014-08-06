@@ -14,7 +14,7 @@ namespace AdAddIn.ADTechnology
             displayName: "Problem Space Connectors",
             description: "",
             stereotypes: new IStereotype[]{
-                ConnectorStereotypes.AlternativeFor,
+                ConnectorStereotypes.HasAlternative,
                 ConnectorStereotypes.Includes,
                 ConnectorStereotypes.Raises,
                 ConnectorStereotypes.Supports,

@@ -20,7 +20,8 @@ namespace EAAddInFramework.MDGBuilder
             String shapeScript = null,
             IEnumerable<TaggedValue> taggedValues = null,
             Direction direction = null,
-            LineStyle lineStyle = null)
+            LineStyle lineStyle = null,
+            CompositionKind compositionKind = null)
         {
             Name = name;
             DisplayName = displayName;
@@ -33,6 +34,7 @@ namespace EAAddInFramework.MDGBuilder
             TaggedValues = taggedValues ?? new TaggedValue[] { };
             Direction = direction.AsOption();
             LineStyle = lineStyle.AsOption();
+            CompositionKind = compositionKind.AsOption();
         }
 
         public string Name { get; private set; }
@@ -64,6 +66,8 @@ namespace EAAddInFramework.MDGBuilder
 
         public Option<LineStyle> LineStyle { get; private set; }
 
+        public Option<CompositionKind> CompositionKind { get; private set; }
+
         public XElement ToXml()
         {
             var taggedValues = LineStyle.Select(ls => TaggedValues.Concat(new TaggedValue[] {
@@ -75,7 +79,8 @@ namespace EAAddInFramework.MDGBuilder
                 ShapeScript.Select<String, XNode>(s => new ShapeScript(s).ToXml()).GetOrElse(new XComment("no custom shape")),
                 new XElement("AppliesTo",
                     new XElement("Apply", new XAttribute("type", Type.ToString()),
-                        new XElement("Property", new XAttribute("name", "direction"), new XAttribute("value", Direction.Select(d => d.Name).GetOrElse(""))))),
+                        new XElement("Property", new XAttribute("name", "direction"), new XAttribute("value", Direction.Select(d => d.Name).GetOrElse(""))),
+                        new XElement("Property", new XAttribute("name", "compositionKind"), new XAttribute("value", CompositionKind.Select(c => c.Name).GetOrElse(""))))),
                 new XElement("TaggedValues",
                     from tv in taggedValues
                     select tv.ToXml()));
@@ -325,5 +330,13 @@ namespace EAAddInFramework.MDGBuilder
         public static readonly LineStyle OrthogonalRoundedCorners = new LineStyle("orthogonalR");
 
         private LineStyle(String name) : base(name) { }
+    }
+
+    public sealed class CompositionKind : Enumeration
+    {
+        public static readonly CompositionKind None = new CompositionKind("None");
+        public static readonly CompositionKind AggregateAtSource = new CompositionKind("Aggregate at Source");
+
+        private CompositionKind(String name) : base(name) { }
     }
 }

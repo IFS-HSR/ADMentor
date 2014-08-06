@@ -15,15 +15,29 @@ namespace AdAddIn.PopulateDependencies
         public DependencyTree(EA.Element element, Option<EA.Connector> incomingConnector, IEnumerable<DependencyTree> children)
         {
             Element = element;
-            IcomingConnector = incomingConnector;
+            IncomingConnector = incomingConnector;
             Children = children;
         }
 
         public EA.Element Element { get; private set; }
 
-        public Option<EA.Connector> IcomingConnector { get; private set; }
+        public Option<EA.Connector> IncomingConnector { get; private set; }
 
         public IEnumerable<DependencyTree> Children { get; private set; }
+
+        public override string ToString()
+        {
+            return ToString(0);
+        }
+
+        private String ToString(int level)
+        {
+            return String.Format("{0}{1}: {2}\n{3}",
+                new String(' ', level * 2),
+                IncomingConnector.Match(c => c.Stereotype, () => ""),
+                Element.Name,
+                Children.Select(c => c.ToString(level + 1)).Join(""));
+        }
 
         public static DependencyTree Create(EA.Repository repo, EA.Element rootNode, int levels)
         {
@@ -50,7 +64,7 @@ namespace AdAddIn.PopulateDependencies
 
         private static Option<EA.Element> DescendToElement(EA.Repository repo, EA.Element source, EA.Connector connector)
         {
-            if (connector.Is(ConnectorStereotypes.AlternativeFor) && connector.SupplierID == source.ElementID)
+            if (connector.Is(ConnectorStereotypes.HasAlternative) && connector.SupplierID == source.ElementID)
             {
                 return from target in repo.TryGetElement(connector.ClientID)
                        select target;

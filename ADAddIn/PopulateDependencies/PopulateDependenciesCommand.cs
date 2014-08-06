@@ -28,7 +28,21 @@ namespace AdAddIn.PopulateDependencies
 
             System.Windows.Forms.MessageBox.Show(String.Format("{0}", elements.Select(e => e.ElementGUID + " " + e.Type).Join("\n")));
 
+            GetProblemForClassifier(contextItem).Do(problem =>
+            {
+                var dependencies = DependencyTree.Create(Repo.Val, problem, 3);
+                System.Windows.Forms.MessageBox.Show(dependencies.ToString());
+            });
+
             return Unit.Instance;
+        }
+
+        private Option<EA.Element> GetProblemForClassifier(Option<ContextItem> contextItem)
+        { 
+            return from ci in contextItem
+                   from e in Repo.Val.TryGetElement(ci.Guid)
+                   from c in Repo.Val.TryGetElement(e.ClassifierID)
+                   select c;
         }
 
         public Boolean CanExecute(Option<ContextItem> contextItem)

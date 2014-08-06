@@ -10,19 +10,19 @@ namespace AdAddIn.ADTechnology
     public static class ConnectorStereotypes
     {
         /// <summary>
-        /// Option -isAlternativeFor-> Problem
+        /// Problem -Has Alternative-> Option
         /// </summary>
-        public static readonly ConnectorStereotype AlternativeFor = new ConnectorStereotype(
-            name: "adAlternativeFor",
-            displayName: "Alternative For",
-            reverseDisplayName: "Has Alternative",
-            type: ConnectorType.Aggregation,
+        public static readonly ConnectorStereotype HasAlternative = new ConnectorStereotype(
+            name: "adHasAlternative",
+            displayName: "Has Alternative",
+            reverseDisplayName: "Alternative For",
+            type: ConnectorType.Association,
+            direction: Direction.Unspecified,
+            compositionKind: CompositionKind.AggregateAtSource,
+            hideStereotypeLabel: true,
             connects: new[]{
-                new Connection(from: ElementStereotypes.Option, to: ElementStereotypes.Problem),
-                new Connection(from: ElementStereotypes.Decision, to: ElementStereotypes.ProblemOccurrence)
-            },
-            taggedValues: new[]{
-                new TaggedValue("compositeKind", TaggedValueType.String.WithDefaultValue("Aggregate at Source"))
+                new Connection(from: ElementStereotypes.Problem, to: ElementStereotypes.Option),
+                new Connection(from: ElementStereotypes.ProblemOccurrence, to: ElementStereotypes.Decision)
             });
 
         /// <summary>
