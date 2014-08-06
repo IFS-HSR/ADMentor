@@ -25,8 +25,8 @@ namespace ADAddInTest.PopulateDependencies
             var alternativeA = ElementStereotypes.Option.Create(rootModel, "AA");
             var alternativeB = ElementStereotypes.Option.Create(rootModel, "AB");
 
-            var cA = ConnectorStereotypes.HasAlternative.Create(alternativeA, problemA);
-            var cB = ConnectorStereotypes.HasAlternative.Create(alternativeB, problemA);
+            var cA = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeA);
+            var cB = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeB);
 
             var expectedTree = new DependencyTree(problemA, Options.None<EA.Connector>(), new[]{
                     new DependencyTree(alternativeA, Options.Some(cA), new DependencyTree[]{}),
@@ -46,7 +46,7 @@ namespace ADAddInTest.PopulateDependencies
             var alternativeBA = ElementStereotypes.Option.Create(rootModel, "BA");
 
             var cAtoB = ConnectorStereotypes.Includes.Create(problemA, problemB);
-            var cBtoBA = ConnectorStereotypes.HasAlternative.Create(alternativeBA, problemB);
+            var cBtoBA = ConnectorStereotypes.HasAlternative.Create(problemB, alternativeBA);
 
             var expextedFromA = new DependencyTree(problemA, Options.None<EA.Connector>(), new[]{
                     new DependencyTree(problemB, Options.Some(cAtoB), new[]{
@@ -58,6 +58,33 @@ namespace ADAddInTest.PopulateDependencies
             var expectedFromB = new DependencyTree(problemB, Options.None<EA.Connector>(), new[]{
                         new DependencyTree(alternativeBA, Options.Some(cBtoBA), new DependencyTree[]{})
                     });
+            AssertEqualTree(expectedFromB, DependencyTree.Create(repo, problemB, 3));
+        }
+
+        [TestMethod]
+        public void FindBoundAlternative()
+        {
+            var problemA = ElementStereotypes.Problem.Create(rootModel, "A");
+            var alternativeAA = ElementStereotypes.Option.Create(rootModel, "AA");
+            var problemB = ElementStereotypes.Problem.Create(rootModel, "B");
+            var alternativeBA = ElementStereotypes.Option.Create(rootModel, "BA");
+
+            var cAtoAA = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeAA);
+            var cBtoBA = ConnectorStereotypes.HasAlternative.Create(problemB, alternativeBA);
+            var cAAtoBA = ConnectorStereotypes.BoundTo.Create(alternativeAA, alternativeBA);
+
+            var expectedFromA = new DependencyTree(problemA, Options.None<EA.Connector>(), new[]{
+                    new DependencyTree(alternativeAA, Options.Some(cAtoAA), new []{
+                        new DependencyTree(alternativeBA, Options.Some(cAAtoBA), new DependencyTree[]{})
+                    })
+                });
+            AssertEqualTree(expectedFromA, DependencyTree.Create(repo, problemA, 3));
+
+            var expectedFromB = new DependencyTree(problemB, Options.None<EA.Connector>(), new[]{
+                    new DependencyTree(alternativeBA, Options.Some(cBtoBA), new []{
+                        new DependencyTree(alternativeAA, Options.Some(cAAtoBA), new DependencyTree[]{})
+                    })
+                });
             AssertEqualTree(expectedFromB, DependencyTree.Create(repo, problemB, 3));
         }
 
@@ -101,10 +128,9 @@ namespace ADAddInTest.PopulateDependencies
             AssertEqualOption(expected.IncomingConnector, actual.IncomingConnector, c => c.ConnectorGUID);
             Assert.AreEqual(expected.Children.Count(), actual.Children.Count());
 
-            expected.Children.Zip(actual.Children, (e, a) =>
+            expected.Children.Zip(actual.Children, (e, a) => Tuple.Create(e, a)).ForEach(pair =>
             {
-                AssertEqualTree(e, a);
-                return Unit.Instance;
+                AssertEqualTree(pair.Item1, pair.Item2);
             });
         }
 

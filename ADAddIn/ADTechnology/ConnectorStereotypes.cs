@@ -19,7 +19,6 @@ namespace AdAddIn.ADTechnology
             type: ConnectorType.Association,
             direction: Direction.Unspecified,
             compositionKind: CompositionKind.AggregateAtSource,
-            hideStereotypeLabel: true,
             connects: new[]{
                 new Connection(from: ElementStereotypes.Problem, to: ElementStereotypes.Option),
                 new Connection(from: ElementStereotypes.ProblemOccurrence, to: ElementStereotypes.Decision)

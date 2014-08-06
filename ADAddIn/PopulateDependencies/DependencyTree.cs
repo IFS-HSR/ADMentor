@@ -64,16 +64,29 @@ namespace AdAddIn.PopulateDependencies
 
         private static Option<EA.Element> DescendToElement(EA.Repository repo, EA.Element source, EA.Connector connector)
         {
-            if (connector.Is(ConnectorStereotypes.HasAlternative) && connector.SupplierID == source.ElementID)
+            var directedConnectors = new[] {
+                    ConnectorStereotypes.HasAlternative,
+                    ConnectorStereotypes.Raises,
+                    ConnectorStereotypes.Includes,
+                    ConnectorStereotypes.Overrides,
+                    ConnectorStereotypes.Supports
+                };
+
+            var undirectedConnectors = new[]{
+                    ConnectorStereotypes.BoundTo,
+                    ConnectorStereotypes.ConflictsWith
+                };
+
+            if (directedConnectors.Concat(undirectedConnectors).Any(stereotype => connector.Is(stereotype)) && connector.ClientID == source.ElementID)
             {
-                return from target in repo.TryGetElement(connector.ClientID)
-                       select target;
+                return repo.TryGetElement(connector.SupplierID);
             }
-            if (connector.Is(ConnectorStereotypes.Includes) && connector.ClientID == source.ElementID)
+
+            if (undirectedConnectors.Any(stereotype => connector.Is(stereotype)) && connector.SupplierID == source.ElementID)
             {
-                return from target in repo.TryGetElement(connector.SupplierID)
-                       select target;
+                return repo.TryGetElement(connector.ClientID);
             }
+
             return Options.None<EA.Element>();
         }
     }
