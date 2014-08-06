@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utils;
 
 namespace EAAddInFramework
 {
@@ -21,6 +22,22 @@ namespace EAAddInFramework
         public static ICommand<T, R> Create<T, R>(Func<T, R> fn)
         {
             return new CommandAdapter<T, R>(fn, arg => true);
+        }
+
+        public static ICommand<T, R> Create<T, R>(Func<T, R> exec, Func<T, Boolean> canExec)
+        {
+            return new CommandAdapter<T, R>(exec, canExec);
+        }
+
+        public static ICommand<S, R> Adapt<S, T, R>(this ICommand<T, R> cmd, Func<S, T> map)
+        {
+            return Create<S,R>(arg =>
+            {
+                return cmd.Execute(map(arg));
+            }, arg =>
+            {
+                return cmd.CanExecute(map(arg));
+            });
         }
     }
 

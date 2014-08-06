@@ -10,8 +10,9 @@ using Utils;
 namespace AdAddIn.Navigation
 {
     /// <summary>
-    /// Navigate to the element that has been used to instantiate the selected element
-    /// if possible.
+    /// Navigate to the element that has been used to instantiate the selected element.
+    /// This command is only executable if an element is selected and the element is an
+    /// invocation/instance of another element.
     /// </summary>
     public class GoToClassifierCommand : ICommand<Option<ContextItem>, Unit>
     {

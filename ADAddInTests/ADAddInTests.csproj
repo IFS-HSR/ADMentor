@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Interop.EA">
+      <HintPath>..\packages\Interop.EA.2.10.238.1\Interop.EA.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
   </ItemGroup>
@@ -47,10 +51,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="DecisionDetails\DecisionDetailViewComponentTest.cs" />
+    <Compile Include="PopulateDependencies\DependencyTreeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\DecisionRepositoryTests.cs" />
-    <Compile Include="TestHelpers.cs" />
+    <Compile Include="TestRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ADAddIn\ADAddIn.csproj">
@@ -65,20 +68,6 @@
       <Project>{c5700c67-635e-45d0-8a5f-028ed5780a4b}</Project>
       <Name>Utils</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="TestModel.eap" />
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="EA">
-      <Guid>{64FB2BF4-9EFA-11D2-8307-C45586000000}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>10</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

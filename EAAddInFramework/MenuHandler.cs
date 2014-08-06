@@ -47,7 +47,7 @@ namespace EAAddInFramework
 
     public class MenuItem : IMenuItem
     {
-        public MenuItem(String name, ICommand<Option<ContextItem>, Unit> cmd)
+        public MenuItem(String name, ICommand<Option<ContextItem>, Object> cmd)
         {
             Name = name;
             Command = cmd;
@@ -55,7 +55,7 @@ namespace EAAddInFramework
 
         public string Name { get; private set; }
 
-        public ICommand<Option<ContextItem>, Unit> Command { get; set; }
+        public ICommand<Option<ContextItem>, Object> Command { get; set; }
 
         public IList<IMenuItem> Children
         {

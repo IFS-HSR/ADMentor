@@ -47,9 +47,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectorExtensions.cs" />
     <Compile Include="ContextItem.cs" />
     <Compile Include="CustomDetailViewHandler.cs" />
     <Compile Include="DataAccess\Collector.cs" />
+    <Compile Include="DataAccess\DataAccessExtensions.cs" />
+    <Compile Include="DataAccess\StereotypeHelpers.cs" />
     <Compile Include="EAAddIn.cs" />
     <Compile Include="EventPropertiesExtensions.cs" />
     <Compile Include="DataAccess\IProjectVisitor.cs" />
@@ -73,17 +76,11 @@
     <Compile Include="RepositoryExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="EA">
-      <Guid>{64FB2BF4-9EFA-11D2-8307-C45586000000}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>10</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
+    <Reference Include="Interop.EA, Version=2.10.0.0, Culture=neutral, PublicKeyToken=fe3452214e5feba0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
-  <ItemGroup>
+      <HintPath>..\packages\Interop.EA.2.10.238.1\Interop.EA.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>

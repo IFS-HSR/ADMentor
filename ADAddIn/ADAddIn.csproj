@@ -37,6 +37,11 @@
     <AssemblyOriginatorKeyFile>admentor.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Interop.EA, Version=2.10.0.0, Culture=neutral, PublicKeyToken=fe3452214e5feba0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\packages\Interop.EA.2.10.238.1\Interop.EA.dll</HintPath>
+    </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
     </Reference>
@@ -59,6 +64,8 @@
     <Compile Include="ADTechnology\Toolboxes.cs" />
     <Compile Include="Components\PopulateDependenciesMenuItem.cs" />
     <Compile Include="Navigation\GoToClassifierCommand.cs" />
+    <Compile Include="PopulateDependencies\DependencyTree.cs" />
+    <Compile Include="PopulateDependencies\PopulateDependenciesCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -76,17 +83,6 @@
       <Project>{c5700c67-635e-45d0-8a5f-028ed5780a4b}</Project>
       <Name>Utils</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="EA">
-      <Guid>{64FB2BF4-9EFA-11D2-8307-C45586000000}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>10</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ADTechnology\Decision.bmp" />
@@ -111,7 +107,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,5 @@
 ﻿using AdAddIn.Navigation;
+using AdAddIn.PopulateDependencies;
 using EAAddInFramework;
 using EAAddInFramework.MDGBuilder;
 using NLog;
@@ -35,7 +36,8 @@ namespace AdAddIn
                     System.Windows.Forms.MessageBox.Show(String.Format("{0}", AdAddIn.Properties.Settings.Default.CdarUrl));
                     return Unit.Instance;
                 })),
-                new MenuItem("Go to Classifier", new GoToClassifierCommand(repository))));
+                new MenuItem("Go to Classifier", new GoToClassifierCommand(repository)),
+                new MenuItem("Populate Dependencies", new PopulateDependenciesCommand(repository))));
             Register(new Components.PopulateDependenciesOnNewOccurrences());
             //Properties.Settings.CdarUrl = "Some(www.example.com)";
             //Register(new DecisionDetailViewComponent(new DecisionDetailView(), decisions, alternatives, issues));
