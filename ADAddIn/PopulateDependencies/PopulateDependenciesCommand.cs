@@ -30,27 +30,39 @@ namespace AdAddIn.PopulateDependencies
 
             GetProblemForClassifier(contextItem).Do(problem =>
             {
-                var dependencies = DependencyTree.Create(Repo.Val, problem, 3);
+                var dependencies = DependencyTree.Create(Repo.Val, problem, levels: 3);
                 System.Windows.Forms.MessageBox.Show(dependencies.ToString());
             });
 
             return Unit.Instance;
         }
 
-        private Option<EA.Element> GetProblemForClassifier(Option<ContextItem> contextItem)
-        { 
-            return from ci in contextItem
-                   from e in Repo.Val.TryGetElement(ci.Guid)
-                   from c in Repo.Val.TryGetElement(e.ClassifierID)
-                   select c;
-        }
-
         public Boolean CanExecute(Option<ContextItem> contextItem)
         {
-            return (from ci in contextItem
-                    from e in Repo.Val.TryGetElement(ci.Guid)
-                    select e.Is(ElementStereotypes.ProblemOccurrence) || e.Is(ElementStereotypes.Decision))
-                    .GetOrElse(false);
+            return GetProblemForClassifier(contextItem).IsDefined;
+        }
+
+        private Option<EA.Element> GetProblemForClassifier(Option<ContextItem> contextItem)
+        {
+            return from ci in contextItem
+                   from e in Repo.Val.TryGetElement(ci.Guid)
+                   from classifier in Repo.Val.TryGetElement(e.ClassifierID)
+                   from problem in GetProblem(classifier)
+                   select problem;
+        }
+
+        private Option<EA.Element> GetProblem(EA.Element classifier)
+        {
+            if (classifier.Is(ElementStereotypes.Problem))
+                return Options.Some(classifier);
+            else if (classifier.Is(ElementStereotypes.Option))
+                return (from c in classifier.Connectors.Cast<EA.Connector>()
+                        where c.Is(ConnectorStereotypes.HasAlternative)
+                        from source in Repo.Val.TryGetElement(c.ClientID)
+                        where source.Is(ElementStereotypes.Problem)
+                        select source).FirstOption();
+            else
+                return Options.None<EA.Element>();
         }
     }
 }

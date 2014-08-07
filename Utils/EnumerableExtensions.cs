@@ -19,5 +19,17 @@ namespace Utils
         {
             return String.Join(separator, es);
         }
+
+        public static IEnumerable<Tuple<T, S>> Zip<T, S>(this IEnumerable<T> ts, IEnumerable<S> ss)
+        {
+            return ts.Zip(ss, (t, s) => Tuple.Create(t, s));
+        }
+        public static void ForEach<T, S>(this IEnumerable<Tuple<T, S>> pairs, Action<T, S> action)
+        {
+            foreach (var p in pairs)
+            {
+                action(p.Item1, p.Item2);
+            }
+        }
     }
 }

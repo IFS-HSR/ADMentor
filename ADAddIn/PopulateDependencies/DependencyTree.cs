@@ -2,6 +2,7 @@
 using EAAddInFramework;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -10,59 +11,42 @@ using Utils;
 
 namespace AdAddIn.PopulateDependencies
 {
-    public class DependencyTree
+    using EdgeFilter = Func<EA.Element, EA.Element, EA.Connector, bool>;
+
+    public class DependencyTreeNode
     {
-        public DependencyTree(EA.Element element, Option<EA.Connector> incomingConnector, IEnumerable<DependencyTree> children)
+        public DependencyTreeNode(EA.Element element, IEnumerable<DependencyTreeEdge> children)
         {
             Element = element;
-            IncomingConnector = incomingConnector;
             Children = children;
         }
 
         public EA.Element Element { get; private set; }
 
-        public Option<EA.Connector> IncomingConnector { get; private set; }
+        public IEnumerable<DependencyTreeEdge> Children { get; private set; }
+    }
 
-        public IEnumerable<DependencyTree> Children { get; private set; }
-
-        public override string ToString()
+    public class DependencyTreeEdge
+    {
+        public DependencyTreeEdge(EA.Connector connector, DependencyTreeNode node)
         {
-            return ToString(0);
+            Connector = connector;
+            Node = node;
         }
 
-        private String ToString(int level)
+        public EA.Connector Connector { get; private set; }
+
+        public DependencyTreeNode Node { get; private set; }
+    }
+
+    public static class DependencyTree
+    {
+        public static DependencyTreeNode Create(EA.Repository repo, EA.Element rootNode, EdgeFilter edgeFilter = null, int levels = 3)
         {
-            return String.Format("{0}{1}: {2}\n{3}",
-                new String(' ', level * 2),
-                IncomingConnector.Match(c => c.Stereotype, () => ""),
-                Element.Name,
-                Children.Select(c => c.ToString(level + 1)).Join(""));
+            return Create(repo, rootNode, edgeFilter ?? UseOnlyADConnectors, levels, ImmutableHashSet<String>.Empty);
         }
 
-        public static DependencyTree Create(EA.Repository repo, EA.Element rootNode, int levels)
-        {
-            Debug.Assert(levels > 0);
-
-            return Create(repo, rootNode, Options.None<EA.Connector>(), levels).First();
-        }
-
-        private static Option<DependencyTree> Create(EA.Repository repo, EA.Element rootNode, Option<EA.Connector> incomingEdge, int levels)
-        {
-            if (levels > 0)
-            {
-                var children = from c in rootNode.Connectors.Cast<EA.Connector>()
-                               from target in DescendToElement(repo, rootNode, c)
-                               from childTree in Create(repo, target, Options.Some(c), levels - 1)
-                               select childTree;
-                return Options.Some(new DependencyTree(rootNode, incomingEdge, children));
-            }
-            else
-            {
-                return Options.None<DependencyTree>();
-            }
-        }
-
-        private static Option<EA.Element> DescendToElement(EA.Repository repo, EA.Element source, EA.Connector connector)
+        public static bool UseOnlyADConnectors(EA.Element from, EA.Element to, EA.Connector via)
         {
             var directedConnectors = new[] {
                     ConnectorStereotypes.HasAlternative,
@@ -77,17 +61,36 @@ namespace AdAddIn.PopulateDependencies
                     ConnectorStereotypes.ConflictsWith
                 };
 
-            if (directedConnectors.Concat(undirectedConnectors).Any(stereotype => connector.Is(stereotype)) && connector.ClientID == source.ElementID)
-            {
-                return repo.TryGetElement(connector.SupplierID);
-            }
+            return (directedConnectors.Concat(undirectedConnectors).Any(stereotype => via.Is(stereotype)) && via.ClientID == from.ElementID) ||
+                (undirectedConnectors.Any(stereotype => via.Is(stereotype)) && via.SupplierID == from.ElementID);
+        }
 
-            if (undirectedConnectors.Any(stereotype => connector.Is(stereotype)) && connector.SupplierID == source.ElementID)
-            {
-                return repo.TryGetElement(connector.ClientID);
-            }
+        public static bool UseAllConnectors(EA.Element from, EA.Element to, EA.Connector via)
+        {
+            return true;
+        }
 
-            return Options.None<EA.Element>();
+        private static DependencyTreeNode Create(EA.Repository repo, EA.Element rootNode, EdgeFilter edgeFilter, int levels, IImmutableSet<String> visitedElementGuids)
+        {
+            var children = from c in rootNode.Connectors.Cast<EA.Connector>()
+                           from child in DescendTo(repo, rootNode, c, edgeFilter, levels, visitedElementGuids.Add(rootNode.ElementGUID))
+                           select child;
+            return new DependencyTreeNode(rootNode, children);
+        }
+
+        private static Option<DependencyTreeEdge> DescendTo(EA.Repository repo, EA.Element source, EA.Connector c, EdgeFilter edgeFilter, int levels, IImmutableSet<String> visitedElementGuids)
+        {
+            if (levels > 0)
+            {
+                var targetId = c.ClientID == source.ElementID ? c.SupplierID : c.ClientID;
+                return from target in repo.TryGetElement(targetId)
+                       where !visitedElementGuids.Contains(target.ElementGUID) && edgeFilter(source, target, c)
+                       select new DependencyTreeEdge(c, Create(repo, target, edgeFilter, levels - 1, visitedElementGuids));
+            }
+            else
+            {
+                return Options.None<DependencyTreeEdge>();
+            }
         }
     }
 }
