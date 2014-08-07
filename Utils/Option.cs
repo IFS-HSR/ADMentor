@@ -213,10 +213,18 @@ namespace Utils
     {
         public static Option<T> FirstOption<T>(this IEnumerable<T> elements)
         {
-            if (elements.Any())
-                return elements.First().AsOption();
-            else
-                return Options.None<T>();
+            return elements.FirstOption(e => true);
+        }
+
+        public static Option<T> FirstOption<T>(this IEnumerable<T> elements, Func<T, Boolean> predicate)
+        {
+            foreach(var e in elements){
+                if (predicate(e))
+                {
+                    return Options.Some(e);
+                }
+            }
+            return Options.None<T>();
         }
     }
 
