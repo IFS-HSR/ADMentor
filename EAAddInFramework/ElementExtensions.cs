@@ -18,5 +18,10 @@ namespace EAAddInFramework
         {
             return e.ClassifierID != 0;
         }
+
+        public static bool IsNew(this EA.Element e)
+        {
+            return DateTime.Now - e.Created < TimeSpan.FromSeconds(1);
+        }
     }
 }

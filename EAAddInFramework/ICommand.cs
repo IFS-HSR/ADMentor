@@ -29,14 +29,14 @@ namespace EAAddInFramework
             return new CommandAdapter<T, R>(exec, canExec);
         }
 
-        public static ICommand<S, R> Adapt<S, T, R>(this ICommand<T, R> cmd, Func<S, T> map)
+        public static ICommand<S, R> Adapt<S, T, R>(this ICommand<T, R> cmd, Func<S, Option<T>> map)
         {
             return Create<S,R>(arg =>
             {
-                return cmd.Execute(map(arg));
+                return cmd.Execute(map(arg).Value);
             }, arg =>
             {
-                return cmd.CanExecute(map(arg));
+                return map(arg).IsDefined && cmd.CanExecute(map(arg).Value);
             });
         }
     }

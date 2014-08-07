@@ -38,9 +38,9 @@ namespace EAAddInFramework
         }
 
         #region component registration
-        protected void Register(ICustomDetailViewComponent component)
+        protected void Register(ICommand<Func<EA.Element>, EntityModified> command)
         {
-            customDetailViewHandler.Register(component);
+            customDetailViewHandler.Register(command);
         }
 
         protected void Register(IMenuItem menu)
@@ -171,7 +171,7 @@ namespace EAAddInFramework
             var elementId = info.ExtractElementId();
             logger.Debug("Element with id {0} created", elementId);
 
-            return customDetailViewHandler.CallElementDetailViews(() => eaRepository.Val.GetElementByID(elementId), true);
+            return customDetailViewHandler.CallElementDetailViews(() => eaRepository.Val.GetElementByID(elementId)).Val;
         }
 
         public void EA_OnNotifyContextItemModified(EA.Repository repository, string guid, EA.ObjectType ot)
@@ -197,7 +197,7 @@ namespace EAAddInFramework
 
             if (ot == EA.ObjectType.otElement)
             {
-                return customDetailViewHandler.CallElementDetailViews(() => eaRepository.Val.GetElementByGuid(guid), false);
+                return customDetailViewHandler.CallElementDetailViews(() => eaRepository.Val.GetElementByGuid(guid)).Val;
             }
 
             return false;

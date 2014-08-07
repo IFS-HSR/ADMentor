@@ -7,63 +7,50 @@ using Utils;
 
 namespace EAAddInFramework
 {
-    public interface ICustomDetailViewComponent
-    {
-        CustomDetailViewResult DisplayCustomElementDetails(EA.Element e, bool isNew);
-    }
+    using CustomDetailViewCommand = ICommand<Func<EA.Element>, EntityModified>;
 
-    public sealed class CustomDetailViewResult
+    public class EntityModified
     {
-        public CustomDetailViewResult(bool entityChanged = false, bool suppressDefaultDialog = false)
-        {
-            EntityChanged = entityChanged;
-            SuppressDefaultDialog = suppressDefaultDialog;
-        }
-        public bool EntityChanged { get; private set; }
-        public bool SuppressDefaultDialog { get; private set; }
+        public static readonly EntityModified Modified = new EntityModified(true);
+        public static readonly EntityModified NotModified = new EntityModified(false);
+
+        private EntityModified(bool val) { Val = val; }
+
+        public bool Val { get; private set; }
     }
 
     class CustomDetailViewHandler
     {
         private IReadableAtom<EA.Repository> repository;
-        private IList<ICustomDetailViewComponent> customDetailViewComponents = new List<ICustomDetailViewComponent>();
+        private IList<CustomDetailViewCommand> customDetailViewCommands = new List<CustomDetailViewCommand>();
 
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public CustomDetailViewHandler(IReadableAtom<EA.Repository> repository){
+        public CustomDetailViewHandler(IReadableAtom<EA.Repository> repository)
+        {
             this.repository = repository;
         }
 
-        public void Register(ICustomDetailViewComponent component)
+        public void Register(CustomDetailViewCommand command)
         {
-            customDetailViewComponents.Add(component);
+            customDetailViewCommands.Add(command);
         }
 
-        public bool CallElementDetailViews(Func<EA.Element> getElement, bool isNew)
+        public EntityModified CallElementDetailViews(Func<EA.Element> getElement)
         {
-            if (customDetailViewComponents.Count > 0)
-            {
-                var element = getElement();
-
-                var res = customDetailViewComponents
-                    .Aggregate(new CustomDetailViewResult(), (acc, component) =>
-                    {
-                        var componentResult = component.DisplayCustomElementDetails(element, isNew);
-                        return new CustomDetailViewResult(acc.EntityChanged || componentResult.EntityChanged,
-                            acc.SuppressDefaultDialog || componentResult.SuppressDefaultDialog);
-                    });
-
-                if (res.SuppressDefaultDialog)
+            return customDetailViewCommands.Aggregate(EntityModified.NotModified,
+                (modified, cmd) =>
                 {
-                    logger.Debug("Intercept display of detail view of element {0}", element.ElementGUID);
-                    repository.Val.SuppressEADialogs = true;
-                }
-                return res.EntityChanged;
-            }
-            else
-            {
-                return false;
-            }
+                    if (cmd.CanExecute(getElement))
+                    {
+                        var res = cmd.Execute(getElement);
+                        return modified == EntityModified.Modified ? modified : res;
+                    }
+                    else
+                    {
+                        return modified;
+                    }
+                });
         }
     }
 }

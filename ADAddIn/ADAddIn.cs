@@ -30,6 +30,8 @@ namespace AdAddIn
 
         public override void bootstrap(IReadableAtom<EA.Repository> repository)
         {
+            var populateDependenciesCommand = new PopulateDependenciesCommand(repository, new DependencySelectorForm());
+
             Register(new Menu(technology.Name,
                 new MenuItem("Foo", Command.Create((Option<ContextItem> arg) =>
                 {
@@ -37,8 +39,8 @@ namespace AdAddIn
                     return Unit.Instance;
                 })),
                 new MenuItem("Go to Classifier", new GoToClassifierCommand(repository)),
-                new MenuItem("Populate Dependencies", new PopulateDependenciesCommand(repository))));
-            Register(new Components.PopulateDependenciesOnNewOccurrences());
+                new MenuItem("Populate Dependencies", populateDependenciesCommand.AsMenuCommand())));
+            Register(populateDependenciesCommand.AsDetailViewCommand());
             //Properties.Settings.CdarUrl = "Some(www.example.com)";
             //Register(new DecisionDetailViewComponent(new DecisionDetailView(), decisions, alternatives, issues));
         }

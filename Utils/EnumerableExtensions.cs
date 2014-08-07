@@ -15,6 +15,22 @@ namespace Utils
             }
         }
 
+        public static void ForEach<T, S>(this IEnumerable<Tuple<T, S>> pairs, Action<T, S> action)
+        {
+            foreach (var p in pairs)
+            {
+                action(p.Item1, p.Item2);
+            }
+        }
+
+        public static void ForEach<T, S, O>(this IEnumerable<Tuple<T, S, O>> pairs, Action<T, S, O> action)
+        {
+            foreach (var p in pairs)
+            {
+                action(p.Item1, p.Item2, p.Item3);
+            }
+        }
+
         public static String Join<T>(this IEnumerable<T> es, String separator)
         {
             return String.Join(separator, es);
@@ -23,13 +39,6 @@ namespace Utils
         public static IEnumerable<Tuple<T, S>> Zip<T, S>(this IEnumerable<T> ts, IEnumerable<S> ss)
         {
             return ts.Zip(ss, (t, s) => Tuple.Create(t, s));
-        }
-        public static void ForEach<T, S>(this IEnumerable<Tuple<T, S>> pairs, Action<T, S> action)
-        {
-            foreach (var p in pairs)
-            {
-                action(p.Item1, p.Item2);
-            }
         }
     }
 }
