@@ -30,11 +30,18 @@ namespace AdAddIn.PopulateDependencies
             return Create(repo, rootNode, edgeFilter ?? TraverseOnlyADConnectors, levels, ImmutableHashSet<String>.Empty);
         }
 
+        /// <summary>
+        /// Use this method as edge filter to create a dependency tree consisting of all reachable elements.
+        /// </summary>
         public static bool TraverseAllConnectors(EA.Element from, EA.Element to, EA.Connector via)
         {
             return true;
         }
 
+        /// <summary>
+        /// Use this method as edge filter to create dependency trees that consists only of connectors as
+        /// used in the AD domain.
+        /// </summary>
         public static bool TraverseOnlyADConnectors(EA.Element from, EA.Element to, EA.Connector via)
         {
             var directedConnectors = new[] {
@@ -52,11 +59,6 @@ namespace AdAddIn.PopulateDependencies
 
             return (directedConnectors.Concat(undirectedConnectors).Any(stereotype => via.Is(stereotype)) && via.ClientID == from.ElementID) ||
                 (undirectedConnectors.Any(stereotype => via.Is(stereotype)) && via.SupplierID == from.ElementID);
-        }
-
-        public static bool TraverseFromAlternativeToProblem(EA.Element from, EA.Element to, EA.Connector via)
-        {
-            return via.Is(ConnectorStereotypes.HasAlternative) && from.Is(ElementStereotypes.Option) && to.Is(ElementStereotypes.Problem);
         }
 
         private static Node Create(EA.Repository repo, EA.Element rootNode, EdgeFilter edgeFilter, int levels, IImmutableSet<String> visitedElementGuids)

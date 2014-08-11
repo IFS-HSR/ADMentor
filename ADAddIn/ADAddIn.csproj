@@ -78,7 +78,7 @@
     </Compile>
     <Compile Include="PopulateDependencies\DependencyTree.cs" />
     <Compile Include="PopulateDependencies\IDependencySelector.cs" />
-    <Compile Include="PopulateDependencies\IMissingDependenciesFinder.cs" />
+    <Compile Include="PopulateDependencies\IDependenciesFinder.cs" />
     <Compile Include="PopulateDependencies\MissingADDependenciesFinder.cs" />
     <Compile Include="PopulateDependencies\PopulateDependenciesCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

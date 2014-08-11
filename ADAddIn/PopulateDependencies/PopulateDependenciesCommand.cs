@@ -1,4 +1,5 @@
 ﻿using AdAddIn.ADTechnology;
+using AdAddIn.ADTechnology.Model;
 using EAAddInFramework;
 using EAAddInFramework.DataAccess;
 using NLog;
@@ -19,25 +20,24 @@ namespace AdAddIn.PopulateDependencies
 
         private readonly IDependencySelector Selector;
 
-        public PopulateDependenciesCommand(IReadableAtom<EA.Repository> repo, IDependencySelector selector)
+        private readonly IDependenciesFinder Finder;
+
+        public PopulateDependenciesCommand(IReadableAtom<EA.Repository> repo, IDependenciesFinder finder, IDependencySelector selector)
         {
             Repo = repo;
+            Finder = finder;
             Selector = selector;
         }
 
         public EntityModified Execute(EA.Element element)
         {
-            CollectRequiredData(element).ForEach((currentDiagram, problem) =>
+            GetCurrentDiagramContaining(element).Do(currentDiagram =>
             {
-                var dependencies = DependencyTree.Create(Repo.Val, problem, levels: 3);
-                var alreadyAddedDependencies = dependencies.Elements.Where(dependency =>
+                Finder.FindPotentialDependencies(element).Do(potentialDependencies =>
                 {
-                    return (from o in currentDiagram.DiagramObjects.Cast<EA.DiagramObject>()
-                            from e in Repo.Val.TryGetElement(o.ElementID)
-                            where e.ClassfierID == dependency.ElementID
-                            select e).Count() > 0;
+                    var missingDependencies = Finder.SelectMissingDependencies(potentialDependencies, element);
+                    var selectedDependencies = Selector.GetSelectedDependencies(potentialDependencies, missingDependencies);
                 });
-                var selectedDependencies = Selector.GetSelectedDependencies(dependencies, alreadyAddedDependencies);
             });
 
             return EntityModified.NotModified;
@@ -45,23 +45,14 @@ namespace AdAddIn.PopulateDependencies
 
         public Boolean CanExecute(EA.Element element)
         {
-            return CollectRequiredData(element).IsDefined;
+            return GetCurrentDiagramContaining(element).IsDefined && Finder.FindPotentialDependencies(element).IsDefined;
         }
 
-        private Option<Tuple<EA.Diagram, EA.Element>> CollectRequiredData(EA.Element element)
+        private Option<EA.Diagram> GetCurrentDiagramContaining(EA.Element element)
         {
             return from diagram in Repo.Val.GetCurrentDiagram().AsOption()
                    where diagram.DiagramObjects.Cast<EA.DiagramObject>().Any(o => o.ElementID == element.ElementID)
-                   from problem in GetProblemForClassifier(element)
-                   select Tuple.Create(diagram, problem);
-        }
-
-        private Option<EA.Element> GetProblemForClassifier(EA.Element element)
-        {
-            return from classifier in Repo.Val.TryGetElement(element.ClassifierID)
-                   let dependencyTree = DependencyTree.Create(Repo.Val, classifier, DependencyTree.TraverseFromAlternativeToProblem)
-                   from problem in dependencyTree.Elements.FirstOption(e => e.Is(ElementStereotypes.Problem))
-                   select problem;
+                   select diagram;
         }
 
         public ICommand<Option<ContextItem>, object> AsMenuCommand()
@@ -70,7 +61,7 @@ namespace AdAddIn.PopulateDependencies
                 contextItem => from ci in contextItem from e in Repo.Val.TryGetElement(ci.Guid) select e);
         }
 
-        public ICommand<Func<EA.Element>, EntityModified> AsDetailViewCommand()
+        public ICommand<Func<EA.Element>, EntityModified> AsElementCreatedHandler()
         {
             return this.Adapt<Func<EA.Element>, EA.Element, EntityModified>(
                 getElement =>

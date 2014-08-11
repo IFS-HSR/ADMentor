@@ -30,14 +30,15 @@ namespace AdAddIn
 
         public override void bootstrap(IReadableAtom<EA.Repository> repository)
         {
-            var populateDependenciesCommand = new PopulateDependenciesCommand(repository, new DependencySelectorForm());
+            var populateDependenciesCommand = new PopulateDependenciesCommand(
+                repository, new MissingADDependenciesFinder(repository), new DependencySelectorForm());
 
             Register(new Menu(technology.Name,
                 new MenuItem("Go to Classifier", new GoToClassifierCommand(repository)),
                 new MenuItem("Populate Dependencies", populateDependenciesCommand.AsMenuCommand())));
 
             OnElementCreated.Add(new CopyMetadataOfNewSolutionItemsCommand(repository));
-            OnElementCreated.Add(populateDependenciesCommand.AsDetailViewCommand());
+            OnElementCreated.Add(populateDependenciesCommand.AsElementCreatedHandler());
         }
     }
 }

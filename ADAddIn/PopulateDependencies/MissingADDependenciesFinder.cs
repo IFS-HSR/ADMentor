@@ -8,7 +8,7 @@ using Utils;
 
 namespace AdAddIn.PopulateDependencies
 {
-    public class MissingADDependenciesFinder : IMissingDependenciesFinder
+    public class MissingADDependenciesFinder : IDependenciesFinder
     {
         private readonly IReadableAtom<EA.Repository> Repo;
 
@@ -17,9 +17,20 @@ namespace AdAddIn.PopulateDependencies
             Repo = repo;
         }
 
-        public Tuple<DependencyTree.Node, IEnumerable<EA.Element>> FindMissingDependencies(ProblemOccurrence po)
+        public Option<DependencyTree.Node> FindPotentialDependencies(EA.Element element)
         {
-            throw new NotImplementedException();
+            return from po in ProblemOccurrence.Create(Repo.Val, element)
+                   from problem in po.GetProblem()
+                   select DependencyTree.Create(Repo.Val, problem.Element, DependencyTree.TraverseOnlyADConnectors);
+        }
+
+        public IEnumerable<EA.Element> SelectMissingDependencies(DependencyTree.Node dependencies, EA.Element element)
+        {
+            var existingDependencies = DependencyTree.Create(Repo.Val, element, DependencyTree.TraverseOnlyADConnectors);
+
+            return from dep in dependencies.Elements
+                   where existingDependencies.Elements.Any(e => e.ClassifierID == dep.ElementID)
+                   select dep;
         }
     }
 }
