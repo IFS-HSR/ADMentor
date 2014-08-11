@@ -63,6 +63,9 @@
     <Compile Include="ADTechnology\ConnectorStereotypes.cs" />
     <Compile Include="ADTechnology\Diagrams.cs" />
     <Compile Include="ADTechnology\ElementStereotypes.cs" />
+    <Compile Include="ADTechnology\Model\EAEntity.cs" />
+    <Compile Include="ADTechnology\Model\Problem.cs" />
+    <Compile Include="ADTechnology\Model\ProblemOccurrence.cs" />
     <Compile Include="ADTechnology\Technology.cs" />
     <Compile Include="ADTechnology\Toolboxes.cs" />
     <Compile Include="Navigation\GoToClassifierCommand.cs" />
@@ -74,6 +77,8 @@
     </Compile>
     <Compile Include="PopulateDependencies\DependencyTree.cs" />
     <Compile Include="PopulateDependencies\IDependencySelector.cs" />
+    <Compile Include="PopulateDependencies\IMissingDependenciesFinder.cs" />
+    <Compile Include="PopulateDependencies\MissingADDependenciesFinder.cs" />
     <Compile Include="PopulateDependencies\PopulateDependenciesCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
