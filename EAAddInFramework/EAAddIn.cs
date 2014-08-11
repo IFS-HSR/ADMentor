@@ -15,8 +15,6 @@ namespace EAAddInFramework
 
         private readonly Atom<Option<ContextItem>> contextItem = new LoggedAtom<Option<ContextItem>>("ea.contextItem", Options.None<ContextItem>());
 
-        private readonly CustomDetailViewHandler customDetailViewHandler;
-
         private readonly MenuHandler menuHandler;
 
         private readonly Atom<Option<MDGTechnology>> technology = new LoggedAtom<Option<MDGTechnology>>("ea.addIn.technology", Options.None<MDGTechnology>());
@@ -24,8 +22,9 @@ namespace EAAddInFramework
         public EAAddIn()
         {
             logger.Info("Init add-in {0}", AddInName);
-            customDetailViewHandler = new CustomDetailViewHandler(eaRepository);
             menuHandler = new MenuHandler(contextItem);
+
+            InitOnElementCreated();
         }
 
         public abstract String AddInName { get; }
@@ -38,11 +37,6 @@ namespace EAAddInFramework
         }
 
         #region component registration
-        protected void Register(ICommand<Func<EA.Element>, EntityModified> command)
-        {
-            customDetailViewHandler.Register(command);
-        }
-
         protected void Register(IMenuItem menu)
         {
             menuHandler.Register(menu);
@@ -164,6 +158,23 @@ namespace EAAddInFramework
             return true;
         }
 
+        public EventManager<Func<EA.Element>, EntityModified> OnElementCreated { get; private set; }
+
+        private void InitOnElementCreated(){
+            OnElementCreated = new EventManager<Func<EA.Element>, EntityModified>(
+                EntityModified.NotModified,
+                (acc, v) => acc == EntityModified.Modified ? acc : v);
+        }
+
+        /// <summary>
+        /// EA_OnPostNewElement notifies Add-Ins that a new element has been created on a diagram. It enables Add-Ins to
+        /// modify the element upon creation.
+        /// 
+        /// This event occurs after a user has dragged a new element from the Toolbox or Resources window onto a diagram.
+        /// The notification is provided immediately after the element is added to the model. Set Repository.SuppressEADialogs
+        /// to true to suppress Enterprise Architect from showing its default dialogs.
+        /// </summary>
+        /// <returns>Return True if the element has been updated during this notification. Return False otherwise.</returns>
         public bool EA_OnPostNewElement(EA.Repository repository, EA.EventProperties info)
         {
             RepositoryChanged(repository);
@@ -171,7 +182,9 @@ namespace EAAddInFramework
             var elementId = info.ExtractElementId();
             logger.Debug("Element with id {0} created", elementId);
 
-            return customDetailViewHandler.CallElementDetailViews(() => eaRepository.Val.GetElementByID(elementId)).Val;
+            var entityModified = OnElementCreated.Handle(() => eaRepository.Val.GetElementByID(elementId));
+
+            return entityModified.AsBool;
         }
 
         public void EA_OnNotifyContextItemModified(EA.Repository repository, string guid, EA.ObjectType ot)
@@ -189,6 +202,14 @@ namespace EAAddInFramework
             logger.Debug("Context item changed to {0} of object type {1}", guid, ot);
         }
 
+        /// <summary>
+        /// EA_OnContextItemDoubleClicked notifies Add-Ins that the user has double-clicked the item currently in context.
+        /// 
+        /// This event occurs when a user has double-clicked (or pressed ( Enter ) ) on the item in context, either in a diagram
+        /// or in the Project Browser. Add-Ins to handle events can subscribe to this broadcast function.
+        /// </summary>
+        /// <returns>Return True to notify Enterprise Architect that the double-click event has been handled by an Add-In.
+        /// Return False to enable Enterprise Architect to continue processing the event.</returns>
         public bool EA_OnContextItemDoubleClicked(EA.Repository repository, string guid, EA.ObjectType ot)
         {
             RepositoryChanged(repository);
@@ -197,11 +218,21 @@ namespace EAAddInFramework
 
             if (ot == EA.ObjectType.otElement)
             {
-                return customDetailViewHandler.CallElementDetailViews(() => eaRepository.Val.GetElementByGuid(guid)).Val;
+                //return customDetailViewHandler.CallElementDetailViews(() => eaRepository.Val.GetElementByGuid(guid)).Val;
             }
 
             return false;
         }
         #endregion
+    }
+
+    public class EntityModified
+    {
+        public static readonly EntityModified Modified = new EntityModified(true);
+        public static readonly EntityModified NotModified = new EntityModified(false);
+
+        private EntityModified(bool val) { AsBool = val; }
+
+        public bool AsBool { get; private set; }
     }
 }

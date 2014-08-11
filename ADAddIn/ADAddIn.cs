@@ -33,16 +33,11 @@ namespace AdAddIn
             var populateDependenciesCommand = new PopulateDependenciesCommand(repository, new DependencySelectorForm());
 
             Register(new Menu(technology.Name,
-                //new MenuItem("Foo", Command.Create((Option<ContextItem> arg) =>
-                //{
-                //    System.Windows.Forms.MessageBox.Show(String.Format("{0}", AdAddIn.Properties.Settings.Default.CdarUrl));
-                //    return Unit.Instance;
-                //})),
                 new MenuItem("Go to Classifier", new GoToClassifierCommand(repository)),
                 new MenuItem("Populate Dependencies", populateDependenciesCommand.AsMenuCommand())));
-            Register(populateDependenciesCommand.AsDetailViewCommand());
-            //Properties.Settings.CdarUrl = "Some(www.example.com)";
-            //Register(new DecisionDetailViewComponent(new DecisionDetailView(), decisions, alternatives, issues));
+
+            OnElementCreated.Add(new CopyMetadataOfNewSolutionItemsCommand(repository));
+            OnElementCreated.Add(populateDependenciesCommand.AsDetailViewCommand());
         }
     }
 }

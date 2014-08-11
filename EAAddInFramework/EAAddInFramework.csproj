@@ -49,11 +49,11 @@
   <ItemGroup>
     <Compile Include="ConnectorExtensions.cs" />
     <Compile Include="ContextItem.cs" />
-    <Compile Include="CustomDetailViewHandler.cs" />
     <Compile Include="DataAccess\Collector.cs" />
     <Compile Include="DataAccess\DataAccessExtensions.cs" />
     <Compile Include="DataAccess\StereotypeHelpers.cs" />
     <Compile Include="EAAddIn.cs" />
+    <Compile Include="EventManager.cs" />
     <Compile Include="EventPropertiesExtensions.cs" />
     <Compile Include="DataAccess\IProjectVisitor.cs" />
     <Compile Include="ICommand.cs" />
