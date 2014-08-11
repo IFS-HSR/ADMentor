@@ -40,5 +40,10 @@ namespace Utils
         {
             return ts.Zip(ss, (t, s) => Tuple.Create(t, s));
         }
+
+        public static IDictionary<T, S> ToDictionary<T, S>(this IEnumerable<Tuple<T, S>> pairs)
+        {
+            return pairs.ToDictionary(p => p.Item1, p => p.Item2);
+        }
     }
 }

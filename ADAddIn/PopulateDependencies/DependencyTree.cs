@@ -25,9 +25,32 @@ namespace AdAddIn.PopulateDependencies
         /// <param name="rootNode">Start node that becomes the root of the dependency tree</param>
         /// <param name="edgeFilter">The strategy used to traverse the graph</param>
         /// <param name="levels">Maximum numbers of levels created in the dependency tree</param>
-        public static Node Create(EA.Repository repo, EA.Element rootNode, EdgeFilter edgeFilter = null, int levels = 3)
+        public static LabeledTree<EA.Element, EA.Connector> Create(EA.Repository repo, EA.Element rootNode, EdgeFilter edgeFilter = null, int levels = 3)
         {
             return Create(repo, rootNode, edgeFilter ?? TraverseOnlyADConnectors, levels, ImmutableHashSet<String>.Empty);
+        }
+
+        private static LabeledTree<EA.Element, EA.Connector> Create(EA.Repository repo, EA.Element rootNode, EdgeFilter edgeFilter, int levels, IImmutableSet<String> visitedElementGuids)
+        {
+            var children = from c in rootNode.Connectors.Cast<EA.Connector>()
+                           from child in DescendTo(repo, rootNode, c, edgeFilter, levels, visitedElementGuids.Add(rootNode.ElementGUID))
+                           select child;
+            return LabeledTree.Create(rootNode, children.ToDictionary());
+        }
+
+        private static Option<Tuple<EA.Connector, LabeledTree<EA.Element, EA.Connector>>> DescendTo(EA.Repository repo, EA.Element source, EA.Connector c, EdgeFilter edgeFilter, int levels, IImmutableSet<String> visitedElementGuids)
+        {
+            if (levels > 0)
+            {
+                var targetId = c.ClientID == source.ElementID ? c.SupplierID : c.ClientID;
+                return from target in repo.TryGetElement(targetId)
+                       where !visitedElementGuids.Contains(target.ElementGUID) && edgeFilter(source, target, c)
+                       select Tuple.Create(c, Create(repo, target, edgeFilter, levels - 1, visitedElementGuids));
+            }
+            else
+            {
+                return Options.None<Tuple<EA.Connector, LabeledTree<EA.Element, EA.Connector>>>();
+            }
         }
 
         /// <summary>
@@ -61,29 +84,6 @@ namespace AdAddIn.PopulateDependencies
                 (undirectedConnectors.Any(stereotype => via.Is(stereotype)) && via.SupplierID == from.ElementID);
         }
 
-        private static Node Create(EA.Repository repo, EA.Element rootNode, EdgeFilter edgeFilter, int levels, IImmutableSet<String> visitedElementGuids)
-        {
-            var children = from c in rootNode.Connectors.Cast<EA.Connector>()
-                           from child in DescendTo(repo, rootNode, c, edgeFilter, levels, visitedElementGuids.Add(rootNode.ElementGUID))
-                           select child;
-            return new Node(rootNode, children);
-        }
-
-        private static Option<Edge> DescendTo(EA.Repository repo, EA.Element source, EA.Connector c, EdgeFilter edgeFilter, int levels, IImmutableSet<String> visitedElementGuids)
-        {
-            if (levels > 0)
-            {
-                var targetId = c.ClientID == source.ElementID ? c.SupplierID : c.ClientID;
-                return from target in repo.TryGetElement(targetId)
-                       where !visitedElementGuids.Contains(target.ElementGUID) && edgeFilter(source, target, c)
-                       select new Edge(c, Create(repo, target, edgeFilter, levels - 1, visitedElementGuids));
-            }
-            else
-            {
-                return Options.None<Edge>();
-            }
-        }
-
         public class Node
         {
             public Node(EA.Element element, IEnumerable<Edge> children)
@@ -111,7 +111,7 @@ namespace AdAddIn.PopulateDependencies
             {
                 get
                 {
-                    foreach (var e in (new []{Element}).Concat(from c in Children from e in c.Node.Elements select e))
+                    foreach (var e in (new[] { Element }).Concat(from c in Children from e in c.Node.Elements select e))
                     {
                         yield return e;
                     }
@@ -138,6 +138,54 @@ namespace AdAddIn.PopulateDependencies
                     Connector.Stereotype,
                     Node.ToString(level));
             }
+        }
+    }
+
+    public class LabeledTree<N, E>
+    {
+        public LabeledTree(N label, IDictionary<E, LabeledTree<N, E>> edges)
+        {
+            Label = label;
+            Edges = edges;
+        }
+
+        public N Label { get; private set; }
+
+        public IDictionary<E, LabeledTree<N, E>> Edges { get; private set; }
+
+        public IEnumerable<N> NodeLabels
+        {
+            get
+            {
+                var nodes = new[] { Label }.Concat(from e in Edges from nl in e.Value.NodeLabels select nl);
+                foreach (var nl in nodes)
+                {
+                    yield return nl;
+                }
+            }
+        }
+
+        public override string ToString()
+        {
+            return ToString(0);
+        }
+
+        internal string ToString(int level)
+        {
+            return String.Format("{0}{1}", new String(' ', 2 * level), Label.ToString());
+        }
+    }
+
+    public static class LabeledTree
+    {
+        public static LabeledTree<N, E> Create<N, E>(N label, IDictionary<E, LabeledTree<N, E>> edges)
+        {
+            return new LabeledTree<N, E>(label, edges);
+        }
+
+        public static LabeledTree<N, E> Create<N, E>(N label, params Tuple<E, LabeledTree<N, E>>[] edges)
+        {
+            return Create(label, edges.ToDictionary());
         }
     }
 }

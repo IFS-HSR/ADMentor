@@ -17,20 +17,20 @@ namespace AdAddIn.PopulateDependencies
             Repo = repo;
         }
 
-        public Option<DependencyTree.Node> FindPotentialDependencies(EA.Element element)
+        public Option<LabeledTree<EA.Element, EA.Connector>> FindPotentialDependencies(EA.Element element)
         {
             return from po in ProblemOccurrence.Create(Repo.Val, element)
                    from problem in po.GetProblem()
                    select DependencyTree.Create(Repo.Val, problem.Element, DependencyTree.TraverseOnlyADConnectors);
         }
 
-        public IEnumerable<EA.Element> SelectMissingDependencies(DependencyTree.Node dependencies, EA.Element element)
+        public IEnumerable<EA.Element> SelectMissingDependencies(LabeledTree<EA.Element, EA.Connector> dependencies, EA.Element element)
         {
             var existingDependencies = DependencyTree.Create(Repo.Val, element, DependencyTree.TraverseOnlyADConnectors);
 
-            return from dep in dependencies.Elements
-                   where existingDependencies.Elements.Any(e => e.ClassifierID == dep.ElementID)
-                   select dep;
+            return from dep in dependencies.Edges
+                   where existingDependencies.NodeLabels.Any(e => e.ClassifierID == dep.Value.Label.ElementID)
+                   select dep.Value.Label;
         }
     }
 }

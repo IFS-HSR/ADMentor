@@ -14,8 +14,8 @@ namespace AdAddIn.PopulateDependencies
         /// Returns a dependency tree consisting of elements and connectors that can be used to instantiate
         /// additional dependencies for <c>e</c>.
         /// </summary>
-        Option<DependencyTree.Node> FindPotentialDependencies(EA.Element element);
+        Option<LabeledTree<EA.Element, EA.Connector>> FindPotentialDependencies(EA.Element element);
 
-        IEnumerable<EA.Element> SelectMissingDependencies(DependencyTree.Node dependencies, EA.Element element);
+        IEnumerable<EA.Element> SelectMissingDependencies(LabeledTree<EA.Element, EA.Connector> dependencies, EA.Element element);
     }
 }
