@@ -23,8 +23,6 @@ namespace EAAddInFramework
         {
             logger.Info("Init add-in {0}", AddInName);
             menuHandler = new MenuHandler(contextItem);
-
-            InitOnElementCreated();
         }
 
         public abstract String AddInName { get; }
@@ -158,13 +156,10 @@ namespace EAAddInFramework
             return true;
         }
 
-        public EventManager<Func<EA.Element>, EntityModified> OnElementCreated { get; private set; }
-
-        private void InitOnElementCreated(){
-            OnElementCreated = new EventManager<Func<EA.Element>, EntityModified>(
+        public readonly EventManager<Func<EA.Element>, EntityModified> OnElementCreated =
+            new EventManager<Func<EA.Element>, EntityModified>(
                 EntityModified.NotModified,
                 (acc, v) => acc == EntityModified.Modified ? acc : v);
-        }
 
         /// <summary>
         /// EA_OnPostNewElement notifies Add-Ins that a new element has been created on a diagram. It enables Add-Ins to
