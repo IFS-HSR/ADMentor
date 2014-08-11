@@ -109,7 +109,7 @@ namespace AdAddIn.PopulateDependencies
             {
                 get
                 {
-                    foreach (var e in (from c in Children from e in c.Node.Elements select e))
+                    foreach (var e in (new []{Element}).Concat(from c in Children from e in c.Node.Elements select e))
                     {
                         yield return e;
                     }
