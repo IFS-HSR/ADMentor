@@ -21,15 +21,14 @@ namespace AdAddIn.PopulateDependencies
 
         public EntityModified Execute(Func<EA.Element> getElement)
         {
-            return GetInstance(getElement()).SelectMany(instance =>
-            {
-                return GetClassifier(instance).Select(classifier =>
-                {
-                    instance.Notes = classifier.Notes;
-                    instance.Update();
+            var element = getElement();
 
-                    return EntityModified.Modified;
-                });
+            return GetClassifier(element).Select(classifier =>
+            {
+                element.Notes = classifier.Notes;
+                element.Update();
+
+                return EntityModified.Modified;
             }).GetOrElse(EntityModified.NotModified);
         }
 
@@ -43,12 +42,6 @@ namespace AdAddIn.PopulateDependencies
             return from po in ProblemOccurrence.Create(Repo.Val, e)
                    from p in po.GetProblem()
                    select p.Element;
-        }
-
-        private Option<EA.Element> GetInstance(EA.Element e)
-        {
-            return from po in ProblemOccurrence.Create(Repo.Val, e)
-                   select po.Element;
         }
     }
 }
