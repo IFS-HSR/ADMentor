@@ -30,7 +30,7 @@ namespace AdAddIn.PopulateDependencies
             CollectRequiredData(element).ForEach((currentDiagram, problem) =>
             {
                 var dependencies = DependencyTree.Create(Repo.Val, problem, levels: 3);
-                var alreadyAddedDependencies = dependencies.Where(dependency =>
+                var alreadyAddedDependencies = dependencies.Elements.Where(dependency =>
                 {
                     return (from o in currentDiagram.DiagramObjects.Cast<EA.DiagramObject>()
                             from e in Repo.Val.TryGetElement(o.ElementID)
@@ -60,7 +60,7 @@ namespace AdAddIn.PopulateDependencies
         {
             return from classifier in Repo.Val.TryGetElement(element.ClassifierID)
                    let dependencyTree = DependencyTree.Create(Repo.Val, classifier, DependencyTree.TraverseFromAlternativeToProblem)
-                   from problem in dependencyTree.FirstOption(e => e.Is(ElementStereotypes.Problem))
+                   from problem in dependencyTree.Elements.FirstOption(e => e.Is(ElementStereotypes.Problem))
                    select problem;
         }
 

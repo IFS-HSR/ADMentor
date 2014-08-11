@@ -82,7 +82,7 @@ namespace AdAddIn.PopulateDependencies
             }
         }
 
-        public class Node : IEnumerable<EA.Element>
+        public class Node
         {
             public Node(EA.Element element, IEnumerable<Edge> children)
             {
@@ -105,22 +105,15 @@ namespace AdAddIn.PopulateDependencies
                     Children.Select(c => c.ToString(level + 1)).Join(""));
             }
 
-            public IEnumerator<EA.Element> GetEnumerator()
+            public IEnumerable<EA.Element> Elements
             {
-                return ToElementList().GetEnumerator();
-            }
-
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-            {
-                return ToElementList().GetEnumerator();
-            }
-
-            public IEnumerable<EA.Element> ToElementList()
-            {
-                return new List<EA.Element> { Element }
-                    .Concat(from c in Children
-                            from e in c.Node.ToElementList()
-                            select e);
+                get
+                {
+                    foreach (var e in (from c in Children from e in c.Node.Elements select e))
+                    {
+                        yield return e;
+                    }
+                }
             }
         }
 

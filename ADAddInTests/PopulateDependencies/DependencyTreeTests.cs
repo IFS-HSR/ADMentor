@@ -118,7 +118,7 @@ namespace ADAddInTest.PopulateDependencies
             var cAAtoBA = ConnectorStereotypes.BoundTo.Create(alternativeAA, alternativeBA);
 
             var expectedOrder = "A,AA,BA";
-            var actualOrder = DependencyTree.Create(repo, problemA).Select(e => e.Name).Join(",");
+            var actualOrder = DependencyTree.Create(repo, problemA).Elements.Select(e => e.Name).Join(",");
 
             Assert.AreEqual(expectedOrder, actualOrder);
         }
