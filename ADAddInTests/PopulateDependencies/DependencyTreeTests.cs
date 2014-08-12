@@ -29,14 +29,9 @@ namespace ADAddInTest.PopulateDependencies
             var cBtoC = ConnectorStereotypes.Includes.Create(b, c);
             var cCtoA = ConnectorStereotypes.Includes.Create(c, a);
 
-            //var expectedTree = new DependencyTree.Node(a, new[]{
-            //    new DependencyTree.Edge(cAtoB, new DependencyTree.Node(b, new []{
-            //        new DependencyTree.Edge(cBtoC, new DependencyTree.Node(c, new DependencyTree.Edge[]{}))
-            //    }))
-            //});
-            var expectedTree = LabeledTree.Create(a,
-                Tuple.Create(cAtoB, LabeledTree.Create(b,
-                    Tuple.Create(cBtoC, LabeledTree.Create<EA.Element, EA.Connector>(c)))));
+            var expectedTree = LabeledTree.Node(a,
+                LabeledTree.Edge(cAtoB, LabeledTree.Node(b,
+                    LabeledTree.Edge(cBtoC, LabeledTree.Node<EA.Element, EA.Connector>(c)))));
             AssertEqualTree(expectedTree, DependencyTree.Create(repo, a));
         }
 
@@ -50,12 +45,12 @@ namespace ADAddInTest.PopulateDependencies
             var cA = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeA);
             var cB = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeB);
 
-            var expectedTree = LabeledTree.Create(problemA,
-                Tuple.Create(cA, LabeledTree.Create<EA.Element, EA.Connector>(alternativeA)),
-                Tuple.Create(cB, LabeledTree.Create<EA.Element, EA.Connector>(alternativeB)));
+            var expectedTree = LabeledTree.Node(problemA,
+                LabeledTree.Edge(cA, LabeledTree.Node<EA.Element, EA.Connector>(alternativeA)),
+                LabeledTree.Edge(cB, LabeledTree.Node<EA.Element, EA.Connector>(alternativeB)));
             AssertEqualTree(expectedTree, DependencyTree.Create(repo, problemA));
 
-            var singleNodeTree = LabeledTree.Create<EA.Element, EA.Connector>(problemA);
+            var singleNodeTree = LabeledTree.Node<EA.Element, EA.Connector>(problemA);
             AssertEqualTree(singleNodeTree, DependencyTree.Create(repo, problemA, levels: 0));
         }
 
@@ -69,13 +64,13 @@ namespace ADAddInTest.PopulateDependencies
             var cAtoB = ConnectorStereotypes.Includes.Create(problemA, problemB);
             var cBtoBA = ConnectorStereotypes.HasAlternative.Create(problemB, alternativeBA);
 
-            var expectedFromA = LabeledTree.Create(problemA,
-                Tuple.Create(cAtoB, LabeledTree.Create(problemB,
-                    Tuple.Create(cBtoBA, LabeledTree.Create<EA.Element, EA.Connector>(alternativeBA)))));
+            var expectedFromA = LabeledTree.Node(problemA,
+                LabeledTree.Edge(cAtoB, LabeledTree.Node(problemB,
+                    LabeledTree.Edge(cBtoBA, LabeledTree.Node<EA.Element, EA.Connector>(alternativeBA)))));
             AssertEqualTree(expectedFromA, DependencyTree.Create(repo, problemA));
 
-            var expectedFromB = LabeledTree.Create(problemB,
-                Tuple.Create(cBtoBA, LabeledTree.Create<EA.Element, EA.Connector>(alternativeBA)));
+            var expectedFromB = LabeledTree.Node(problemB,
+                LabeledTree.Edge(cBtoBA, LabeledTree.Node<EA.Element, EA.Connector>(alternativeBA)));
             AssertEqualTree(expectedFromB, DependencyTree.Create(repo, problemB));
         }
 
@@ -91,24 +86,14 @@ namespace ADAddInTest.PopulateDependencies
             var cBtoBA = ConnectorStereotypes.HasAlternative.Create(problemB, alternativeBA);
             var cAAtoBA = ConnectorStereotypes.BoundTo.Create(alternativeAA, alternativeBA);
 
-            //var expectedFromA = new DependencyTree.Node(problemA, new[]{
-            //    new DependencyTree.Edge(cAtoAA, new DependencyTree.Node(alternativeAA, new DependencyTree.Edge[]{
-            //        new DependencyTree.Edge(cAAtoBA, new DependencyTree.Node(alternativeBA, new DependencyTree.Edge[]{}))
-            //    }))
-            //});
-            var expectedFromA = LabeledTree.Create(problemA,
-                Tuple.Create(cAtoAA, LabeledTree.Create(alternativeAA,
-                    Tuple.Create(cAAtoBA, LabeledTree.Create<EA.Element, EA.Connector>(alternativeBA)))));
+            var expectedFromA = LabeledTree.Node(problemA,
+                LabeledTree.Edge(cAtoAA, LabeledTree.Node(alternativeAA,
+                    LabeledTree.Edge(cAAtoBA, LabeledTree.Node<EA.Element, EA.Connector>(alternativeBA)))));
             AssertEqualTree(expectedFromA, DependencyTree.Create(repo, problemA));
 
-            //var expectedFromB = new DependencyTree.Node(problemB, new[]{
-            //    new DependencyTree.Edge(cBtoBA, new DependencyTree.Node(alternativeBA, new DependencyTree.Edge[]{
-            //        new DependencyTree.Edge(cAAtoBA, new DependencyTree.Node(alternativeAA, new DependencyTree.Edge[]{}))
-            //    }))
-            //});
-            var expectedFromB = LabeledTree.Create(problemB,
-                Tuple.Create(cBtoBA, LabeledTree.Create(alternativeBA,
-                    Tuple.Create(cAAtoBA, LabeledTree.Create<EA.Element, EA.Connector>(alternativeAA)))));
+            var expectedFromB = LabeledTree.Node(problemB,
+                LabeledTree.Edge(cBtoBA, LabeledTree.Node(alternativeBA,
+                    LabeledTree.Edge(cAAtoBA, LabeledTree.Node<EA.Element, EA.Connector>(alternativeAA)))));
             AssertEqualTree(expectedFromB, DependencyTree.Create(repo, problemB));
         }
 
@@ -162,18 +147,6 @@ namespace ADAddInTest.PopulateDependencies
             File.Delete(path);
         }
 
-        private static void AssertEqualTree(DependencyTree.Node expected, DependencyTree.Node actual)
-        {
-            Assert.AreEqual(expected.Element.ElementGUID, actual.Element.ElementGUID);
-            Assert.AreEqual(expected.Children.Count(), actual.Children.Count());
-
-            expected.Children.Zip(actual.Children).ForEach((e, a) =>
-            {
-                Assert.AreEqual(e.Connector.ConnectorGUID, a.Connector.ConnectorGUID);
-                AssertEqualTree(e.Node, a.Node);
-            });
-        }
-
         private static void AssertEqualTree(LabeledTree<EA.Element, EA.Connector> expected, LabeledTree<EA.Element, EA.Connector> actual)
         {
             Assert.AreEqual(expected.Label.ElementGUID, actual.Label.ElementGUID);
@@ -181,8 +154,8 @@ namespace ADAddInTest.PopulateDependencies
 
             expected.Edges.Zip(actual.Edges).ForEach((e, a) =>
             {
-                Assert.AreEqual(e.Key.ConnectorGUID, a.Key.ConnectorGUID);
-                AssertEqualTree(e.Value, a.Value);
+                Assert.AreEqual(e.Label.ConnectorGUID, a.Label.ConnectorGUID);
+                AssertEqualTree(e.Target, a.Target);
             });
         }
     }

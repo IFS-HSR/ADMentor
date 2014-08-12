@@ -28,10 +28,6 @@ namespace AdAddIn.PopulateDependencies
 
             ShowDialog();
 
-            var selectedNodes = from node in dependencyTreeView.Nodes.Cast<TreeNode>()
-                                where node.Checked
-                                select node.Tag as DependencyTree.Node;
-
             return Options.None<LabeledTree<EA.Element, EA.Connector>>();
         }
 
@@ -44,14 +40,14 @@ namespace AdAddIn.PopulateDependencies
             return node;
         }
 
-        private TreeNode[] ToTreeNodes(IDictionary<EA.Connector, LabeledTree<EA.Element, EA.Connector>> children, IEnumerable<EA.Element> alreadyAddedElements)
+        private TreeNode[] ToTreeNodes(IEnumerable<LabeledTree<EA.Element, EA.Connector>.Edge> edges, IEnumerable<EA.Element> alreadyAddedElements)
         {
-            return children.Select(edge =>
+            return edges.Select(edge =>
             {
-                var label = String.Format("{0}: {1}", edge.Key.Stereotype, edge.Value.Label.Name);
-                var node = new TreeNode(label, ToTreeNodes(edge.Value.Edges, alreadyAddedElements));
-                node.Tag = edge.Value;
-                if (alreadyAddedElements.Any(e => e.ElementID == edge.Value.Label.ElementID))
+                var label = String.Format("{0}: {1}", edge.Label.Stereotype, edge.Target.Label.Name);
+                var node = new TreeNode(label, ToTreeNodes(edge.Target.Edges, alreadyAddedElements));
+                node.Tag = edge.Target;
+                if (alreadyAddedElements.Any(e => e.ElementID == edge.Target.Label.ElementID))
                     node.ForeColor = System.Drawing.SystemColors.GrayText;
                 return node;
             }).ToArray();

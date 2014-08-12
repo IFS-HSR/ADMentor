@@ -29,8 +29,8 @@ namespace AdAddIn.PopulateDependencies
             var existingDependencies = DependencyTree.Create(Repo.Val, element, DependencyTree.TraverseOnlyADConnectors);
 
             return from dep in dependencies.Edges
-                   where existingDependencies.NodeLabels.Any(e => e.ClassifierID == dep.Value.Label.ElementID)
-                   select dep.Value.Label;
+                   where existingDependencies.NodeLabels.Any(e => e.ClassifierID == dep.Target.Label.ElementID)
+                   select dep.Target.Label;
         }
     }
 }
