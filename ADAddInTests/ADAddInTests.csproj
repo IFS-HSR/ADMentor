@@ -52,8 +52,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="PopulateDependencies\DependencyTreeTests.cs" />
+    <Compile Include="PopulateDependencies\MissingADDependenciesFinderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestRepository.cs" />
+    <Compile Include="RepositoryUnderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ADAddIn\ADAddIn.csproj">
