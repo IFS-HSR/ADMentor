@@ -1,5 +1,4 @@
 ﻿using AdAddIn.ADTechnology;
-using AdAddIn.ADTechnology.Model;
 using EAAddInFramework;
 using EAAddInFramework.DataAccess;
 using NLog;
@@ -20,12 +19,9 @@ namespace AdAddIn.PopulateDependencies
 
         private readonly IDependencySelector Selector;
 
-        private readonly IDependenciesFinder Finder;
-
-        public PopulateDependenciesCommand(IReadableAtom<EA.Repository> repo, IDependenciesFinder finder, IDependencySelector selector)
+        public PopulateDependenciesCommand(IReadableAtom<EA.Repository> repo, IDependencySelector selector)
         {
             Repo = repo;
-            Finder = finder;
             Selector = selector;
         }
 
@@ -33,11 +29,11 @@ namespace AdAddIn.PopulateDependencies
         {
             GetCurrentDiagramContaining(element).Do(currentDiagram =>
             {
-                Finder.FindPotentialDependencies(element).Do(potentialDependencies =>
-                {
-                    var missingDependencies = Finder.SelectMissingDependencies(potentialDependencies, element);
-                    var selectedDependencies = Selector.GetSelectedDependencies(potentialDependencies, missingDependencies);
-                });
+                //Finder.FindPotentialDependencies(element).Do(potentialDependencies =>
+                //{
+                //    var missingDependencies = Finder.SelectMissingDependencies(potentialDependencies, element);
+                //    var selectedDependencies = Selector.GetSelectedDependencies(potentialDependencies, missingDependencies);
+                //});
             });
 
             return EntityModified.NotModified;
@@ -45,7 +41,8 @@ namespace AdAddIn.PopulateDependencies
 
         public Boolean CanExecute(EA.Element element)
         {
-            return GetCurrentDiagramContaining(element).IsDefined && Finder.FindPotentialDependencies(element).IsDefined;
+            //return GetCurrentDiagramContaining(element).IsDefined && Finder.FindPotentialDependencies(element).IsDefined;
+            return true;
         }
 
         private Option<EA.Diagram> GetCurrentDiagramContaining(EA.Element element)

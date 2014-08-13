@@ -24,36 +24,34 @@ namespace ADAddInTests
         /// </summary>
         private static readonly Finalizer finalizer = new Finalizer();
 
-        private static readonly EA.Repository Repository;
+        private static readonly EA.App App;
 
         static RepositoryUnderTest()
         {
-            Repository = new EA.Repository();
-            Repository.CreateModel(EA.CreateModelType.cmEAPFromBase, RepositoryPath, 0);
-            Repository.OpenFile(RepositoryPath);
+            App = new EA.App();
+            App.Repository.CreateModel(EA.CreateModelType.cmEAPFromBase, RepositoryPath, 0);
+            App.Repository.OpenFile(RepositoryPath);
         }
 
         public RepositoryUnderTest()
         {
-            var rootModelName = "Model_" + RandomNumberGenerator.Next();
-            RootModel = Repository.Models.AddNew(rootModelName, "") as EA.Package;
-            if (!RootModel.Update())
-            {
-                throw new ApplicationException(RootModel.GetLastError());
-            }
+            var rootModel = Repo.Models.GetAt(0) as EA.Package;
+            var testPackageName = "Test_" + RandomNumberGenerator.Next();
+            TestPackage = rootModel.Packages.AddNew(testPackageName, "") as EA.Package;
+            TestPackage.Update();
         }
 
         private sealed class Finalizer
         {
             ~Finalizer()
             {
-                Repository.Exit();
+                App.Repository.CloseFile();
                 File.Delete(RepositoryPath);
             }
         }
 
-        public EA.Package RootModel { get; private set; }
+        public EA.Package TestPackage { get; private set; }
 
-        public EA.Repository Repo { get { return Repository; } }
+        public EA.Repository Repo { get { return App.Repository; } }
     }
 }

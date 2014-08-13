@@ -89,8 +89,10 @@ namespace EAAddInFramework.MDGBuilder
     {
         public static readonly ElementType Action = new ElementType("Action");
         public static readonly ElementType Activity = new ElementType("Activity");
+        public static readonly ElementType Class = new ElementType("Class");
         public static readonly ElementType Event = new ElementType("Event");
         public static readonly ElementType Issue = new ElementType("Issue");
+        public static readonly ElementType Object = new ElementType("Object");
         public static readonly ElementType Requirement = new ElementType("Requirement");
 
         private ElementType(String name) : base(name) {

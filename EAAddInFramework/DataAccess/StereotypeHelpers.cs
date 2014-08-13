@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Utils;
 
 namespace EAAddInFramework.DataAccess
 {
@@ -14,7 +16,16 @@ namespace EAAddInFramework.DataAccess
             var e = package.Elements.AddNew(name, stereotype.Type.Name) as EA.Element;
 
             e.Stereotype = stereotype.Name;
-            e.Update();
+
+            try
+            {
+                e.Update();
+            }
+            catch (COMException ce)
+            {
+                throw new ApplicationException(e.GetLastError(), ce);
+            }
+
             package.Elements.Refresh();
 
             return e;
@@ -26,11 +37,32 @@ namespace EAAddInFramework.DataAccess
 
             c.Stereotype = stereotype.Name;
             c.SupplierID = target.ElementID;
-            c.Update();
+
+            try
+            {
+                c.Update();
+            }
+            catch (COMException ce)
+            {
+                throw new ApplicationException(c.GetLastError(), ce);
+            }
+
             source.Connectors.Refresh();
             target.Connectors.Refresh();
 
             return c;
+        }
+
+        public static Option<EA.Element> Instanciate(this ElementStereotype classifierStereotype, EA.Element classifier, EA.Package package)
+        {
+            return classifierStereotype.InstanceType.Select(instanceStereotype =>
+            {
+                var e = instanceStereotype.Create(package, "");
+                e.ClassifierID = classifier.ElementID;
+                e.Update();
+
+                return e;
+            });
         }
     }
 }

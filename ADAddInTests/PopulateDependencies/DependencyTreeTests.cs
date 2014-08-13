@@ -19,9 +19,9 @@ namespace ADAddInTest.PopulateDependencies
         {
             var rut = new RepositoryUnderTest();
 
-            var a = ElementStereotypes.Problem.Create(rut.RootModel, "A");
-            var b = ElementStereotypes.Problem.Create(rut.RootModel, "B");
-            var c = ElementStereotypes.Problem.Create(rut.RootModel, "C");
+            var a = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
+            var b = ElementStereotypes.Problem.Create(rut.TestPackage, "B");
+            var c = ElementStereotypes.Problem.Create(rut.TestPackage, "C");
 
             var cAtoB = ConnectorStereotypes.Includes.Create(a, b);
             var cBtoC = ConnectorStereotypes.Includes.Create(b, c);
@@ -30,7 +30,7 @@ namespace ADAddInTest.PopulateDependencies
             var expectedTree = LabeledTree.Node(a,
                 LabeledTree.Edge(cAtoB, LabeledTree.Node(b,
                     LabeledTree.Edge(cBtoC, LabeledTree.Node<EA.Element, EA.Connector>(c)))));
-            AssertEqualTree(expectedTree, DependencyTree.Create(rut.Repo, a));
+            AssertEqualTree(expectedTree, DependencyTree.Create(rut.Repo, a, levels: 100));
         }
 
         [TestMethod]
@@ -38,9 +38,9 @@ namespace ADAddInTest.PopulateDependencies
         {
             var rut = new RepositoryUnderTest();
 
-            var problemA = ElementStereotypes.Problem.Create(rut.RootModel, "A");
-            var alternativeA = ElementStereotypes.Option.Create(rut.RootModel, "AA");
-            var alternativeB = ElementStereotypes.Option.Create(rut.RootModel, "AB");
+            var problemA = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
+            var alternativeA = ElementStereotypes.Option.Create(rut.TestPackage, "AA");
+            var alternativeB = ElementStereotypes.Option.Create(rut.TestPackage, "AB");
 
             var cA = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeA);
             var cB = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeB);
@@ -59,9 +59,9 @@ namespace ADAddInTest.PopulateDependencies
         {
             var rut = new RepositoryUnderTest();
 
-            var problemA = ElementStereotypes.Problem.Create(rut.RootModel, "A");
-            var problemB = ElementStereotypes.Problem.Create(rut.RootModel, "B");
-            var alternativeBA = ElementStereotypes.Option.Create(rut.RootModel, "BA");
+            var problemA = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
+            var problemB = ElementStereotypes.Problem.Create(rut.TestPackage, "B");
+            var alternativeBA = ElementStereotypes.Option.Create(rut.TestPackage, "BA");
 
             var cAtoB = ConnectorStereotypes.Includes.Create(problemA, problemB);
             var cBtoBA = ConnectorStereotypes.HasAlternative.Create(problemB, alternativeBA);
@@ -81,10 +81,10 @@ namespace ADAddInTest.PopulateDependencies
         {
             var rut = new RepositoryUnderTest();
 
-            var problemA = ElementStereotypes.Problem.Create(rut.RootModel, "A");
-            var alternativeAA = ElementStereotypes.Option.Create(rut.RootModel, "AA");
-            var problemB = ElementStereotypes.Problem.Create(rut.RootModel, "B");
-            var alternativeBA = ElementStereotypes.Option.Create(rut.RootModel, "BA");
+            var problemA = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
+            var alternativeAA = ElementStereotypes.Option.Create(rut.TestPackage, "AA");
+            var problemB = ElementStereotypes.Problem.Create(rut.TestPackage, "B");
+            var alternativeBA = ElementStereotypes.Option.Create(rut.TestPackage, "BA");
 
             var cAtoAA = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeAA);
             var cBtoBA = ConnectorStereotypes.HasAlternative.Create(problemB, alternativeBA);
@@ -106,9 +106,9 @@ namespace ADAddInTest.PopulateDependencies
         {
             var rut = new RepositoryUnderTest();
 
-            var problemA = ElementStereotypes.Problem.Create(rut.RootModel, "A");
-            var alternativeAA = ElementStereotypes.Option.Create(rut.RootModel, "AA");
-            var alternativeBA = ElementStereotypes.Option.Create(rut.RootModel, "BA");
+            var problemA = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
+            var alternativeAA = ElementStereotypes.Option.Create(rut.TestPackage, "AA");
+            var alternativeBA = ElementStereotypes.Option.Create(rut.TestPackage, "BA");
 
             var cAtoAA = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeAA);
             var cAAtoBA = ConnectorStereotypes.BoundTo.Create(alternativeAA, alternativeBA);

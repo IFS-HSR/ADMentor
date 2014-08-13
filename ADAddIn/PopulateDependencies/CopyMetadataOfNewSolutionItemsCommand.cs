@@ -1,5 +1,4 @@
 ﻿using AdAddIn.ADTechnology;
-using AdAddIn.ADTechnology.Model;
 using EAAddInFramework;
 using System;
 using System.Collections.Generic;
@@ -39,9 +38,9 @@ namespace AdAddIn.PopulateDependencies
 
         private Option<EA.Element> GetClassifier(EA.Element e)
         {
-            return from po in ProblemOccurrence.Create(Repo.Val, e)
-                   from p in po.GetProblem()
-                   select p.Element;
+            return from cl in Repo.Val.TryGetElement(e.ClassifierID)
+                   where cl.Is(ElementStereotypes.Problem)
+                   select cl;
         }
     }
 }

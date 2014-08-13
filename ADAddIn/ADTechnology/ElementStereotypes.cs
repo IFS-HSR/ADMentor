@@ -38,7 +38,7 @@ namespace AdAddIn.ADTechnology
         public static readonly ElementStereotype Decision = new ElementStereotype(
             name: "adDecision",
             displayName: "Decision",
-            type: ElementType.Action,
+            type: ElementType.Object,
             icon: new Icon("AdAddIn.ADTechnology.Decision.bmp"),
             shapeScript: @"
                 shape main{
@@ -95,7 +95,7 @@ namespace AdAddIn.ADTechnology
         public static readonly ElementStereotype ProblemOccurrence = new ElementStereotype(
             name: "adProblemOccurrence",
             displayName: "Problem Occurrence",
-            type: ElementType.Action,
+            type: ElementType.Object,
             icon: new Icon("AdAddIn.ADTechnology.ProblemOccurrence.bmp"),
             shapeScript: @"
                 shape main{
@@ -138,7 +138,7 @@ namespace AdAddIn.ADTechnology
         public static readonly ElementStereotype Problem = new ElementStereotype(
             name: "adProblem",
             displayName: "Problem",
-            type: ElementType.Activity,
+            type: ElementType.Class,
             instanceType: ProblemOccurrence,
             icon: new Icon("AdAddIn.ADTechnology.Problem.bmp"),
             shapeScript: @"
@@ -164,7 +164,7 @@ namespace AdAddIn.ADTechnology
         public static readonly ElementStereotype Option = new ElementStereotype(
             name: "adOption",
             displayName: "Option",
-            type: ElementType.Activity,
+            type: ElementType.Class,
             instanceType: Decision,
             icon: new Icon("AdAddIn.ADTechnology.Option.bmp"),
             backgroundColor: Color.LightYellow,
