@@ -65,6 +65,7 @@
     <Compile Include="MDGBuilder\ElementStereotype.cs" />
     <Compile Include="MDGBuilder\Enumeration.cs" />
     <Compile Include="MDGBuilder\Icon.cs" />
+    <Compile Include="MDGBuilder\LookupHelpers.cs" />
     <Compile Include="MDGBuilder\MDGTechnology.cs" />
     <Compile Include="MDGBuilder\ModelTemplate.cs" />
     <Compile Include="MDGBuilder\ShapeScript.cs" />

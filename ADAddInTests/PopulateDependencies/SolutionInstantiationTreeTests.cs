@@ -32,11 +32,35 @@ namespace ADAddInTests.PopulateDependencies
 
             var c1to11 = ConnectorStereotypes.HasAlternative.Create(occurrence1, decision11);
 
-            var expectedTree = LabeledTree.Node(new SolutionInstantiation(problemA, occurrence1.AsOption(), false),
-                LabeledTree.Edge(cAtoAA, LabeledTree.Node(new SolutionInstantiation(alternativeAA, decision11.AsOption(), false),
-                LabeledTree.Edge(cAAtoBA, LabeledTree.Node<SolutionInstantiation, EA.Connector>(new SolutionInstantiation(alternativeBA, Options.None<EA.Element>(), false))))));
+            var expectedTree = LabeledTree.Node(new SolutionInstantiation(problemA, occurrence1.AsOption()),
+                LabeledTree.Edge(cAtoAA, LabeledTree.Node(new SolutionInstantiation(alternativeAA, decision11.AsOption()),
+                    LabeledTree.Edge(cAAtoBA, LabeledTree.Node<SolutionInstantiation, EA.Connector>(new SolutionInstantiation(alternativeBA, Options.None<EA.Element>()))))));
 
             var actualTree = SolutionInstantiationTree.Create(rut.Repo, occurrence1).Value;
+
+            AssertEqualTree(expectedTree, actualTree);
+        }
+
+        [TestMethod]
+        [Ignore]
+        public void CreateSolutionInstatiationTreeFromDecision()
+        {
+            var rut = new RepositoryUnderTest();
+
+            var problemA = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
+            var alternativeAA = ElementStereotypes.Option.Create(rut.TestPackage, "AA");
+            var alternativeAB = ElementStereotypes.Option.Create(rut.TestPackage, "AB");
+
+            var cAtoAA = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeAA);
+            var cAtoAB = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeAB);
+
+            var decision11 = ElementStereotypes.Problem.Instanciate(alternativeAA, rut.TestPackage).Value;
+
+            var expectedTree = LabeledTree.Node(new SolutionInstantiation(alternativeAA, decision11.AsOption()),
+                LabeledTree.Edge(cAtoAA, LabeledTree.Node(new SolutionInstantiation(problemA, Options.None<EA.Element>()),
+                    LabeledTree.Edge(cAtoAB, LabeledTree.Node<SolutionInstantiation, EA.Connector>(new SolutionInstantiation(alternativeAB, Options.None<EA.Element>()))))));
+
+            var actualTree = SolutionInstantiationTree.Create(rut.Repo, decision11).Value;
 
             AssertEqualTree(expectedTree, actualTree);
         }

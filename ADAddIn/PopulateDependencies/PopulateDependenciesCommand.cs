@@ -29,11 +29,10 @@ namespace AdAddIn.PopulateDependencies
         {
             GetCurrentDiagramContaining(element).Do(currentDiagram =>
             {
-                //Finder.FindPotentialDependencies(element).Do(potentialDependencies =>
-                //{
-                //    var missingDependencies = Finder.SelectMissingDependencies(potentialDependencies, element);
-                //    var selectedDependencies = Selector.GetSelectedDependencies(potentialDependencies, missingDependencies);
-                //});
+                SolutionInstantiationTree.Create(Repo.Val, element).Do(solution =>
+                {
+                    var selectedSolution = Selector.GetSelectedDependencies(solution);
+                });
             });
 
             return EntityModified.NotModified;
@@ -41,8 +40,7 @@ namespace AdAddIn.PopulateDependencies
 
         public Boolean CanExecute(EA.Element element)
         {
-            //return GetCurrentDiagramContaining(element).IsDefined && Finder.FindPotentialDependencies(element).IsDefined;
-            return true;
+            return GetCurrentDiagramContaining(element).IsDefined;
         }
 
         private Option<EA.Diagram> GetCurrentDiagramContaining(EA.Element element)

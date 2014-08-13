@@ -20,6 +20,8 @@ namespace EAAddInFramework.MDGBuilder
 
     public class ElementStereotype : IStereotype
     {
+        internal static IList<ElementStereotype> Instances = new List<ElementStereotype>();
+
         public ElementStereotype(String name, String displayName, ElementType type,
             Icon icon = null,
             String shapeScript = null,
@@ -39,6 +41,8 @@ namespace EAAddInFramework.MDGBuilder
             Width = width.AsOption();
             Height = height.AsOption();
             InstanceType = instanceType.AsOption();
+
+            Instances.Add(this);
         }
 
         public string Name { get; private set; }

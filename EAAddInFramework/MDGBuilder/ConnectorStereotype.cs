@@ -10,6 +10,8 @@ namespace EAAddInFramework.MDGBuilder
 {
     public class ConnectorStereotype : IStereotype
     {
+        internal static IList<ConnectorStereotype> Instances = new List<ConnectorStereotype>();
+
         public ConnectorStereotype(
             String name,
             String displayName,
@@ -35,6 +37,8 @@ namespace EAAddInFramework.MDGBuilder
             Direction = direction.AsOption();
             LineStyle = lineStyle.AsOption();
             CompositionKind = compositionKind.AsOption();
+
+            Instances.Add(this);
         }
 
         public string Name { get; private set; }

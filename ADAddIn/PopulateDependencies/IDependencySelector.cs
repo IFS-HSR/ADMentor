@@ -9,6 +9,6 @@ namespace AdAddIn.PopulateDependencies
 {
     public interface IDependencySelector
     {
-        Option<LabeledTree<EA.Element, EA.Connector>> GetSelectedDependencies(LabeledTree<EA.Element, EA.Connector> availableDependencies, IEnumerable<EA.Element> alreadyAddedElements);
+        LabeledTree<SolutionInstantiation, EA.Connector> GetSelectedDependencies(LabeledTree<SolutionInstantiation, EA.Connector> availableDependencies);
     }
 }
