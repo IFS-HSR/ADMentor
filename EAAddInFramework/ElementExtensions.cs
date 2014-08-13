@@ -23,5 +23,12 @@ namespace EAAddInFramework
         {
             return DateTime.Now - e.Created < TimeSpan.FromSeconds(1);
         }
+
+        public static EA.Package FindPackage(this EA.Element element, EA.Repository repo)
+        {
+            return repo.AllPackages().First(
+                pkg => pkg.Elements.Cast<EA.Element>().Any(
+                    e => e.ElementID == element.ElementID));
+        }
     }
 }

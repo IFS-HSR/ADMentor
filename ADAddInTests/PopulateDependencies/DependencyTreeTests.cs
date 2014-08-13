@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ADAddInTests;
 using AdAddIn.ADTechnology;
-using EAAddInFramework.DataAccess;
+using EAAddInFramework;
 using AdAddIn.PopulateDependencies;
 using Utils;
 using System.IO;

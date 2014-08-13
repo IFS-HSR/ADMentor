@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Utils;
-using EAAddInFramework.MDGBuilder;
+using EAAddInFramework;
 
 namespace AdAddIn.PopulateDependencies
 {
@@ -29,7 +29,22 @@ namespace AdAddIn.PopulateDependencies
 
             ShowDialog();
 
-            return availableDependencies;
+            return MarkSelectedNodes(availableDependencies, dependencyTreeView.Nodes[0]);
+        }
+
+        private LabeledTree<SolutionInstantiation, EA.Connector> MarkSelectedNodes(LabeledTree<SolutionInstantiation, EA.Connector> problemSpace, TreeNode treeNode)
+        {
+            var edges = from pair in problemSpace.Edges.Zip(treeNode.Nodes.Cast<TreeNode>())
+                        select LabeledTree.Edge(pair.Item1.Label, MarkSelectedNodes(pair.Item1.Target, pair.Item2));
+            
+            if (!problemSpace.Label.Instance.IsDefined && treeNode.Checked)
+            {
+                return LabeledTree.Node(new SolutionInstantiation(problemSpace.Label.Element, selected: true), edges);
+            }
+            else
+            {
+                return LabeledTree.Node(problemSpace.Label, edges);
+            }
         }
 
         private TreeNode ToTreeNode(LabeledTree<SolutionInstantiation, EA.Connector> dependencyNode)

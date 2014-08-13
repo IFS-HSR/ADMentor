@@ -166,6 +166,13 @@ namespace Utils
                 () => els);
         }
 
+        public static Option<T> OrElse<T>(this Option<T> opt, Option<T> els)
+        {
+            return opt.Match(
+                v => opt,
+                () => els);
+        }
+
         public static T GetOrDefault<T>(this Option<T> opt)
         {
             return opt.Match(
