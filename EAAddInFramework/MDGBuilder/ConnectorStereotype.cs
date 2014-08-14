@@ -90,7 +90,7 @@ namespace EAAddInFramework.MDGBuilder
                     select tv.ToXml()));
         }
     }
-    
+
     /// <summary>
     /// Connections describe what kinds of element types or element stereotypes
     /// are intended to be conneceted by a given connector stereotype.
@@ -270,11 +270,29 @@ namespace EAAddInFramework.MDGBuilder
     public sealed class Direction : Enumeration
     {
         public static readonly Direction Unspecified = new Direction("Unspecified");
-        public static readonly Direction SourceToDestination = new Direction("Source -> Destination");
-        public static readonly Direction DestinationToSource = new Direction("Destination -> Source");
-        public static readonly Direction BiDirectional = new Direction("Bi-Directional");
+        public static readonly Direction SourceToDestination = new Direction("Source -> Destination", target: Navigateability.Navigable);
+        public static readonly Direction DestinationToSource = new Direction("Destination -> Source", source: Navigateability.Navigable);
+        public static readonly Direction BiDirectional = new Direction("Bi-Directional", source: Navigateability.Navigable, target: Navigateability.Navigable);
 
-        private Direction(String name) : base(name) { }
+        private Direction(String name, Navigateability source = null, Navigateability target = null)
+            : base(name)
+        {
+            SourceNavigateability = source ?? Navigateability.Unspecified;
+            TargetNavigateability = target ?? Navigateability.Unspecified;
+        }
+
+        public Navigateability SourceNavigateability { get; set; }
+
+        public Navigateability TargetNavigateability { get; set; }
+
+        public class Navigateability : Enumeration
+        {
+            public static readonly Navigateability Navigable = new Navigateability("Navigable");
+            public static readonly Navigateability NonNavigable = new Navigateability("Non-Navigable");
+            public static readonly Navigateability Unspecified = new Navigateability("Unspecified");
+
+            private Navigateability(String name) : base(name) { }
+        }
     }
 
     /// <summary>
@@ -339,8 +357,31 @@ namespace EAAddInFramework.MDGBuilder
     public sealed class CompositionKind : Enumeration
     {
         public static readonly CompositionKind None = new CompositionKind("None");
-        public static readonly CompositionKind AggregateAtSource = new CompositionKind("Aggregate at Source");
+        public static readonly CompositionKind AggregateAtSource = new CompositionKind("Aggregate at Source", CompositionType.Shared, CompositionEnd.Source);
 
-        private CompositionKind(String name) : base(name) { }
+        private CompositionKind(String name, CompositionType type = CompositionType.None, CompositionEnd end = CompositionEnd.None)
+            : base(name)
+        {
+            Type = type;
+            End = end;
+        }
+
+        public CompositionType Type { get; private set; }
+
+        public CompositionEnd End { get; private set; }
+
+        public enum CompositionType
+        {
+            None,
+            Shared,
+            Composite
+        }
+
+        public enum CompositionEnd
+        {
+            None,
+            Source,
+            Target
+        }
     }
 }

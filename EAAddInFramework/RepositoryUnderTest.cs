@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ADAddInTests
+namespace EAAddInFramework
 {
     /// <summary>
     /// Manages an EA repository that may be used for unit tests.

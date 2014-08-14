@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{83C4243F-43C0-4064-8412-7613698436C7}</ProjectGuid>
+    <ProjectGuid>{390C0994-D03B-4A42-975F-29B857AD6F70}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ADAddInTests</RootNamespace>
-    <AssemblyName>ADAddInTests</AssemblyName>
+    <RootNamespace>EAAddInFrameworkTests</RootNamespace>
+    <AssemblyName>EAAddInFrameworkTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,11 +35,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Interop.EA">
-      <HintPath>..\packages\Interop.EA.2.10.238.1\Interop.EA.dll</HintPath>
+    <Reference Include="Interop.EA, Version=2.10.238.1, Culture=neutral, PublicKeyToken=d28e1c76302f6a17, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\packages\Interop.EA.2.10.238.1\Interop.EA.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -48,19 +48,17 @@
         <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
       </ItemGroup>
     </When>
-    <Otherwise />
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="PopulateDependencies\DependencyTreeTests.cs" />
-    <Compile Include="PopulateDependencies\SolutionInstantiationTreeTests.cs" />
-    <Compile Include="PopulateDependencies\InstatiateSolutionInstantiationTreeTest.cs" />
+    <Compile Include="StereotypeHelpersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ADAddIn\ADAddIn.csproj">
-      <Project>{465f2a81-6b6b-4413-b122-2b37c129ab95}</Project>
-      <Name>ADAddIn</Name>
-    </ProjectReference>
     <ProjectReference Include="..\EAAddInFramework\EAAddInFramework.csproj">
       <Project>{8a3ee757-6a07-44a1-95f9-1bae3f337a4c}</Project>
       <Name>EAAddInFramework</Name>
@@ -90,10 +88,6 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

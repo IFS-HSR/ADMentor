@@ -47,10 +47,44 @@ namespace EAAddInFramework
                 throw new ApplicationException(c.GetLastError(), ce);
             }
 
+            SpecifyComposition(stereotype, c);
+            SpecifyNavigateability(stereotype, c);
+
             source.Connectors.Refresh();
             target.Connectors.Refresh();
 
             return c;
+        }
+
+        private static void SpecifyComposition(ConnectorStereotype stereotype, EA.Connector c)
+        {
+            stereotype.CompositionKind.Do(compositionKind =>
+            {
+                var end =
+                    compositionKind.End == CompositionKind.CompositionEnd.Source ? c.ClientEnd.AsOption() :
+                    compositionKind.End == CompositionKind.CompositionEnd.Target ? c.SupplierEnd.AsOption() :
+                    Options.None<EA.ConnectorEnd>();
+                end.Do(e =>
+                {
+                    e.Aggregation = (int)compositionKind.Type;
+                    e.Update();
+                });
+            });
+        }
+
+        private static void SpecifyNavigateability(ConnectorStereotype stereotype, EA.Connector c)
+        {
+            var direction = stereotype.Direction.GetOrElse((stereotype.Type as ConnectorType).DefaultDirection);
+            if (c.ClientEnd.Navigable != direction.SourceNavigateability.Name)
+            {
+                c.ClientEnd.Navigable = direction.SourceNavigateability.Name;
+                c.ClientEnd.Update();
+            }
+            if (c.SupplierEnd.Navigable != direction.TargetNavigateability.Name)
+            {
+                c.SupplierEnd.Navigable = direction.TargetNavigateability.Name;
+                c.SupplierEnd.Update();
+            }
         }
 
         public static Option<EA.Element> Instanciate(this ElementStereotype classifierStereotype, EA.Element classifier, EA.Package package)
