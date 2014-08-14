@@ -26,17 +26,15 @@ namespace AdAddIn.PopulateDependencies
 
         public EntityModified Execute(EA.Element element)
         {
-            GetCurrentDiagramContaining(element).Do(currentDiagram =>
-            {
-                SolutionInstantiationTree.Create(Repo.Val, element).Do(solution =>
-                {
-                    var selectedSolution = Selector.GetSelectedDependencies(solution);
-                    var instantiatedSolution = SolutionInstantiationTree.InstantiateSelectedItems(Repo.Val, element.FindPackage(Repo.Val), selectedSolution);
-                    SolutionInstantiationTree.CreateDiagramElements(Repo.Val, currentDiagram, instantiatedSolution);
-                });
-            });
+            var modified =
+                from currentDiagram in GetCurrentDiagramContaining(element)
+                from solution in SolutionInstantiationTree.Create(Repo.Val, element)
+                from selectedSolution in Selector.GetSelectedDependencies(solution)
+                let instantiatedSolution = SolutionInstantiationTree.InstantiateSelectedItems(Repo.Val, element.FindPackage(Repo.Val), selectedSolution)
+                let _ = SolutionInstantiationTree.CreateDiagramElements(Repo.Val, currentDiagram, instantiatedSolution)
+                select EntityModified.Modified;
 
-            return EntityModified.NotModified;
+            return modified.GetOrElse(EntityModified.NotModified);
         }
 
         public Boolean CanExecute(EA.Element element)

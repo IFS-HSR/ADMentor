@@ -72,7 +72,7 @@ namespace AdAddIn.PopulateDependencies
             return after;
         }
 
-        public static void CreateDiagramElements(EA.Repository repo, EA.Diagram diagram, LabeledTree<SolutionInstantiation, EA.Connector> problemSpace)
+        public static Unit CreateDiagramElements(EA.Repository repo, EA.Diagram diagram, LabeledTree<SolutionInstantiation, EA.Connector> problemSpace)
         {
             var siblings = new Dictionary<SolutionInstantiation, int>();
 
@@ -101,6 +101,8 @@ namespace AdAddIn.PopulateDependencies
                 });
             });
             repo.ReloadDiagram(diagram.DiagramID);
+
+            return Unit.Instance;
         }
     }
 
