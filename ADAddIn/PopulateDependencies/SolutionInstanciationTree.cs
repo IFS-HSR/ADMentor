@@ -50,21 +50,27 @@ namespace AdAddIn.PopulateDependencies
                    select LabeledTree.Edge(psEdge.Label, Compare(psEdge.Target, sEdge.Select(e => e.Target)));
         }
 
-        public static EntityModified InstantiateSelectedItems(EA.Repository repo, EA.Package package, LabeledTree<SolutionInstantiation, EA.Connector> problemSpace)
+        public static LabeledTree<SolutionInstantiation, EA.Connector> InstantiateSelectedItems(EA.Repository repo, EA.Package package, LabeledTree<SolutionInstantiation, EA.Connector> problemSpace)
         {
-            var sourceElement = problemSpace.Label.Element;
-            var missingEdges = from edge in problemSpace.Edges
-                               where edge.Target.Label.Selected && !edge.Target.Label.Instance.IsDefined
-                               select edge;
-
-            missingEdges.ForEach(edge =>
+            var before = problemSpace;
+            var after = problemSpace.Select((parent, connector, child) =>
             {
-                var targetElement = edge.Target.Label.Element.Instanciate(package).Value;
-                var connectorSType = edge.Label.GetStereotype().Value;
-                var connector = connectorSType.Create(sourceElement, targetElement);
-            });
+                if (!child.Instance.IsDefined && child.Selected)
+                {
+                    var sourceElement = parent.Instance.Value;
+                    var targetElement = child.Element.Instanciate(package).Value;
 
-            return EntityModified.NotModified;
+                    var connectorSType = connector.GetStereotype().Value;
+                    connectorSType.Create(sourceElement, targetElement);
+
+                    return child.Copy(instance: targetElement);
+                }
+                else
+                {
+                    return child;
+                }
+            });
+            return after;
         }
     }
 
@@ -89,6 +95,11 @@ namespace AdAddIn.PopulateDependencies
                 && Instance.IsDefined == other.Instance.IsDefined
                 && Instance.Match(e => e.ElementGUID == other.Instance.Value.ElementGUID, () => true)
                 && Selected == other.Selected;
+        }
+
+        public SolutionInstantiation Copy(EA.Element element = null, EA.Element instance = null, bool? selected = null)
+        {
+            return new SolutionInstantiation(element ?? Element, instance ?? Instance.GetOrDefault(), selected ?? Selected);
         }
     }
 }

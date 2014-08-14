@@ -13,7 +13,7 @@ namespace Utils
     /// <typeparam name="E">Edge Labels</typeparam>
     public class LabeledTree<N, E>
     {
-        public LabeledTree(N label, IEnumerable<Edge> edges)
+        public LabeledTree(N label, IList<Edge> edges)
         {
             Label = label;
             Edges = edges;
@@ -21,7 +21,7 @@ namespace Utils
 
         public N Label { get; private set; }
 
-        public IEnumerable<Edge> Edges { get; private set; }
+        public IList<Edge> Edges { get; private set; }
 
         public IEnumerable<N> NodeLabels
         {
@@ -53,13 +53,21 @@ namespace Utils
 
             public LabeledTree<N, E> Target { get; private set; }
         }
+
+        public LabeledTree<N, E> Select(Func<N, E, N, N> fn)
+        {
+            var edges = from edge in Edges
+                        let newTarget = fn(Label, edge.Label, edge.Target.Label)
+                        select LabeledTree.Edge(edge.Label, LabeledTree.Node(newTarget, edge.Target.Edges).Select(fn));
+            return LabeledTree.Node(Label, edges);
+        }
     }
 
     public static class LabeledTree
     {
         public static LabeledTree<N, E> Node<N, E>(N label, IEnumerable<LabeledTree<N, E>.Edge> edges)
         {
-            return new LabeledTree<N, E>(label, edges);
+            return new LabeledTree<N, E>(label, edges.ToList());
         }
 
         public static LabeledTree<N, E> Node<N, E>(N label, params LabeledTree<N, E>.Edge[] edges)

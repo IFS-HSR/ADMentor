@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace EAAddInFramework
 {
-public static    class ConnectorExtensions
+    public static class ConnectorExtensions
     {
-    public static bool Is(this EA.Connector c, ConnectorStereotype stereotype)
-    {
-        return c.Stereotype == stereotype.Name && c.Type == stereotype.Type.Name;
-    }
+        public static bool Is(this EA.Connector c, ConnectorStereotype stereotype)
+        {
+            return c.Stereotype == stereotype.Name && c.Type == stereotype.Type.Name;
+        }
     }
 }

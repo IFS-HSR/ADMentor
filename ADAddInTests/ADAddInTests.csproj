@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="PopulateDependencies\DependencyTreeTests.cs" />
     <Compile Include="PopulateDependencies\SolutionInstantiationTreeTests.cs" />
+    <Compile Include="PopulateDependencies\InstatiateSolutionInstantiationTreeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryUnderTest.cs" />
   </ItemGroup>
