@@ -54,12 +54,21 @@ namespace Utils
             public LabeledTree<N, E> Target { get; private set; }
         }
 
-        public LabeledTree<N, E> Select(Func<N, E, N, N> fn)
+        public LabeledTree<N, E> TransformTopDown(Func<N, E, N, N> fn)
         {
             var edges = from edge in Edges
                         let newTarget = fn(Label, edge.Label, edge.Target.Label)
-                        select LabeledTree.Edge(edge.Label, LabeledTree.Node(newTarget, edge.Target.Edges).Select(fn));
+                        select LabeledTree.Edge(edge.Label, LabeledTree.Node(newTarget, edge.Target.Edges).TransformTopDown(fn));
             return LabeledTree.Node(Label, edges);
+        }
+
+        public void TraverseTopDown(Action<N, E, N> fn)
+        {
+            Edges.ForEach(edge =>
+            {
+                fn(Label, edge.Label, edge.Target.Label);
+                edge.Target.TraverseTopDown(fn);
+            });
         }
     }
 

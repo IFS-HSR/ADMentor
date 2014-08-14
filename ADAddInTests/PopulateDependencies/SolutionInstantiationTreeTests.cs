@@ -65,6 +65,37 @@ namespace ADAddInTests.PopulateDependencies
             AssertEqualTree(expectedTree, actualTree);
         }
 
+        [TestMethod]
+        public void CreateTreeWithExistingInstances()
+        {
+            var rut = new RepositoryUnderTest();
+
+            var problemA = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
+            var alternativeAA = ElementStereotypes.Option.Create(rut.TestPackage, "AA");
+            var alternativeAB = ElementStereotypes.Problem.Create(rut.TestPackage, "AB");
+
+            var cAtoAA = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeAA);
+            var cAtoAB = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeAB);
+
+            var problemOccurrence1 = problemA.Instanciate(rut.TestPackage).Value;
+            var decision11 = alternativeAA.Instanciate(rut.TestPackage).Value;
+            var decision12 = alternativeAB.Instanciate(rut.TestPackage).Value;
+
+            var c1to11 = ConnectorStereotypes.HasAlternative.Create(problemOccurrence1, decision11);
+            var c1to12 = ConnectorStereotypes.HasAlternative.Create(problemOccurrence1, decision12);
+
+            var expectedTree = LabeledTree.Node(new SolutionInstantiation(problemA, problemOccurrence1),
+                LabeledTree.Edge(cAtoAA, LabeledTree.Node<SolutionInstantiation, EA.Connector>(new SolutionInstantiation(alternativeAA, decision11))),
+                LabeledTree.Edge(cAtoAB, LabeledTree.Node<SolutionInstantiation, EA.Connector>(new SolutionInstantiation(alternativeAB, decision12))));
+
+            var actualTree = SolutionInstantiationTree.Create(rut.Repo, problemOccurrence1).Value;
+
+            var classifierIds = actualTree.NodeLabels.Select(n => n.Element.ElementID).Join(",");
+            var instanceIds = actualTree.NodeLabels.Select(n => n.Instance.Select(i => i.ElementID).ToString()).Join(",");
+
+            AssertEqualTree(expectedTree, actualTree);
+        }
+
         private void AssertEqualTree(LabeledTree<SolutionInstantiation, EA.Connector> expectedTree, LabeledTree<SolutionInstantiation, EA.Connector> actualTree)
         {
             Assert.IsTrue(expectedTree.Label.Equals(actualTree.Label));

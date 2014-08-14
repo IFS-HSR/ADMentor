@@ -46,14 +46,13 @@ namespace AdAddIn.PopulateDependencies
         private static IEnumerable<LabeledTree<SolutionInstantiation, EA.Connector>.Edge> Compare(IEnumerable<LabeledTree<EA.Element, EA.Connector>.Edge> problemSpace, IEnumerable<LabeledTree<EA.Element, EA.Connector>.Edge> solution)
         {
             return from psEdge in problemSpace
-                   let sEdge = solution.FirstOption(edge => edge.Label.Stereotype == psEdge.Label.Stereotype && problemSpace.Any(ps => ps.Target.Label.ElementID == edge.Target.Label.ClassifierID))
+                   let sEdge = solution.FirstOption(edge => edge.Label.Stereotype == psEdge.Label.Stereotype && edge.Target.Label.ClassifierID == psEdge.Target.Label.ElementID)
                    select LabeledTree.Edge(psEdge.Label, Compare(psEdge.Target, sEdge.Select(e => e.Target)));
         }
 
         public static LabeledTree<SolutionInstantiation, EA.Connector> InstantiateSelectedItems(EA.Repository repo, EA.Package package, LabeledTree<SolutionInstantiation, EA.Connector> problemSpace)
         {
-            var before = problemSpace;
-            var after = problemSpace.Select((parent, connector, child) =>
+            var after = problemSpace.TransformTopDown((parent, connector, child) =>
             {
                 if (!child.Instance.IsDefined && child.Selected)
                 {
@@ -71,6 +70,37 @@ namespace AdAddIn.PopulateDependencies
                 }
             });
             return after;
+        }
+
+        public static void CreateDiagramElements(EA.Repository repo, EA.Diagram diagram, LabeledTree<SolutionInstantiation, EA.Connector> problemSpace)
+        {
+            var siblings = new Dictionary<SolutionInstantiation, int>();
+
+            problemSpace.TraverseTopDown((parent, connector, child) =>
+            {
+                var leftHandSiblings = siblings.ContainsKey(parent) ? siblings[parent] : 0;
+
+                child.Instance.Do(instance =>
+                {
+                    if (!diagram.DiagramObjects.Cast<EA.DiagramObject>().Any(o => o.ElementID == instance.ElementID))
+                    {
+                        var parentObject = diagram.DiagramObjects.Cast<EA.DiagramObject>().First(o => o.ElementID == parent.Instance.Value.ElementID);
+                        var verticalOffset = leftHandSiblings * 110 - 40;
+                        var horizontalOffset = -200 - leftHandSiblings * 20;
+                        var pos = String.Format("l={0};r={1};t={2};b={3};",
+                            parentObject.left + verticalOffset, parentObject.right + verticalOffset,
+                            parentObject.top + horizontalOffset, parentObject.bottom + horizontalOffset);
+
+                        var obj = diagram.DiagramObjects.AddNew(pos, "") as EA.DiagramObject;
+                        obj.ElementID = instance.ElementID;
+                        obj.Update();
+                        diagram.DiagramObjects.Refresh();
+
+                        siblings[parent] = leftHandSiblings + 1;
+                    }
+                });
+            });
+            repo.ReloadDiagram(diagram.DiagramID);
         }
     }
 

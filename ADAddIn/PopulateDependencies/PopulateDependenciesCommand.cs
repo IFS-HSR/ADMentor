@@ -31,7 +31,8 @@ namespace AdAddIn.PopulateDependencies
                 SolutionInstantiationTree.Create(Repo.Val, element).Do(solution =>
                 {
                     var selectedSolution = Selector.GetSelectedDependencies(solution);
-                    SolutionInstantiationTree.InstantiateSelectedItems(Repo.Val, element.FindPackage(Repo.Val), selectedSolution);
+                    var instantiatedSolution = SolutionInstantiationTree.InstantiateSelectedItems(Repo.Val, element.FindPackage(Repo.Val), selectedSolution);
+                    SolutionInstantiationTree.CreateDiagramElements(Repo.Val, currentDiagram, instantiatedSolution);
                 });
             });
 

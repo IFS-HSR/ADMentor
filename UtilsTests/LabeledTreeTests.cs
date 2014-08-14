@@ -23,7 +23,7 @@ namespace UtilsTests
                 LabeledTree.Edge("a", LabeledTree.Node<int, string>(12)),
                 LabeledTree.Edge("b", LabeledTree.Node<int, string>(13)));
 
-            var actualTree = tree.Select((source, edge, target) =>
+            var actualTree = tree.TransformTopDown((source, edge, target) =>
             {
                 nodeOrder.Add(target);
                 edgeOrder.Add(edge);

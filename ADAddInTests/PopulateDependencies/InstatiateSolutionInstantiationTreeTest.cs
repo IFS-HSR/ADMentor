@@ -27,7 +27,7 @@ namespace ADAddInTests.PopulateDependencies
 
             var problemSpace = SolutionInstantiationTree.Create(rut.Repo, occurrence1).Value;
 
-            var markedProblemSpace = problemSpace.Select((parent, connector, child) =>
+            var markedProblemSpace = problemSpace.TransformTopDown((parent, connector, child) =>
             {
                 return child.Element.Name == "AA" ? child.Copy(selected: true) : child;
             });
