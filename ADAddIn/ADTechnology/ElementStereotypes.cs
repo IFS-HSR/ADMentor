@@ -11,6 +11,40 @@ namespace AdAddIn.ADTechnology
 {
     public static class ElementStereotypes
     {
+        public class OrganisationalReach : Enumeration
+        {
+            public static readonly OrganisationalReach Global = new OrganisationalReach("Global");
+            public static readonly OrganisationalReach Organisation = new OrganisationalReach("Organisation");
+            public static readonly OrganisationalReach Program = new OrganisationalReach("Program");
+            public static readonly OrganisationalReach Project = new OrganisationalReach("Project");
+            public static readonly OrganisationalReach Subproject = new OrganisationalReach("Subproject");
+            public static readonly OrganisationalReach BusinessUnit = new OrganisationalReach("Business Unit");
+            public static readonly OrganisationalReach Individual = new OrganisationalReach("Individual");
+
+            public static readonly IEnumerable<OrganisationalReach> All = new[] {
+                Global, Organisation, Program, Project, Subproject, BusinessUnit, Individual
+            };
+
+            private OrganisationalReach(String name) : base(name) { }
+        }
+
+        public static readonly ElementStereotype StakeholderRole = new ElementStereotype(
+            name: "adStakeholderRole",
+            displayName: "Stakeholder Role",
+            type: ElementType.Actor);
+
+        public static readonly IEnumerable<ITaggedValue> ProblemSpaceTaggedValues = new[]{
+            new TaggedValue(name: "Stakeholder Role", type: TaggedValueTypes.Reference(StakeholderRole)),
+            new TaggedValue(name: "Project Stage", type: TaggedValueTypes.String),
+            new TaggedValue(name: "Viewpoint", type: TaggedValueTypes.String),
+            new TaggedValue(name: "Organisational Reach", type: TaggedValueTypes.Enum(OrganisationalReach.All)),
+            new TaggedValue(name: "Intellectual Property Rights", type: TaggedValueTypes.String)
+        };
+
+        public static readonly IEnumerable<ITaggedValue> SolutionTaggedValues = new[]{
+            new TaggedValue(name: "Revision Date", type: TaggedValueTypes.DateTime)
+        };
+
         public class DecisionState : Enumeration
         {
             /* Decision States according to "QUOSA;Kruchten;Building Up and Reasoning About Architectural Knowledge" */
@@ -45,7 +79,7 @@ namespace AdAddIn.ADTechnology
 	                h_align = ""center"";
 	                v_align = ""center"";
 
-                    " + GenerateFillColors("state", DecisionState.AllStates.ToDictionary(ds => ds.Name, ds => ds.Color)) + @"
+                    " + GenerateFillColors("State", DecisionState.AllStates.ToDictionary(ds => ds.Name, ds => ds.Color)) + @"
 
 	                Rectangle(0,0,100,100);
 
@@ -65,12 +99,12 @@ namespace AdAddIn.ADTechnology
                     }
                 }
             ",
-            taggedValues: new TaggedValue[]{
+            taggedValues: SolutionTaggedValues.Concat(new TaggedValue[]{
                 new TaggedValue(
-                    name: "state",
+                    name: "State",
                     description: "Decision State",
-                    type: new EnumTaggedValue(values: DecisionState.AllStates, defaultValue: DecisionState.Idea))
-            });
+                    type: TaggedValueTypes.Enum(values: DecisionState.AllStates).WithDefaultValue(DecisionState.Idea))
+            }));
 
         public class ProblemOccurrenceState : Enumeration
         {
@@ -102,7 +136,7 @@ namespace AdAddIn.ADTechnology
 	                h_align = ""center"";
 	                v_align = ""center"";
 
-                    " + GenerateFillColors("state", ProblemOccurrenceState.AllStates.ToDictionary(ds => ds.Name, ds => ds.Color)) + @"
+                    " + GenerateFillColors("State", ProblemOccurrenceState.AllStates.ToDictionary(ds => ds.Name, ds => ds.Color)) + @"
 
 	                StartPath();
 	                MoveTo(50,0);
@@ -128,12 +162,12 @@ namespace AdAddIn.ADTechnology
                     }
                 }
             ",
-         taggedValues: new TaggedValue[]{
+         taggedValues: SolutionTaggedValues.Concat(new TaggedValue[]{
             new TaggedValue(
-                name: "state",
+                name: "State",
                 description: "Problem State",
-                type: new EnumTaggedValue(values: ProblemOccurrenceState.AllStates, defaultValue: ProblemOccurrenceState.Open))
-         });
+                type: TaggedValueTypes.Enum(values: ProblemOccurrenceState.AllStates).WithDefaultValue(ProblemOccurrenceState.Open))
+         }));
 
         public static readonly ElementStereotype Problem = new ElementStereotype(
             name: "adProblem",
@@ -159,7 +193,8 @@ namespace AdAddIn.ADTechnology
             ",
             backgroundColor: Color.LightSkyBlue,
             width: 100,
-            height: 70);
+            height: 70,
+            taggedValues: ProblemSpaceTaggedValues);
 
         public static readonly ElementStereotype Option = new ElementStereotype(
             name: "adOption",
@@ -169,7 +204,8 @@ namespace AdAddIn.ADTechnology
             icon: new Icon("AdAddIn.ADTechnology.Option.bmp"),
             backgroundColor: Color.LightYellow,
             width: 100,
-            height: 70);
+            height: 70,
+            taggedValues: ProblemSpaceTaggedValues);
 
         private static String GenerateFillColors(String tagName, IDictionary<String, Color> valueColors)
         {

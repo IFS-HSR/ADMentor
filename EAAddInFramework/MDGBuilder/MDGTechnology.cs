@@ -54,22 +54,52 @@ namespace EAAddInFramework.MDGBuilder
             }
         }
 
+        IEnumerable<ITaggedValue> TaggedValues
+        {
+            get
+            {
+                return (from s in Stereotypes
+                       from t in s.TaggedValues
+                       select t).Distinct(new TaggedValueComparer());
+            }
+        }
+
+        private class TaggedValueComparer : IEqualityComparer<ITaggedValue>
+        {
+            public bool Equals(ITaggedValue x, ITaggedValue y)
+            {
+                return x.Name == y.Name;
+            }
+
+            public int GetHashCode(ITaggedValue obj)
+            {
+                return obj.Name.GetHashCode();
+            }
+        }
+
         public XDocument ToXml()
         {
+            var propertyDataSetChilds = new object[]{
+                new XAttribute("name", "Property Types"), new XAttribute("table", "t_propertytypes"), new XAttribute("filter", "Property='#Property#'")
+            }.Concat(TaggedValues.Select(tv => tv.ToXmlType()));
+
             return new XDocument(
-                new XElement("MDG.Technology", new XAttribute("version", 1),
+                new XElement("MDG.Technology", new XAttribute("version", "1.0"),
                     new XElement("Documentation", new XAttribute("id", ID), new XAttribute("name", Name), new XAttribute("version", Version), new XAttribute("notes", Description)),
                     new XElement("UMLProfiles",
                         new XElement("UMLProfile", new XAttribute("profiletype", "uml2"),
-                            new XElement("Documentation", new XAttribute("id", "abcdefab-1"), new XAttribute("name", Name), new XAttribute("version", Version), new XAttribute("notes", Description)),
+                            new XElement("Documentation", new XAttribute("id", "abcdefab-1"), new XAttribute("name", ID), new XAttribute("version", Version), new XAttribute("notes", Description)),
                             new XElement("Content",
                                 new XElement("Stereotypes",
                                     from s in Stereotypes
                                     select s.ToXml()),
                                 new XElement("QuickLink", new XAttribute("data", getQuickLinkData()))))),
+                    new XElement("TaggedValueTypes",
+                        new XElement("RefData", new XAttribute("version", "1.0"), new XAttribute("exporter", "EA.25"),
+                            new XElement("DataSet", propertyDataSetChilds))),
                     new XElement("DiagramProfile",
                         new XElement("UMLProfile", new XAttribute("profiletype", "uml2"),
-                            new XElement("Documentation", new XAttribute("id", "abcdefab-1"), new XAttribute("name", Name), new XAttribute("version", Version), new XAttribute("notes", Description)),
+                            new XElement("Documentation", new XAttribute("id", "abcdefab-1"), new XAttribute("name", ID), new XAttribute("version", Version), new XAttribute("notes", Description)),
                             new XElement("Content",
                                 new XElement("Stereotypes",
                                     from d in Diagrams
@@ -77,7 +107,7 @@ namespace EAAddInFramework.MDGBuilder
                                     )))),
                     new XElement("UIToolboxes",
                         from t in Toolboxes
-                        select t.ToXml(Name, Version)),
+                        select t.ToXml(ID, Version)),
                     new XElement("ModelTemplates",
                         from t in ModelTemplates
                         select t.ToXml())));

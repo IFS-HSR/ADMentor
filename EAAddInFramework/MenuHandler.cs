@@ -55,7 +55,7 @@ namespace EAAddInFramework
 
         public string Name { get; private set; }
 
-        public ICommand<Option<ContextItem>, Object> Command { get; set; }
+        public ICommand<Option<ContextItem>, Object> Command { get; private set; }
 
         public IList<IMenuItem> Children
         {

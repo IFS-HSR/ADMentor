@@ -11,63 +11,139 @@ namespace EAAddInFramework.MDGBuilder
 {
     public interface ITaggedValueType
     {
-        XElement MakeAttribute(String name, Option<String> description);
+        XElement CreateTag(String tagName);
+
+        Option<String> CreateTypeDescription();
     }
 
-    public class TaggedValueType : ITaggedValueType
+    public interface IDefaultableTaggedValueType<T> : ITaggedValueType
     {
-        public static readonly TaggedValueType String = new TaggedValueType(typeName: "string");
-        public static readonly TaggedValueType Int = new TaggedValueType(typeName: "int");
-        public static readonly TaggedValueType Bool = new TaggedValueType(typeName: "bool");
+        IDefaultableTaggedValueType<T> WithDefaultValue(T defaultValue);
+    }
 
-        public TaggedValueType(String typeName, object defaultValue = null)
+    public static class TaggedValueTypes
+    {
+        public static readonly IDefaultableTaggedValueType<String> String = new PrimitiveType<String>(typeName: "String");
+        public static readonly IDefaultableTaggedValueType<int> Int = new PrimitiveType<int>(typeName: "Integer");
+        public static readonly IDefaultableTaggedValueType<bool> Bool = new PrimitiveType<bool>(typeName: "Boolean");
+
+        public static IDefaultableTaggedValueType<T> Enum<T>(IEnumerable<T> values) where T : Enumeration
         {
-            TypeName = typeName;
-            DefaultValue = defaultValue.AsOption();
+            return new EnumType<T>(values);
         }
 
-        public TaggedValueType WithDefaultValue(object defaultValue)
+        public static readonly ITaggedValueType DateTime = new StructuredType(new Dictionary<String, String> {
+            {"Type", "DateTime"}
+        });
+        public static readonly ITaggedValueType Memo = new StructuredType(new Dictionary<String, String> {
+            {"Type", "Memo"}
+        });
+
+        public static ITaggedValueType Reference(ElementStereotype stype)
         {
-            return new TaggedValueType(TypeName, defaultValue);
+            return new StructuredType(new Dictionary<String, String> {
+                {"Type", "RefGUID"},
+                {"Values", stype.Type.Name},
+                {"Stereotypes", stype.Name}
+            });
+        }
+    }
+
+    class PrimitiveType<T> : IDefaultableTaggedValueType<T>
+    {
+        internal PrimitiveType(String typeName, Option<T> defaultValue = null)
+        {
+            TypeName = typeName;
+            DefaultValue = defaultValue ?? Options.None<T>();
         }
 
         public String TypeName { get; private set; }
-        public Option<object> DefaultValue { get; private set; }
 
-        public XElement MakeAttribute(string name, Option<String> description)
+        public Option<T> DefaultValue { get; private set; }
+
+        public IDefaultableTaggedValueType<T> WithDefaultValue(T defaultValue)
+        {
+            return new PrimitiveType<T>(TypeName, defaultValue.AsOption());
+        }
+
+        public XElement CreateTag(string tagName)
         {
             return new XElement("Tag",
-                new XAttribute("name", name),
+                new XAttribute("name", tagName),
                 new XAttribute("type", TypeName),
-                new XAttribute("description", description.GetOrElse("")),
+                new XAttribute("description", ""),
                 new XAttribute("unit", ""),
                 new XAttribute("values", ""),
                 new XAttribute("default", DefaultValue.Select(dv => dv.ToString()).GetOrElse("")));
         }
+
+        public Option<string> CreateTypeDescription()
+        {
+            return Options.None<String>();
+        }
     }
 
-    public class EnumTaggedValue : ITaggedValueType
+    class EnumType<T> : IDefaultableTaggedValueType<T> where T : Enumeration
     {
-
-        public EnumTaggedValue(IEnumerable<Enumeration> values, Enumeration defaultValue = null)
+        internal EnumType(IEnumerable<T> values, Option<T> defaultValue = null)
         {
             Values = values;
-            Default = defaultValue.AsOption();
+            DefaultValue = defaultValue ?? Options.None<T>();
         }
 
-        public IEnumerable<Enumeration> Values { get; private set; }
+        public IEnumerable<T> Values { get; private set; }
 
-        public Option<Enumeration> Default { get; private set; }
+        public Option<T> DefaultValue { get; set; }
 
-        public XElement MakeAttribute(string name, Option<String> description)
+        public IDefaultableTaggedValueType<T> WithDefaultValue(T defaultValue)
+        {
+            return new EnumType<T>(Values, defaultValue.AsOption());
+        }
+
+        public XElement CreateTag(string tagName)
         {
             return new XElement("Tag",
-                new XAttribute("name", name),
-                new XAttribute("type", "enumeration"),
-                new XAttribute("description", description.GetOrElse("")),
+                new XAttribute("name", tagName),
+                new XAttribute("type", "enum"),
+                new XAttribute("description", ""),
                 new XAttribute("unit", ""),
-                new XAttribute("values", String.Join(",", Values.Select(v => v.Name))),
-                new XAttribute("default", Default.Select(v => v.Name).GetOrElse("")));
+                new XAttribute("values", Values.Select(v => v.Name).Join(",")),
+                new XAttribute("default", DefaultValue.Select(dv => dv.ToString()).GetOrElse("")));
+        }
+
+        public Option<string> CreateTypeDescription()
+        {
+            return Options.None<String>();
+        }
+    }
+
+    /// <summary>
+    /// Adds support for structured tagged value types.
+    /// http://www.sparxsystems.com/enterprise_architect_user_guide/9.3/standard_uml_models/predefinedtaggedvaluetypes.html
+    /// </summary>
+    class StructuredType : ITaggedValueType
+    {
+        public StructuredType(IDictionary<String, String> properties)
+        {
+            Properties = properties;
+        }
+
+        public IDictionary<string, string> Properties { get; set; }
+
+        public XElement CreateTag(string tagName)
+        {
+            return new XElement("Tag",
+                new XAttribute("name", tagName),
+                new XAttribute("type", tagName),
+                new XAttribute("description", ""),
+                new XAttribute("unit", ""),
+                new XAttribute("values", ""),
+                new XAttribute("default", ""));
+        }
+
+        public Option<string> CreateTypeDescription()
+        {
+            return Options.Some(Properties.Select(pair => String.Format("{0}={1};", pair.Key, pair.Value)).Join(""));
         }
     }
 }

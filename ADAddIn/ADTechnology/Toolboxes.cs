@@ -13,7 +13,7 @@ namespace AdAddIn.ADTechnology
             name: "ProblemSpaceConnectors",
             displayName: "Problem Space Connectors",
             description: "",
-            stereotypes: new IStereotype[]{
+            stereotypes: new []{
                 ConnectorStereotypes.HasAlternative,
                 ConnectorStereotypes.Includes,
                 ConnectorStereotypes.Raises,
@@ -26,12 +26,12 @@ namespace AdAddIn.ADTechnology
             name: "ProblemSpaceTools",
             displayName: "Problem Space Tools",
             description: "Elements and connectors for modelling known problems with proposed solutions.",
-            pages: new ToolboxPage[]{
+            pages: new []{
                 new ToolboxPage(
                     name: "Elements",
                     displayName: "Elements",
                     description: "",
-                    stereotypes: new IStereotype[]{
+                    stereotypes: new []{
                         ElementStereotypes.Problem,
                         ElementStereotypes.Option
                     }),
@@ -43,12 +43,12 @@ namespace AdAddIn.ADTechnology
             name: "SolutionOverviewTools",
             displayName: "Solution Overview Tools",
             description: "Elements and connectors for modelling the decision process during a project.",
-            pages: new ToolboxPage[]{
+            pages: new []{
                 new ToolboxPage(
                     name: "Elements",
                     displayName: "Elements",
                     description: "",
-                    stereotypes: new IStereotype[]{
+                    stereotypes: new []{
                         ElementStereotypes.ProblemOccurrence,
                         ElementStereotypes.Decision
                     }),
@@ -57,9 +57,24 @@ namespace AdAddIn.ADTechnology
                     name: "SolutionOverviewConnectors",
                     displayName: "Solution Overview Connectors",
                     description: "",
-                    stereotypes: new IStereotype[]{
+                    stereotypes: new []{
                         ConnectorStereotypes.Challenges,
                         ConnectorStereotypes.Overrides
+                    })
+            }
+        );
+
+        public static readonly Toolbox StakeholderTools = new Toolbox(
+            name: "StakeholderTools",
+            displayName: "Stakeholder Tools",
+            description: "",
+            pages: new []{
+                new ToolboxPage(
+                    name: "Elements",
+                    displayName: "Elements",
+                    description: "",
+                    stereotypes: new []{
+                        ElementStereotypes.StakeholderRole
                     })
             }
         );

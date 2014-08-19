@@ -64,7 +64,7 @@ namespace EAAddInFramework.MDGBuilder
 
         public Option<String> ShapeScript { get; private set; }
 
-        public IEnumerable<TaggedValue> TaggedValues { get; private set; }
+        public IEnumerable<ITaggedValue> TaggedValues { get; private set; }
 
         public Option<Direction> Direction { get; private set; }
 
@@ -74,8 +74,8 @@ namespace EAAddInFramework.MDGBuilder
 
         public XElement ToXml()
         {
-            var taggedValues = LineStyle.Select(ls => TaggedValues.Concat(new TaggedValue[] {
-                new TaggedValue(name: "_lineStyle", type: TaggedValueType.String.WithDefaultValue(ls.ToString()))
+            var taggedValues = LineStyle.Select(ls => TaggedValues.Concat(new [] {
+                new TaggedValue(name: "_lineStyle", type: TaggedValueTypes.String.WithDefaultValue(ls.ToString()))
             })).GetOrElse(TaggedValues);
 
             return new XElement("Stereotype", new XAttribute("name", Name), new XAttribute("metatype", DisplayName),

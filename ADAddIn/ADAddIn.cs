@@ -25,7 +25,7 @@ namespace AdAddIn
 
         public override Option<MDGTechnology> bootstrapTechnology()
         {
-            return technology.AsOption();
+            return Options.Some(technology);
         }
 
         public override void bootstrap(IReadableAtom<EA.Repository> repository)

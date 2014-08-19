@@ -15,6 +15,7 @@ namespace EAAddInFramework.MDGBuilder
         String Name { get; }
         String DisplayName { get; }
         Enumeration Type { get; }
+        IEnumerable<ITaggedValue> TaggedValues { get; }
         XElement ToXml();
     }
 
@@ -25,7 +26,7 @@ namespace EAAddInFramework.MDGBuilder
         public ElementStereotype(String name, String displayName, ElementType type,
             Icon icon = null,
             String shapeScript = null,
-            IEnumerable<TaggedValue> taggedValues = null,
+            IEnumerable<ITaggedValue> taggedValues = null,
             Color? backgroundColor = null,
             int? width = null,
             int? height = null,
@@ -36,7 +37,7 @@ namespace EAAddInFramework.MDGBuilder
             Type = type;
             Icon = icon.AsOption();
             ShapeScript = shapeScript.AsOption();
-            TaggedValues = taggedValues ?? new TaggedValue[] { };
+            TaggedValues = taggedValues ?? new ITaggedValue[] { };
             BackgroundColor = backgroundColor.AsOption();
             Width = width.AsOption();
             Height = height.AsOption();
@@ -55,7 +56,7 @@ namespace EAAddInFramework.MDGBuilder
 
         public Option<String> ShapeScript { get; private set; }
 
-        public IEnumerable<TaggedValue> TaggedValues { get; private set; }
+        public IEnumerable<ITaggedValue> TaggedValues { get; private set; }
 
         public Option<Color> BackgroundColor { get; private set; }
 
@@ -93,6 +94,7 @@ namespace EAAddInFramework.MDGBuilder
     {
         public static readonly ElementType Action = new ElementType("Action");
         public static readonly ElementType Activity = new ElementType("Activity");
+        public static readonly ElementType Actor = new ElementType("Actor");
         public static readonly ElementType Class = new ElementType("Class");
         public static readonly ElementType Event = new ElementType("Event");
         public static readonly ElementType Issue = new ElementType("Issue");

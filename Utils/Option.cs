@@ -139,7 +139,7 @@ namespace Utils
     {
         public static Option<T> AsOption<T>(this Nullable<T> value) where T: struct
         {
-            if (value != null)
+            if (value.HasValue)
                 return Options.Some(value.Value);
             else
                 return Options.None<T>();

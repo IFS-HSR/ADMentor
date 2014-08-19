@@ -52,7 +52,7 @@ namespace AdAddIn.PopulateDependencies
 
         public static LabeledTree<SolutionInstantiation, EA.Connector> InstantiateSelectedItems(EA.Repository repo, EA.Package package, LabeledTree<SolutionInstantiation, EA.Connector> problemSpace)
         {
-            var after = problemSpace.TransformTopDown((parent, connector, child) =>
+            return problemSpace.TransformTopDown((parent, connector, child) =>
             {
                 if (!child.Instance.IsDefined && child.Selected)
                 {
@@ -69,7 +69,6 @@ namespace AdAddIn.PopulateDependencies
                     return child;
                 }
             });
-            return after;
         }
 
         public static Unit CreateDiagramElements(EA.Repository repo, EA.Diagram diagram, LabeledTree<SolutionInstantiation, EA.Connector> problemSpace)
