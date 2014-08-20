@@ -50,7 +50,7 @@ namespace AdAddIn.ADTechnology
                     description: "",
                     stereotypes: new []{
                         ElementStereotypes.ProblemOccurrence,
-                        ElementStereotypes.Decision
+                        ElementStereotypes.OptionOccurrence
                     }),
                 ProblemSpaceConncetorsPage,
                 new ToolboxPage(

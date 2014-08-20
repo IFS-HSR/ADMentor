@@ -69,11 +69,11 @@ namespace AdAddIn.ADTechnology
             public Color Color { get; private set; }
         }
 
-        public static readonly ElementStereotype Decision = new ElementStereotype(
-            name: "adDecision",
-            displayName: "Decision",
+        public static readonly ElementStereotype OptionOccurrence = new ElementStereotype(
+            name: "adOptionOccurrence",
+            displayName: "Option Occurrence",
             type: ElementType.Object,
-            icon: new Icon("AdAddIn.ADTechnology.Decision.bmp"),
+            icon: new Icon("AdAddIn.ADTechnology.OptionOccurrence.bmp"),
             shapeScript: @"
                 shape main{
 	                h_align = ""center"";
@@ -102,7 +102,7 @@ namespace AdAddIn.ADTechnology
             taggedValues: SolutionTaggedValues.Concat(new TaggedValue[]{
                 new TaggedValue(
                     name: "State",
-                    description: "Decision State",
+                    description: "Option State",
                     type: TaggedValueTypes.Enum(values: DecisionState.AllStates).WithDefaultValue(DecisionState.Idea))
             }));
 
@@ -162,12 +162,12 @@ namespace AdAddIn.ADTechnology
                     }
                 }
             ",
-         taggedValues: SolutionTaggedValues.Concat(new TaggedValue[]{
-            new TaggedValue(
-                name: "State",
-                description: "Problem State",
-                type: TaggedValueTypes.Enum(values: ProblemOccurrenceState.AllStates).WithDefaultValue(ProblemOccurrenceState.Open))
-         }));
+             taggedValues: SolutionTaggedValues.Concat(new TaggedValue[]{
+                new TaggedValue(
+                    name: "State",
+                    description: "Problem State",
+                    type: TaggedValueTypes.Enum(values: ProblemOccurrenceState.AllStates).WithDefaultValue(ProblemOccurrenceState.Open))
+             }));
 
         public static readonly ElementStereotype Problem = new ElementStereotype(
             name: "adProblem",
@@ -200,7 +200,7 @@ namespace AdAddIn.ADTechnology
             name: "adOption",
             displayName: "Option",
             type: ElementType.Class,
-            instanceType: Decision,
+            instanceType: OptionOccurrence,
             icon: new Icon("AdAddIn.ADTechnology.Option.bmp"),
             backgroundColor: Color.LightYellow,
             width: 100,

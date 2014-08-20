@@ -40,7 +40,7 @@ namespace ADAddInTests.PopulateDependencies
                 {
                     Assert.IsTrue(s.Instance.IsDefined);
                     var instance = s.Instance.Value;
-                    Assert.IsTrue(instance.Is(ElementStereotypes.Decision));
+                    Assert.IsTrue(instance.Is(ElementStereotypes.OptionOccurrence));
                     Assert.AreEqual(alternativeAA.ElementID, instance.ClassifierID);
                 }
                 else if (s.Element.Name == "AB")
