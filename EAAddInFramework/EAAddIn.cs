@@ -29,7 +29,7 @@ namespace EAAddInFramework
 
         public abstract void bootstrap(IReadableAtom<EA.Repository> repository);
 
-        public virtual Option<MDGTechnology> bootstrapTechnology()
+        public virtual Option<MDGTechnology> BootstrapTechnology()
         {
             return Options.None<MDGTechnology>();
         }
@@ -89,7 +89,7 @@ namespace EAAddInFramework
 
         public object EA_OnInitializeTechnologies(EA.Repository repository)
         {
-            technology.Exchange(bootstrapTechnology(), GetType());
+            technology.Exchange(BootstrapTechnology(), GetType());
             return technology.Val.Select(tech =>
                 {
                     logger.Info("Initialise MDG Technology {0}", tech.ID);

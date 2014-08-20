@@ -9,13 +9,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Utils;
 using EAAddInFramework;
+using AdAddIn.DataAccess;
 
 namespace AdAddIn.PopulateDependencies
 {
     public partial class DependencySelectorForm : Form, IDependencySelector
     {
-        public DependencySelectorForm()
+        private readonly ElementRepository Repo;
+
+        public DependencySelectorForm(ElementRepository repo)
         {
+            Repo = repo;
+
             InitializeComponent();
 
             dependencyTreeView.CheckBoxes = true;
@@ -68,7 +73,7 @@ namespace AdAddIn.PopulateDependencies
         {
             return edges.Select(edge =>
             {
-                var stype = edge.Label.GetStereotype().Value;
+                var stype = Repo.GetStereotype(edge.Label).Value;
                 var label = String.Format("{0}: {1}", stype.DisplayName, edge.Target.Label.Element.Name);
                 var node = new TreeNode(label, ToTreeNodes(edge.Target.Edges));
                 node.Tag = edge.Target;

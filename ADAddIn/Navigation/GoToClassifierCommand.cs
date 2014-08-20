@@ -1,4 +1,5 @@
 ﻿using AdAddIn.ADTechnology;
+using AdAddIn.DataAccess;
 using EAAddInFramework;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,9 @@ namespace AdAddIn.Navigation
     /// </summary>
     public class GoToClassifierCommand : ICommand<Option<ContextItem>, Unit>
     {
-        private readonly IReadableAtom<EA.Repository> Repo;
+        private readonly ElementRepository Repo;
 
-        public GoToClassifierCommand(IReadableAtom<EA.Repository> repo)
+        public GoToClassifierCommand(ElementRepository repo)
         {
             Repo = repo;
         }
@@ -27,7 +28,7 @@ namespace AdAddIn.Navigation
         {
             GetClassifier(contextItem).Do(c =>
             {
-                Repo.Val.ShowInProjectView(c);
+                Repo.EA.Val.ShowInProjectView(c);
             });
 
             return Unit.Instance;
@@ -41,8 +42,8 @@ namespace AdAddIn.Navigation
         private Option<EA.Element> GetClassifier(Option<ContextItem> contextItem)
         {
             return from ci in contextItem
-                   from element in Repo.Val.TryGetElement(ci.Guid)
-                   from classifier in Repo.Val.TryGetElement(element.ClassifierID)
+                   from element in Repo.GetElement(ci.Guid)
+                   from classifier in Repo.GetClassifier(element)
                    select classifier;
         }
     }

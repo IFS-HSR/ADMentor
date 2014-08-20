@@ -64,8 +64,9 @@
     <Compile Include="ADTechnology\ElementStereotypes.cs" />
     <Compile Include="ADTechnology\Technology.cs" />
     <Compile Include="ADTechnology\Toolboxes.cs" />
+    <Compile Include="CopyMetadata\UpdateMetadataOfNewElementsCommand.cs" />
+    <Compile Include="DataAccess\ADRepository.cs" />
     <Compile Include="Navigation\GoToClassifierCommand.cs" />
-    <Compile Include="PopulateDependencies\CopyMetadataOfNewSolutionItemsCommand.cs" />
     <Compile Include="PopulateDependencies\DependencySelectorForm.cs">
       <SubType>Form</SubType>
     </Compile>

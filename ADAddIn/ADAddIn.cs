@@ -1,4 +1,6 @@
-﻿using AdAddIn.Navigation;
+﻿using AdAddIn.CopyMetadata;
+using AdAddIn.DataAccess;
+using AdAddIn.Navigation;
 using AdAddIn.PopulateDependencies;
 using AdAddIn.ADTechnology;
 using EAAddInFramework;
@@ -24,21 +26,24 @@ namespace AdAddIn
             get { return technology.Name; }
         }
 
-        public override Option<MDGTechnology> bootstrapTechnology()
+        public override Option<MDGTechnology> BootstrapTechnology()
         {
             return Options.Some(technology);
         }
 
         public override void bootstrap(IReadableAtom<EA.Repository> repository)
         {
+            var adRepository = new ElementRepository(repository);
+
+            var updateMetadataCommand = new UpdateMetadataOfNewElementsCommand(adRepository);
             var populateDependenciesCommand = new PopulateDependenciesCommand(
-                repository, new DependencySelectorForm());
+                adRepository, new DependencySelectorForm(adRepository));
 
             Register(new Menu(technology.Name,
-                new MenuItem("Go to Classifier", new GoToClassifierCommand(repository)),
+                new MenuItem("Go to Classifier", new GoToClassifierCommand(adRepository)),
                 new MenuItem("Populate Dependencies", populateDependenciesCommand.AsMenuCommand())));
 
-            OnElementCreated.Add(new CopyMetadataOfNewSolutionItemsCommand(repository));
+            OnElementCreated.Add(updateMetadataCommand);
             OnElementCreated.Add(populateDependenciesCommand.AsElementCreatedHandler());
         }
     }

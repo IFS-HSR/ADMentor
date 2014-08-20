@@ -1,4 +1,5 @@
 ﻿using AdAddIn.ADTechnology;
+using AdAddIn.DataAccess;
 using EAAddInFramework;
 using EAAddInFramework.MDGBuilder;
 using System;
@@ -20,9 +21,9 @@ namespace AdAddIn.PopulateDependencies
         /// <param name="repo"></param>
         /// <param name="solutionItem">The problem space item that has been used to instantiate this element becomes the root of the tree</param>
         /// <returns><c>None</c> if <c>solutionItem</c> has no valid classifier. Otherwise a tree representing the problem space.</returns>
-        public static Option<LabeledTree<SolutionInstantiation, EA.Connector>> Create(EA.Repository repo, EA.Element solutionItem)
+        public static Option<LabeledTree<SolutionInstantiation, EA.Connector>> Create(ElementRepository repo, EA.Element solutionItem)
         {
-            return from classifier in repo.TryGetElement(solutionItem.ClassifierID)
+            return from classifier in repo.GetElement(solutionItem.ClassifierID)
                    where classifier.Is(ElementStereotypes.Problem)
                    let problemSpace = DependencyTree.Create(repo, classifier)
                    let solution = DependencyTree.Create(repo, solutionItem)
@@ -50,16 +51,16 @@ namespace AdAddIn.PopulateDependencies
                    select LabeledTree.Edge(psEdge.Label, Compare(psEdge.Target, sEdge.Select(e => e.Target)));
         }
 
-        public static LabeledTree<SolutionInstantiation, EA.Connector> InstantiateSelectedItems(EA.Repository repo, EA.Package package, LabeledTree<SolutionInstantiation, EA.Connector> problemSpace)
+        public static LabeledTree<SolutionInstantiation, EA.Connector> InstantiateSelectedItems(ElementRepository repo, EA.Package package, LabeledTree<SolutionInstantiation, EA.Connector> problemSpace)
         {
             return problemSpace.TransformTopDown((parent, connector, child) =>
             {
                 if (!child.Instance.IsDefined && child.Selected)
                 {
                     var sourceElement = parent.Instance.Value;
-                    var targetElement = child.Element.Instanciate(package).Value;
+                    var targetElement = repo.Instanciate(child.Element, package).Value;
 
-                    var connectorSType = connector.GetStereotype().Value;
+                    var connectorSType = repo.GetStereotype(connector).Value;
                     connectorSType.Create(sourceElement, targetElement);
 
                     return child.Copy(instance: targetElement);
@@ -71,7 +72,7 @@ namespace AdAddIn.PopulateDependencies
             });
         }
 
-        public static Unit CreateDiagramElements(EA.Repository repo, EA.Diagram diagram, LabeledTree<SolutionInstantiation, EA.Connector> problemSpace)
+        public static Unit CreateDiagramElements(ElementRepository repo, EA.Diagram diagram, LabeledTree<SolutionInstantiation, EA.Connector> problemSpace)
         {
             var siblings = new Dictionary<SolutionInstantiation, int>();
 
@@ -99,7 +100,7 @@ namespace AdAddIn.PopulateDependencies
                     }
                 });
             });
-            repo.ReloadDiagram(diagram.DiagramID);
+            repo.EA.Val.ReloadDiagram(diagram.DiagramID);
 
             return Unit.Instance;
         }

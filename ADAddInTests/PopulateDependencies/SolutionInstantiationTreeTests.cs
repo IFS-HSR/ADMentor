@@ -6,6 +6,7 @@ using AdAddIn.ADTechnology;
 using EAAddInFramework;
 using Utils;
 using AdAddIn.PopulateDependencies;
+using AdAddIn.DataAccess;
 
 namespace ADAddInTests.PopulateDependencies
 {
@@ -16,6 +17,7 @@ namespace ADAddInTests.PopulateDependencies
         public void CreateSimpleSolutionInstantiationTree()
         {
             var rut = new RepositoryUnderTest();
+            var adRepo = new ElementRepository(new Atom<EA.Repository>(rut.Repo));
 
             var problemA = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
             var alternativeAA = ElementStereotypes.Option.Create(rut.TestPackage, "AA");
@@ -36,7 +38,7 @@ namespace ADAddInTests.PopulateDependencies
                 LabeledTree.Edge(cAtoAA, LabeledTree.Node(new SolutionInstantiation(alternativeAA, decision11),
                     LabeledTree.Edge(cAAtoBA, LabeledTree.Node<SolutionInstantiation, EA.Connector>(new SolutionInstantiation(alternativeBA))))));
 
-            var actualTree = SolutionInstantiationTree.Create(rut.Repo, occurrence1).Value;
+            var actualTree = SolutionInstantiationTree.Create(adRepo, occurrence1).Value;
 
             AssertEqualTree(expectedTree, actualTree);
         }
@@ -46,6 +48,7 @@ namespace ADAddInTests.PopulateDependencies
         public void CreateSolutionInstatiationTreeFromDecision()
         {
             var rut = new RepositoryUnderTest();
+            var adRepo = new ElementRepository(new Atom<EA.Repository>(rut.Repo));
 
             var problemA = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
             var alternativeAA = ElementStereotypes.Option.Create(rut.TestPackage, "AA");
@@ -60,7 +63,7 @@ namespace ADAddInTests.PopulateDependencies
                 LabeledTree.Edge(cAtoAA, LabeledTree.Node(new SolutionInstantiation(problemA),
                     LabeledTree.Edge(cAtoAB, LabeledTree.Node<SolutionInstantiation, EA.Connector>(new SolutionInstantiation(alternativeAB))))));
 
-            var actualTree = SolutionInstantiationTree.Create(rut.Repo, decision11).Value;
+            var actualTree = SolutionInstantiationTree.Create(adRepo, decision11).Value;
 
             AssertEqualTree(expectedTree, actualTree);
         }
@@ -69,6 +72,7 @@ namespace ADAddInTests.PopulateDependencies
         public void CreateTreeWithExistingInstances()
         {
             var rut = new RepositoryUnderTest();
+            var adRepo = new ElementRepository(new Atom<EA.Repository>(rut.Repo));
 
             var problemA = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
             var alternativeAA = ElementStereotypes.Option.Create(rut.TestPackage, "AA");
@@ -77,9 +81,9 @@ namespace ADAddInTests.PopulateDependencies
             var cAtoAA = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeAA);
             var cAtoAB = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeAB);
 
-            var problemOccurrence1 = problemA.Instanciate(rut.TestPackage).Value;
-            var decision11 = alternativeAA.Instanciate(rut.TestPackage).Value;
-            var decision12 = alternativeAB.Instanciate(rut.TestPackage).Value;
+            var problemOccurrence1 = adRepo.Instanciate(problemA, rut.TestPackage).Value;
+            var decision11 = adRepo.Instanciate(alternativeAA, rut.TestPackage).Value;
+            var decision12 = adRepo.Instanciate(alternativeAB, rut.TestPackage).Value;
 
             var c1to11 = ConnectorStereotypes.HasAlternative.Create(problemOccurrence1, decision11);
             var c1to12 = ConnectorStereotypes.HasAlternative.Create(problemOccurrence1, decision12);
@@ -88,7 +92,7 @@ namespace ADAddInTests.PopulateDependencies
                 LabeledTree.Edge(cAtoAA, LabeledTree.Node<SolutionInstantiation, EA.Connector>(new SolutionInstantiation(alternativeAA, decision11))),
                 LabeledTree.Edge(cAtoAB, LabeledTree.Node<SolutionInstantiation, EA.Connector>(new SolutionInstantiation(alternativeAB, decision12))));
 
-            var actualTree = SolutionInstantiationTree.Create(rut.Repo, problemOccurrence1).Value;
+            var actualTree = SolutionInstantiationTree.Create(adRepo, problemOccurrence1).Value;
 
             var classifierIds = actualTree.NodeLabels.Select(n => n.Element.ElementID).Join(",");
             var instanceIds = actualTree.NodeLabels.Select(n => n.Instance.Select(i => i.ElementID).ToString()).Join(",");

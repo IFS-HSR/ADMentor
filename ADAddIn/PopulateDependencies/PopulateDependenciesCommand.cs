@@ -1,4 +1,5 @@
 ﻿using AdAddIn.ADTechnology;
+using AdAddIn.DataAccess;
 using EAAddInFramework;
 using NLog;
 using System;
@@ -14,11 +15,11 @@ namespace AdAddIn.PopulateDependencies
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private readonly IReadableAtom<EA.Repository> Repo;
+        private readonly ElementRepository Repo;
 
         private readonly IDependencySelector Selector;
 
-        public PopulateDependenciesCommand(IReadableAtom<EA.Repository> repo, IDependencySelector selector)
+        public PopulateDependenciesCommand(ElementRepository repo, IDependencySelector selector)
         {
             Repo = repo;
             Selector = selector;
@@ -28,10 +29,10 @@ namespace AdAddIn.PopulateDependencies
         {
             var modified =
                 from currentDiagram in GetCurrentDiagramContaining(element)
-                from solution in SolutionInstantiationTree.Create(Repo.Val, element)
+                from solution in SolutionInstantiationTree.Create(Repo, element)
                 from selectedSolution in Selector.GetSelectedDependencies(solution)
-                let instantiatedSolution = SolutionInstantiationTree.InstantiateSelectedItems(Repo.Val, element.FindPackage(Repo.Val), selectedSolution)
-                let _ = SolutionInstantiationTree.CreateDiagramElements(Repo.Val, currentDiagram, instantiatedSolution)
+                let instantiatedSolution = SolutionInstantiationTree.InstantiateSelectedItems(Repo, element.FindPackage(Repo.EA.Val), selectedSolution)
+                let _ = SolutionInstantiationTree.CreateDiagramElements(Repo, currentDiagram, instantiatedSolution)
                 select EntityModified.Modified;
 
             return modified.GetOrElse(EntityModified.NotModified);
@@ -44,7 +45,7 @@ namespace AdAddIn.PopulateDependencies
 
         private Option<EA.Diagram> GetCurrentDiagramContaining(EA.Element element)
         {
-            return from diagram in Repo.Val.GetCurrentDiagram().AsOption()
+            return from diagram in Repo.EA.Val.GetCurrentDiagram().AsOption()
                    where diagram.DiagramObjects.Cast<EA.DiagramObject>().Any(o => o.ElementID == element.ElementID)
                    select diagram;
         }
@@ -52,7 +53,7 @@ namespace AdAddIn.PopulateDependencies
         public ICommand<Option<ContextItem>, object> AsMenuCommand()
         {
             return this.Adapt<Option<ContextItem>, EA.Element, object>(
-                contextItem => from ci in contextItem from e in Repo.Val.TryGetElement(ci.Guid) select e);
+                contextItem => from ci in contextItem from e in Repo.GetElement(ci.Guid) select e);
         }
 
         public ICommand<Func<EA.Element>, EntityModified> AsElementCreatedHandler()

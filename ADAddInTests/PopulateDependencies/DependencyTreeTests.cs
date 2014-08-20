@@ -8,6 +8,7 @@ using EAAddInFramework;
 using AdAddIn.PopulateDependencies;
 using Utils;
 using System.IO;
+using AdAddIn.DataAccess;
 
 namespace ADAddInTest.PopulateDependencies
 {
@@ -18,6 +19,7 @@ namespace ADAddInTest.PopulateDependencies
         public void DontFollowCycles()
         {
             var rut = new RepositoryUnderTest();
+            var adRepo = new ElementRepository(new Atom<EA.Repository>(rut.Repo));
 
             var a = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
             var b = ElementStereotypes.Problem.Create(rut.TestPackage, "B");
@@ -30,13 +32,14 @@ namespace ADAddInTest.PopulateDependencies
             var expectedTree = LabeledTree.Node(a,
                 LabeledTree.Edge(cAtoB, LabeledTree.Node(b,
                     LabeledTree.Edge(cBtoC, LabeledTree.Node<EA.Element, EA.Connector>(c)))));
-            AssertEqualTree(expectedTree, DependencyTree.Create(rut.Repo, a, levels: 100));
+            AssertEqualTree(expectedTree, DependencyTree.Create(adRepo, a, levels: 100));
         }
 
         [TestMethod]
         public void FindAlternativesForProblem()
         {
             var rut = new RepositoryUnderTest();
+            var adRepo = new ElementRepository(new Atom<EA.Repository>(rut.Repo));
 
             var problemA = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
             var alternativeA = ElementStereotypes.Option.Create(rut.TestPackage, "AA");
@@ -48,16 +51,17 @@ namespace ADAddInTest.PopulateDependencies
             var expectedTree = LabeledTree.Node(problemA,
                 LabeledTree.Edge(cA, LabeledTree.Node<EA.Element, EA.Connector>(alternativeA)),
                 LabeledTree.Edge(cB, LabeledTree.Node<EA.Element, EA.Connector>(alternativeB)));
-            AssertEqualTree(expectedTree, DependencyTree.Create(rut.Repo, problemA));
+            AssertEqualTree(expectedTree, DependencyTree.Create(adRepo, problemA));
 
             var singleNodeTree = LabeledTree.Node<EA.Element, EA.Connector>(problemA);
-            AssertEqualTree(singleNodeTree, DependencyTree.Create(rut.Repo, problemA, levels: 0));
+            AssertEqualTree(singleNodeTree, DependencyTree.Create(adRepo, problemA, levels: 0));
         }
 
         [TestMethod]
         public void FindIncludedProblemWithAlternatives()
         {
             var rut = new RepositoryUnderTest();
+            var adRepo = new ElementRepository(new Atom<EA.Repository>(rut.Repo));
 
             var problemA = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
             var problemB = ElementStereotypes.Problem.Create(rut.TestPackage, "B");
@@ -69,17 +73,18 @@ namespace ADAddInTest.PopulateDependencies
             var expectedFromA = LabeledTree.Node(problemA,
                 LabeledTree.Edge(cAtoB, LabeledTree.Node(problemB,
                     LabeledTree.Edge(cBtoBA, LabeledTree.Node<EA.Element, EA.Connector>(alternativeBA)))));
-            AssertEqualTree(expectedFromA, DependencyTree.Create(rut.Repo, problemA));
+            AssertEqualTree(expectedFromA, DependencyTree.Create(adRepo, problemA));
 
             var expectedFromB = LabeledTree.Node(problemB,
                 LabeledTree.Edge(cBtoBA, LabeledTree.Node<EA.Element, EA.Connector>(alternativeBA)));
-            AssertEqualTree(expectedFromB, DependencyTree.Create(rut.Repo, problemB));
+            AssertEqualTree(expectedFromB, DependencyTree.Create(adRepo, problemB));
         }
 
         [TestMethod]
         public void FindBoundAlternative()
         {
             var rut = new RepositoryUnderTest();
+            var adRepo = new ElementRepository(new Atom<EA.Repository>(rut.Repo));
 
             var problemA = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
             var alternativeAA = ElementStereotypes.Option.Create(rut.TestPackage, "AA");
@@ -93,18 +98,19 @@ namespace ADAddInTest.PopulateDependencies
             var expectedFromA = LabeledTree.Node(problemA,
                 LabeledTree.Edge(cAtoAA, LabeledTree.Node(alternativeAA,
                     LabeledTree.Edge(cAAtoBA, LabeledTree.Node<EA.Element, EA.Connector>(alternativeBA)))));
-            AssertEqualTree(expectedFromA, DependencyTree.Create(rut.Repo, problemA));
+            AssertEqualTree(expectedFromA, DependencyTree.Create(adRepo, problemA));
 
             var expectedFromB = LabeledTree.Node(problemB,
                 LabeledTree.Edge(cBtoBA, LabeledTree.Node(alternativeBA,
                     LabeledTree.Edge(cAAtoBA, LabeledTree.Node<EA.Element, EA.Connector>(alternativeAA)))));
-            AssertEqualTree(expectedFromB, DependencyTree.Create(rut.Repo, problemB));
+            AssertEqualTree(expectedFromB, DependencyTree.Create(adRepo, problemB));
         }
 
         [TestMethod]
         public void EnumerateDependencies()
         {
             var rut = new RepositoryUnderTest();
+            var adRepo = new ElementRepository(new Atom<EA.Repository>(rut.Repo));
 
             var problemA = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
             var alternativeAA = ElementStereotypes.Option.Create(rut.TestPackage, "AA");
@@ -114,7 +120,7 @@ namespace ADAddInTest.PopulateDependencies
             var cAAtoBA = ConnectorStereotypes.BoundTo.Create(alternativeAA, alternativeBA);
 
             var expectedOrder = "A,AA,BA";
-            var actualOrder = DependencyTree.Create(rut.Repo, problemA).NodeLabels.Select(e => e.Name).Join(",");
+            var actualOrder = DependencyTree.Create(adRepo, problemA).NodeLabels.Select(e => e.Name).Join(",");
 
             Assert.AreEqual(expectedOrder, actualOrder);
         }

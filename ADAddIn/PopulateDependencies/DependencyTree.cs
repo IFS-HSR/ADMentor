@@ -11,6 +11,7 @@ using Utils;
 
 namespace AdAddIn.PopulateDependencies
 {
+    using AdAddIn.DataAccess;
     using EdgeFilter = Func<EA.Element, EA.Element, EA.Connector, bool>;
 
     public static class DependencyTree
@@ -25,12 +26,12 @@ namespace AdAddIn.PopulateDependencies
         /// <param name="rootNode">Start node that becomes the root of the dependency tree</param>
         /// <param name="edgeFilter">The strategy used to traverse the graph</param>
         /// <param name="levels">Maximum numbers of levels created in the dependency tree</param>
-        public static LabeledTree<EA.Element, EA.Connector> Create(EA.Repository repo, EA.Element rootNode, EdgeFilter edgeFilter = null, int levels = 3)
+        public static LabeledTree<EA.Element, EA.Connector> Create(ElementRepository repo, EA.Element rootNode, EdgeFilter edgeFilter = null, int levels = 3)
         {
             return Create(repo, rootNode, edgeFilter ?? TraverseOnlyADConnectors, levels, ImmutableHashSet<String>.Empty);
         }
 
-        private static LabeledTree<EA.Element, EA.Connector> Create(EA.Repository repo, EA.Element rootNode, EdgeFilter edgeFilter, int levels, IImmutableSet<String> visitedElementGuids)
+        private static LabeledTree<EA.Element, EA.Connector> Create(ElementRepository repo, EA.Element rootNode, EdgeFilter edgeFilter, int levels, IImmutableSet<String> visitedElementGuids)
         {
             var children = from c in rootNode.Connectors.Cast<EA.Connector>()
                            from child in DescendTo(repo, rootNode, c, edgeFilter, levels, visitedElementGuids.Add(rootNode.ElementGUID))
@@ -38,12 +39,12 @@ namespace AdAddIn.PopulateDependencies
             return LabeledTree.Node<EA.Element, EA.Connector>(rootNode, children);
         }
 
-        private static Option<LabeledTree<EA.Element, EA.Connector>.Edge> DescendTo(EA.Repository repo, EA.Element source, EA.Connector c, EdgeFilter edgeFilter, int levels, IImmutableSet<String> visitedElementGuids)
+        private static Option<LabeledTree<EA.Element, EA.Connector>.Edge> DescendTo(ElementRepository repo, EA.Element source, EA.Connector c, EdgeFilter edgeFilter, int levels, IImmutableSet<String> visitedElementGuids)
         {
             if (levels > 0)
             {
                 var targetId = c.ClientID == source.ElementID ? c.SupplierID : c.ClientID;
-                return from target in repo.TryGetElement(targetId)
+                return from target in repo.GetElement(targetId)
                        where !visitedElementGuids.Contains(target.ElementGUID) && edgeFilter(source, target, c)
                        select LabeledTree.Edge(c, Create(repo, target, edgeFilter, levels - 1, visitedElementGuids));
             }

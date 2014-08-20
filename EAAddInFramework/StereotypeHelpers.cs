@@ -98,22 +98,5 @@ namespace EAAddInFramework
                 return e;
             });
         }
-
-        public static Option<ConnectorStereotype> GetStereotype(this EA.Connector c)
-        {
-            return ConnectorStereotype.Instances.FirstOption(stype => c.Stereotype == stype.Name);
-        }
-
-        public static Option<ElementStereotype> GetStereotype(this EA.Element e)
-        {
-            return ElementStereotype.Instances.FirstOption(stype => e.Stereotype == stype.Name);
-        }
-
-        public static Option<EA.Element> Instanciate(this EA.Element classifier, EA.Package package)
-        {
-            return from stype in classifier.GetStereotype()
-                   from instance in stype.Instanciate(classifier, package)
-                   select instance;
-        }
     }
 }

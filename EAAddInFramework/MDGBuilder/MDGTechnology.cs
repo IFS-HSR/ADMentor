@@ -34,7 +34,7 @@ namespace EAAddInFramework.MDGBuilder
 
         public IEnumerable<ModelTemplate> ModelTemplates { get; private set; }
 
-        IEnumerable<IStereotype> Stereotypes
+        public IEnumerable<IStereotype> Stereotypes
         {
             get
             {
