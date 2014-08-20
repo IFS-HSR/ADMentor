@@ -1,5 +1,6 @@
 ﻿using AdAddIn.Navigation;
 using AdAddIn.PopulateDependencies;
+using AdAddIn.ADTechnology;
 using EAAddInFramework;
 using EAAddInFramework.MDGBuilder;
 using NLog;

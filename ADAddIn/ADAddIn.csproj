@@ -37,10 +37,9 @@
     <AssemblyOriginatorKeyFile>admentor.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Interop.EA, Version=2.10.0.0, Culture=neutral, PublicKeyToken=fe3452214e5feba0, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Interop.EA">
+      <HintPath>..\Interop.EA.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
-      <HintPath>..\packages\Interop.EA.2.10.238.1\Interop.EA.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
@@ -95,7 +94,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ADTechnology\Decision.bmp" />
+    <EmbeddedResource Include="ADTechnology\OptionOccurrence.bmp" />
     <EmbeddedResource Include="ADTechnology\ProblemOccurrence.bmp" />
     <EmbeddedResource Include="ADTechnology\ProblemSpaceTemplate.xml" />
     <EmbeddedResource Include="ADTechnology\SolutionOverviewTemplate.xml" />
