@@ -18,17 +18,19 @@ namespace AdAddIn.Navigation
     public class GoToClassifierCommand : ICommand<Option<ContextItem>, Unit>
     {
         private readonly ElementRepository Repo;
+        private readonly IReadableAtom<EA.Repository> EARepo;
 
-        public GoToClassifierCommand(ElementRepository repo)
+        public GoToClassifierCommand(ElementRepository repo, IReadableAtom<EA.Repository> eaRepo)
         {
             Repo = repo;
+            EARepo = eaRepo;
         }
 
         public Unit Execute(Option<ContextItem> contextItem)
         {
             GetClassifier(contextItem).Do(c =>
             {
-                Repo.EA.Val.ShowInProjectView(c);
+                EARepo.Val.ShowInProjectView(c);
             });
 
             return Unit.Instance;

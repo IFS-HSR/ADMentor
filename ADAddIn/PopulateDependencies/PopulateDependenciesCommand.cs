@@ -19,9 +19,12 @@ namespace AdAddIn.PopulateDependencies
 
         private readonly IDependencySelector Selector;
 
-        public PopulateDependenciesCommand(ElementRepository repo, IDependencySelector selector)
+        private readonly DiagramRepository DiagramRepo;
+
+        public PopulateDependenciesCommand(ElementRepository repo, DiagramRepository diagramRepo, IDependencySelector selector)
         {
             Repo = repo;
+            DiagramRepo = diagramRepo;
             Selector = selector;
         }
 
@@ -31,8 +34,9 @@ namespace AdAddIn.PopulateDependencies
                 from currentDiagram in GetCurrentDiagramContaining(element)
                 from solution in SolutionInstantiationTree.Create(Repo, element)
                 from selectedSolution in Selector.GetSelectedDependencies(solution)
-                let instantiatedSolution = SolutionInstantiationTree.InstantiateSelectedItems(Repo, element.FindPackage(Repo.EA.Val), selectedSolution)
-                let _ = SolutionInstantiationTree.CreateDiagramElements(Repo, currentDiagram, instantiatedSolution)
+                let targetPackage = Repo.FindPackageContaining(element)
+                let instantiatedSolution = SolutionInstantiationTree.InstantiateSelectedItems(Repo, targetPackage, selectedSolution)
+                let _ = SolutionInstantiationTree.CreateDiagramElements(Repo, DiagramRepo, currentDiagram, instantiatedSolution)
                 select EntityModified.Modified;
 
             return modified.GetOrElse(EntityModified.NotModified);
@@ -45,8 +49,8 @@ namespace AdAddIn.PopulateDependencies
 
         private Option<EA.Diagram> GetCurrentDiagramContaining(EA.Element element)
         {
-            return from diagram in Repo.EA.Val.GetCurrentDiagram().AsOption()
-                   where diagram.DiagramObjects.Cast<EA.DiagramObject>().Any(o => o.ElementID == element.ElementID)
+            return from diagram in DiagramRepo.GetCurrentDiagram()
+                   where DiagramRepo.Contains(diagram, element)
                    select diagram;
         }
 

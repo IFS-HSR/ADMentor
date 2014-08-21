@@ -15,12 +15,12 @@ namespace AdAddIn.DataAccess
     /// </summary>
     public class ElementRepository
     {
+        private readonly IReadableAtom<EA.Repository> EA;
+
         public ElementRepository(IReadableAtom<EA.Repository> ea)
         {
             EA = ea;
         }
-
-        public IReadableAtom<EA.Repository> EA { get; private set; }
 
         public MDGTechnology Technology { get { return ADTechnology.Technologies.AD; } }
 
@@ -54,6 +54,11 @@ namespace AdAddIn.DataAccess
                     where stype is ConnectorStereotype
                     where stype.Name == e.Stereotype
                     select stype as ConnectorStereotype).FirstOption();
+        }
+
+        public EA.Package FindPackageContaining(EA.Element e)
+        {
+            return e.FindPackage(EA.Val);
         }
 
         public Utils.Option<EA.Element> Instanciate(EA.Element classifier, EA.Package package)

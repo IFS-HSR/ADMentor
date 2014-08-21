@@ -31,16 +31,17 @@ namespace AdAddIn
             return Options.Some(technology);
         }
 
-        public override void bootstrap(IReadableAtom<EA.Repository> repository)
+        public override void bootstrap(IReadableAtom<EA.Repository> eaRepository)
         {
-            var adRepository = new ElementRepository(repository);
+            var elementRepository = new ElementRepository(eaRepository);
+            var diagreamRepository = new DiagramRepository(eaRepository);
 
-            var updateMetadataCommand = new UpdateMetadataOfNewElementsCommand(adRepository);
+            var updateMetadataCommand = new UpdateMetadataOfNewElementsCommand(elementRepository);
             var populateDependenciesCommand = new PopulateDependenciesCommand(
-                adRepository, new DependencySelectorForm(adRepository));
+                elementRepository, diagreamRepository, new DependencySelectorForm(elementRepository));
 
             Register(new Menu(technology.Name,
-                new MenuItem("Go to Classifier", new GoToClassifierCommand(adRepository)),
+                new MenuItem("Go to Classifier", new GoToClassifierCommand(elementRepository, eaRepository)),
                 new MenuItem("Populate Dependencies", populateDependenciesCommand.AsMenuCommand())));
 
             OnElementCreated.Add(updateMetadataCommand);

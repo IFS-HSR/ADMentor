@@ -72,7 +72,7 @@ namespace AdAddIn.PopulateDependencies
             });
         }
 
-        public static Unit CreateDiagramElements(ElementRepository repo, EA.Diagram diagram, LabeledTree<SolutionInstantiation, EA.Connector> problemSpace)
+        public static Unit CreateDiagramElements(ElementRepository repo, DiagramRepository diagramRepo, EA.Diagram diagram, LabeledTree<SolutionInstantiation, EA.Connector> problemSpace)
         {
             var siblings = new Dictionary<SolutionInstantiation, int>();
 
@@ -82,25 +82,22 @@ namespace AdAddIn.PopulateDependencies
 
                 child.Instance.Do(instance =>
                 {
-                    if (!diagram.DiagramObjects.Cast<EA.DiagramObject>().Any(o => o.ElementID == instance.ElementID))
+                    if (!diagramRepo.FindDiagramObject(diagram, instance).IsDefined)
                     {
-                        var parentObject = diagram.DiagramObjects.Cast<EA.DiagramObject>().First(o => o.ElementID == parent.Instance.Value.ElementID);
+                        var parentObject = diagramRepo.FindDiagramObject(diagram, parent.Instance.Value).Value;
+
                         var verticalOffset = leftHandSiblings * 110 - 40;
                         var horizontalOffset = -200 - leftHandSiblings * 20;
-                        var pos = String.Format("l={0};r={1};t={2};b={3};",
-                            parentObject.left + verticalOffset, parentObject.right + verticalOffset,
-                            parentObject.top + horizontalOffset, parentObject.bottom + horizontalOffset);
 
-                        var obj = diagram.DiagramObjects.AddNew(pos, "") as EA.DiagramObject;
-                        obj.ElementID = instance.ElementID;
-                        obj.Update();
-                        diagram.DiagramObjects.Refresh();
+                        diagramRepo.AddToDiagram(diagram, instance,
+                            parentObject.left + verticalOffset, parentObject.top + horizontalOffset,
+                            parentObject.right - parentObject.left, parentObject.bottom - parentObject.top);
 
                         siblings[parent] = leftHandSiblings + 1;
                     }
                 });
             });
-            repo.EA.Val.ReloadDiagram(diagram.DiagramID);
+            diagramRepo.ReloadDiagram(diagram);
 
             return Unit.Instance;
         }
