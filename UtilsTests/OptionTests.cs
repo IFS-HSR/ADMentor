@@ -15,15 +15,12 @@ namespace UtilsTests
             var none = Options.None<int>();
             var some0 = Options.Some(0);
             var some12 = Options.Some(12);
-            Assert.IsTrue(none.Equals(none));
-            Assert.IsTrue(some12.Equals(some12));
-            Assert.IsFalse(none.Equals(some0));
-            Assert.IsFalse(some0.Equals(none));
+            Assert.IsTrue(none.IsEqualTo(none));
+            Assert.IsTrue(some12.IsEqualTo(some12));
+            Assert.IsFalse(none.IsEqualTo(some0));
+            Assert.IsFalse(some0.IsEqualTo(none));
 
-            Assert.IsTrue(some12.Equals(some0.Select(n => n + 12)));
-
-            Assert.IsTrue(some12 == some0.Select(n => n + 12));
-            Assert.IsTrue(some12 != some0);
+            Assert.IsTrue(some12.IsEqualTo(some0.Select(n => n + 12)));
         }
 
         [TestMethod]
@@ -36,7 +33,7 @@ namespace UtilsTests
         [TestMethod]
         public void TestSomethingAsOptionIsDefined()
         {
-            Assert.AreEqual(Options.Some("bird"), "bird".AsOption());
+            Assert.IsTrue(Options.Some("bird").IsEqualTo("bird".AsOption()));
         }
 
         [TestMethod]
@@ -45,7 +42,7 @@ namespace UtilsTests
             var res = from n in Options.Some(7)
                       where n > 5
                       select n * 6;
-            Assert.AreEqual(Options.Some(42), res);
+            Assert.IsTrue(Options.Some(42).IsEqualTo(res));
         }
 
         [TestMethod]
@@ -63,7 +60,7 @@ namespace UtilsTests
             var res = from n in Options.Some("hi")
                       from m in Options.Some("!")
                       select n + m;
-            Assert.AreEqual(Options.Some("hi!"), res);
+            Assert.IsTrue(Options.Some("hi!").IsEqualTo(res));
         }
 
         [TestMethod]
@@ -72,7 +69,7 @@ namespace UtilsTests
             var res = from n in Options.Some(123)
                       from s in Options.Some("abc")
                       select n + s.Length == 126;
-            Assert.AreEqual(Options.Some(true), res);
+            Assert.IsTrue(Options.Some(true).IsEqualTo(res));
         }
 
         [TestMethod]

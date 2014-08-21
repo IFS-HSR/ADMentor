@@ -8,30 +8,42 @@ using System.Threading.Tasks;
 namespace Utils
 {
     [TypeConverter(typeof(OptionConverter))]
-    public class Option<T> : IEnumerable<T>, IEquatable<Option<T>>
+    public interface Option<out T> : IEnumerable<T>
+    {
+        bool IsDefined { get; }
+        T Value { get; }
+        T2 Match<T2>(Func<T, T2> then, Func<T2> els);
+    }
+
+    class OptionImpl<T> : Option<T>
     {
         private readonly T value;
-        public readonly bool IsDefined;
+        private readonly bool isDefined;
 
-        internal Option()
+        internal OptionImpl()
         {
             value = default(T);
-            IsDefined = false;
+            isDefined = false;
         }
 
-        internal Option(T v)
+        internal OptionImpl(T v)
         {
             value = v;
-            IsDefined = true;
+            isDefined = true;
         }
 
-        internal static readonly Option<T> None = new Option<T>();
+        internal static readonly Option<T> None = new OptionImpl<T>();
+
+        public bool IsDefined
+        {
+            get { return isDefined; }
+        }
 
         public T Value
         {
             get
             {
-                if (IsDefined)
+                if (isDefined)
                     return value;
                 else
                     throw new InvalidOperationException("Get Value of None");
@@ -40,7 +52,7 @@ namespace Utils
 
         public T2 Match<T2>(Func<T, T2> then, Func<T2> els)
         {
-            if (IsDefined)
+            if (isDefined)
                 return then(Value);
             else
                 return els();
@@ -58,7 +70,7 @@ namespace Utils
 
         private IEnumerable<T> ToEnumerable()
         {
-            if (IsDefined)
+            if (isDefined)
                 yield return Value;
             else
                 yield break;
@@ -69,37 +81,6 @@ namespace Utils
             return Match(
                 v => String.Format("Some({0})", v),
                 () => "None");
-        }
-
-        public override bool Equals(object o)
-        {
-            if (o != null && o is Option<T>)
-            {
-                return Equals(o as Option<T>);
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public bool Equals(Option<T> other)
-        {
-            return Match(
-                v1 => other.Match(
-                    v2 => v1.Equals(v2),
-                    () => false),
-                () => !other.IsDefined);
-        }
-
-        public static bool operator ==(Option<T> a, Option<T> b)
-        {
-            return a.Equals(b);
-        }
-
-        public static bool operator !=(Option<T> a, Option<T> b)
-        {
-            return !(a == b);
         }
 
         public override int GetHashCode()
@@ -114,12 +95,12 @@ namespace Utils
     {
         public static Option<T> Some<T>(T v)
         {
-            return new Option<T>(v);
+            return new OptionImpl<T>(v);
         }
 
         public static Option<T> None<T>()
         {
-            return Option<T>.None;
+            return OptionImpl<T>.None;
         }
 
         public static Option<T> Try<T>(Func<T> fn)
@@ -137,7 +118,7 @@ namespace Utils
 
     public static class OptionExtensions
     {
-        public static Option<T> AsOption<T>(this Nullable<T> value) where T: struct
+        public static Option<T> AsOption<T>(this Nullable<T> value) where T : struct
         {
             if (value.HasValue)
                 return Options.Some(value.Value);
@@ -214,6 +195,19 @@ namespace Utils
                     return Options.None<T>();
             });
         }
+
+        public static bool IsEqualTo<T>(this Option<T> opt, Option<T> other)
+        {
+            return opt.Match(
+                v =>
+                {
+                    return other.IsDefined && v.Equals(other.Value);
+                },
+                () =>
+                {
+                    return !other.IsDefined;
+                });
+        }
     }
 
     public static class EnumerableOptionUtils
@@ -225,7 +219,8 @@ namespace Utils
 
         public static Option<T> FirstOption<T>(this IEnumerable<T> elements, Func<T, Boolean> predicate)
         {
-            foreach(var e in elements){
+            foreach (var e in elements)
+            {
                 if (predicate(e))
                 {
                     return Options.Some(e);
