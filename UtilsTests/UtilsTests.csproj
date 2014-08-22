@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DirectedLabeledGraphTests.cs" />
     <Compile Include="LabeledTreeTests.cs" />
     <Compile Include="OptionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
