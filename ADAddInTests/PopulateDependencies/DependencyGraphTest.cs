@@ -118,12 +118,15 @@ namespace ADAddInTests.PopulateDependencies
             {
                 Assert.AreEqual(expectedGraph.Edges.Count(), actualGraph.Edges.Count());
 
+                var ec = new DependencyGraph.ElementComparer();
+                var cc = new DependencyGraph.ConnectorComparer();
+
                 expectedGraph.Edges.ForEach(expectedEdge =>
                 {
                     Assert.IsTrue(actualGraph.Edges.Any(actualEdge =>
-                        DependencyGraph.CompareElements(expectedEdge.Item1, actualEdge.Item1)
-                        && DependencyGraph.CompareConnectors(expectedEdge.Item2, actualEdge.Item2)
-                        && DependencyGraph.CompareElements(expectedEdge.Item3, actualEdge.Item3)));
+                        ec.Equals(expectedEdge.Item1, actualEdge.Item1)
+                        && cc.Equals(expectedEdge.Item2, actualEdge.Item2)
+                        && ec.Equals(expectedEdge.Item3, actualEdge.Item3)));
                 });
             }
         }

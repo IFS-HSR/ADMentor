@@ -9,18 +9,20 @@ namespace Utils
 {
     public class DirectedLabeledGraph<NodeLabel, EdgeLabel>
     {
-        private readonly Func<NodeLabel, NodeLabel, bool> CompareNodes;
+        private readonly IEqualityComparer<NodeLabel> NodeComparer;
 
-        private readonly Func<EdgeLabel, EdgeLabel, bool> CompareEdges;
+        private readonly IEqualityComparer<EdgeLabel> EdgeComparer;
 
-        public DirectedLabeledGraph(Func<NodeLabel, NodeLabel, bool> compareNodes = null, Func<EdgeLabel, EdgeLabel, bool> compareEdges = null)
-            : this(ImmutableList.Create<Node>(), compareNodes, compareEdges) { }
+        public DirectedLabeledGraph(IEqualityComparer<NodeLabel> nodeComparer = null, IEqualityComparer<EdgeLabel> edgeComparer = null)
+            : this(ImmutableList.Create<Node>(), nodeComparer, edgeComparer) { }
 
-        internal DirectedLabeledGraph(IImmutableList<Node> nodes, Func<NodeLabel, NodeLabel, bool> compareNodes = null, Func<EdgeLabel, EdgeLabel, bool> compareEdges = null)
+        internal DirectedLabeledGraph(IImmutableList<Node> nodes, 
+            IEqualityComparer<NodeLabel> nodeComparer = null,
+            IEqualityComparer<EdgeLabel> edgeComparer = null)
         {
             Nodes = nodes;
-            CompareNodes = compareNodes ?? ((a, b) => a.Equals(b));
-            CompareEdges = compareEdges ?? ((a, b) => a.Equals(b));
+            NodeComparer = nodeComparer ?? EqualityComparer<NodeLabel>.Default;
+            EdgeComparer = edgeComparer ?? EqualityComparer<EdgeLabel>.Default;
         }
 
         internal IImmutableList<Node> Nodes { get; private set; }
@@ -80,28 +82,28 @@ namespace Utils
 
         private class NodeEqualityComparer : IEqualityComparer<Node>
         {
-            private readonly Func<NodeLabel, NodeLabel, bool> CompareNodes;
+            private readonly IEqualityComparer<NodeLabel> NodeComparer;
 
-            public NodeEqualityComparer(Func<NodeLabel, NodeLabel, bool> compareNodes)
+            public NodeEqualityComparer(IEqualityComparer<NodeLabel> nodeComparer)
             {
-                CompareNodes = compareNodes;
+                NodeComparer = nodeComparer;
             }
 
             public bool Equals(Node x, Node y)
             {
-                return CompareNodes(x.Label, y.Label);
+                return NodeComparer.Equals(x.Label, y.Label);
             }
 
             public int GetHashCode(Node obj)
             {
-                return obj.Label.GetHashCode();
+                return NodeComparer.GetHashCode(obj.Label);
             }
         }
 
         public void TraverseEdgesBF(NodeLabel startLabel, Action<NodeLabel, EdgeLabel, NodeLabel> act)
         {
-            var startNode = Nodes.FirstOption(n => CompareNodes(n.Label, startLabel)).Value;
-            var visitedNodes = new HashSet<Node>(new NodeEqualityComparer(CompareNodes));
+            var startNode = Nodes.FirstOption(n => NodeComparer.Equals(n.Label, startLabel)).Value;
+            var visitedNodes = new HashSet<Node>(new NodeEqualityComparer(NodeComparer));
             TraverseEdgesBF(startNode, act, visitedNodes);
         }
 
@@ -111,7 +113,7 @@ namespace Utils
             source.Edges.ForEach(edge =>
             {
                 act(source.Label, edge.Label, edge.TargetLabel);
-                var targetNode = Nodes.First(n => CompareNodes(n.Label, edge.TargetLabel));
+                var targetNode = Nodes.First(n => NodeComparer.Equals(n.Label, edge.TargetLabel));
                 if (!visitedNodes.Contains(targetNode))
                 {
                     TraverseEdgesBF(targetNode, act, visitedNodes);
@@ -119,33 +121,35 @@ namespace Utils
             });
         }
 
-        public DirectedLabeledGraph<N, EdgeLabel> MapNodeLabels<N>(Func<NodeLabel, N> fn, Func<N, N, bool> compareNodes = null)
+        public DirectedLabeledGraph<NodeLabel, EdgeLabel> MapNodeLabels(Func<NodeLabel, NodeLabel> fn)
         {
-            var mapped = Nodes.ToImmutableDictionary(n => n.Label, n => fn(n.Label));
+            return MapNodeLabels<NodeLabel>(fn, NodeComparer);
+        }
 
-            var mappedGraph = new DirectedLabeledGraph<N, EdgeLabel>(compareNodes, CompareEdges);
+        public DirectedLabeledGraph<N, EdgeLabel> MapNodeLabels<N>(Func<NodeLabel, N> fn, IEqualityComparer<N> nodeComparer = null)
+        {
+            var mappedNodes = Nodes.ToImmutableDictionary(n => n.Label, n => fn(n.Label), NodeComparer);
 
-            Edges.ForEach(e =>
+            return Edges.Aggregate(new DirectedLabeledGraph<N, EdgeLabel>(nodeComparer, EdgeComparer), (graph, edge) =>
             {
-                mappedGraph = mappedGraph.Connect(mapped[e.Item1], e.Item2, mapped[e.Item3]);
+                return graph.Connect(mappedNodes[edge.Item1], edge.Item2, mappedNodes[edge.Item3]);
             });
-
-            return mappedGraph;
         }
 
         public DirectedLabeledGraph<NodeLabel, EdgeLabel> Connect(NodeLabel sourceLabel, EdgeLabel edgeLabel, NodeLabel targetLabel)
         {
-            var target = Nodes.FirstOption(n => CompareNodes(n.Label, targetLabel)).GetOrElse(new Node(targetLabel));
+            var target = Nodes.FirstOption(n => NodeComparer.Equals(n.Label, targetLabel))
+                .GetOrElse(new Node(targetLabel));
             var edge = new Edge(edgeLabel, targetLabel);
-            var source = Nodes.FirstOption(n => CompareNodes(n.Label, sourceLabel))
+            var source = Nodes.FirstOption(n => NodeComparer.Equals(n.Label, sourceLabel))
                 .GetOrElse(new Node(sourceLabel));
 
-            if (!source.Edges.Any(e => CompareEdges(e.Label, edgeLabel)))
+            if (!source.Edges.Any(e => EdgeComparer.Equals(e.Label, edgeLabel)))
             {
                 var newSource = new Node(source.Label, source.Edges.Concat(new[] { edge }));
-                var newNodes = Nodes.RemoveAll(n => CompareNodes(n.Label, sourceLabel) || CompareNodes(n.Label, targetLabel));
+                var newNodes = Nodes.RemoveAll(n => NodeComparer.Equals(n.Label, sourceLabel) || NodeComparer.Equals(n.Label, targetLabel));
 
-                return new DirectedLabeledGraph<NodeLabel, EdgeLabel>(newNodes.Add(newSource).Add(target), CompareNodes, CompareEdges);
+                return new DirectedLabeledGraph<NodeLabel, EdgeLabel>(newNodes.Add(newSource).Add(target), NodeComparer, EdgeComparer);
             }
             else
             {
@@ -156,9 +160,10 @@ namespace Utils
 
     public static class DirectedLabeledGraph
     {
-        public static DirectedLabeledGraph<N, E> Create<N, E>(Func<N, N, bool> compareNodes, Func<E, E, bool> compareEdges, params Tuple<N, E, N>[] edges)
+        public static DirectedLabeledGraph<N, E> Create<N, E>(IEqualityComparer<N> nodeComparer, 
+            IEqualityComparer<E> edgeComparer, params Tuple<N, E, N>[] edges)
         {
-            return edges.Aggregate(new DirectedLabeledGraph<N, E>(compareNodes, compareEdges), (graph, edge) =>
+            return edges.Aggregate(new DirectedLabeledGraph<N, E>(nodeComparer, edgeComparer), (graph, edge) =>
             {
                 return graph.Connect(edge.Item1, edge.Item2, edge.Item3);
             });

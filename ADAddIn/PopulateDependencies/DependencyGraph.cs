@@ -12,20 +12,36 @@ namespace AdAddIn.PopulateDependencies
 {
     public static class DependencyGraph
     {
-        public static bool CompareElements(EA.Element a, EA.Element b)
+        public class ElementComparer : IEqualityComparer<EA.Element>
         {
-            return a.ElementGUID == b.ElementGUID;
+            public bool Equals(EA.Element x, EA.Element y)
+            {
+                return x.ElementGUID == y.ElementGUID;
+            }
+
+            public int GetHashCode(EA.Element obj)
+            {
+                return obj.ElementGUID.GetHashCode();
+            }
         }
 
-        public static bool CompareConnectors(EA.Connector a, EA.Connector b)
+        public class ConnectorComparer : IEqualityComparer<EA.Connector>
         {
-            return a.ConnectorGUID == b.ConnectorGUID;
+            public bool Equals(EA.Connector x, EA.Connector y)
+            {
+                return x.ConnectorGUID == y.ConnectorGUID;
+            }
+
+            public int GetHashCode(EA.Connector obj)
+            {
+                return obj.ConnectorGUID.GetHashCode();
+            }
         }
 
         public static DirectedLabeledGraph<EA.Element, EA.Connector> Create(ElementRepository repo, EA.Element rootNode,
             Func<EA.Element, EA.Connector, EA.Element, bool> edgeFilter)
         {
-            return Create(repo, rootNode, new DirectedLabeledGraph<EA.Element, EA.Connector>(), edgeFilter);
+            return Create(repo, rootNode, new DirectedLabeledGraph<EA.Element, EA.Connector>(new ElementComparer(), new ConnectorComparer()), edgeFilter);
         }
 
         private static DirectedLabeledGraph<EA.Element, EA.Connector> Create(ElementRepository repo, EA.Element source,
@@ -40,7 +56,7 @@ namespace AdAddIn.PopulateDependencies
             return targets.Aggregate(dependencyGraph, (graph, edge) =>
             {
                 var connected = graph.Connect(edge.Item1, edge.Item2, edge.Item3);
-                if (graph.NodeLabels.Any(nl => CompareElements(nl, edge.Item3)))
+                if (graph.NodeLabels.Any(nl => nl.ElementGUID == edge.Item3.ElementGUID))
                 {
                     return connected;
                 }

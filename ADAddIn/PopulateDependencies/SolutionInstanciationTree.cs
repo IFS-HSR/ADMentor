@@ -35,7 +35,7 @@ namespace AdAddIn.PopulateDependencies
             return solution.Match(s =>
             {
                 var edges = Compare(problemSpace.Edges, s.Edges);
-                return LabeledTree.Node(new SolutionInstantiation(problemSpace.Label, s.Label), edges);
+                return LabeledTree.Node(new SolutionInstantiation(problemSpace.Label, s.Label.AsOption()), edges);
             }, () =>
             {
                 var edges = from edge in problemSpace.Edges
@@ -63,7 +63,7 @@ namespace AdAddIn.PopulateDependencies
                     var connectorSType = repo.GetStereotype(connector).Value;
                     connectorSType.Create(sourceElement, targetElement);
 
-                    return child.Copy(instance: targetElement);
+                    return child.Copy(instance: targetElement.AsOption());
                 }
                 else
                 {
@@ -100,35 +100,6 @@ namespace AdAddIn.PopulateDependencies
             diagramRepo.ReloadDiagram(diagram);
 
             return Unit.Instance;
-        }
-    }
-
-    public class SolutionInstantiation : IEquatable<SolutionInstantiation>
-    {
-        public SolutionInstantiation(EA.Element element, EA.Element instance = null, bool selected = false)
-        {
-            Element = element;
-            Instance = instance.AsOption();
-            Selected = selected;
-        }
-
-        public EA.Element Element { get; private set; }
-
-        public Option<EA.Element> Instance { get; private set; }
-
-        public bool Selected { get; private set; }
-
-        public bool Equals(SolutionInstantiation other)
-        {
-            return Element.ElementGUID == other.Element.ElementGUID
-                && Instance.IsDefined == other.Instance.IsDefined
-                && Instance.Match(e => e.ElementGUID == other.Instance.Value.ElementGUID, () => true)
-                && Selected == other.Selected;
-        }
-
-        public SolutionInstantiation Copy(EA.Element element = null, EA.Element instance = null, bool? selected = null)
-        {
-            return new SolutionInstantiation(element ?? Element, instance ?? Instance.GetOrDefault(), selected ?? Selected);
         }
     }
 }
