@@ -68,6 +68,7 @@
     <Compile Include="DataAccess\DiagramRepository.cs" />
     <Compile Include="DataAccess\ElementRepository.cs" />
     <Compile Include="Navigation\GoToClassifierCommand.cs" />
+    <Compile Include="PopulateDependencies\DependencyGraph.cs" />
     <Compile Include="PopulateDependencies\DependencySelectorForm.cs">
       <SubType>Form</SubType>
     </Compile>
