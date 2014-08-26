@@ -15,6 +15,8 @@ namespace ADAddInTests.PopulateDependencies
         [TestClass]
         public class DependencyTreeTests
         {
+            private Func<EA.Element, EA.Connector, EA.Element, bool> EdgeFilter =
+                   DependencyGraph.TraverseOnlyTechnologyConnectors(AdAddIn.ADTechnology.Technologies.AD);
 
             [TestMethod]
             public void DontFollowCycles()
@@ -35,7 +37,7 @@ namespace ADAddInTests.PopulateDependencies
                         Tuple.Create(b, cBtoC, c),
                         Tuple.Create(c, cCtoA, a)
                     );
-                AssertEqualGraph(expectedGraph, DependencyGraph.Create(adRepo, a, DependencyGraph.TraverseOnlyADConnectors));
+                AssertEqualGraph(expectedGraph, DependencyGraph.Create(adRepo, a, EdgeFilter));
             }
 
             [TestMethod]
@@ -57,7 +59,7 @@ namespace ADAddInTests.PopulateDependencies
                         Tuple.Create(problemA, cB, alternativeB),
                         Tuple.Create(alternativeB, cB, problemA)
                     );
-                AssertEqualGraph(expectedGraph, DependencyGraph.Create(adRepo, problemA, DependencyGraph.TraverseOnlyADConnectors));
+                AssertEqualGraph(expectedGraph, DependencyGraph.Create(adRepo, problemA, EdgeFilter));
             }
 
             [TestMethod]
@@ -78,13 +80,13 @@ namespace ADAddInTests.PopulateDependencies
                         Tuple.Create(problemB, cBtoBA, alternativeBA),
                         Tuple.Create(alternativeBA, cBtoBA, problemB)
                     );
-                AssertEqualGraph(expectedFromA, DependencyGraph.Create(adRepo, problemA, DependencyGraph.TraverseOnlyADConnectors));
+                AssertEqualGraph(expectedFromA, DependencyGraph.Create(adRepo, problemA, EdgeFilter));
 
                 var expectedFromB = DirectedLabeledGraph.Create(
                         Tuple.Create(problemB, cBtoBA, alternativeBA),
                         Tuple.Create(alternativeBA, cBtoBA, problemB)
                     );
-                AssertEqualGraph(expectedFromB, DependencyGraph.Create(adRepo, problemB, DependencyGraph.TraverseOnlyADConnectors));
+                AssertEqualGraph(expectedFromB, DependencyGraph.Create(adRepo, problemB, EdgeFilter));
             }
 
             [TestMethod]
@@ -110,10 +112,10 @@ namespace ADAddInTests.PopulateDependencies
                         Tuple.Create(alternativeAA, cAAtoBA, alternativeBA),
                         Tuple.Create(alternativeBA, cAAtoBA, alternativeAA)
                     );
-                AssertEqualGraph(expectedFromA, DependencyGraph.Create(adRepo, problemA, DependencyGraph.TraverseOnlyADConnectors));
+                AssertEqualGraph(expectedFromA, DependencyGraph.Create(adRepo, problemA, EdgeFilter));
 
                 var expectedFromB = expectedFromA;
-                AssertEqualGraph(expectedFromB, DependencyGraph.Create(adRepo, problemB, DependencyGraph.TraverseOnlyADConnectors));
+                AssertEqualGraph(expectedFromB, DependencyGraph.Create(adRepo, problemB, EdgeFilter));
             }
 
             private void AssertEqualGraph(DirectedLabeledGraph<EA.Element, EA.Connector> expectedGraph,

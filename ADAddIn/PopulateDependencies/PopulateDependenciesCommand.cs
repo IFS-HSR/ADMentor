@@ -30,24 +30,16 @@ namespace AdAddIn.PopulateDependencies
 
         public EntityModified Execute(EA.Element element)
         {
-            //var modified =
-            //    from currentDiagram in GetCurrentDiagramContaining(element)
-            //    from solution in SolutionInstantiationTree.Create(Repo, element)
-            //    from selectedSolution in Selector.GetSelectedDependencies(solution)
-            //    let targetPackage = Repo.FindPackageContaining(element)
-            //    let instantiatedSolution = SolutionInstantiationTree.InstantiateSelectedItems(Repo, targetPackage, selectedSolution)
-            //    let _ = SolutionInstantiationTree.CreateDiagramElements(Repo, DiagramRepo, currentDiagram, instantiatedSolution)
-            //    select EntityModified.Modified;
             var modified =
                 from currentDiagram in GetCurrentDiagramContaining(element)
                 from solution in SolutionInstantiationGraph.Create(Repo, element)
-                let solutionTree = solution.ToTree(DirectedLabeledGraph.TraverseEdgeOnlyOnce(new DependencyGraph.ConnectorComparer()))
+                let solutionTree = solution.Graph.ToTree(DirectedLabeledGraph.TraverseEdgeOnlyOnce(new DependencyGraph.ConnectorComparer()))
                 from markedSolutionTree in Selector.GetSelectedDependencies(solutionTree)
-                let markedSolution = SolutionInstantiationGraph.CopySelection(solution, markedSolutionTree)
+                let markedSolution = solution.WithSelection(markedSolutionTree.NodeLabels)
                 let targetPackage = Repo.FindPackageContaining(element)
-                let instantiatedSolution = SolutionInstantiationGraph.InstantiateSelectedItems(Repo, targetPackage, markedSolution)
-                let _1 = SolutionInstantiationGraph.InstantiateMissingSolutionConnectors(Repo, instantiatedSolution)
-                let _2 = SolutionInstantiationGraph.CreateDiagramElements(DiagramRepo, currentDiagram, instantiatedSolution)
+                let instantiatedSolution = markedSolution.InstantiateSelectedItems(targetPackage)
+                let _1 = instantiatedSolution.InstantiateMissingSolutionConnectors()
+                let _2 = instantiatedSolution.CreateDiagramElements(DiagramRepo, currentDiagram)
                 select EntityModified.Modified;
 
             return modified.GetOrElse(EntityModified.NotModified);

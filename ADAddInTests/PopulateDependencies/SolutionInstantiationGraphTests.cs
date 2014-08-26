@@ -107,15 +107,14 @@ namespace ADAddInTests.PopulateDependencies
             AssertEqual(expectedGraph, actualGraph);
         }
 
-        private void AssertEqual(DirectedLabeledGraph<SolutionInstantiation, EA.Connector> expectedGraph,
-            DirectedLabeledGraph<SolutionInstantiation, EA.Connector> actualGraph)
+        private void AssertEqual(SolutionInstantiationGraph expectedGraph, SolutionInstantiationGraph actualGraph)
         {
             var cc = new DependencyGraph.ConnectorComparer();
-            Assert.AreEqual(expectedGraph.Edges.Count(), actualGraph.Edges.Count());
+            Assert.AreEqual(expectedGraph.Graph.Edges.Count(), actualGraph.Graph.Edges.Count());
 
-            expectedGraph.Edges.ForEach(expectedEdge =>
+            expectedGraph.Graph.Edges.ForEach(expectedEdge =>
             {
-                Assert.IsTrue(actualGraph.Edges.Any(actualEdge =>
+                Assert.IsTrue(actualGraph.Graph.Edges.Any(actualEdge =>
                     expectedEdge.Item1.Equals(actualEdge.Item1)
                     && cc.Equals(expectedEdge.Item2, actualEdge.Item2)
                     && expectedEdge.Item3.Equals(actualEdge.Item3)));

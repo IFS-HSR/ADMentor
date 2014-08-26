@@ -1,6 +1,7 @@
 ﻿using AdAddIn.ADTechnology;
 using AdAddIn.DataAccess;
 using EAAddInFramework;
+using EAAddInFramework.MDGBuilder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,10 +25,10 @@ namespace AdAddIn.PopulateDependencies
             DirectedLabeledGraph<EA.Element, EA.Connector> dependencyGraph,
             Func<EA.Element, EA.Connector, EA.Element, bool> edgeFilter)
         {
-            var targets = from c in source.Connectors.Cast<EA.Connector>()
-                          let target = OppositeEnd(repo, source, c)
-                          where edgeFilter(source, c, target)
-                          select Tuple.Create(source, c, target);
+            var targets = from connector in source.Connectors.Cast<EA.Connector>()
+                          let target = OppositeEnd(repo, source, connector)
+                          where edgeFilter(source, connector, target)
+                          select Tuple.Create(source, connector, target);
 
             return targets.Aggregate(dependencyGraph, (graph, edge) =>
             {
@@ -65,25 +66,21 @@ namespace AdAddIn.PopulateDependencies
 
         /// <summary>
         /// Use this method as edge filter to create dependency trees that consists only of connectors as
-        /// used in the AD domain.
+        /// used in the specified domain.
         /// </summary>
-        public static bool TraverseOnlyADConnectors(EA.Element from, EA.Connector via, EA.Element to)
+        public static Func<EA.Element, EA.Connector, EA.Element, bool> TraverseOnlyTechnologyConnectors(MDGTechnology technology)
         {
-            var directedConnectors = new[] {
-                    ConnectorStereotypes.Raises,
-                    ConnectorStereotypes.Includes,
-                    ConnectorStereotypes.Overrides,
-                    ConnectorStereotypes.Supports
-                };
+            var stypesByDirection = technology.ConnectorStereotypes.ToLookup(c => c.Direction.GetOrElse(Direction.Unspecified));
 
-            var undirectedConnectors = new[]{
-                    ConnectorStereotypes.HasAlternative,
-                    ConnectorStereotypes.BoundTo,
-                    ConnectorStereotypes.ConflictsWith
-                };
+            var bidirectionalTypes = stypesByDirection[Direction.BiDirectional].Concat(stypesByDirection[Direction.Unspecified]);
+            var forwardTypes = bidirectionalTypes.Concat(stypesByDirection[Direction.SourceToDestination]);
+            var backwardTypes = bidirectionalTypes.Concat(stypesByDirection[Direction.DestinationToSource]);
 
-            return (directedConnectors.Concat(undirectedConnectors).Any(stereotype => via.Is(stereotype)) && via.ClientID == from.ElementID) ||
-                (undirectedConnectors.Any(stereotype => via.Is(stereotype)) && via.SupplierID == from.ElementID);
+            return (from, via, to) =>
+            {
+                return (forwardTypes.Any(stype => via.Is(stype)) && via.ClientID == from.ElementID)
+                     || (backwardTypes.Any(stype => via.Is(stype)) && via.SupplierID == from.ElementID);
+            };
         }
 
         public class ElementComparer : IEqualityComparer<EA.Element>

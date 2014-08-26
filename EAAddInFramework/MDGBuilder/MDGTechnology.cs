@@ -45,6 +45,26 @@ namespace EAAddInFramework.MDGBuilder
             }
         }
 
+        public IEnumerable<ConnectorStereotype> ConnectorStereotypes
+        {
+            get
+            {
+                return from s in Stereotypes
+                       where s is ConnectorStereotype
+                       select s as ConnectorStereotype;
+            }
+        }
+
+        public IEnumerable<ElementStereotype> ElementStereotypes
+        {
+            get
+            {
+                return from s in Stereotypes
+                       where s is ElementStereotype
+                       select s as ElementStereotype;
+            }
+        }
+
         IEnumerable<Toolbox> Toolboxes
         {
             get
@@ -59,8 +79,8 @@ namespace EAAddInFramework.MDGBuilder
             get
             {
                 return (from s in Stereotypes
-                       from t in s.TaggedValues
-                       select t).Distinct(new TaggedValueComparer());
+                        from t in s.TaggedValues
+                        select t).Distinct(new TaggedValueComparer());
             }
         }
 

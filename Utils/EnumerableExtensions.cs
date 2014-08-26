@@ -46,5 +46,10 @@ namespace Utils
         {
             return pairs.ToDictionary(p => p.Item1, p => p.Item2);
         }
+
+        public static bool In<T, U>(this T item, params U[] items) where T : U
+        {
+            return items.Any(i => i.Equals(item));
+        }
     }
 }

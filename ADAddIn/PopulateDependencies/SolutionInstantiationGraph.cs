@@ -10,29 +10,31 @@ using AdAddIn.ADTechnology;
 
 namespace AdAddIn.PopulateDependencies
 {
-    public static class SolutionInstantiationGraph
+    public class SolutionInstantiationGraph
     {
-        public static DirectedLabeledGraph<SolutionInstantiation, EA.Connector> Create(
-            params Tuple<SolutionInstantiation, EA.Connector, SolutionInstantiation>[] edges)
+        private readonly ElementRepository Repo;
+
+        private SolutionInstantiationGraph(ElementRepository repo, DirectedLabeledGraph<SolutionInstantiation, EA.Connector> graph)
         {
-            return DirectedLabeledGraph.Create(
-                EqualityComparer<SolutionInstantiation>.Default,
-                new DependencyGraph.ConnectorComparer(),
-                edges);
+            Repo = repo;
+            Graph = graph;
         }
 
-        public static Option<DirectedLabeledGraph<SolutionInstantiation, EA.Connector>> Create(ElementRepository repo, EA.Element solutionItem)
+        public DirectedLabeledGraph<SolutionInstantiation, EA.Connector> Graph { get; private set; }
+
+        private static Func<EA.Element, EA.Connector, EA.Element, bool> DependencyGraphFilter =
+            DependencyGraph.TraverseOnlyTechnologyConnectors(ADTechnology.Technologies.AD);
+
+        public static Option<SolutionInstantiationGraph> Create(ElementRepository repo, EA.Element solutionItem)
         {
             return from classifier in repo.GetElement(solutionItem.ClassifierID)
                    where classifier.Is(ElementStereotypes.Problem) || classifier.Is(ElementStereotypes.Option)
-                   let problemSpace = DependencyGraph.Create(repo, classifier, DependencyGraph.TraverseOnlyADConnectors)
-                   let solution = DependencyGraph.Create(repo, solutionItem, DependencyGraph.TraverseOnlyADConnectors)
-                   select Compare(problemSpace, solution);
+                   let problemSpace = DependencyGraph.Create(repo, classifier, DependencyGraphFilter)
+                   let solution = DependencyGraph.Create(repo, solutionItem, DependencyGraphFilter)
+                   select new SolutionInstantiationGraph(repo, Compare(problemSpace, solution));
         }
 
-        private static DirectedLabeledGraph<SolutionInstantiation, EA.Connector> Compare(
-            DirectedLabeledGraph<EA.Element, EA.Connector> problemSpace,
-            DirectedLabeledGraph<EA.Element, EA.Connector> solution)
+        private static DirectedLabeledGraph<SolutionInstantiation, EA.Connector> Compare(DirectedLabeledGraph<EA.Element, EA.Connector> problemSpace, DirectedLabeledGraph<EA.Element, EA.Connector> solution)
         {
             return problemSpace.MapNodeLabels<SolutionInstantiation>(problemItem =>
             {
@@ -41,15 +43,13 @@ namespace AdAddIn.PopulateDependencies
             });
         }
 
-        public static DirectedLabeledGraph<SolutionInstantiation, EA.Connector> InstantiateSelectedItems(
-            ElementRepository repo, EA.Package package,
-            DirectedLabeledGraph<SolutionInstantiation, EA.Connector> problemSpace)
+        public SolutionInstantiationGraph InstantiateSelectedItems(EA.Package package)
         {
-            return problemSpace.MapNodeLabels(problemItem =>
+            var newGraph = Graph.MapNodeLabels(problemItem =>
             {
                 if (problemItem.Selected && !problemItem.Instance.IsDefined)
                 {
-                    var instance = repo.Instanciate(problemItem.Element, package);
+                    var instance = Repo.Instanciate(problemItem.Element, package);
                     return problemItem.Copy(instance: instance);
                 }
                 else
@@ -57,21 +57,27 @@ namespace AdAddIn.PopulateDependencies
                     return problemItem;
                 }
             });
+
+            return new SolutionInstantiationGraph(Repo, newGraph);
         }
 
-        public static Unit InstantiateMissingSolutionConnectors(
-            ElementRepository repo,
-            DirectedLabeledGraph<SolutionInstantiation, EA.Connector> problemSpace)
+        /// <summary>
+        /// Adds connectors to the solution that exists in the graph but nor yet in the solution.
+        /// </summary>
+        /// <param name="repo"></param>
+        /// <param name="problemSpace"></param>
+        /// <returns></returns>
+        public Unit InstantiateMissingSolutionConnectors()
         {
-            problemSpace.TraverseEdgesBF((source, edge, target) =>
+            Graph.TraverseEdgesBF((source, edge, target) =>
             {
                 source.Instance.Do(solutionSource =>
                 {
                     target.Instance.Do(solutionTarget =>
                     {
-                        repo.GetStereotype(edge).Do(stype =>
+                        Repo.GetStereotype(edge).Do(stype =>
                         {
-                            var connectsAlternativeToProblem = 
+                            var connectsAlternativeToProblem =
                                 stype == ConnectorStereotypes.HasAlternative && solutionSource.Is(ElementStereotypes.OptionOccurrence);
                             var alreadyExisting = solutionSource.Connectors.Cast<EA.Connector>().Any(c =>
                             {
@@ -89,24 +95,35 @@ namespace AdAddIn.PopulateDependencies
             return Unit.Instance;
         }
 
-        public static DirectedLabeledGraph<SolutionInstantiation, EA.Connector> CopySelection(
-            DirectedLabeledGraph<SolutionInstantiation, EA.Connector> solution,
-            LabeledTree<SolutionInstantiation, EA.Connector> markedSolutionTree)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="solution"></param>
+        /// <param name="markedSolutionTree"></param>
+        /// <returns></returns>
+        public SolutionInstantiationGraph WithSelection(IEnumerable<SolutionInstantiation> nodes)
         {
-            return solution.MapNodeLabels(si =>
+            var markedGraph = Graph.MapNodeLabels(si =>
             {
-                var selected = markedSolutionTree.NodeLabels.Any(n => n.Element.ElementGUID == si.Element.ElementGUID && n.Selected);
+                var selected = nodes.Any(n => n.Element.ElementGUID == si.Element.ElementGUID && n.Selected);
                 return si.Copy(selected: selected);
             });
+
+            return new SolutionInstantiationGraph(Repo, markedGraph);
         }
 
-        internal static Unit CreateDiagramElements(
-            DiagramRepository diagramRepo, EA.Diagram diagram,
-            DirectedLabeledGraph<SolutionInstantiation, EA.Connector> problemSpace)
+        /// <summary>
+        /// Adds diagram objects for every solution item in the graph to <c>diagram</c>.
+        /// </summary>
+        /// <param name="diagramRepo"></param>
+        /// <param name="diagram"></param>
+        /// <param name="problemSpace"></param>
+        /// <returns></returns>
+        public Unit CreateDiagramElements(DiagramRepository diagramRepo, EA.Diagram diagram)
         {
             var siblings = new Dictionary<SolutionInstantiation, int>();
 
-            problemSpace.TraverseEdgesBF((from, via, to) =>
+            Graph.TraverseEdgesBF((from, via, to) =>
             {
                 var leftHandSiblings = siblings.ContainsKey(from) ? siblings[from] : 0;
 
@@ -133,6 +150,20 @@ namespace AdAddIn.PopulateDependencies
             diagramRepo.ReloadDiagram(diagram);
 
             return Unit.Instance;
+        }
+
+        /// <summary>
+        /// A helper method to create solution instantiation graphs with the correct equality comparers.
+        /// </summary>
+        /// <param name="edges"></param>
+        /// <returns></returns>
+        public static SolutionInstantiationGraph Create(
+            params Tuple<SolutionInstantiation, EA.Connector, SolutionInstantiation>[] edges)
+        {
+            return new SolutionInstantiationGraph(null, DirectedLabeledGraph.Create(
+                EqualityComparer<SolutionInstantiation>.Default,
+                new DependencyGraph.ConnectorComparer(),
+                edges));
         }
     }
 

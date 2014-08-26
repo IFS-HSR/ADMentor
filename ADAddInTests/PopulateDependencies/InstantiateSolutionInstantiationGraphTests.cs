@@ -28,17 +28,11 @@ namespace ADAddInTests.PopulateDependencies
 
             var problemSpace = SolutionInstantiationGraph.Create(adRepo, occurrence1).Value;
 
-            var markedProblemSpace = problemSpace.MapNodeLabels(problemSpaceItem =>
-            {
-                if (problemSpaceItem.Element.Name == "AA")
-                    return problemSpaceItem.Copy(selected: true);
-                else
-                    return problemSpaceItem;
-            });
+            var markedProblemSpace = problemSpace.WithSelection(new[] { new SolutionInstantiation(alternativeAA, selected: true) });
 
-            var result = SolutionInstantiationGraph.InstantiateSelectedItems(adRepo, rut.TestPackage, markedProblemSpace);
+            var result = markedProblemSpace.InstantiateSelectedItems(rut.TestPackage);
 
-            result.NodeLabels.ForEach(s =>
+            result.Graph.NodeLabels.ForEach(s =>
             {
                 if (s.Element.Name == "AA")
                 {

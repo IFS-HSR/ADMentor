@@ -31,7 +31,7 @@ namespace AdAddIn.PopulateDependencies
         {
             dependencyTreeView.Nodes.Clear();
             dependencyTreeView.Nodes.Add(ToTreeNode(availableDependencies));
-            dependencyTreeView.ExpandAll();
+            dependencyTreeView.Nodes.Cast<TreeNode>().ForEach(tn => tn.Expand());
 
             var result = ShowDialog();
 
@@ -74,7 +74,10 @@ namespace AdAddIn.PopulateDependencies
             return edges.Select(edge =>
             {
                 var stype = Repo.GetStereotype(edge.Label).Value;
-                var label = String.Format("{0}: {1}", stype.DisplayName, edge.Target.Label.Element.Name);
+                var connectorName = edge.Label.SupplierID == edge.Target.Label.Element.ElementID
+                    ? stype.DisplayName
+                    : stype.ReverseDisplayName.GetOrElse(stype.DisplayName);
+                var label = String.Format("{0}: {1}", connectorName, edge.Target.Label.Element.Name);
                 var node = new TreeNode(label, ToTreeNodes(edge.Target.Edges));
                 node.Tag = edge.Target;
                 if (edge.Target.Label.Instance.IsDefined)
@@ -85,7 +88,7 @@ namespace AdAddIn.PopulateDependencies
 
         private void buttonSelectAll_Click(object sender, EventArgs e)
         {
-                UpdateAll(dependencyTreeView.Nodes, true);
+            UpdateAll(dependencyTreeView.Nodes, true);
         }
 
         private void buttonDeselectAll_Click(object sender, EventArgs e)
