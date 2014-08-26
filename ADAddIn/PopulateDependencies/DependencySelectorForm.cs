@@ -27,29 +27,6 @@ namespace AdAddIn.PopulateDependencies
             dependencyTreeView.AfterCheck += dependencyTreeView_AfterCheck;
         }
 
-        public Option<DirectedLabeledGraph<SolutionInstantiation, EA.Connector>> GetSelectedDependencies(DirectedLabeledGraph<SolutionInstantiation, EA.Connector> availableDependencies)
-        {
-            dependencyTreeView.Nodes.Clear();
-            dependencyTreeView.Nodes.Add(ToTreeNode(availableDependencies));
-            dependencyTreeView.ExpandAll();
-
-            var result = ShowDialog();
-
-            //if (result == System.Windows.Forms.DialogResult.OK)
-            //{
-            //    return Options.Some(MarkSelectedNodes(availableDependencies, dependencyTreeView.Nodes[0]));
-            //}
-            //else
-            //{
-                return Options.None<DirectedLabeledGraph<SolutionInstantiation, EA.Connector>>();
-            //}
-        }
-
-        private TreeNode ToTreeNode(DirectedLabeledGraph<SolutionInstantiation, EA.Connector> availableDependencies)
-        {
-            throw new NotImplementedException();
-        }
-
         public Option<LabeledTree<SolutionInstantiation, EA.Connector>> GetSelectedDependencies(LabeledTree<SolutionInstantiation, EA.Connector> availableDependencies)
         {
             dependencyTreeView.Nodes.Clear();

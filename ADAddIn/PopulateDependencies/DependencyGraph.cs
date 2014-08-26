@@ -16,7 +16,7 @@ namespace AdAddIn.PopulateDependencies
             Func<EA.Element, EA.Connector, EA.Element, bool> edgeFilter)
         {
             return Create(repo, rootNode,
-                new DirectedLabeledGraph<EA.Element, EA.Connector>(new ElementComparer(), new ConnectorComparer()).AddNode(rootNode),
+                new DirectedLabeledGraph<EA.Element, EA.Connector>(rootNode, new ElementComparer(), new ConnectorComparer()),
                 edgeFilter);
         }
 

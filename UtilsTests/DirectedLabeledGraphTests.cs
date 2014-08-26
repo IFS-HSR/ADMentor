@@ -12,7 +12,7 @@ namespace UtilsTests
         [TestMethod]
         public void AddConnectionToEmptyGraph()
         {
-            var connected = new DirectedLabeledGraph<int, string>()
+            var connected = new DirectedLabeledGraph<int, string>(1)
                 .Connect(1, "1to2", 2);
 
             Assert.IsTrue(connected.NodeLabels.Any(l => l == 1));
@@ -25,7 +25,7 @@ namespace UtilsTests
         [TestMethod]
         public void AddCycle()
         {
-            var cycle = new DirectedLabeledGraph<int, string>()
+            var cycle = new DirectedLabeledGraph<int, string>(1)
                 .Connect(1, "1to2", 2)
                 .Connect(2, "2to1", 1);
 
@@ -39,7 +39,7 @@ namespace UtilsTests
         [TestMethod]
         public void EdgesAreUnique()
         {
-            var graph = new DirectedLabeledGraph<int, char>()
+            var graph = new DirectedLabeledGraph<int, char>(1)
                 .Connect(1, 'a', 2)
                 .Connect(1, 'a', 2);
 
@@ -49,7 +49,7 @@ namespace UtilsTests
         [TestMethod]
         public void CreaeInReversedOrder()
         {
-            var graph = new DirectedLabeledGraph<int, char>()
+            var graph = new DirectedLabeledGraph<int, char>(1)
                 .Connect(2, 'b', 3)
                 .Connect(1, 'a', 2);
 
@@ -61,7 +61,7 @@ namespace UtilsTests
         [TestMethod]
         public void AddMultipleOutgoingEdges()
         {
-            var graph = new DirectedLabeledGraph<int, char>()
+            var graph = new DirectedLabeledGraph<int, char>(1)
                 .Connect(1, 'a', 2)
                 .Connect(1, 'b', 3);
 
@@ -73,7 +73,7 @@ namespace UtilsTests
         [TestMethod]
         public void TraverseSimpleGraph()
         {
-            var graph = new DirectedLabeledGraph<int, char>()
+            var graph = new DirectedLabeledGraph<int, char>(1)
                 .Connect(1, 'a', 2)
                 .Connect(2, 'b', 4)
                 .Connect(1, 'c', 3)
@@ -81,7 +81,7 @@ namespace UtilsTests
 
             var edgeOrder = new List<char>();
 
-            graph.TraverseEdgesBF(1, (source, edge, target) =>
+            graph.TraverseEdgesBF((source, edge, target) =>
             {
                 edgeOrder.Add(edge);
             });
@@ -95,13 +95,13 @@ namespace UtilsTests
         [TestMethod]
         public void DontFollowCycles()
         {
-            var graph = new DirectedLabeledGraph<int, char>()
+            var graph = new DirectedLabeledGraph<int, char>(1)
                 .Connect(1, 'a', 2)
                 .Connect(2, 'b', 3);
 
             var edgeOrder = new List<char>();
 
-            graph.TraverseEdgesBF(1, (source, edge, target) =>
+            graph.TraverseEdgesBF((source, edge, target) =>
             {
                 edgeOrder.Add(edge);
             });
@@ -114,7 +114,7 @@ namespace UtilsTests
         [TestMethod]
         public void MapNodesInSimpleGraph()
         {
-            var graph = new DirectedLabeledGraph<int, char>()
+            var graph = new DirectedLabeledGraph<int, char>(1)
                 .Connect(1, 'a', 2)
                 .Connect(2, 'b', 3);
 

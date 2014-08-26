@@ -63,7 +63,7 @@ namespace AdAddIn.PopulateDependencies
             ElementRepository repo,
             DirectedLabeledGraph<SolutionInstantiation, EA.Connector> problemSpace)
         {
-            problemSpace.TraverseEdgesBF(problemSpace.NodeLabels.First(), (source, edge, target) =>
+            problemSpace.TraverseEdgesBF((source, edge, target) =>
             {
                 source.Instance.Do(solutionSource =>
                 {
@@ -71,11 +71,67 @@ namespace AdAddIn.PopulateDependencies
                     {
                         repo.GetStereotype(edge).Do(stype =>
                         {
-                            stype.Create(solutionSource, solutionTarget);
+                            var connectsAlternativeToProblem = 
+                                stype == ConnectorStereotypes.HasAlternative && solutionSource.Is(ElementStereotypes.OptionOccurrence);
+                            var alreadyExisting = solutionSource.Connectors.Cast<EA.Connector>().Any(c =>
+                            {
+                                return c.Is(stype) && (c.SupplierID == solutionTarget.ElementID || c.ClientID == solutionTarget.ElementID);
+                            });
+
+                            if (!connectsAlternativeToProblem && !alreadyExisting)
+                            {
+                                stype.Create(solutionSource, solutionTarget);
+                            }
                         });
                     });
                 });
             });
+            return Unit.Instance;
+        }
+
+        public static DirectedLabeledGraph<SolutionInstantiation, EA.Connector> CopySelection(
+            DirectedLabeledGraph<SolutionInstantiation, EA.Connector> solution,
+            LabeledTree<SolutionInstantiation, EA.Connector> markedSolutionTree)
+        {
+            return solution.MapNodeLabels(si =>
+            {
+                var selected = markedSolutionTree.NodeLabels.Any(n => n.Element.ElementGUID == si.Element.ElementGUID && n.Selected);
+                return si.Copy(selected: selected);
+            });
+        }
+
+        internal static Unit CreateDiagramElements(
+            DiagramRepository diagramRepo, EA.Diagram diagram,
+            DirectedLabeledGraph<SolutionInstantiation, EA.Connector> problemSpace)
+        {
+            var siblings = new Dictionary<SolutionInstantiation, int>();
+
+            problemSpace.TraverseEdgesBF((from, via, to) =>
+            {
+                var leftHandSiblings = siblings.ContainsKey(from) ? siblings[from] : 0;
+
+                to.Instance.Do(toInstance =>
+                {
+                    if (!diagramRepo.FindDiagramObject(diagram, toInstance).IsDefined)
+                    {
+                        from.Instance.Do(fromInstance =>
+                        {
+                            var parentObject = diagramRepo.FindDiagramObject(diagram, fromInstance).Value;
+
+                            var verticalOffset = leftHandSiblings * 110 - 40;
+                            var horizontalOffset = -200 - leftHandSiblings * 20;
+
+                            diagramRepo.AddToDiagram(diagram, toInstance,
+                                parentObject.left + verticalOffset, parentObject.top + horizontalOffset,
+                                parentObject.right - parentObject.left, parentObject.bottom - parentObject.top);
+
+                            siblings[from] = leftHandSiblings + 1;
+                        });
+                    }
+                });
+            });
+            diagramRepo.ReloadDiagram(diagram);
+
             return Unit.Instance;
         }
     }
