@@ -16,7 +16,7 @@ namespace Utils
         public DirectedLabeledGraph(IEqualityComparer<NodeLabel> nodeComparer = null, IEqualityComparer<EdgeLabel> edgeComparer = null)
             : this(ImmutableList.Create<Node>(), nodeComparer, edgeComparer) { }
 
-        internal DirectedLabeledGraph(IImmutableList<Node> nodes, 
+        internal DirectedLabeledGraph(IImmutableList<Node> nodes,
             IEqualityComparer<NodeLabel> nodeComparer = null,
             IEqualityComparer<EdgeLabel> edgeComparer = null)
         {
@@ -156,11 +156,26 @@ namespace Utils
                 return this;
             }
         }
+
+        public DirectedLabeledGraph<NodeLabel, EdgeLabel> AddNode(NodeLabel nodeLabel)
+        {
+            return Nodes.FirstOption(n => NodeComparer.Equals(n.Label, nodeLabel)).Match(
+                node =>
+                {
+                    return this;
+                },
+                () =>
+                {
+                    var newNode = new Node(nodeLabel);
+                    return new DirectedLabeledGraph<NodeLabel, EdgeLabel>(
+                        Nodes.Add(newNode), NodeComparer, EdgeComparer);
+                });
+        }
     }
 
     public static class DirectedLabeledGraph
     {
-        public static DirectedLabeledGraph<N, E> Create<N, E>(IEqualityComparer<N> nodeComparer, 
+        public static DirectedLabeledGraph<N, E> Create<N, E>(IEqualityComparer<N> nodeComparer,
             IEqualityComparer<E> edgeComparer, params Tuple<N, E, N>[] edges)
         {
             return edges.Aggregate(new DirectedLabeledGraph<N, E>(nodeComparer, edgeComparer), (graph, edge) =>

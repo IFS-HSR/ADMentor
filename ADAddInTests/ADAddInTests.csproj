@@ -56,6 +56,7 @@
     <Compile Include="PopulateDependencies\InstatiateSolutionInstantiationTreeTest.cs" />
     <Compile Include="PopulateDependencies\DependencyGraphTest.cs" />
     <Compile Include="PopulateDependencies\SolutionInstantiationGraphTests.cs" />
+    <Compile Include="PopulateDependencies\InstantiateSolutionInstantiationGraphTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

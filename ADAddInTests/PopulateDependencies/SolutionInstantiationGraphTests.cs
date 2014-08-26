@@ -36,8 +36,11 @@ namespace ADAddInTests.PopulateDependencies
 
             var expectedGraph = SolutionInstantiationGraph.Create(
                     Tuple.Create(new SolutionInstantiation(problemA, occurrence1), cAtoAA, new SolutionInstantiation(alternativeAA, decision11)),
+                    Tuple.Create(new SolutionInstantiation(alternativeAA, decision11), cAtoAA, new SolutionInstantiation(problemA, occurrence1)),
                     Tuple.Create(new SolutionInstantiation(alternativeAA, decision11), cAAtoBA, new SolutionInstantiation(alternativeBA)),
-                    Tuple.Create(new SolutionInstantiation(alternativeBA), cAAtoBA, new SolutionInstantiation(alternativeAA, decision11))
+                    Tuple.Create(new SolutionInstantiation(alternativeBA), cAAtoBA, new SolutionInstantiation(alternativeAA, decision11)),
+                    Tuple.Create(new SolutionInstantiation(problemB), cBtoBA, new SolutionInstantiation(alternativeBA)),
+                    Tuple.Create(new SolutionInstantiation(alternativeBA), cBtoBA, new SolutionInstantiation(problemB))
                 );
 
             var actualGraph = SolutionInstantiationGraph.Create(adRepo, occurrence1).Value;
@@ -46,8 +49,7 @@ namespace ADAddInTests.PopulateDependencies
         }
 
         [TestMethod]
-        [Ignore]
-        public void CreateSolutionInstatiationTreeGraphDecision()
+        public void CreateSolutionInstatiationGraphFromDecision()
         {
             var rut = new RepositoryUnderTest();
             var adRepo = new ElementRepository(new Atom<EA.Repository>(rut.Repo));
@@ -63,7 +65,9 @@ namespace ADAddInTests.PopulateDependencies
 
             var expected = SolutionInstantiationGraph.Create(
                     Tuple.Create(new SolutionInstantiation(alternativeAA, decision11), cAtoAA, new SolutionInstantiation(problemA)),
-                    Tuple.Create(new SolutionInstantiation(problemA), cAtoAB, new SolutionInstantiation(alternativeAB))
+                    Tuple.Create(new SolutionInstantiation(problemA), cAtoAA, new SolutionInstantiation(alternativeAA, decision11)),
+                    Tuple.Create(new SolutionInstantiation(problemA), cAtoAB, new SolutionInstantiation(alternativeAB)),
+                    Tuple.Create(new SolutionInstantiation(alternativeAB), cAtoAB, new SolutionInstantiation(problemA))
                 );
 
             var actual = SolutionInstantiationGraph.Create(adRepo, decision11).Value;
@@ -93,7 +97,9 @@ namespace ADAddInTests.PopulateDependencies
 
             var expectedGraph = SolutionInstantiationGraph.Create(
                     Tuple.Create(new SolutionInstantiation(problemA, problemOccurrence1), cAtoAA, new SolutionInstantiation(alternativeAA, decision11)),
-                    Tuple.Create(new SolutionInstantiation(problemA, problemOccurrence1), cAtoAB, new SolutionInstantiation(alternativeAB, decision12))
+                    Tuple.Create(new SolutionInstantiation(alternativeAA, decision11), cAtoAA, new SolutionInstantiation(problemA, problemOccurrence1)),
+                    Tuple.Create(new SolutionInstantiation(problemA, problemOccurrence1), cAtoAB, new SolutionInstantiation(alternativeAB, decision12)),
+                    Tuple.Create(new SolutionInstantiation(alternativeAB, decision12), cAtoAB, new SolutionInstantiation(problemA, problemOccurrence1))
                 );
 
             var actualGraph = SolutionInstantiationGraph.Create(adRepo, problemOccurrence1).Value;

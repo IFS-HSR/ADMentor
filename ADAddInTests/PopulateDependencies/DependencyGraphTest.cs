@@ -53,7 +53,9 @@ namespace ADAddInTests.PopulateDependencies
 
                 var expectedGraph = DirectedLabeledGraph.Create(
                         Tuple.Create(problemA, cA, alternativeA),
-                        Tuple.Create(problemA, cB, alternativeB)
+                        Tuple.Create(alternativeA, cA, problemA),
+                        Tuple.Create(problemA, cB, alternativeB),
+                        Tuple.Create(alternativeB, cB, problemA)
                     );
                 AssertEqualGraph(expectedGraph, DependencyGraph.Create(adRepo, problemA, DependencyGraph.TraverseOnlyADConnectors));
             }
@@ -73,12 +75,14 @@ namespace ADAddInTests.PopulateDependencies
 
                 var expectedFromA = DirectedLabeledGraph.Create(
                         Tuple.Create(problemA, cAtoB, problemB),
-                        Tuple.Create(problemB, cBtoBA, alternativeBA)
+                        Tuple.Create(problemB, cBtoBA, alternativeBA),
+                        Tuple.Create(alternativeBA, cBtoBA, problemB)
                     );
                 AssertEqualGraph(expectedFromA, DependencyGraph.Create(adRepo, problemA, DependencyGraph.TraverseOnlyADConnectors));
 
                 var expectedFromB = DirectedLabeledGraph.Create(
-                        Tuple.Create(problemB, cBtoBA, alternativeBA)
+                        Tuple.Create(problemB, cBtoBA, alternativeBA),
+                        Tuple.Create(alternativeBA, cBtoBA, problemB)
                     );
                 AssertEqualGraph(expectedFromB, DependencyGraph.Create(adRepo, problemB, DependencyGraph.TraverseOnlyADConnectors));
             }
@@ -100,16 +104,15 @@ namespace ADAddInTests.PopulateDependencies
 
                 var expectedFromA = DirectedLabeledGraph.Create(
                         Tuple.Create(problemA, cAtoAA, alternativeAA),
+                        Tuple.Create(alternativeAA, cAtoAA, problemA),
+                        Tuple.Create(problemB, cBtoBA, alternativeBA),
+                        Tuple.Create(alternativeBA, cBtoBA, problemB),
                         Tuple.Create(alternativeAA, cAAtoBA, alternativeBA),
                         Tuple.Create(alternativeBA, cAAtoBA, alternativeAA)
                     );
                 AssertEqualGraph(expectedFromA, DependencyGraph.Create(adRepo, problemA, DependencyGraph.TraverseOnlyADConnectors));
 
-                var expectedFromB = DirectedLabeledGraph.Create(
-                        Tuple.Create(problemB, cBtoBA, alternativeBA),
-                        Tuple.Create(alternativeAA, cAAtoBA, alternativeBA),
-                        Tuple.Create(alternativeBA, cAAtoBA, alternativeAA)
-                    );
+                var expectedFromB = expectedFromA;
                 AssertEqualGraph(expectedFromB, DependencyGraph.Create(adRepo, problemB, DependencyGraph.TraverseOnlyADConnectors));
             }
 

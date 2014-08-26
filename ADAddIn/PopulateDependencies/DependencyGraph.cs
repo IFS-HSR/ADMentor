@@ -12,36 +12,12 @@ namespace AdAddIn.PopulateDependencies
 {
     public static class DependencyGraph
     {
-        public class ElementComparer : IEqualityComparer<EA.Element>
-        {
-            public bool Equals(EA.Element x, EA.Element y)
-            {
-                return x.ElementGUID == y.ElementGUID;
-            }
-
-            public int GetHashCode(EA.Element obj)
-            {
-                return obj.ElementGUID.GetHashCode();
-            }
-        }
-
-        public class ConnectorComparer : IEqualityComparer<EA.Connector>
-        {
-            public bool Equals(EA.Connector x, EA.Connector y)
-            {
-                return x.ConnectorGUID == y.ConnectorGUID;
-            }
-
-            public int GetHashCode(EA.Connector obj)
-            {
-                return obj.ConnectorGUID.GetHashCode();
-            }
-        }
-
         public static DirectedLabeledGraph<EA.Element, EA.Connector> Create(ElementRepository repo, EA.Element rootNode,
             Func<EA.Element, EA.Connector, EA.Element, bool> edgeFilter)
         {
-            return Create(repo, rootNode, new DirectedLabeledGraph<EA.Element, EA.Connector>(new ElementComparer(), new ConnectorComparer()), edgeFilter);
+            return Create(repo, rootNode,
+                new DirectedLabeledGraph<EA.Element, EA.Connector>(new ElementComparer(), new ConnectorComparer()).AddNode(rootNode),
+                edgeFilter);
         }
 
         private static DirectedLabeledGraph<EA.Element, EA.Connector> Create(ElementRepository repo, EA.Element source,
@@ -94,7 +70,6 @@ namespace AdAddIn.PopulateDependencies
         public static bool TraverseOnlyADConnectors(EA.Element from, EA.Connector via, EA.Element to)
         {
             var directedConnectors = new[] {
-                    ConnectorStereotypes.HasAlternative,
                     ConnectorStereotypes.Raises,
                     ConnectorStereotypes.Includes,
                     ConnectorStereotypes.Overrides,
@@ -102,12 +77,39 @@ namespace AdAddIn.PopulateDependencies
                 };
 
             var undirectedConnectors = new[]{
+                    ConnectorStereotypes.HasAlternative,
                     ConnectorStereotypes.BoundTo,
                     ConnectorStereotypes.ConflictsWith
                 };
 
             return (directedConnectors.Concat(undirectedConnectors).Any(stereotype => via.Is(stereotype)) && via.ClientID == from.ElementID) ||
                 (undirectedConnectors.Any(stereotype => via.Is(stereotype)) && via.SupplierID == from.ElementID);
+        }
+
+        public class ElementComparer : IEqualityComparer<EA.Element>
+        {
+            public bool Equals(EA.Element x, EA.Element y)
+            {
+                return x.ElementGUID == y.ElementGUID;
+            }
+
+            public int GetHashCode(EA.Element obj)
+            {
+                return obj.ElementGUID.GetHashCode();
+            }
+        }
+
+        public class ConnectorComparer : IEqualityComparer<EA.Connector>
+        {
+            public bool Equals(EA.Connector x, EA.Connector y)
+            {
+                return x.ConnectorGUID == y.ConnectorGUID;
+            }
+
+            public int GetHashCode(EA.Connector obj)
+            {
+                return obj.ConnectorGUID.GetHashCode();
+            }
         }
     }
 }

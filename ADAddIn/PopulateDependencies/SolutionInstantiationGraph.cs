@@ -24,7 +24,7 @@ namespace AdAddIn.PopulateDependencies
         public static Option<DirectedLabeledGraph<SolutionInstantiation, EA.Connector>> Create(ElementRepository repo, EA.Element solutionItem)
         {
             return from classifier in repo.GetElement(solutionItem.ClassifierID)
-                   where classifier.Is(ElementStereotypes.Problem)
+                   where classifier.Is(ElementStereotypes.Problem) || classifier.Is(ElementStereotypes.Option)
                    let problemSpace = DependencyGraph.Create(repo, classifier, DependencyGraph.TraverseOnlyADConnectors)
                    let solution = DependencyGraph.Create(repo, solutionItem, DependencyGraph.TraverseOnlyADConnectors)
                    select Compare(problemSpace, solution);
