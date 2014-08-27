@@ -73,6 +73,7 @@ namespace AdAddIn.DataAccess
         {
             Func<EA.Element, EA.Element, EntityModified> update = (e, classifier) =>
             {
+                e.Name = classifier.Name;
                 e.Notes = classifier.Notes;
                 e.Update();
                 return EntityModified.Modified;

@@ -30,5 +30,10 @@ namespace EAAddInFramework
                 pkg => pkg.Elements.Cast<EA.Element>().Any(
                     e => e.ElementID == element.ElementID));
         }
+
+        public static IEnumerable<EA.Connector> Connectors(this EA.Element e)
+        {
+            return e.Connectors.Cast<EA.Connector>();
+        }
     }
 }

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Utils;
+using AdAddIn.InstantiateProblemSpace;
 
 namespace AdAddIn
 {
@@ -34,15 +35,18 @@ namespace AdAddIn
         public override void bootstrap(IReadableAtom<EA.Repository> eaRepository)
         {
             var elementRepository = new ElementRepository(eaRepository);
-            var diagreamRepository = new DiagramRepository(eaRepository);
+            var packageRepository = new PackageRepository(eaRepository);
+            var diagramRepository = new DiagramRepository(eaRepository);
 
             var updateMetadataCommand = new UpdateMetadataOfNewElementsCommand(elementRepository);
             var populateDependenciesCommand = new PopulateDependenciesCommand(
-                elementRepository, diagreamRepository, new DependencySelectorForm(elementRepository));
+                elementRepository, diagramRepository, new DependencySelectorForm(elementRepository));
+            var instantiateProblemSpace = new InstantiateProblemSpaceCommand(packageRepository, elementRepository, diagramRepository, new SolutionNameForm());
 
             Register(new Menu(technology.Name,
                 new MenuItem("Go to Classifier", new GoToClassifierCommand(elementRepository, eaRepository)),
-                new MenuItem("Populate Dependencies", populateDependenciesCommand.AsMenuCommand())));
+                new MenuItem("Populate Dependencies", populateDependenciesCommand.AsMenuCommand()),
+                new MenuItem("Instantiate Complete Problem Space", instantiateProblemSpace.AsMenuCommand())));
 
             OnElementCreated.Add(updateMetadataCommand);
             OnElementCreated.Add(populateDependenciesCommand.AsElementCreatedHandler());

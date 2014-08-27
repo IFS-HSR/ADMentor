@@ -86,16 +86,12 @@ namespace AdAddIn.ADTechnology
                     println(""(#TAG:state#)"");
 
 	                if(HasProperty(""name"", """")){
-	                }else{
-	                    Print(""#name#"");
                         if(HasProperty(""classifier.name"", """")){
                         } else {
-                            Println("": "");
+                            Println(""#classifier.name#"");
                         }
-                    }
-                    if(HasProperty(""classifier.name"", """")){
-                    } else {
-                        Println(""#classifier.name#"");
+	                }else{
+	                    Print(""#name#"");
                     }
                 }
             ",
@@ -149,16 +145,12 @@ namespace AdAddIn.ADTechnology
                     println(""(#TAG:state#)"");
 
 	                if(HasProperty(""name"", """")){
-	                }else{
-	                    Print(""#name#"");
                         if(HasProperty(""classifier.name"", """")){
                         } else {
-                            Println("": "");
+                            Println(""#classifier.name#"");
                         }
-                    }
-                    if(HasProperty(""classifier.name"", """")){
-                    } else {
-                        Println(""#classifier.name#"");
+	                }else{
+	                    Print(""#name#"");
                     }
                 }
             ",

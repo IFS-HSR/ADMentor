@@ -14,13 +14,13 @@ namespace AdAddIn.PopulateDependencies
     {
         private readonly ElementRepository Repo;
 
-        private SolutionInstantiationGraph(ElementRepository repo, DirectedLabeledGraph<SolutionInstantiation, EA.Connector> graph)
+        private SolutionInstantiationGraph(ElementRepository repo, DirectedLabeledGraph<ElementInstantiation, EA.Connector> graph)
         {
             Repo = repo;
             Graph = graph;
         }
 
-        public DirectedLabeledGraph<SolutionInstantiation, EA.Connector> Graph { get; private set; }
+        public DirectedLabeledGraph<ElementInstantiation, EA.Connector> Graph { get; private set; }
 
         private static Func<EA.Element, EA.Connector, EA.Element, bool> DependencyGraphFilter =
             DependencyGraph.TraverseOnlyTechnologyConnectors(ADTechnology.Technologies.AD);
@@ -34,12 +34,12 @@ namespace AdAddIn.PopulateDependencies
                    select new SolutionInstantiationGraph(repo, Compare(problemSpace, solution));
         }
 
-        private static DirectedLabeledGraph<SolutionInstantiation, EA.Connector> Compare(DirectedLabeledGraph<EA.Element, EA.Connector> problemSpace, DirectedLabeledGraph<EA.Element, EA.Connector> solution)
+        private static DirectedLabeledGraph<ElementInstantiation, EA.Connector> Compare(DirectedLabeledGraph<EA.Element, EA.Connector> problemSpace, DirectedLabeledGraph<EA.Element, EA.Connector> solution)
         {
-            return problemSpace.MapNodeLabels<SolutionInstantiation>(problemItem =>
+            return problemSpace.MapNodeLabels<ElementInstantiation>(problemItem =>
             {
                 var instance = solution.NodeLabels.FirstOption(solutionItem => solutionItem.ClassifierID == problemItem.ElementID);
-                return new SolutionInstantiation(problemItem, instance);
+                return new ElementInstantiation(problemItem, instance);
             });
         }
 
@@ -101,7 +101,7 @@ namespace AdAddIn.PopulateDependencies
         /// <param name="solution"></param>
         /// <param name="markedSolutionTree"></param>
         /// <returns></returns>
-        public SolutionInstantiationGraph WithSelection(IEnumerable<SolutionInstantiation> nodes)
+        public SolutionInstantiationGraph WithSelection(IEnumerable<ElementInstantiation> nodes)
         {
             var markedGraph = Graph.MapNodeLabels(si =>
             {
@@ -121,7 +121,7 @@ namespace AdAddIn.PopulateDependencies
         /// <returns></returns>
         public Unit CreateDiagramElements(DiagramRepository diagramRepo, EA.Diagram diagram)
         {
-            var siblings = new Dictionary<SolutionInstantiation, int>();
+            var siblings = new Dictionary<ElementInstantiation, int>();
 
             Graph.TraverseEdgesBF((from, via, to) =>
             {
@@ -139,8 +139,8 @@ namespace AdAddIn.PopulateDependencies
                             var horizontalOffset = -200 - leftHandSiblings * 20;
 
                             diagramRepo.AddToDiagram(diagram, toInstance,
-                                parentObject.left + verticalOffset, parentObject.top + horizontalOffset,
-                                parentObject.right - parentObject.left, parentObject.bottom - parentObject.top);
+                                left: parentObject.left + verticalOffset, right: parentObject.right + verticalOffset,
+                                top: parentObject.top + verticalOffset, bottom: parentObject.bottom + verticalOffset);
 
                             siblings[from] = leftHandSiblings + 1;
                         });
@@ -158,20 +158,20 @@ namespace AdAddIn.PopulateDependencies
         /// <param name="edges"></param>
         /// <returns></returns>
         public static SolutionInstantiationGraph Create(
-            params Tuple<SolutionInstantiation, EA.Connector, SolutionInstantiation>[] edges)
+            params Tuple<ElementInstantiation, EA.Connector, ElementInstantiation>[] edges)
         {
             return new SolutionInstantiationGraph(null, DirectedLabeledGraph.Create(
-                EqualityComparer<SolutionInstantiation>.Default,
+                EqualityComparer<ElementInstantiation>.Default,
                 new DependencyGraph.ConnectorComparer(),
                 edges));
         }
     }
 
-    public class SolutionInstantiation : IEquatable<SolutionInstantiation>
+    public class ElementInstantiation : IEquatable<ElementInstantiation>
     {
-        public SolutionInstantiation(EA.Element element, EA.Element instance, bool selected = false) : this(element, instance.AsOption(), selected) { }
+        public ElementInstantiation(EA.Element element, EA.Element instance, bool selected = false) : this(element, instance.AsOption(), selected) { }
 
-        public SolutionInstantiation(EA.Element element, Option<EA.Element> instance = null, bool selected = false)
+        public ElementInstantiation(EA.Element element, Option<EA.Element> instance = null, bool selected = false)
         {
             Element = element;
             Instance = instance ?? Options.None<EA.Element>();
@@ -184,7 +184,7 @@ namespace AdAddIn.PopulateDependencies
 
         public bool Selected { get; private set; }
 
-        public bool Equals(SolutionInstantiation other)
+        public bool Equals(ElementInstantiation other)
         {
             return Element.ElementGUID == other.Element.ElementGUID
                 && Instance.IsDefined == other.Instance.IsDefined
@@ -192,9 +192,9 @@ namespace AdAddIn.PopulateDependencies
                 && Selected == other.Selected;
         }
 
-        public SolutionInstantiation Copy(EA.Element element = null, Option<EA.Element> instance = null, bool? selected = null)
+        public ElementInstantiation Copy(EA.Element element = null, Option<EA.Element> instance = null, bool? selected = null)
         {
-            return new SolutionInstantiation(element ?? Element, instance ?? Instance, selected ?? Selected);
+            return new ElementInstantiation(element ?? Element, instance ?? Instance, selected ?? Selected);
         }
     }
 }

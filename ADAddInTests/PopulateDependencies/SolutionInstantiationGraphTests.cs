@@ -35,12 +35,12 @@ namespace ADAddInTests.PopulateDependencies
             var c1to11 = ConnectorStereotypes.HasAlternative.Create(occurrence1, decision11);
 
             var expectedGraph = SolutionInstantiationGraph.Create(
-                    Tuple.Create(new SolutionInstantiation(problemA, occurrence1), cAtoAA, new SolutionInstantiation(alternativeAA, decision11)),
-                    Tuple.Create(new SolutionInstantiation(alternativeAA, decision11), cAtoAA, new SolutionInstantiation(problemA, occurrence1)),
-                    Tuple.Create(new SolutionInstantiation(alternativeAA, decision11), cAAtoBA, new SolutionInstantiation(alternativeBA)),
-                    Tuple.Create(new SolutionInstantiation(alternativeBA), cAAtoBA, new SolutionInstantiation(alternativeAA, decision11)),
-                    Tuple.Create(new SolutionInstantiation(problemB), cBtoBA, new SolutionInstantiation(alternativeBA)),
-                    Tuple.Create(new SolutionInstantiation(alternativeBA), cBtoBA, new SolutionInstantiation(problemB))
+                    Tuple.Create(new ElementInstantiation(problemA, occurrence1), cAtoAA, new ElementInstantiation(alternativeAA, decision11)),
+                    Tuple.Create(new ElementInstantiation(alternativeAA, decision11), cAtoAA, new ElementInstantiation(problemA, occurrence1)),
+                    Tuple.Create(new ElementInstantiation(alternativeAA, decision11), cAAtoBA, new ElementInstantiation(alternativeBA)),
+                    Tuple.Create(new ElementInstantiation(alternativeBA), cAAtoBA, new ElementInstantiation(alternativeAA, decision11)),
+                    Tuple.Create(new ElementInstantiation(problemB), cBtoBA, new ElementInstantiation(alternativeBA)),
+                    Tuple.Create(new ElementInstantiation(alternativeBA), cBtoBA, new ElementInstantiation(problemB))
                 );
 
             var actualGraph = SolutionInstantiationGraph.Create(adRepo, occurrence1).Value;
@@ -64,10 +64,10 @@ namespace ADAddInTests.PopulateDependencies
             var decision11 = ElementStereotypes.Problem.Instanciate(alternativeAA, rut.TestPackage).Value;
 
             var expected = SolutionInstantiationGraph.Create(
-                    Tuple.Create(new SolutionInstantiation(alternativeAA, decision11), cAtoAA, new SolutionInstantiation(problemA)),
-                    Tuple.Create(new SolutionInstantiation(problemA), cAtoAA, new SolutionInstantiation(alternativeAA, decision11)),
-                    Tuple.Create(new SolutionInstantiation(problemA), cAtoAB, new SolutionInstantiation(alternativeAB)),
-                    Tuple.Create(new SolutionInstantiation(alternativeAB), cAtoAB, new SolutionInstantiation(problemA))
+                    Tuple.Create(new ElementInstantiation(alternativeAA, decision11), cAtoAA, new ElementInstantiation(problemA)),
+                    Tuple.Create(new ElementInstantiation(problemA), cAtoAA, new ElementInstantiation(alternativeAA, decision11)),
+                    Tuple.Create(new ElementInstantiation(problemA), cAtoAB, new ElementInstantiation(alternativeAB)),
+                    Tuple.Create(new ElementInstantiation(alternativeAB), cAtoAB, new ElementInstantiation(problemA))
                 );
 
             var actual = SolutionInstantiationGraph.Create(adRepo, decision11).Value;
@@ -96,10 +96,10 @@ namespace ADAddInTests.PopulateDependencies
             var c1to12 = ConnectorStereotypes.HasAlternative.Create(problemOccurrence1, decision12);
 
             var expectedGraph = SolutionInstantiationGraph.Create(
-                    Tuple.Create(new SolutionInstantiation(problemA, problemOccurrence1), cAtoAA, new SolutionInstantiation(alternativeAA, decision11)),
-                    Tuple.Create(new SolutionInstantiation(alternativeAA, decision11), cAtoAA, new SolutionInstantiation(problemA, problemOccurrence1)),
-                    Tuple.Create(new SolutionInstantiation(problemA, problemOccurrence1), cAtoAB, new SolutionInstantiation(alternativeAB, decision12)),
-                    Tuple.Create(new SolutionInstantiation(alternativeAB, decision12), cAtoAB, new SolutionInstantiation(problemA, problemOccurrence1))
+                    Tuple.Create(new ElementInstantiation(problemA, problemOccurrence1), cAtoAA, new ElementInstantiation(alternativeAA, decision11)),
+                    Tuple.Create(new ElementInstantiation(alternativeAA, decision11), cAtoAA, new ElementInstantiation(problemA, problemOccurrence1)),
+                    Tuple.Create(new ElementInstantiation(problemA, problemOccurrence1), cAtoAB, new ElementInstantiation(alternativeAB, decision12)),
+                    Tuple.Create(new ElementInstantiation(alternativeAB, decision12), cAtoAB, new ElementInstantiation(problemA, problemOccurrence1))
                 );
 
             var actualGraph = SolutionInstantiationGraph.Create(adRepo, problemOccurrence1).Value;

@@ -27,7 +27,7 @@ namespace AdAddIn.PopulateDependencies
             dependencyTreeView.AfterCheck += dependencyTreeView_AfterCheck;
         }
 
-        public Option<LabeledTree<SolutionInstantiation, EA.Connector>> GetSelectedDependencies(LabeledTree<SolutionInstantiation, EA.Connector> availableDependencies)
+        public Option<LabeledTree<ElementInstantiation, EA.Connector>> GetSelectedDependencies(LabeledTree<ElementInstantiation, EA.Connector> availableDependencies)
         {
             dependencyTreeView.Nodes.Clear();
             dependencyTreeView.Nodes.Add(ToTreeNode(availableDependencies));
@@ -41,18 +41,18 @@ namespace AdAddIn.PopulateDependencies
             }
             else
             {
-                return Options.None<LabeledTree<SolutionInstantiation, EA.Connector>>();
+                return Options.None<LabeledTree<ElementInstantiation, EA.Connector>>();
             }
         }
 
-        private LabeledTree<SolutionInstantiation, EA.Connector> MarkSelectedNodes(LabeledTree<SolutionInstantiation, EA.Connector> problemSpace, TreeNode treeNode)
+        private LabeledTree<ElementInstantiation, EA.Connector> MarkSelectedNodes(LabeledTree<ElementInstantiation, EA.Connector> problemSpace, TreeNode treeNode)
         {
             var edges = from pair in problemSpace.Edges.Zip(treeNode.Nodes.Cast<TreeNode>())
                         select LabeledTree.Edge(pair.Item1.Label, MarkSelectedNodes(pair.Item1.Target, pair.Item2));
 
             if (!problemSpace.Label.Instance.IsDefined && treeNode.Checked)
             {
-                return LabeledTree.Node(new SolutionInstantiation(problemSpace.Label.Element, selected: true), edges);
+                return LabeledTree.Node(new ElementInstantiation(problemSpace.Label.Element, selected: true), edges);
             }
             else
             {
@@ -60,7 +60,7 @@ namespace AdAddIn.PopulateDependencies
             }
         }
 
-        private TreeNode ToTreeNode(LabeledTree<SolutionInstantiation, EA.Connector> dependencyNode)
+        private TreeNode ToTreeNode(LabeledTree<ElementInstantiation, EA.Connector> dependencyNode)
         {
             var node = new TreeNode(dependencyNode.Label.Element.Name, ToTreeNodes(dependencyNode.Edges));
             node.Tag = dependencyNode;
@@ -69,7 +69,7 @@ namespace AdAddIn.PopulateDependencies
             return node;
         }
 
-        private TreeNode[] ToTreeNodes(IEnumerable<LabeledTree<SolutionInstantiation, EA.Connector>.Edge> edges)
+        private TreeNode[] ToTreeNodes(IEnumerable<LabeledTree<ElementInstantiation, EA.Connector>.Edge> edges)
         {
             return edges.Select(edge =>
             {

@@ -28,7 +28,7 @@ namespace ADAddInTests.PopulateDependencies
 
             var problemSpace = SolutionInstantiationGraph.Create(adRepo, occurrence1).Value;
 
-            var markedProblemSpace = problemSpace.WithSelection(new[] { new SolutionInstantiation(alternativeAA, selected: true) });
+            var markedProblemSpace = problemSpace.WithSelection(new[] { new ElementInstantiation(alternativeAA, selected: true) });
 
             var result = markedProblemSpace.InstantiateSelectedItems(rut.TestPackage);
 

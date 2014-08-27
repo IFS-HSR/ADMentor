@@ -36,15 +36,24 @@ namespace AdAddIn.DataAccess
             return d.DiagramObjects.Cast<EA.DiagramObject>().FirstOption(obj => obj.ElementID == e.ElementID);
         }
 
-        public EA.DiagramObject AddToDiagram(EA.Diagram d, EA.Element e, int x = 0, int y = 0, int width = 0, int height = 0)
+        public EA.DiagramObject AddToDiagram(EA.Diagram d, EA.Element e, int left = 0, int right = 0, int top = 0, int bottom = 0)
         {
-            var pos = String.Format("l={0};r={1};t={2};b={3};", x, x + width, y, y + height);
+            var pos = String.Format("l={0};r={1};t={2};b={3};", left, right, top, bottom);
             var obj = d.DiagramObjects.AddNew(pos, "") as EA.DiagramObject;
             obj.ElementID = e.ElementID;
             obj.Update();
             d.DiagramObjects.Refresh();
 
             return obj;
+        }
+
+        public EA.Diagram Create(EAAddInFramework.MDGBuilder.Diagram diagramType, EA.Package package, string name)
+        {
+            var diagram = package.Diagrams.AddNew(name, diagramType.Type.Name) as EA.Diagram;
+            diagram.StyleEx = String.Format("MDGDgm={0}::{1};", ADTechnology.Technologies.AD.ID, diagramType.Name);
+            diagram.Update();
+            package.Diagrams.Refresh();
+            return diagram;
         }
     }
 }
