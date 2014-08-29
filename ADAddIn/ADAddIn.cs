@@ -41,7 +41,7 @@ namespace AdAddIn
             var updateMetadataCommand = new UpdateMetadataOfNewElementsCommand(elementRepository);
             var populateDependenciesCommand = new PopulateDependenciesCommand(
                 elementRepository, diagramRepository, new DependencySelectorForm(elementRepository));
-            var instantiateProblemSpace = new InstantiateProblemSpaceCommand(packageRepository, elementRepository, diagramRepository, new SolutionNameForm());
+            var instantiateProblemSpace = new InstantiateProblemSpaceCommand(packageRepository, elementRepository, diagramRepository, new InstantiateSolutionForm());
 
             Register(new Menu(technology.Name,
                 new MenuItem("Go to Classifier", new GoToClassifierCommand(elementRepository, eaRepository)),

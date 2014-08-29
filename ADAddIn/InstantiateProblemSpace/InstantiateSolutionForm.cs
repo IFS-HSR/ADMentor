@@ -11,14 +11,14 @@ using Utils;
 
 namespace AdAddIn.InstantiateProblemSpace
 {
-    public partial class SolutionNameForm : Form
+    public partial class InstantiateSolutionForm : Form
     {
-        public SolutionNameForm()
+        public InstantiateSolutionForm()
         {
             InitializeComponent();
         }
 
-        public Option<String> GetSolutionName()
+        public Option<String> GetSolutionName(ProblemSpaceTree problemSpaceTree)
         {
             textBoxName.Clear();
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdAddIn.ADTechnology
 {
-    public static class Diagrams
+    public static class DiagramTypes
     {
         public static readonly Diagram ProblemSpace = new Diagram(
             name: "ProblemSpace",

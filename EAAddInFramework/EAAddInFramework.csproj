@@ -50,6 +50,7 @@
     <Compile Include="ConnectorExtensions.cs" />
     <Compile Include="ContextItem.cs" />
     <Compile Include="DiagramExtensions.cs" />
+    <Compile Include="PackageExtensions.cs" />
     <Compile Include="RepositoryUnderTest.cs" />
     <Compile Include="StereotypeHelpers.cs" />
     <Compile Include="EAAddIn.cs" />

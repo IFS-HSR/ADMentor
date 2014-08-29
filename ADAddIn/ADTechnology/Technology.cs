@@ -14,9 +14,9 @@ namespace AdAddIn.ADTechnology
             name: "AD Mentor",
             description: "Modelling Language for documentation and reuse of architectural decisions",
             diagrams: new Diagram[]{
-                        ADTechnology.Diagrams.ProblemSpace,
-                        ADTechnology.Diagrams.SolutionOverview,
-                        ADTechnology.Diagrams.StakeholderOverview
+                        ADTechnology.DiagramTypes.ProblemSpace,
+                        ADTechnology.DiagramTypes.SolutionOverview,
+                        ADTechnology.DiagramTypes.StakeholderOverview
                     },
             modelTemplates: new ModelTemplate[]{
                         new ModelTemplate(

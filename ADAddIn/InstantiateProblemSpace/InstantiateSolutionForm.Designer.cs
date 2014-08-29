@@ -1,6 +1,6 @@
 ﻿namespace AdAddIn.InstantiateProblemSpace
 {
-    partial class SolutionNameForm
+    partial class InstantiateSolutionForm
     {
         /// <summary>
         /// Required designer variable.
@@ -44,8 +44,7 @@
             // 
             // buttonCreate
             // 
-            this.buttonCreate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCreate.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonCreate.Location = new System.Drawing.Point(226, 38);
             this.buttonCreate.Name = "buttonCreate";
@@ -56,8 +55,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new System.Drawing.Point(307, 38);
             this.buttonCancel.Name = "buttonCancel";
@@ -66,7 +64,7 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
-            // SolutionNameForm
+            // InstantiateSolutionForm
             // 
             this.AcceptButton = this.buttonCreate;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -79,10 +77,10 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "SolutionNameForm";
+            this.Name = "InstantiateSolutionForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "SolutionNameForm";
+            this.Text = "Choose Name for New Solution";
             this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();

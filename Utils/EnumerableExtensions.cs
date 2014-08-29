@@ -51,5 +51,10 @@ namespace Utils
         {
             return items.Any(i => i.Equals(item));
         }
+
+        public static IEnumerable<T> Run<T>(this IEnumerable<T> ts)
+        {
+            return ts.ToList();
+        }
     }
 }

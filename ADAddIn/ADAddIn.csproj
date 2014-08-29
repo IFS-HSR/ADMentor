@@ -60,16 +60,17 @@
   <ItemGroup>
     <Compile Include="ADAddIn.cs" />
     <Compile Include="ADTechnology\ConnectorStereotypes.cs" />
-    <Compile Include="ADTechnology\Diagrams.cs" />
+    <Compile Include="ADTechnology\DiagramTypes.cs" />
     <Compile Include="ADTechnology\ElementStereotypes.cs" />
     <Compile Include="ADTechnology\Technology.cs" />
     <Compile Include="ADTechnology\Toolboxes.cs" />
     <Compile Include="CopyMetadata\UpdateMetadataOfNewElementsCommand.cs" />
     <Compile Include="DataAccess\DiagramRepository.cs" />
+    <Compile Include="DataAccess\ElementInstantiation.cs" />
     <Compile Include="DataAccess\ElementRepository.cs" />
     <Compile Include="DataAccess\PackageRepository.cs" />
     <Compile Include="InstantiateProblemSpace\InstantiateProblemSpaceCommand.cs" />
-    <Compile Include="InstantiateProblemSpace\PackageTree.cs" />
+    <Compile Include="InstantiateProblemSpace\ProblemSpaceTree.cs" />
     <Compile Include="InstantiateProblemSpace\SolutionNameForm.cs">
       <SubType>Form</SubType>
     </Compile>
