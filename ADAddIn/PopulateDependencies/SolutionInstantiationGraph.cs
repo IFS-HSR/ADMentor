@@ -140,7 +140,7 @@ namespace AdAddIn.PopulateDependencies
 
                             diagramRepo.AddToDiagram(diagram, toInstance,
                                 left: parentObject.left + verticalOffset, right: parentObject.right + verticalOffset,
-                                top: parentObject.top + verticalOffset, bottom: parentObject.bottom + verticalOffset);
+                                top: parentObject.top + horizontalOffset, bottom: parentObject.bottom + horizontalOffset);
 
                             siblings[from] = leftHandSiblings + 1;
                         });
@@ -148,6 +148,7 @@ namespace AdAddIn.PopulateDependencies
                 });
             });
             diagramRepo.ReloadDiagram(diagram);
+            diagramRepo.SaveDiagram(diagram);
 
             return Unit.Instance;
         }

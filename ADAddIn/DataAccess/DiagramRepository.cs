@@ -26,6 +26,11 @@ namespace AdAddIn.DataAccess
             Repo.Val.ReloadDiagram(d.DiagramID);
         }
 
+        public void SaveDiagram(EA.Diagram d)
+        {
+            Repo.Val.SaveDiagram(d.DiagramID);
+        }
+
         public Boolean Contains(EA.Diagram d, EA.Element e)
         {
             return d.DiagramObjects.Cast<EA.DiagramObject>().Any(obj => obj.ElementID == e.ElementID);
