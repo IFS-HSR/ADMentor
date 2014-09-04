@@ -24,9 +24,9 @@ namespace ADAddInTests.PopulateDependencies
                 var rut = new RepositoryUnderTest();
                 var adRepo = new ElementRepository(new Atom<EA.Repository>(rut.Repo));
 
-                var a = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
-                var b = ElementStereotypes.Problem.Create(rut.TestPackage, "B");
-                var c = ElementStereotypes.Problem.Create(rut.TestPackage, "C");
+                var a = ProblemSpace.Problem.Create(rut.TestPackage, "A");
+                var b = ProblemSpace.Problem.Create(rut.TestPackage, "B");
+                var c = ProblemSpace.Problem.Create(rut.TestPackage, "C");
 
                 var cAtoB = ConnectorStereotypes.Includes.Create(a, b);
                 var cBtoC = ConnectorStereotypes.Includes.Create(b, c);
@@ -46,9 +46,9 @@ namespace ADAddInTests.PopulateDependencies
                 var rut = new RepositoryUnderTest();
                 var adRepo = new ElementRepository(new Atom<EA.Repository>(rut.Repo));
 
-                var problemA = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
-                var alternativeA = ElementStereotypes.Option.Create(rut.TestPackage, "AA");
-                var alternativeB = ElementStereotypes.Option.Create(rut.TestPackage, "AB");
+                var problemA = ProblemSpace.Problem.Create(rut.TestPackage, "A");
+                var alternativeA = ProblemSpace.Option.Create(rut.TestPackage, "AA");
+                var alternativeB = ProblemSpace.Option.Create(rut.TestPackage, "AB");
 
                 var cA = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeA);
                 var cB = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeB);
@@ -68,9 +68,9 @@ namespace ADAddInTests.PopulateDependencies
                 var rut = new RepositoryUnderTest();
                 var adRepo = new ElementRepository(new Atom<EA.Repository>(rut.Repo));
 
-                var problemA = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
-                var problemB = ElementStereotypes.Problem.Create(rut.TestPackage, "B");
-                var alternativeBA = ElementStereotypes.Option.Create(rut.TestPackage, "BA");
+                var problemA = ProblemSpace.Problem.Create(rut.TestPackage, "A");
+                var problemB = ProblemSpace.Problem.Create(rut.TestPackage, "B");
+                var alternativeBA = ProblemSpace.Option.Create(rut.TestPackage, "BA");
 
                 var cAtoB = ConnectorStereotypes.Includes.Create(problemA, problemB);
                 var cBtoBA = ConnectorStereotypes.HasAlternative.Create(problemB, alternativeBA);
@@ -95,10 +95,10 @@ namespace ADAddInTests.PopulateDependencies
                 var rut = new RepositoryUnderTest();
                 var adRepo = new ElementRepository(new Atom<EA.Repository>(rut.Repo));
 
-                var problemA = ElementStereotypes.Problem.Create(rut.TestPackage, "A");
-                var alternativeAA = ElementStereotypes.Option.Create(rut.TestPackage, "AA");
-                var problemB = ElementStereotypes.Problem.Create(rut.TestPackage, "B");
-                var alternativeBA = ElementStereotypes.Option.Create(rut.TestPackage, "BA");
+                var problemA = ProblemSpace.Problem.Create(rut.TestPackage, "A");
+                var alternativeAA = ProblemSpace.Option.Create(rut.TestPackage, "AA");
+                var problemB = ProblemSpace.Problem.Create(rut.TestPackage, "B");
+                var alternativeBA = ProblemSpace.Option.Create(rut.TestPackage, "BA");
 
                 var cAtoAA = ConnectorStereotypes.HasAlternative.Create(problemA, alternativeAA);
                 var cBtoBA = ConnectorStereotypes.HasAlternative.Create(problemB, alternativeBA);

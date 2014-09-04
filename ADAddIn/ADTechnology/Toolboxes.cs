@@ -32,8 +32,8 @@ namespace AdAddIn.ADTechnology
                     displayName: "Elements",
                     description: "",
                     stereotypes: new []{
-                        ElementStereotypes.Problem,
-                        ElementStereotypes.Option
+                        ProblemSpace.Problem,
+                        ProblemSpace.Option
                     }),
                 ProblemSpaceConncetorsPage
             }
@@ -49,8 +49,8 @@ namespace AdAddIn.ADTechnology
                     displayName: "Elements",
                     description: "",
                     stereotypes: new []{
-                        ElementStereotypes.ProblemOccurrence,
-                        ElementStereotypes.OptionOccurrence
+                        Solution.ProblemOccurrence,
+                        Solution.OptionOccurrence
                     }),
                 ProblemSpaceConncetorsPage,
                 new ToolboxPage(
@@ -74,7 +74,7 @@ namespace AdAddIn.ADTechnology
                     displayName: "Elements",
                     description: "",
                     stereotypes: new []{
-                        ElementStereotypes.StakeholderRole
+                        StakeholderRoles.StakeholderRole
                     })
             }
         );

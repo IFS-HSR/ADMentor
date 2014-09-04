@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdAddIn.ADTechnology
 {
-    public static class TaggedValues
+    public static class Common
     {
         public class OrganisationalReachValue : Enumeration
         {
@@ -26,8 +26,24 @@ namespace AdAddIn.ADTechnology
             private OrganisationalReachValue(String name) : base(name) { }
         }
 
-        public static readonly TaggedValue IntellectualPropertyRights = new TaggedValue(name: "Intellectual Property Rights", type: TaggedValueTypes.String);
+        public static readonly TaggedValue IntellectualPropertyRights = new TaggedValue(
+            name: "Intellectual Property Rights",
+            type: TaggedValueTypes.String);
 
-        public static readonly TaggedValue OrganisationalReach = new TaggedValue(name: "Organisational Reach", type: TaggedValueTypes.Enum(OrganisationalReachValue.All));
+        public static readonly TaggedValue OrganisationalReach = new TaggedValue(
+            name: "Organisational Reach",
+            type: TaggedValueTypes.Enum(OrganisationalReachValue.All));
+
+        public static readonly TaggedValue ProjectStage = new TaggedValue(
+            name: "Project Stage",
+            type: TaggedValueTypes.String);
+
+        public static readonly TaggedValue Viewpoint = new TaggedValue(
+            name: "Viewpoint",
+            type: TaggedValueTypes.String);
+
+        public static readonly TaggedValue RevisionDate = new TaggedValue(
+            name: "Revision Date",
+            type: TaggedValueTypes.DateTime);
     }
 }

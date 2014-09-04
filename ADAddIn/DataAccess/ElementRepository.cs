@@ -80,7 +80,7 @@ namespace AdAddIn.DataAccess
             };
 
             return (from c in GetClassifier(element)
-                    where c.Is(ElementStereotypes.Problem) || c.Is(ElementStereotypes.Option)
+                    where c.Is(ProblemSpace.Problem) || c.Is(ProblemSpace.Option)
                     select update(element, c)).GetOrElse(EntityModified.NotModified);
         }
     }

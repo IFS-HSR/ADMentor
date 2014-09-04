@@ -20,8 +20,8 @@ namespace AdAddIn.ADTechnology
             direction: Direction.Unspecified,
             compositionKind: CompositionKind.AggregateAtSource,
             connects: new[]{
-                new Connection(from: ElementStereotypes.Problem, to: ElementStereotypes.Option),
-                new Connection(from: ElementStereotypes.ProblemOccurrence, to: ElementStereotypes.OptionOccurrence)
+                new Connection(from: ProblemSpace.Problem, to: ProblemSpace.Option),
+                new Connection(from: Solution.ProblemOccurrence, to: Solution.OptionOccurrence)
             });
 
         /// <summary>
@@ -34,8 +34,8 @@ namespace AdAddIn.ADTechnology
             type: ConnectorType.Association,
             direction: Direction.SourceToDestination,
             connects: new[]{
-                new Connection(from: ElementStereotypes.Option, to: ElementStereotypes.Problem),
-                new Connection(from: ElementStereotypes.OptionOccurrence, to: ElementStereotypes.ProblemOccurrence)
+                new Connection(from: ProblemSpace.Option, to: ProblemSpace.Problem),
+                new Connection(from: Solution.OptionOccurrence, to: Solution.ProblemOccurrence)
             });
 
         /// <summary>
@@ -48,8 +48,8 @@ namespace AdAddIn.ADTechnology
             type: ConnectorType.Association,
             direction: Direction.SourceToDestination,
             connects: new[]{
-                new Connection(from: ElementStereotypes.Problem, to: ElementStereotypes.Problem),
-                new Connection(from: ElementStereotypes.ProblemOccurrence, to: ElementStereotypes.ProblemOccurrence)
+                new Connection(from: ProblemSpace.Problem, to: ProblemSpace.Problem),
+                new Connection(from: Solution.ProblemOccurrence, to: Solution.ProblemOccurrence)
             });
 
         /// <summary>
@@ -62,8 +62,8 @@ namespace AdAddIn.ADTechnology
             type: ConnectorType.Dependency,
             direction: Direction.SourceToDestination,
             connects: new[]{
-                new Connection(from: ElementStereotypes.Option, to: ElementStereotypes.Option),
-                new Connection(from: ElementStereotypes.OptionOccurrence, to: ElementStereotypes.OptionOccurrence)
+                new Connection(from: ProblemSpace.Option, to: ProblemSpace.Option),
+                new Connection(from: Solution.OptionOccurrence, to: Solution.OptionOccurrence)
             });
 
         /// <summary>
@@ -75,8 +75,8 @@ namespace AdAddIn.ADTechnology
             type: ConnectorType.Dependency,
             direction: Direction.BiDirectional,
             connects: new[]{
-                new Connection(from: ElementStereotypes.Option, to: ElementStereotypes.Option),
-                new Connection(from: ElementStereotypes.OptionOccurrence, to: ElementStereotypes.OptionOccurrence)
+                new Connection(from: ProblemSpace.Option, to: ProblemSpace.Option),
+                new Connection(from: Solution.OptionOccurrence, to: Solution.OptionOccurrence)
             });
 
         /// <summary>
@@ -88,8 +88,8 @@ namespace AdAddIn.ADTechnology
             type: ConnectorType.Dependency,
             direction: Direction.BiDirectional,
             connects: new[]{
-                new Connection(from: ElementStereotypes.Option, to: ElementStereotypes.Option),
-                new Connection(from: ElementStereotypes.OptionOccurrence, to: ElementStereotypes.OptionOccurrence)
+                new Connection(from: ProblemSpace.Option, to: ProblemSpace.Option),
+                new Connection(from: Solution.OptionOccurrence, to: Solution.OptionOccurrence)
             });
 
         /// <summary>
@@ -102,8 +102,8 @@ namespace AdAddIn.ADTechnology
             type: ConnectorType.Dependency,
             direction: Direction.SourceToDestination,
             connects: new[]{
-                new Connection(from: ElementType.Issue.DefaultStereotype, to: ElementStereotypes.OptionOccurrence),
-                new Connection(from: ElementType.Requirement.DefaultStereotype, to: ElementStereotypes.OptionOccurrence)
+                new Connection(from: ElementType.Issue.DefaultStereotype, to: Solution.OptionOccurrence),
+                new Connection(from: ElementType.Requirement.DefaultStereotype, to: Solution.OptionOccurrence)
             });
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace AdAddIn.ADTechnology
             type: ConnectorType.Association,
             direction: Direction.SourceToDestination,
             connects: new[]{
-                new Connection(from: ElementStereotypes.OptionOccurrence, to: ElementStereotypes.OptionOccurrence)
+                new Connection(from: Solution.OptionOccurrence, to: Solution.OptionOccurrence)
             });
     }
 }

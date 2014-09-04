@@ -9,24 +9,10 @@ using Utils;
 
 namespace AdAddIn.ADTechnology
 {
-    public static class ElementStereotypes
+    public static class Solution
     {
-
-        public static readonly ElementStereotype StakeholderRole = new ElementStereotype(
-            name: "adStakeholderRole",
-            displayName: "Stakeholder Role",
-            type: ElementType.Actor);
-
-        public static readonly IEnumerable<ITaggedValue> ProblemSpaceTaggedValues = new[]{
-            new TaggedValue(name: "Stakeholder Role", type: TaggedValueTypes.Reference(StakeholderRole)),
-            new TaggedValue(name: "Project Stage", type: TaggedValueTypes.String),
-            new TaggedValue(name: "Viewpoint", type: TaggedValueTypes.String),
-            TaggedValues.OrganisationalReach,
-            TaggedValues.IntellectualPropertyRights
-        };
-
         public static readonly IEnumerable<ITaggedValue> SolutionTaggedValues = new[]{
-            new TaggedValue(name: "Revision Date", type: TaggedValueTypes.DateTime)
+            Common.RevisionDate
         };
 
         public class DecisionState : Enumeration
@@ -144,44 +130,6 @@ namespace AdAddIn.ADTechnology
                     description: "Problem State",
                     type: TaggedValueTypes.Enum(values: ProblemOccurrenceState.AllStates).WithDefaultValue(ProblemOccurrenceState.Open))
              }));
-
-        public static readonly ElementStereotype Problem = new ElementStereotype(
-            name: "adProblem",
-            displayName: "Problem",
-            type: ElementType.Class,
-            instanceType: ProblemOccurrence,
-            icon: new Icon("AdAddIn.ADTechnology.Problem.bmp"),
-            shapeScript: @"
-                shape main{
-	                h_align = ""center"";
-	                v_align = ""center"";
-
-	                StartPath();
-	                MoveTo(50,0);
-	                LineTo(100,50);
-	                LineTo(50,100);
-	                LineTo(0,50);
-	                EndPath();
-	                FillAndStrokePath();
-	
-	                Println(""#NAME#"");
-                }
-            ",
-            backgroundColor: Color.LightSkyBlue,
-            width: 100,
-            height: 70,
-            taggedValues: ProblemSpaceTaggedValues);
-
-        public static readonly ElementStereotype Option = new ElementStereotype(
-            name: "adOption",
-            displayName: "Option",
-            type: ElementType.Class,
-            instanceType: OptionOccurrence,
-            icon: new Icon("AdAddIn.ADTechnology.Option.bmp"),
-            backgroundColor: Color.LightYellow,
-            width: 100,
-            height: 70,
-            taggedValues: ProblemSpaceTaggedValues);
 
         private static String GenerateFillColors(String tagName, IDictionary<String, Color> valueColors)
         {

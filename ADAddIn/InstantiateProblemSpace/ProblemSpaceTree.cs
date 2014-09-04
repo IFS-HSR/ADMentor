@@ -40,7 +40,7 @@ namespace AdAddIn.InstantiateProblemSpace
         public static ProblemSpaceTree Create(EA.Package problemSpacePackage)
         {
             var instantiations = from element in problemSpacePackage.Elements()
-                                 where element.Is(ElementStereotypes.Option) || element.Is(ElementStereotypes.Problem)
+                                 where element.Is(ProblemSpace.Option) || element.Is(ProblemSpace.Problem)
                                  select new ElementInstantiation(element);
             var diagrams = from diagram in problemSpacePackage.Diagrams()
                            where diagram.Is(DiagramTypes.ProblemSpace)

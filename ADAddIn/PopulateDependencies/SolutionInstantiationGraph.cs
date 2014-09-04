@@ -28,7 +28,7 @@ namespace AdAddIn.PopulateDependencies
         public static Option<SolutionInstantiationGraph> Create(ElementRepository repo, EA.Element solutionItem)
         {
             return from classifier in repo.GetElement(solutionItem.ClassifierID)
-                   where classifier.Is(ElementStereotypes.Problem) || classifier.Is(ElementStereotypes.Option)
+                   where classifier.Is(ProblemSpace.Problem) || classifier.Is(ProblemSpace.Option)
                    let problemSpace = DependencyGraph.Create(repo, classifier, DependencyGraphFilter)
                    let solution = DependencyGraph.Create(repo, solutionItem, DependencyGraphFilter)
                    select new SolutionInstantiationGraph(repo, Compare(problemSpace, solution));
@@ -78,7 +78,7 @@ namespace AdAddIn.PopulateDependencies
                         Repo.GetStereotype(edge).Do(stype =>
                         {
                             var connectsAlternativeToProblem =
-                                stype == ConnectorStereotypes.HasAlternative && solutionSource.Is(ElementStereotypes.OptionOccurrence);
+                                stype == ConnectorStereotypes.HasAlternative && solutionSource.Is(Solution.OptionOccurrence);
                             var alreadyExisting = solutionSource.Connectors.Cast<EA.Connector>().Any(c =>
                             {
                                 return c.Is(stype) && (c.SupplierID == solutionTarget.ElementID || c.ClientID == solutionTarget.ElementID);

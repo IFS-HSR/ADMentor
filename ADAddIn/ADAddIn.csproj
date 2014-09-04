@@ -59,10 +59,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ADAddIn.cs" />
+    <Compile Include="ADTechnology\Common.cs" />
     <Compile Include="ADTechnology\ConnectorStereotypes.cs" />
     <Compile Include="ADTechnology\DiagramTypes.cs" />
-    <Compile Include="ADTechnology\ElementStereotypes.cs" />
-    <Compile Include="ADTechnology\TaggedValues.cs" />
+    <Compile Include="ADTechnology\Solution.cs" />
+    <Compile Include="ADTechnology\ProblemSpace.cs" />
+    <Compile Include="ADTechnology\StakeholderRoles.cs" />
     <Compile Include="ADTechnology\Technology.cs" />
     <Compile Include="ADTechnology\Toolboxes.cs" />
     <Compile Include="CopyMetadata\UpdateMetadataOfNewElementsCommand.cs" />
