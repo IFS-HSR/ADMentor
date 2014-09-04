@@ -47,7 +47,7 @@ namespace AdAddIn
             Register(new Menu(technology.Name,
                 new MenuItem("Locate Option/Problem", new GoToClassifierCommand(elementRepository, eaRepository)),
                 new MenuItem("Establish Dependencies from Problem Space", populateDependenciesCommand.AsMenuCommand()),
-                new MenuItem("Tailor Problem Space", new ExportProblemSpaceCommand(elementRepository, packageRepository, new TailorSolutionForm()).AsMenuCommand()),
+                new MenuItem("Tailor Problem Space", new ExportProblemSpaceCommand(elementRepository, packageRepository, new TailorPackageExportForm()).AsMenuCommand()),
                 new MenuItem("Create Solution from Problem Space", instantiateProblemSpace.AsMenuCommand())));
 
             OnElementCreated.Add(updateMetadataCommand);

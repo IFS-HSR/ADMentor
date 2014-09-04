@@ -11,12 +11,12 @@ using Utils;
 
 namespace AdAddIn.ExportProblemSpace
 {
-    public partial class TailorSolutionForm : Form
+    public partial class TailorPackageExportForm : Form
     {
         private Atom<Func<IFilter<ModelEntity>, LabeledTree<ModelEntity, Unit>>> getModelHierarchy;
         private Atom<CompositeFilter<ModelEntity>> rootFilter;
 
-        public TailorSolutionForm()
+        public TailorPackageExportForm()
         {
             getModelHierarchy = new Atom<Func<IFilter<ModelEntity>, LabeledTree<ModelEntity, Unit>>>(null);
             rootFilter = new Atom<CompositeFilter<ModelEntity>>(null);

@@ -74,11 +74,11 @@
     <Compile Include="DataAccess\PackageRepository.cs" />
     <Compile Include="ExportProblemSpace\ExportProblemSpaceCommand.cs" />
     <Compile Include="ExportProblemSpace\ModelEntity.cs" />
-    <Compile Include="ExportProblemSpace\TailorSolutionForm.cs">
+    <Compile Include="ExportProblemSpace\TailorPackageExportForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ExportProblemSpace\TailorSolutionForm.Designer.cs">
-      <DependentUpon>TailorSolutionForm.cs</DependentUpon>
+    <Compile Include="ExportProblemSpace\TailorPackageExportForm.Designer.cs">
+      <DependentUpon>TailorPackageExportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="InstantiateProblemSpace\InstantiateProblemSpaceCommand.cs" />
     <Compile Include="InstantiateProblemSpace\ProblemSpaceTree.cs" />
@@ -128,8 +128,8 @@
     </Content>
     <EmbeddedResource Include="ADTechnology\Option.bmp" />
     <EmbeddedResource Include="ADTechnology\Problem.bmp" />
-    <EmbeddedResource Include="ExportProblemSpace\TailorSolutionForm.resx">
-      <DependentUpon>TailorSolutionForm.cs</DependentUpon>
+    <EmbeddedResource Include="ExportProblemSpace\TailorPackageExportForm.resx">
+      <DependentUpon>TailorPackageExportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InstantiateProblemSpace\InstantiateSolutionForm.resx">
       <DependentUpon>InstantiateSolutionForm.cs</DependentUpon>

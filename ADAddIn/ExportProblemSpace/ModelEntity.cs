@@ -2,6 +2,7 @@
 using EAAddInFramework.MDGBuilder;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,7 +76,7 @@ namespace AdAddIn.ExportProblemSpace
             get
             {
                 return Match(
-                    (Package p) => (this as dynamic).Val.Element.Stereotype as String,
+                    (Package p) => p.Val.Element.Stereotype as String,
                     () => (this as dynamic).Val.Stereotype as String);
             }
         }
@@ -85,7 +86,7 @@ namespace AdAddIn.ExportProblemSpace
             get
             {
                 return Match(
-                    (Package p) => (this as dynamic).Val.Element.Type as String,
+                    (Package p) => p.Val.Element.Type as String,
                     () => (this as dynamic).Val.Type as String);
             }
         }
@@ -107,6 +108,23 @@ namespace AdAddIn.ExportProblemSpace
                 (Element e) => e.Val.Get(taggedValue),
                 (Connector c) => { throw new NotImplementedException(); },
                 (Diagram _) => Options.None<String>());
+        }
+
+        public IImmutableSet<String> Keywords
+        {
+            get
+            {
+                var element = Match(
+                    (Package p) => p.Val.Element.AsOption(),
+                    (Element e) => e.Val.AsOption(),
+                    () => Options.None<EA.Element>());
+
+                return (from e in element
+                        from keyword in e.Tag
+                            .Split(new[] { ',', ';' })
+                            .Select(w => w.Trim().ToLower())
+                        select keyword).ToImmutableHashSet();
+            }
         }
 
         public class Package : ModelEntity

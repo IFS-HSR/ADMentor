@@ -1,6 +1,6 @@
 ﻿namespace AdAddIn.ExportProblemSpace
 {
-    partial class TailorSolutionForm
+    partial class TailorPackageExportForm
     {
         /// <summary>
         /// Required designer variable.
@@ -75,6 +75,7 @@
             // 
             // export
             // 
+            this.export.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.export.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.export.Location = new System.Drawing.Point(526, 538);
             this.export.Name = "export";
@@ -85,6 +86,7 @@
             // 
             // cancel
             // 
+            this.cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancel.Location = new System.Drawing.Point(607, 538);
             this.cancel.Name = "cancel";
@@ -93,7 +95,7 @@
             this.cancel.Text = "Cancel";
             this.cancel.UseVisualStyleBackColor = true;
             // 
-            // TailorSolutionForm
+            // TailorPackageExportForm
             // 
             this.AcceptButton = this.export;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -106,8 +108,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.filterTreeView);
             this.Controls.Add(this.label1);
-            this.Name = "TailorSolutionForm";
-            this.Text = "TailorSolutionForm";
+            this.Name = "TailorPackageExportForm";
+            this.Text = "Tailor Package Export";
             this.ResumeLayout(false);
             this.PerformLayout();
 
