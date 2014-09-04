@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utils;
 
 namespace EAAddInFramework
 {
@@ -34,6 +35,14 @@ namespace EAAddInFramework
         public static IEnumerable<EA.Connector> Connectors(this EA.Element e)
         {
             return e.Connectors.Cast<EA.Connector>();
+        }
+
+        public static Option<String> Get(this EA.Element e, TaggedValue taggedValue)
+        {
+            return (from tv in e.TaggedValues.Cast<EA.TaggedValue>()
+                    where tv.Name == taggedValue.Name
+                    where tv.Value != ""
+                    select tv.Value).FirstOption();
         }
     }
 }

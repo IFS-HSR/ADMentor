@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Utils;
 using AdAddIn.InstantiateProblemSpace;
+using AdAddIn.ExportProblemSpace;
 
 namespace AdAddIn
 {
@@ -44,9 +45,10 @@ namespace AdAddIn
             var instantiateProblemSpace = new InstantiateProblemSpaceCommand(packageRepository, elementRepository, diagramRepository, new InstantiateSolutionForm());
 
             Register(new Menu(technology.Name,
-                new MenuItem("Go to Classifier", new GoToClassifierCommand(elementRepository, eaRepository)),
-                new MenuItem("Populate Dependencies", populateDependenciesCommand.AsMenuCommand()),
-                new MenuItem("Instantiate Complete Problem Space", instantiateProblemSpace.AsMenuCommand())));
+                new MenuItem("Locate Option/Problem", new GoToClassifierCommand(elementRepository, eaRepository)),
+                new MenuItem("Establish Dependencies from Problem Space", populateDependenciesCommand.AsMenuCommand()),
+                new MenuItem("Tailor Problem Space", new ExportProblemSpaceCommand(elementRepository, packageRepository, new TailorSolutionForm()).AsMenuCommand()),
+                new MenuItem("Create Solution from Problem Space", instantiateProblemSpace.AsMenuCommand())));
 
             OnElementCreated.Add(updateMetadataCommand);
             OnElementCreated.Add(populateDependenciesCommand.AsElementCreatedHandler());

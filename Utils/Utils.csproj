@@ -49,8 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Atom.cs" />
+    <Compile Include="Either.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="DirectedLabeledGraph.cs" />
+    <Compile Include="IFilter.cs" />
     <Compile Include="LabeledTree.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="OptionConverter.cs" />

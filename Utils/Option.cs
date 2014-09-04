@@ -89,6 +89,15 @@ namespace Utils
                 v => (397 + v.GetHashCode()) * 17,
                 () => 0);
         }
+
+        public override bool Equals(object other)
+        {
+            return other.TryCast<Option<T>>().Match(
+                opt => IsDefined == opt.IsDefined && Match(
+                    val => Value.Equals(val),
+                    () => true),
+                () => false);
+        }
     }
 
     public static class Options
@@ -196,17 +205,12 @@ namespace Utils
             });
         }
 
-        public static bool IsEqualTo<T>(this Option<T> opt, Option<T> other)
+        public static Option<T> TryCast<T>(this object o) where T : class
         {
-            return opt.Match(
-                v =>
-                {
-                    return other.IsDefined && v.Equals(other.Value);
-                },
-                () =>
-                {
-                    return !other.IsDefined;
-                });
+            if (o is T)
+                return Options.Some(o as T);
+            else
+                return Options.None<T>();
         }
     }
 

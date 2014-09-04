@@ -11,22 +11,6 @@ namespace AdAddIn.ADTechnology
 {
     public static class ElementStereotypes
     {
-        public class OrganisationalReach : Enumeration
-        {
-            public static readonly OrganisationalReach Global = new OrganisationalReach("Global");
-            public static readonly OrganisationalReach Organisation = new OrganisationalReach("Organisation");
-            public static readonly OrganisationalReach Program = new OrganisationalReach("Program");
-            public static readonly OrganisationalReach Project = new OrganisationalReach("Project");
-            public static readonly OrganisationalReach Subproject = new OrganisationalReach("Subproject");
-            public static readonly OrganisationalReach BusinessUnit = new OrganisationalReach("Business Unit");
-            public static readonly OrganisationalReach Individual = new OrganisationalReach("Individual");
-
-            public static readonly IEnumerable<OrganisationalReach> All = new[] {
-                Global, Organisation, Program, Project, Subproject, BusinessUnit, Individual
-            };
-
-            private OrganisationalReach(String name) : base(name) { }
-        }
 
         public static readonly ElementStereotype StakeholderRole = new ElementStereotype(
             name: "adStakeholderRole",
@@ -37,8 +21,8 @@ namespace AdAddIn.ADTechnology
             new TaggedValue(name: "Stakeholder Role", type: TaggedValueTypes.Reference(StakeholderRole)),
             new TaggedValue(name: "Project Stage", type: TaggedValueTypes.String),
             new TaggedValue(name: "Viewpoint", type: TaggedValueTypes.String),
-            new TaggedValue(name: "Organisational Reach", type: TaggedValueTypes.Enum(OrganisationalReach.All)),
-            new TaggedValue(name: "Intellectual Property Rights", type: TaggedValueTypes.String)
+            TaggedValues.OrganisationalReach,
+            TaggedValues.IntellectualPropertyRights
         };
 
         public static readonly IEnumerable<ITaggedValue> SolutionTaggedValues = new[]{

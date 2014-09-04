@@ -63,7 +63,6 @@ namespace AdAddIn.PopulateDependencies
         private TreeNode ToTreeNode(LabeledTree<ElementInstantiation, EA.Connector> dependencyNode)
         {
             var node = new TreeNode(dependencyNode.Label.Element.Name, ToTreeNodes(dependencyNode.Edges));
-            node.Tag = dependencyNode;
             if (dependencyNode.Label.Instance.IsDefined)
                 node.ForeColor = System.Drawing.SystemColors.GrayText;
             return node;
@@ -79,7 +78,6 @@ namespace AdAddIn.PopulateDependencies
                     : stype.ReverseDisplayName.GetOrElse(stype.DisplayName);
                 var label = String.Format("{0}: {1}", connectorName, edge.Target.Label.Element.Name);
                 var node = new TreeNode(label, ToTreeNodes(edge.Target.Edges));
-                node.Tag = edge.Target;
                 if (edge.Target.Label.Instance.IsDefined)
                     node.ForeColor = System.Drawing.SystemColors.GrayText;
                 return node;

@@ -62,6 +62,7 @@
     <Compile Include="ADTechnology\ConnectorStereotypes.cs" />
     <Compile Include="ADTechnology\DiagramTypes.cs" />
     <Compile Include="ADTechnology\ElementStereotypes.cs" />
+    <Compile Include="ADTechnology\TaggedValues.cs" />
     <Compile Include="ADTechnology\Technology.cs" />
     <Compile Include="ADTechnology\Toolboxes.cs" />
     <Compile Include="CopyMetadata\UpdateMetadataOfNewElementsCommand.cs" />
@@ -69,13 +70,21 @@
     <Compile Include="DataAccess\ElementInstantiation.cs" />
     <Compile Include="DataAccess\ElementRepository.cs" />
     <Compile Include="DataAccess\PackageRepository.cs" />
-    <Compile Include="InstantiateProblemSpace\InstantiateProblemSpaceCommand.cs" />
-    <Compile Include="InstantiateProblemSpace\ProblemSpaceTree.cs" />
-    <Compile Include="InstantiateProblemSpace\SolutionNameForm.cs">
+    <Compile Include="ExportProblemSpace\ExportProblemSpaceCommand.cs" />
+    <Compile Include="ExportProblemSpace\ModelEntity.cs" />
+    <Compile Include="ExportProblemSpace\TailorSolutionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InstantiateProblemSpace\SolutionNameForm.Designer.cs">
-      <DependentUpon>SolutionNameForm.cs</DependentUpon>
+    <Compile Include="ExportProblemSpace\TailorSolutionForm.Designer.cs">
+      <DependentUpon>TailorSolutionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InstantiateProblemSpace\InstantiateProblemSpaceCommand.cs" />
+    <Compile Include="InstantiateProblemSpace\ProblemSpaceTree.cs" />
+    <Compile Include="InstantiateProblemSpace\InstantiateSolutionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InstantiateProblemSpace\InstantiateSolutionForm.Designer.cs">
+      <DependentUpon>InstantiateSolutionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Navigation\GoToClassifierCommand.cs" />
     <Compile Include="PopulateDependencies\DependencyGraph.cs" />
@@ -117,8 +126,11 @@
     </Content>
     <EmbeddedResource Include="ADTechnology\Option.bmp" />
     <EmbeddedResource Include="ADTechnology\Problem.bmp" />
-    <EmbeddedResource Include="InstantiateProblemSpace\SolutionNameForm.resx">
-      <DependentUpon>SolutionNameForm.cs</DependentUpon>
+    <EmbeddedResource Include="ExportProblemSpace\TailorSolutionForm.resx">
+      <DependentUpon>TailorSolutionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InstantiateProblemSpace\InstantiateSolutionForm.resx">
+      <DependentUpon>InstantiateSolutionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PopulateDependencies\DependencySelectorForm.resx">
       <DependentUpon>DependencySelectorForm.cs</DependentUpon>
@@ -134,6 +146,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

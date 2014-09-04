@@ -54,7 +54,7 @@ namespace AdAddIn.DataAccess
             });
         }
 
-        private T AggregatePackages<T>(EA.Package package, T init, Func<T, EA.Package, T> fn)
+        public T AggregatePackages<T>(EA.Package package, T init, Func<T, EA.Package, T> fn)
         {
             var res = fn(init, package);
             return package.Packages.Cast<EA.Package>().Aggregate(res, (acc, child) =>

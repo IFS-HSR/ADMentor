@@ -51,7 +51,7 @@ namespace UtilsTests
         {
             var converter = TypeDescriptor.GetConverter(typeof(Option<T>));
             var result = converter.ConvertFrom(data) as Option<T>;
-            Assert.IsTrue(expected.IsEqualTo(result));
+            Assert.IsTrue(expected.Equals(result));
         }
 
         private void AssertConversionToString<T>(T value, string expected)

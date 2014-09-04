@@ -64,8 +64,13 @@ namespace AdAddIn.InstantiateProblemSpace
 
         public ICommand<Option<ContextItem>, object> AsMenuCommand()
         {
-            return this.Adapt<Option<ContextItem>, EA.Package, object>(
-                contextItem => from ci in contextItem from p in PackageRepo.GetPackage(ci.Guid) select p);
+            return this.Adapt(
+                (Option<ContextItem> contextItem) =>
+                {
+                    return from ci in contextItem
+                           from p in PackageRepo.GetPackage(ci.Guid)
+                           select p;
+                });
         }
     }
 }

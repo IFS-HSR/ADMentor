@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Utils
     /// <typeparam name="E">Edge Labels</typeparam>
     public class LabeledTree<N, E>
     {
-        public LabeledTree(N label, IList<Edge> edges)
+        public LabeledTree(N label, IImmutableList<Edge> edges)
         {
             Label = label;
             Edges = edges;
@@ -21,7 +22,7 @@ namespace Utils
 
         public N Label { get; private set; }
 
-        public IList<Edge> Edges { get; private set; }
+        public IImmutableList<Edge> Edges { get; private set; }
 
         public IEnumerable<N> NodeLabels
         {
@@ -76,12 +77,12 @@ namespace Utils
     {
         public static LabeledTree<N, E> Node<N, E>(N label, IEnumerable<LabeledTree<N, E>.Edge> edges)
         {
-            return new LabeledTree<N, E>(label, edges.ToList());
+            return new LabeledTree<N, E>(label, edges.ToImmutableList());
         }
 
         public static LabeledTree<N, E> Node<N, E>(N label, params LabeledTree<N, E>.Edge[] edges)
         {
-            return new LabeledTree<N, E>(label, edges);
+            return new LabeledTree<N, E>(label, edges.ToImmutableList());
         }
 
         public static LabeledTree<N, E>.Edge Edge<N, E>(E label, LabeledTree<N, E> target)
