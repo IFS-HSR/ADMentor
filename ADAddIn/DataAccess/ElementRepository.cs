@@ -83,5 +83,11 @@ namespace AdAddIn.DataAccess
                     where c.Is(ProblemSpace.Problem) || c.Is(ProblemSpace.Option)
                     select update(element, c)).GetOrElse(EntityModified.NotModified);
         }
+
+        public Unit ElementChanged(EA.Element e)
+        {
+            EA.Val.AdviseElementChange(e.ElementID);
+            return Unit.Instance;
+        }
     }
 }

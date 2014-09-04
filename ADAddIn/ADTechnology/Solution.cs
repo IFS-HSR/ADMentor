@@ -15,22 +15,18 @@ namespace AdAddIn.ADTechnology
             Common.RevisionDate
         };
 
-        public class DecisionState : Enumeration
+        public class OptionState : Enumeration
         {
             /* Decision States according to "QUOSA;Kruchten;Building Up and Reasoning About Architectural Knowledge" */
-            public static readonly DecisionState Idea = new DecisionState("Idea", Color.LightSkyBlue);
-            public static readonly DecisionState Tentative = new DecisionState("Tentative", Color.LightBlue);
-            public static readonly DecisionState Decided = new DecisionState("Decided", Color.LawnGreen);
-            public static readonly DecisionState Approved = new DecisionState("Approved", Color.LightGreen);
-            public static readonly DecisionState Challenged = new DecisionState("Challenged", Color.LightSalmon);
-            public static readonly DecisionState Rejected = new DecisionState("Rejected", Color.LightGray);
-            public static readonly DecisionState Obsolete = new DecisionState("Obsolete", Color.LightGray);
+            public static readonly OptionState Candidate = new OptionState("Candidate", Color.LightSkyBlue);
+            public static readonly OptionState Chosen = new OptionState("Chosen", Color.LightGreen);
+            public static readonly OptionState Neglected = new OptionState("Neglected", Color.LightGray);
 
-            public static readonly IEnumerable<DecisionState> AllStates = new DecisionState[] {
-                Idea, Tentative, Decided, Approved, Challenged, Rejected, Obsolete
+            public static readonly IEnumerable<OptionState> AllStates = new OptionState[] {
+                Candidate, Chosen, Neglected
             };
 
-            private DecisionState(String name, Color color)
+            private OptionState(String name, Color color)
                 : base(name)
             {
                 Color = color;
@@ -38,6 +34,11 @@ namespace AdAddIn.ADTechnology
 
             public Color Color { get; private set; }
         }
+
+        public static readonly TaggedValue OptionStateTag = new TaggedValue(
+            name: "State",
+            description: "Option State",
+            type: TaggedValueTypes.Enum(values: OptionState.AllStates).WithDefaultValue(OptionState.Candidate));
 
         public static readonly ElementStereotype OptionOccurrence = new ElementStereotype(
             name: "adOptionOccurrence",
@@ -49,7 +50,7 @@ namespace AdAddIn.ADTechnology
 	                h_align = ""center"";
 	                v_align = ""center"";
 
-                    " + GenerateFillColors("State", DecisionState.AllStates.ToDictionary(ds => ds.Name, ds => ds.Color)) + @"
+                    " + GenerateFillColors("State", OptionState.AllStates.ToDictionary(ds => ds.Name, ds => ds.Color)) + @"
 
 	                Rectangle(0,0,100,100);
 
@@ -66,21 +67,18 @@ namespace AdAddIn.ADTechnology
                 }
             ",
             taggedValues: SolutionTaggedValues.Concat(new TaggedValue[]{
-                new TaggedValue(
-                    name: "State",
-                    description: "Option State",
-                    type: TaggedValueTypes.Enum(values: DecisionState.AllStates).WithDefaultValue(DecisionState.Idea))
+                OptionStateTag
             }));
 
         public class ProblemOccurrenceState : Enumeration
         {
             public static readonly ProblemOccurrenceState Open = new ProblemOccurrenceState("Open", Color.LightSalmon);
-            public static readonly ProblemOccurrenceState Tentative = new ProblemOccurrenceState("Tentative", Color.LightBlue);
-            public static readonly ProblemOccurrenceState Decided = new ProblemOccurrenceState("Decided", Color.LawnGreen);
-            public static readonly ProblemOccurrenceState Approved = new ProblemOccurrenceState("Approved", Color.LightGreen);
+            public static readonly ProblemOccurrenceState PartiallySolved = new ProblemOccurrenceState("Partially Solved", Color.LightYellow);
+            public static readonly ProblemOccurrenceState Solved = new ProblemOccurrenceState("Solved", Color.LawnGreen);
+            public static readonly ProblemOccurrenceState NotApplicable = new ProblemOccurrenceState("Not Applicable", Color.LightGray);
 
             public static readonly IEnumerable<ProblemOccurrenceState> AllStates = new ProblemOccurrenceState[] {
-                Open, Tentative, Decided, Approved
+                Open, PartiallySolved, Solved, NotApplicable
             };
 
             private ProblemOccurrenceState(String name, Color color)
@@ -91,6 +89,11 @@ namespace AdAddIn.ADTechnology
 
             public Color Color { get; private set; }
         }
+
+        public static readonly TaggedValue ProblemOccurrenceStateTag = new TaggedValue(
+            name: "State",
+            description: "Problem State",
+            type: TaggedValueTypes.Enum(values: ProblemOccurrenceState.AllStates).WithDefaultValue(ProblemOccurrenceState.Open));
 
         public static readonly ElementStereotype ProblemOccurrence = new ElementStereotype(
             name: "adProblemOccurrence",
@@ -125,10 +128,7 @@ namespace AdAddIn.ADTechnology
                 }
             ",
              taggedValues: SolutionTaggedValues.Concat(new TaggedValue[]{
-                new TaggedValue(
-                    name: "State",
-                    description: "Problem State",
-                    type: TaggedValueTypes.Enum(values: ProblemOccurrenceState.AllStates).WithDefaultValue(ProblemOccurrenceState.Open))
+                ProblemOccurrenceStateTag
              }));
 
         private static String GenerateFillColors(String tagName, IDictionary<String, Color> valueColors)

@@ -44,5 +44,27 @@ namespace EAAddInFramework
                     where tv.Value != ""
                     select tv.Value).FirstOption();
         }
+
+        public static void Set(this EA.Element e, TaggedValue taggedValue, String value)
+        {
+            (from tv in e.TaggedValues.Cast<EA.TaggedValue>()
+             where tv.Name == taggedValue.Name
+             select tv).FirstOption()
+                .Match(
+                tv =>
+                {
+                    tv.Value = value;
+                    tv.Update();
+                    return Unit.Instance;
+                },
+                () =>
+                {
+                    var tv = e.TaggedValues.AddNew(taggedValue.Name, "") as EA.TaggedValue;
+                    tv.Value = value;
+                    tv.Update();
+                    e.TaggedValues.Refresh();
+                    return Unit.Instance;
+                });
+        }
     }
 }

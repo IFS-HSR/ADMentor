@@ -21,6 +21,7 @@ namespace UtilsTests
             Assert.IsFalse(some0.Equals(none));
 
             Assert.IsTrue(some12.Equals(some0.Select(n => n + 12)));
+            Assert.IsFalse(Options.Some("hi").Equals(Options.Some("ho")));
         }
 
         [TestMethod]

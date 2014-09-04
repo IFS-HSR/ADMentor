@@ -40,6 +40,7 @@ namespace AdAddIn
             var diagramRepository = new DiagramRepository(eaRepository);
 
             var updateMetadataCommand = new UpdateMetadataOfNewElementsCommand(elementRepository);
+            var updateStatesCommand = new UpdateProblemOccurrenceStateCommand(elementRepository, diagramRepository);
             var populateDependenciesCommand = new PopulateDependenciesCommand(
                 elementRepository, diagramRepository, new DependencySelectorForm(elementRepository));
             var instantiateProblemSpace = new InstantiateProblemSpaceCommand(packageRepository, elementRepository, diagramRepository, new InstantiateSolutionForm());
@@ -52,6 +53,8 @@ namespace AdAddIn
 
             OnElementCreated.Add(updateMetadataCommand);
             OnElementCreated.Add(populateDependenciesCommand.AsElementCreatedHandler());
+
+            OnElementModified.Add(updateStatesCommand);
         }
     }
 }

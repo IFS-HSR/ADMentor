@@ -161,6 +161,11 @@ namespace EAAddInFramework
                 EntityModified.NotModified,
                 (acc, v) => acc == EntityModified.Modified ? acc : v);
 
+        public readonly EventManager<Func<EA.Element>, object> OnElementModified =
+            new EventManager<Func<EA.Element>, object>(
+                Unit.Instance,
+                (acc, _) => acc);
+
         /// <summary>
         /// EA_OnPostNewElement notifies Add-Ins that a new element has been created on a diagram. It enables Add-Ins to
         /// modify the element upon creation.
@@ -187,6 +192,11 @@ namespace EAAddInFramework
             RepositoryChanged(repository);
 
             logger.Debug("Element {0} of type {1} modified", guid, ot);
+
+            if (ot == EA.ObjectType.otElement)
+            {
+                OnElementModified.Handle(() => eaRepository.Val.GetElementByGuid(guid));
+            }
         }
 
         public void EA_OnContextItemChanged(EA.Repository repository, string guid, EA.ObjectType ot)

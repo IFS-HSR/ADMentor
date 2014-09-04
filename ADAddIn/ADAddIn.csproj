@@ -68,6 +68,7 @@
     <Compile Include="ADTechnology\Technology.cs" />
     <Compile Include="ADTechnology\Toolboxes.cs" />
     <Compile Include="CopyMetadata\UpdateMetadataOfNewElementsCommand.cs" />
+    <Compile Include="CopyMetadata\UpdateProblemOccurrenceStateCommand.cs" />
     <Compile Include="DataAccess\DiagramRepository.cs" />
     <Compile Include="DataAccess\ElementInstantiation.cs" />
     <Compile Include="DataAccess\ElementRepository.cs" />
