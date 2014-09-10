@@ -73,8 +73,8 @@ namespace AdAddIn.ADTechnology
         public class ProblemOccurrenceState : Enumeration
         {
             public static readonly ProblemOccurrenceState Open = new ProblemOccurrenceState("Open", Color.LightSalmon);
-            public static readonly ProblemOccurrenceState PartiallySolved = new ProblemOccurrenceState("Partially Solved", Color.LightYellow);
-            public static readonly ProblemOccurrenceState Solved = new ProblemOccurrenceState("Solved", Color.LawnGreen);
+            public static readonly ProblemOccurrenceState PartiallySolved = new ProblemOccurrenceState("Partially Solved", Color.LightSkyBlue);
+            public static readonly ProblemOccurrenceState Solved = new ProblemOccurrenceState("Solved", Color.LightGreen);
             public static readonly ProblemOccurrenceState NotApplicable = new ProblemOccurrenceState("Not Applicable", Color.LightGray);
 
             public static readonly IEnumerable<ProblemOccurrenceState> AllStates = new ProblemOccurrenceState[] {

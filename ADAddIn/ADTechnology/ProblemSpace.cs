@@ -51,6 +51,16 @@ namespace AdAddIn.ADTechnology
             type: ElementType.Class,
             instanceType: Solution.OptionOccurrence,
             icon: new Icon("AdAddIn.ADTechnology.Option.bmp"),
+            shapeScript: @"
+                shape main{
+	                h_align = ""center"";
+	                v_align = ""center"";
+
+	                Rectangle(0,0,100,100);
+
+	                Print(""#name#"");
+                }
+            ",
             backgroundColor: Color.LightYellow,
             width: 100,
             height: 70,
