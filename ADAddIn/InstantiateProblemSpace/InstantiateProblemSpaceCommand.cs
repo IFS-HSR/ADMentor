@@ -15,19 +15,13 @@ namespace AdAddIn.InstantiateProblemSpace
 {
     public class InstantiateProblemSpaceCommand : ICommand<ModelEntity.Package, Unit>
     {
-        private readonly PackageRepository PackageRepo;
         private readonly InstantiateSolutionForm SolutionNameForm;
-        private readonly ElementRepository ElementRepo;
         private readonly DiagramRepository DiagramRepo;
         private readonly ModelEntityRepository Repo;
 
-        public InstantiateProblemSpaceCommand(ModelEntityRepository repo,
-            PackageRepository packageRepo,
-            ElementRepository elementRepo, DiagramRepository diagramRepo, InstantiateSolutionForm solutionNameForm)
+        public InstantiateProblemSpaceCommand(ModelEntityRepository repo, DiagramRepository diagramRepo, InstantiateSolutionForm solutionNameForm)
         {
             Repo = repo;
-            PackageRepo = packageRepo;
-            ElementRepo = elementRepo;
             DiagramRepo = diagramRepo;
             SolutionNameForm = solutionNameForm;
         }
@@ -45,7 +39,7 @@ namespace AdAddIn.InstantiateProblemSpace
                     .InstantiateSolutionPackages(parentPackage)
                     .InstantiateSolutionElements(Repo);
                 RenameSolutionPackage(instantiatedTree, solutionName);
-                instantiatedTree.InstantiateSolutionConnectors(ElementRepo);
+                instantiatedTree.InstantiateSolutionConnectors();
                 instantiatedTree.CreateSolutionDiagrams(DiagramRepo);
             });
 

@@ -82,14 +82,14 @@ namespace AdAddIn.InstantiateProblemSpace
             return new ProblemSpaceTree(Package, PackageInstance, instantiations, Diagrams, children);
         }
 
-        public void InstantiateSolutionConnectors(ElementRepository elementRepo)
+        public void InstantiateSolutionConnectors()
         {
             var allInstantiations = AllInstantiations();
             var connections = from instantiation in allInstantiations
                               from source in instantiation.Instance
                               from connector in instantiation.Element.Connectors()
                               where connector.EaObject.ClientID == instantiation.Element.Id
-                              from connectorStype in elementRepo.GetStereotype(connector.EaObject)
+                              from connectorStype in connector.GetStereotype(ADTechnology.Technologies.AD.ConnectorStereotypes)
                               join targetInstantiation in allInstantiations
                                 on connector.EaObject.SupplierID equals targetInstantiation.Element.Id
                               from target in targetInstantiation.Instance

@@ -22,13 +22,13 @@ namespace EAAddInFramework.DataAccess
 
         public Option<ModelEntity.Element> GetElement(int id)
         {
-            return from e in Repo.Val.GetElementByID(id).AsOption()
+            return from e in Options.Try(() => Repo.Val.GetElementByID(id))
                    select Wrapper.Wrap(e);
         }
 
         public Option<ModelEntity.Element> GetElement(string guid)
         {
-            return from e in Repo.Val.GetElementByGuid(guid).AsOption()
+            return from e in Options.Try(() => Repo.Val.GetElementByGuid(guid))
                    select Wrapper.Wrap(e);
         }
 
@@ -47,13 +47,13 @@ namespace EAAddInFramework.DataAccess
 
         public Option<ModelEntity.Package> GetPackage(int id)
         {
-            return from p in Repo.Val.GetPackageByID(id).AsOption()
+            return from p in Options.Try(() => Repo.Val.GetPackageByID(id))
                    select Wrapper.Wrap(p);
         }
 
         public Option<ModelEntity.Package> GetPackage(string guid)
         {
-            return from p in Repo.Val.GetPackageByGuid(guid).AsOption()
+            return from p in Options.Try(() => Repo.Val.GetPackageByGuid(guid))
                    select Wrapper.Wrap(p);
         }
 

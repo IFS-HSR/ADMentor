@@ -74,8 +74,6 @@
     <Compile Include="CopyMetadata\UpdateProblemOccurrenceStateCommand.cs" />
     <Compile Include="DataAccess\DiagramRepository.cs" />
     <Compile Include="DataAccess\ElementInstantiation.cs" />
-    <Compile Include="DataAccess\ElementRepository.cs" />
-    <Compile Include="DataAccess\PackageRepository.cs" />
     <Compile Include="DataAccess\ProblemSpaceEntities.cs" />
     <Compile Include="DataAccess\SolutionEntities.cs" />
     <Compile Include="ExportProblemSpace\ExportProblemSpaceCommand.cs" />
