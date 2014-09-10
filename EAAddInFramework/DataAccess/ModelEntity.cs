@@ -58,6 +58,21 @@ namespace EAAddInFramework.DataAccess
                         () => onMatch4(this as T4))));
         }
 
+        public abstract int Id { get; }
+        public abstract String Guid { get; }
+
+        public override bool Equals(object obj)
+        {
+            return (from otherEntity in obj.Match<ModelEntity>()
+                    select Guid.Equals(otherEntity.Guid))
+                    .GetOrElse(false);
+        }
+
+        public override int GetHashCode()
+        {
+            return Guid.GetHashCode();
+        }
+
         public String Name
         {
             get
@@ -135,6 +150,16 @@ namespace EAAddInFramework.DataAccess
 
             public EA.Package EaObject { get; private set; }
 
+            public override int Id
+            {
+                get { return EaObject.PackageID; }
+            }
+
+            public override string Guid
+            {
+                get { return EaObject.PackageGUID; }
+            }
+
             public Option<Package> GetParent(Func<int, Option<Package>> getPackageById)
             {
                 return getPackageById(EaObject.ParentID);
@@ -164,6 +189,14 @@ namespace EAAddInFramework.DataAccess
                        from descendant in new List<Package> { child }.Concat(child.AllDescendants())
                        select descendant;
             }
+
+            public ModelEntity.Package Create(String packageName)
+            {
+                var newPackage = EaObject.Packages.AddNew(packageName, "") as EA.Package;
+                newPackage.Update();
+                EaObject.Packages.Refresh();
+                return Wrapper.Wrap(newPackage);
+            }
         }
 
         public class Element : ModelEntity
@@ -176,11 +209,32 @@ namespace EAAddInFramework.DataAccess
 
             public EA.Element EaObject { get; private set; }
 
+            public override int Id
+            {
+                get { return EaObject.ElementID; }
+            }
+
+            public override string Guid
+            {
+                get { return EaObject.ElementGUID; }
+            }
+
             public Option<ElementStereotype> GetStereotype(IEnumerable<ElementStereotype> stereotypes)
             {
                 return (from stype in stereotypes
                         where EaObject.Is(stype)
                         select stype).FirstOption();
+            }
+
+            public Option<Element> GetClassifier(Func<int, Option<Element>> getElementById)
+            {
+                return getElementById(EaObject.ClassifierID);
+            }
+
+            public IEnumerable<Connector> Connectors()
+            {
+                return from c in EaObject.Connectors.Cast<EA.Connector>()
+                       select Wrapper.Wrap(c);
             }
         }
 
@@ -193,6 +247,31 @@ namespace EAAddInFramework.DataAccess
             }
 
             public EA.Connector EaObject { get; private set; }
+
+            public override int Id
+            {
+                get { return EaObject.ConnectorID; }
+            }
+
+            public override string Guid
+            {
+                get { return EaObject.ConnectorGUID; }
+            }
+
+            public Option<ConnectorStereotype> GetStereotype(IEnumerable<ConnectorStereotype> stereotypes)
+            {
+                return (from stype in stereotypes
+                        where EaObject.Is(stype)
+                        select stype).FirstOption();
+            }
+
+            public Option<Element> OppositeEnd(Element thisEnd, Func<int, Option<Element>> getElementById)
+            {
+                if (EaObject.ClientID == thisEnd.Id)
+                    return getElementById(EaObject.SupplierID);
+                else
+                    return getElementById(EaObject.ClientID);
+            }
         }
 
         public class Diagram : ModelEntity
@@ -204,6 +283,16 @@ namespace EAAddInFramework.DataAccess
             }
 
             public EA.Diagram EaObject { get; private set; }
+
+            public override int Id
+            {
+                get { return EaObject.DiagramID; }
+            }
+
+            public override string Guid
+            {
+                get { return EaObject.DiagramGUID; }
+            }
         }
     }
 }

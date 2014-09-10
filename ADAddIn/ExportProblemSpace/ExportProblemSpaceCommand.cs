@@ -13,7 +13,7 @@ using Utils;
 
 namespace AdAddIn.ExportProblemSpace
 {
-    public class ExportProblemSpaceCommand : ICommand<EA.Package, Unit>
+    public class ExportProblemSpaceCommand : ICommand<ModelEntity.Package, Unit>
     {
         private readonly TailorPackageExportForm Form;
         private readonly ModelEntityRepository Repo;
@@ -24,9 +24,8 @@ namespace AdAddIn.ExportProblemSpace
             Form = form;
         }
 
-        public Unit Execute(EA.Package p)
+        public Unit Execute(ModelEntity.Package package)
         {
-            var package = Repo.Wrapper.Wrap(p);
             var packages = package.AllDescendants().Run();
             var elements = from descendant in packages
                            from element in descendant.Elements()
@@ -154,7 +153,7 @@ namespace AdAddIn.ExportProblemSpace
             return Filter.Create<ModelEntity>(name, me => me.Match<T, bool>(e => accept(e), () => false));
         }
 
-        public bool CanExecute(EA.Package _)
+        public bool CanExecute(ModelEntity.Package _)
         {
             return true;
         }
@@ -165,7 +164,7 @@ namespace AdAddIn.ExportProblemSpace
             {
                 return from ci in contextItem
                        from package in Repo.GetPackage(ci.Guid)
-                       select package.EaObject;
+                       select package;
             });
         }
     }

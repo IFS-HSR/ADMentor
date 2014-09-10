@@ -7,55 +7,53 @@ using System.Threading.Tasks;
 using Utils;
 using EAAddInFramework;
 using AdAddIn.ADTechnology;
+using EAAddInFramework.DataAccess;
 
 namespace AdAddIn.PopulateDependencies
 {
     public class SolutionInstantiationGraph
     {
-        private readonly ElementRepository Repo;
+        private readonly ModelEntityRepository Repo;
 
-        private SolutionInstantiationGraph(ElementRepository repo, DirectedLabeledGraph<ElementInstantiation, EA.Connector> graph)
+        private SolutionInstantiationGraph(ModelEntityRepository repo, DirectedLabeledGraph<ElementInstantiation, ModelEntity.Connector> graph)
         {
             Repo = repo;
             Graph = graph;
         }
 
-        public DirectedLabeledGraph<ElementInstantiation, EA.Connector> Graph { get; private set; }
+        public DirectedLabeledGraph<ElementInstantiation, ModelEntity.Connector> Graph { get; private set; }
 
-        private static Func<EA.Element, EA.Connector, EA.Element, bool> DependencyGraphFilter =
+        private static Func<ModelEntity.Element, ModelEntity.Connector, ModelEntity.Element, bool> DependencyGraphFilter =
             DependencyGraph.TraverseOnlyTechnologyConnectors(ADTechnology.Technologies.AD);
 
-        public static Option<SolutionInstantiationGraph> Create(ElementRepository repo, EA.Element solutionItem)
+        public static Option<SolutionInstantiationGraph> Create(ModelEntityRepository repo, SolutionEntity solutionItem)
         {
-            return from classifier in repo.GetElement(solutionItem.ClassifierID)
-                   where classifier.Is(ProblemSpace.Problem) || classifier.Is(ProblemSpace.Option)
-                   let problemSpace = DependencyGraph.Create(repo, classifier, DependencyGraphFilter)
+            return from classifier in solutionItem.GetClassifier(repo.GetElement)
+                   from problemSpaceEntity in classifier.Match<ProblemSpaceEntity>()
+                   let problemSpace = DependencyGraph.Create(repo, problemSpaceEntity, DependencyGraphFilter)
                    let solution = DependencyGraph.Create(repo, solutionItem, DependencyGraphFilter)
                    select new SolutionInstantiationGraph(repo, Compare(problemSpace, solution));
         }
 
-        private static DirectedLabeledGraph<ElementInstantiation, EA.Connector> Compare(DirectedLabeledGraph<EA.Element, EA.Connector> problemSpace, DirectedLabeledGraph<EA.Element, EA.Connector> solution)
+        private static DirectedLabeledGraph<ElementInstantiation, ModelEntity.Connector> Compare(
+            DirectedLabeledGraph<ModelEntity.Element, ModelEntity.Connector> problemSpace, 
+            DirectedLabeledGraph<ModelEntity.Element, ModelEntity.Connector> solution)
         {
             return problemSpace.MapNodeLabels<ElementInstantiation>(problemItem =>
             {
-                var instance = solution.NodeLabels.FirstOption(solutionItem => solutionItem.ClassifierID == problemItem.ElementID);
+                var instance = solution.NodeLabels.FirstOption(solutionItem => solutionItem.EaObject.ClassifierID == problemItem.Id);
                 return new ElementInstantiation(problemItem, instance);
             });
         }
 
-        public SolutionInstantiationGraph InstantiateSelectedItems(EA.Package package)
+        public SolutionInstantiationGraph InstantiateSelectedItems(ModelEntity.Package package)
         {
             var newGraph = Graph.MapNodeLabels(problemItem =>
             {
-                if (problemItem.Selected && !problemItem.Instance.IsDefined)
-                {
-                    var instance = Repo.Instanciate(problemItem.Element, package);
-                    return problemItem.Copy(instance: instance);
-                }
+                if (problemItem.Selected)
+                    return problemItem.CreateInstanceIfMissing(Repo, package);
                 else
-                {
                     return problemItem;
-                }
             });
 
             return new SolutionInstantiationGraph(Repo, newGraph);
@@ -75,18 +73,18 @@ namespace AdAddIn.PopulateDependencies
                 {
                     target.Instance.Do(solutionTarget =>
                     {
-                        Repo.GetStereotype(edge).Do(stype =>
+                        edge.GetStereotype(ADTechnology.Technologies.AD.ConnectorStereotypes).Do(stype =>
                         {
                             var connectsAlternativeToProblem =
-                                stype == ConnectorStereotypes.HasAlternative && solutionSource.Is(Solution.OptionOccurrence);
-                            var alreadyExisting = solutionSource.Connectors.Cast<EA.Connector>().Any(c =>
+                                stype == ConnectorStereotypes.HasAlternative && solutionSource is OptionOccurrence;
+                            var alreadyExisting = solutionSource.Connectors().Any(c =>
                             {
-                                return c.Is(stype) && (c.SupplierID == solutionTarget.ElementID || c.ClientID == solutionTarget.ElementID);
+                                return c.EaObject.Is(stype) && (c.EaObject.SupplierID == solutionTarget.Id || c.EaObject.ClientID == solutionTarget.Id);
                             });
 
                             if (!connectsAlternativeToProblem && !alreadyExisting)
                             {
-                                stype.Create(solutionSource, solutionTarget);
+                                stype.Create(solutionSource.EaObject, solutionTarget.EaObject);
                             }
                         });
                     });
@@ -105,7 +103,7 @@ namespace AdAddIn.PopulateDependencies
         {
             var markedGraph = Graph.MapNodeLabels(si =>
             {
-                var selected = nodes.Any(n => n.Element.ElementGUID == si.Element.ElementGUID && n.Selected);
+                var selected = nodes.Any(n => n.Element.Guid == si.Element.Guid && n.Selected);
                 return si.Copy(selected: selected);
             });
 
@@ -129,16 +127,16 @@ namespace AdAddIn.PopulateDependencies
 
                 to.Instance.Do(toInstance =>
                 {
-                    if (!diagramRepo.FindDiagramObject(diagram, toInstance).IsDefined)
+                    if (!diagramRepo.FindDiagramObject(diagram, toInstance.EaObject).IsDefined)
                     {
                         from.Instance.Do(fromInstance =>
                         {
-                            var parentObject = diagramRepo.FindDiagramObject(diagram, fromInstance).Value;
+                            var parentObject = diagramRepo.FindDiagramObject(diagram, fromInstance.EaObject).Value;
 
                             var verticalOffset = leftHandSiblings * 110 - 40;
                             var horizontalOffset = -200 - leftHandSiblings * 20;
 
-                            diagramRepo.AddToDiagram(diagram, toInstance,
+                            diagramRepo.AddToDiagram(diagram, toInstance.EaObject,
                                 left: parentObject.left + verticalOffset, right: parentObject.right + verticalOffset,
                                 top: parentObject.top + horizontalOffset, bottom: parentObject.bottom + horizontalOffset);
 
@@ -159,11 +157,11 @@ namespace AdAddIn.PopulateDependencies
         /// <param name="edges"></param>
         /// <returns></returns>
         public static SolutionInstantiationGraph Create(
-            params Tuple<ElementInstantiation, EA.Connector, ElementInstantiation>[] edges)
+            params Tuple<ElementInstantiation, ModelEntity.Connector, ElementInstantiation>[] edges)
         {
             return new SolutionInstantiationGraph(null, DirectedLabeledGraph.Create(
                 EqualityComparer<ElementInstantiation>.Default,
-                new DependencyGraph.ConnectorComparer(),
+                EqualityComparer<ModelEntity.Connector>.Default,
                 edges));
         }
     }

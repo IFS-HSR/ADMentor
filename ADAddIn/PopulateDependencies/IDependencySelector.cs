@@ -1,4 +1,5 @@
 ﻿using AdAddIn.DataAccess;
+using EAAddInFramework.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace AdAddIn.PopulateDependencies
 {
     public interface IDependencySelector
     {
-        Option<LabeledTree<ElementInstantiation, EA.Connector>> GetSelectedDependencies(LabeledTree<ElementInstantiation, EA.Connector> availableDependencies);
+        Option<LabeledTree<ElementInstantiation, ModelEntity.Connector>> GetSelectedDependencies(
+            LabeledTree<ElementInstantiation, ModelEntity.Connector> availableDependencies);
     }
 }

@@ -17,6 +17,10 @@ namespace AdAddIn.DataAccess
                 return new OptionOccurrence(e, this);
             else if (e.Is(Solution.ProblemOccurrence))
                 return new ProblemOccurrence(e, this);
+            else if (e.Is(ProblemSpace.Problem))
+                return new Problem(e, this);
+            else if (e.Is(ProblemSpace.Option))
+                return new OptionEntity(e, this);
             else
                 return base.Wrap(e);
         }

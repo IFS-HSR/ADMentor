@@ -2,6 +2,7 @@
 using AdAddIn.DataAccess;
 using AdAddIn.PopulateDependencies;
 using EAAddInFramework;
+using EAAddInFramework.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -12,25 +13,28 @@ using Utils;
 
 namespace AdAddIn.InstantiateProblemSpace
 {
-    public class InstantiateProblemSpaceCommand : ICommand<EA.Package, Unit>
+    public class InstantiateProblemSpaceCommand : ICommand<ModelEntity.Package, Unit>
     {
         private readonly PackageRepository PackageRepo;
         private readonly InstantiateSolutionForm SolutionNameForm;
         private readonly ElementRepository ElementRepo;
         private readonly DiagramRepository DiagramRepo;
+        private readonly ModelEntityRepository Repo;
 
-        public InstantiateProblemSpaceCommand(PackageRepository packageRepo,
+        public InstantiateProblemSpaceCommand(ModelEntityRepository repo,
+            PackageRepository packageRepo,
             ElementRepository elementRepo, DiagramRepository diagramRepo, InstantiateSolutionForm solutionNameForm)
         {
+            Repo = repo;
             PackageRepo = packageRepo;
             ElementRepo = elementRepo;
             DiagramRepo = diagramRepo;
             SolutionNameForm = solutionNameForm;
         }
 
-        public Unit Execute(EA.Package problemSpace)
+        public Unit Execute(ModelEntity.Package problemSpace)
         {
-            var requiredData = from parentPackage in PackageRepo.GetPackage(problemSpace.ParentID)
+            var requiredData = from parentPackage in problemSpace.GetParent(Repo.GetPackage)
                                let problemSpaceTree = ProblemSpaceTree.Create(problemSpace)
                                from solutionName in SolutionNameForm.GetSolutionName(problemSpaceTree)
                                select Tuple.Create(problemSpaceTree, parentPackage, solutionName);
@@ -38,8 +42,8 @@ namespace AdAddIn.InstantiateProblemSpace
             requiredData.ForEach((problemSpaceTree, parentPackage, solutionName) =>
             {
                 var instantiatedTree = problemSpaceTree
-                    .InstantiateSolutionPackages(PackageRepo, parentPackage)
-                    .InstantiateSolutionElements(ElementRepo);
+                    .InstantiateSolutionPackages(parentPackage)
+                    .InstantiateSolutionElements(Repo);
                 RenameSolutionPackage(instantiatedTree, solutionName);
                 instantiatedTree.InstantiateSolutionConnectors(ElementRepo);
                 instantiatedTree.CreateSolutionDiagrams(DiagramRepo);
@@ -52,14 +56,14 @@ namespace AdAddIn.InstantiateProblemSpace
         {
             instantiatedTree.PackageInstance.Do(solutionPackage =>
             {
-                solutionPackage.Name = solutionName;
-                solutionPackage.Update();
+                solutionPackage.EaObject.Name = solutionName;
+                solutionPackage.EaObject.Update();
             });
         }
 
-        public bool CanExecute(EA.Package p)
+        public bool CanExecute(ModelEntity.Package p)
         {
-            return PackageRepo.GetPackage(p.ParentID).IsDefined;
+            return p.GetParent(Repo.GetPackage).IsDefined;
         }
 
         public ICommand<Option<ContextItem>, object> AsMenuCommand()
@@ -68,7 +72,7 @@ namespace AdAddIn.InstantiateProblemSpace
                 (Option<ContextItem> contextItem) =>
                 {
                     return from ci in contextItem
-                           from p in PackageRepo.GetPackage(ci.Guid)
+                           from p in Repo.GetPackage(ci.Guid)
                            select p;
                 });
         }

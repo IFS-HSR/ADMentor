@@ -203,8 +203,9 @@ namespace Utils
             return true;
         }
 
-        public static Func<object, E, object, bool> TraverseEdgeOnlyOnce<E>(IEqualityComparer<E> edgeComparer)
+        public static Func<object, E, object, bool> TraverseEdgeOnlyOnce<E>(IEqualityComparer<E> edgeComparer = null)
         {
+            edgeComparer = edgeComparer ?? EqualityComparer<E>.Default;
             var visitedEdges = new HashSet<E>(edgeComparer);
             return (from, via, to) =>
             {

@@ -12,7 +12,7 @@ using Utils;
 
 namespace AdAddIn.CopyMetadata
 {
-    public class UpdateProblemOccurrenceStateCommand : ICommand<Func<EA.Element>, Unit>
+    public class UpdateProblemOccurrenceStateCommand : ICommand<OptionOccurrence, Unit>
     {
         private readonly ModelEntityRepository Repo;
 
@@ -21,10 +21,9 @@ namespace AdAddIn.CopyMetadata
             Repo = repo;
         }
 
-        public Unit Execute(Func<EA.Element> getElement)
+        public Unit Execute(OptionOccurrence optionOcc)
         {
-            var problemOccs = from optionOcc in Repo.Wrapper.Wrap(getElement()).Match<OptionOccurrence>()
-                              from problemOcc in optionOcc.GetAssociatedProblemOccurrences(Repo.GetElement)
+            var problemOccs = from problemOcc in optionOcc.GetAssociatedProblemOccurrences(Repo.GetElement)
                               select problemOcc;
 
             problemOccs.ForEach(problemOcc =>
@@ -37,9 +36,17 @@ namespace AdAddIn.CopyMetadata
             return Unit.Instance;
         }
 
-        public bool CanExecute(Func<EA.Element> _)
+        public bool CanExecute(OptionOccurrence _)
         {
             return true;
+        }
+
+        public ICommand<Func<EA.Element>, object> AsElementModifiedHandler()
+        {
+            return this.Adapt((Func<EA.Element> getElement) =>
+            {
+                return Repo.Wrapper.Wrap(getElement()).Match<OptionOccurrence>();
+            });
         }
     }
 }

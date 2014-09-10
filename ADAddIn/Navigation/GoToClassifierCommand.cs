@@ -17,12 +17,10 @@ namespace AdAddIn.Navigation
     /// </summary>
     public class GoToClassifierCommand : ICommand<Option<ContextItem>, Unit>
     {
-        private readonly ElementRepository Repo;
         private readonly IReadableAtom<EA.Repository> EARepo;
 
-        public GoToClassifierCommand(ElementRepository repo, IReadableAtom<EA.Repository> eaRepo)
+        public GoToClassifierCommand(IReadableAtom<EA.Repository> eaRepo)
         {
-            Repo = repo;
             EARepo = eaRepo;
         }
 
@@ -44,8 +42,9 @@ namespace AdAddIn.Navigation
         private Option<EA.Element> GetClassifier(Option<ContextItem> contextItem)
         {
             return from ci in contextItem
-                   from element in Repo.GetElement(ci.Guid)
-                   from classifier in Repo.GetClassifier(element)
+                   where ci.Type == EA.ObjectType.otElement
+                   from element in EARepo.Val.GetElementByGuid(ci.Guid).AsOption()
+                   from classifier in EARepo.Val.GetElementByID(element.ClassifierID).AsOption()
                    select classifier;
         }
     }

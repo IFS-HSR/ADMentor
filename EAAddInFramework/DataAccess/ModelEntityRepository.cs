@@ -56,5 +56,10 @@ namespace EAAddInFramework.DataAccess
             return from p in Repo.Val.GetPackageByGuid(guid).AsOption()
                    select Wrapper.Wrap(p);
         }
+
+        public ModelEntity.Package FindPackageContaining(ModelEntity.Element element)
+        {
+            return GetPackage(element.EaObject.PackageID).Value;
+        }
     }
 }

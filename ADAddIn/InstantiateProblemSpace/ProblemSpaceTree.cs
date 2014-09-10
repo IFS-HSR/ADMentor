@@ -1,7 +1,7 @@
 ﻿using AdAddIn.ADTechnology;
 using AdAddIn.DataAccess;
-using AdAddIn.PopulateDependencies;
 using EAAddInFramework;
+using EAAddInFramework.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +14,10 @@ namespace AdAddIn.InstantiateProblemSpace
     public class ProblemSpaceTree
     {
         private ProblemSpaceTree(
-            EA.Package package,
-            Option<EA.Package> packageInstance,
+            ModelEntity.Package package,
+            Option<ModelEntity.Package> packageInstance,
             IEnumerable<ElementInstantiation> instantiations,
-            IEnumerable<EA.Diagram> diagrams,
+            IEnumerable<ModelEntity.Diagram> diagrams,
             IEnumerable<ProblemSpaceTree> children)
         {
             Package = package;
@@ -27,30 +27,30 @@ namespace AdAddIn.InstantiateProblemSpace
             Children = children.Run();
         }
 
-        public EA.Package Package { get; private set; }
+        public ModelEntity.Package Package { get; private set; }
 
-        public Option<EA.Package> PackageInstance { get; private set; }
+        public Option<ModelEntity.Package> PackageInstance { get; private set; }
 
         public IEnumerable<ElementInstantiation> ElementInstantiations { get; private set; }
 
-        public IEnumerable<EA.Diagram> Diagrams { get; private set; }
+        public IEnumerable<ModelEntity.Diagram> Diagrams { get; private set; }
 
         public IEnumerable<ProblemSpaceTree> Children { get; private set; }
 
-        public static ProblemSpaceTree Create(EA.Package problemSpacePackage)
+        public static ProblemSpaceTree Create(ModelEntity.Package problemSpacePackage)
         {
             var instantiations = from element in problemSpacePackage.Elements()
-                                 where element.Is(ProblemSpace.Option) || element.Is(ProblemSpace.Problem)
+                                 where element is OptionEntity || element is Problem
                                  select new ElementInstantiation(element);
             var diagrams = from diagram in problemSpacePackage.Diagrams()
-                           where diagram.Is(DiagramTypes.ProblemSpace)
+                           where diagram.EaObject.Is(DiagramTypes.ProblemSpace)
                            select diagram;
             var children = from childPackage in problemSpacePackage.Packages()
                            let childTree = Create(childPackage)
                            where childTree.AllInstantiations().Count() > 0
                            select childTree;
 
-            return new ProblemSpaceTree(problemSpacePackage, Options.None<EA.Package>(), instantiations, diagrams, children);
+            return new ProblemSpaceTree(problemSpacePackage, Options.None<ModelEntity.Package>(), instantiations, diagrams, children);
         }
 
         public IEnumerable<ElementInstantiation> AllInstantiations()
@@ -61,23 +61,23 @@ namespace AdAddIn.InstantiateProblemSpace
             });
         }
 
-        public ProblemSpaceTree InstantiateSolutionPackages(PackageRepository packageRepo, EA.Package parentPackage)
+        public ProblemSpaceTree InstantiateSolutionPackages(ModelEntity.Package parentPackage)
         {
-            var solutionPackage = packageRepo.Create(parentPackage, Package.Name);
-            var children = Children.Select(c => c.InstantiateSolutionPackages(packageRepo, solutionPackage));
+            var solutionPackage = parentPackage.Create(Package.Name);
+            var children = Children.Select(c => c.InstantiateSolutionPackages(solutionPackage));
 
             return new ProblemSpaceTree(Package, Options.Some(solutionPackage), ElementInstantiations, Diagrams, children);
         }
 
-        public ProblemSpaceTree InstantiateSolutionElements(ElementRepository elementRepo)
+        public ProblemSpaceTree InstantiateSolutionElements(ModelEntityRepository repo)
         {
             var instantiations = from instantiation in ElementInstantiations
                                  select PackageInstance.Match(
                                             (solutionPackage) =>
-                                                instantiation.CreateInstanceIfMissing(elementRepo, solutionPackage),
+                                                instantiation.CreateInstanceIfMissing(repo, solutionPackage),
                                             () => instantiation);
 
-            var children = Children.Select(c => c.InstantiateSolutionElements(elementRepo));
+            var children = Children.Select(c => c.InstantiateSolutionElements(repo));
 
             return new ProblemSpaceTree(Package, PackageInstance, instantiations, Diagrams, children);
         }
@@ -88,16 +88,16 @@ namespace AdAddIn.InstantiateProblemSpace
             var connections = from instantiation in allInstantiations
                               from source in instantiation.Instance
                               from connector in instantiation.Element.Connectors()
-                              where connector.ClientID == instantiation.Element.ElementID
-                              from connectorStype in elementRepo.GetStereotype(connector)
+                              where connector.EaObject.ClientID == instantiation.Element.Id
+                              from connectorStype in elementRepo.GetStereotype(connector.EaObject)
                               join targetInstantiation in allInstantiations
-                                on connector.SupplierID equals targetInstantiation.Element.ElementID
+                                on connector.EaObject.SupplierID equals targetInstantiation.Element.Id
                               from target in targetInstantiation.Instance
                               select Tuple.Create(source, connectorStype, target);
 
             connections.ForEach((source, connectorStype, target) =>
             {
-                connectorStype.Create(source, target);
+                connectorStype.Create(source.EaObject, target.EaObject);
             });
         }
 
@@ -112,8 +112,8 @@ namespace AdAddIn.InstantiateProblemSpace
             {
                 Diagrams.ForEach(problemDiagram =>
                 {
-                    var solutionDiagram = diagramRepo.Create(DiagramTypes.SolutionOverview, solutionPackage, problemDiagram.Name);
-                    CopyDiagramObjects(diagramRepo, problemDiagram, solutionDiagram, instantiations);
+                    var solutionDiagram = diagramRepo.Create(DiagramTypes.SolutionOverview, solutionPackage.EaObject, problemDiagram.Name);
+                    CopyDiagramObjects(diagramRepo, problemDiagram.EaObject, solutionDiagram, instantiations);
                 });
             });
 
@@ -124,13 +124,13 @@ namespace AdAddIn.InstantiateProblemSpace
         {
             var newObjects = from problemObject in problemDiagram.DiagramObjects()
                              join instantiation in instantiations
-                               on problemObject.ElementID equals instantiation.Element.ElementID
+                               on problemObject.ElementID equals instantiation.Element.Id
                              from solutionElement in instantiation.Instance
                              select Tuple.Create(problemObject, solutionElement);
 
             newObjects.ForEach((problemObject, solutionElement) =>
             {
-                diagramRepo.AddToDiagram(solutionDiagram, solutionElement,
+                diagramRepo.AddToDiagram(solutionDiagram, solutionElement.EaObject,
                     left: problemObject.left, right: problemObject.right, top: problemObject.top, bottom: problemObject.bottom);
             });
         }

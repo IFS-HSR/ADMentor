@@ -11,7 +11,7 @@ using Utils;
 
 namespace AdAddIn.CopyMetadata
 {
-    class UpdateMetadataOfNewElementsCommand : ICommand<Func<EA.Element>, EntityModified>
+    class UpdateMetadataOfNewElementsCommand : ICommand<AdEntity, EntityModified>
     {
         private readonly ModelEntityRepository Repo;
 
@@ -20,22 +20,23 @@ namespace AdAddIn.CopyMetadata
             Repo = repo;
         }
 
-        public EntityModified Execute(Func<EA.Element> getElement)
+        public EntityModified Execute(AdEntity entity)
         {
-            return Repo.Wrapper.Wrap(getElement())
-                .Match<AdEntity>()
-                .Match(
-                    element =>
-                    {
-                        element.CopyDataFromClassifier(Repo.GetElement);
-                        return EntityModified.Modified;
-                    },
-                    () => EntityModified.NotModified);
+            entity.CopyDataFromClassifier(Repo.GetElement);
+            return EntityModified.Modified;
         }
 
-        public bool CanExecute(Func<EA.Element> getElement)
+        public bool CanExecute(AdEntity _)
         {
             return true;
+        }
+
+        public ICommand<Func<EA.Element>, EntityModified> AsElementCreatedHandler()
+        {
+            return this.Adapt((Func<EA.Element> getElement) =>
+            {
+                return Repo.Wrapper.Wrap(getElement()).Match<AdEntity>();
+            });
         }
     }
 }

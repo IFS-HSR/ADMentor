@@ -45,19 +45,19 @@ namespace AdAddIn
             var updateMetadataCommand = new UpdateMetadataOfNewElementsCommand(entityRepository);
             var updateStatesCommand = new UpdateProblemOccurrenceStateCommand(entityRepository);
             var populateDependenciesCommand = new PopulateDependenciesCommand(
-                elementRepository, diagramRepository, new DependencySelectorForm(elementRepository));
-            var instantiateProblemSpace = new InstantiateProblemSpaceCommand(packageRepository, elementRepository, diagramRepository, new InstantiateSolutionForm());
+                entityRepository, diagramRepository, new DependencySelectorForm(entityRepository));
+            var instantiateProblemSpace = new InstantiateProblemSpaceCommand(entityRepository, packageRepository, elementRepository, diagramRepository, new InstantiateSolutionForm());
 
             Register(new Menu(technology.Name,
-                new MenuItem("Locate Option/Problem", new GoToClassifierCommand(elementRepository, eaRepository)),
+                new MenuItem("Locate Option/Problem", new GoToClassifierCommand(eaRepository)),
                 new MenuItem("Establish Dependencies from Problem Space", populateDependenciesCommand.AsMenuCommand()),
                 new MenuItem("Tailor Problem Space", new ExportProblemSpaceCommand(entityRepository, new TailorPackageExportForm()).AsMenuCommand()),
                 new MenuItem("Create Solution from Problem Space", instantiateProblemSpace.AsMenuCommand())));
 
-            OnElementCreated.Add(updateMetadataCommand);
+            OnElementCreated.Add(updateMetadataCommand.AsElementCreatedHandler());
             OnElementCreated.Add(populateDependenciesCommand.AsElementCreatedHandler());
 
-            OnElementModified.Add(updateStatesCommand);
+            OnElementModified.Add(updateStatesCommand.AsElementModifiedHandler());
         }
     }
 }

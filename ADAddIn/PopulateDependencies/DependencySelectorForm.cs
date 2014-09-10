@@ -10,14 +10,15 @@ using System.Windows.Forms;
 using Utils;
 using EAAddInFramework;
 using AdAddIn.DataAccess;
+using EAAddInFramework.DataAccess;
 
 namespace AdAddIn.PopulateDependencies
 {
     public partial class DependencySelectorForm : Form, IDependencySelector
     {
-        private readonly ElementRepository Repo;
+        private readonly ModelEntityRepository Repo;
 
-        public DependencySelectorForm(ElementRepository repo)
+        public DependencySelectorForm(ModelEntityRepository repo)
         {
             Repo = repo;
 
@@ -27,7 +28,8 @@ namespace AdAddIn.PopulateDependencies
             dependencyTreeView.AfterCheck += dependencyTreeView_AfterCheck;
         }
 
-        public Option<LabeledTree<ElementInstantiation, EA.Connector>> GetSelectedDependencies(LabeledTree<ElementInstantiation, EA.Connector> availableDependencies)
+        public Option<LabeledTree<ElementInstantiation, ModelEntity.Connector>> GetSelectedDependencies(
+            LabeledTree<ElementInstantiation, ModelEntity.Connector> availableDependencies)
         {
             dependencyTreeView.Nodes.Clear();
             dependencyTreeView.Nodes.Add(ToTreeNode(availableDependencies));
@@ -41,11 +43,11 @@ namespace AdAddIn.PopulateDependencies
             }
             else
             {
-                return Options.None<LabeledTree<ElementInstantiation, EA.Connector>>();
+                return Options.None<LabeledTree<ElementInstantiation, ModelEntity.Connector>>();
             }
         }
 
-        private LabeledTree<ElementInstantiation, EA.Connector> MarkSelectedNodes(LabeledTree<ElementInstantiation, EA.Connector> problemSpace, TreeNode treeNode)
+        private LabeledTree<ElementInstantiation, ModelEntity.Connector> MarkSelectedNodes(LabeledTree<ElementInstantiation, ModelEntity.Connector> problemSpace, TreeNode treeNode)
         {
             var edges = from pair in problemSpace.Edges.Zip(treeNode.Nodes.Cast<TreeNode>())
                         select LabeledTree.Edge(pair.Item1.Label, MarkSelectedNodes(pair.Item1.Target, pair.Item2));
@@ -60,7 +62,7 @@ namespace AdAddIn.PopulateDependencies
             }
         }
 
-        private TreeNode ToTreeNode(LabeledTree<ElementInstantiation, EA.Connector> dependencyNode)
+        private TreeNode ToTreeNode(LabeledTree<ElementInstantiation, ModelEntity.Connector> dependencyNode)
         {
             var node = new TreeNode(dependencyNode.Label.Element.Name, ToTreeNodes(dependencyNode.Edges));
             if (dependencyNode.Label.Instance.IsDefined)
@@ -68,12 +70,12 @@ namespace AdAddIn.PopulateDependencies
             return node;
         }
 
-        private TreeNode[] ToTreeNodes(IEnumerable<LabeledTree<ElementInstantiation, EA.Connector>.Edge> edges)
+        private TreeNode[] ToTreeNodes(IEnumerable<LabeledTree<ElementInstantiation, ModelEntity.Connector>.Edge> edges)
         {
             return edges.Select(edge =>
             {
-                var stype = Repo.GetStereotype(edge.Label).Value;
-                var connectorName = edge.Label.SupplierID == edge.Target.Label.Element.ElementID
+                var stype = edge.Label.GetStereotype(ADTechnology.Technologies.AD.ConnectorStereotypes).Value;
+                var connectorName = edge.Label.EaObject.SupplierID == edge.Target.Label.Element.EaObject.ElementID
                     ? stype.DisplayName
                     : stype.ReverseDisplayName.GetOrElse(stype.DisplayName);
                 var label = String.Format("{0}: {1}", connectorName, edge.Target.Label.Element.Name);

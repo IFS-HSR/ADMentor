@@ -30,7 +30,10 @@ namespace EAAddInFramework
         {
             return Handlers.Aggregate(InitVal, (acc, cmd) =>
             {
-                return Accumulate(acc, cmd.Execute(arg));
+                if (cmd.CanExecute(arg))
+                    return Accumulate(acc, cmd.Execute(arg));
+                else
+                    return acc;
             });
         }
     }

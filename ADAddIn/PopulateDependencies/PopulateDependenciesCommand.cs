@@ -1,6 +1,7 @@
 ﻿using AdAddIn.ADTechnology;
 using AdAddIn.DataAccess;
 using EAAddInFramework;
+using EAAddInFramework.DataAccess;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -11,29 +12,29 @@ using Utils;
 
 namespace AdAddIn.PopulateDependencies
 {
-    class PopulateDependenciesCommand : ICommand<EA.Element, EntityModified>
+    class PopulateDependenciesCommand : ICommand<SolutionEntity, EntityModified>
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private readonly ElementRepository Repo;
+        private readonly ModelEntityRepository Repo;
 
         private readonly IDependencySelector Selector;
 
         private readonly DiagramRepository DiagramRepo;
 
-        public PopulateDependenciesCommand(ElementRepository repo, DiagramRepository diagramRepo, IDependencySelector selector)
+        public PopulateDependenciesCommand(ModelEntityRepository repo, DiagramRepository diagramRepo, IDependencySelector selector)
         {
             Repo = repo;
             DiagramRepo = diagramRepo;
             Selector = selector;
         }
 
-        public EntityModified Execute(EA.Element element)
+        public EntityModified Execute(SolutionEntity element)
         {
             var modified =
                 from currentDiagram in GetCurrentDiagramContaining(element)
                 from solution in SolutionInstantiationGraph.Create(Repo, element)
-                let solutionTree = solution.Graph.ToTree(DirectedLabeledGraph.TraverseEdgeOnlyOnce(new DependencyGraph.ConnectorComparer()))
+                let solutionTree = solution.Graph.ToTree(DirectedLabeledGraph.TraverseEdgeOnlyOnce<ModelEntity.Connector>())
                 from markedSolutionTree in Selector.GetSelectedDependencies(solutionTree)
                 let markedSolution = solution.WithSelection(markedSolutionTree.NodeLabels)
                 let targetPackage = Repo.FindPackageContaining(element)
@@ -45,37 +46,41 @@ namespace AdAddIn.PopulateDependencies
             return modified.GetOrElse(EntityModified.NotModified);
         }
 
-        public Boolean CanExecute(EA.Element element)
+        public Boolean CanExecute(SolutionEntity element)
         {
             return GetCurrentDiagramContaining(element).IsDefined;
         }
 
-        private Option<EA.Diagram> GetCurrentDiagramContaining(EA.Element element)
+        private Option<EA.Diagram> GetCurrentDiagramContaining(ModelEntity.Element element)
         {
             return from diagram in DiagramRepo.GetCurrentDiagram()
-                   where DiagramRepo.Contains(diagram, element)
+                   where DiagramRepo.Contains(diagram, element.EaObject)
                    select diagram;
         }
 
         public ICommand<Option<ContextItem>, object> AsMenuCommand()
         {
-            return this.Adapt<Option<ContextItem>, EA.Element, object>(
-                contextItem => from ci in contextItem from e in Repo.GetElement(ci.Guid) select e);
+            return this.Adapt(
+                (Option<ContextItem> contextItem) =>
+                    from ci in contextItem
+                    from e in Repo.GetElement(ci.Guid)
+                    from solutionEntity in e.Match<SolutionEntity>()
+                    select solutionEntity);
         }
 
         public ICommand<Func<EA.Element>, EntityModified> AsElementCreatedHandler()
         {
-            return this.Adapt<Func<EA.Element>, EA.Element, EntityModified>(
-                getElement =>
+            return this.Adapt(
+                (Func<EA.Element> getElement) =>
                 {
                     var element = getElement();
                     if (element.IsNew())
                     {
-                        return Options.Some(element);
+                        return Repo.Wrapper.Wrap(element).Match<SolutionEntity>();
                     }
                     else
                     {
-                        return Options.None<EA.Element>();
+                        return Options.None<SolutionEntity>();
                     }
                 });
         }

@@ -1,6 +1,7 @@
 ﻿using AdAddIn.ADTechnology;
 using AdAddIn.DataAccess;
 using EAAddInFramework;
+using EAAddInFramework.DataAccess;
 using EAAddInFramework.MDGBuilder;
 using System;
 using System.Collections.Generic;
@@ -13,27 +14,29 @@ namespace AdAddIn.PopulateDependencies
 {
     public static class DependencyGraph
     {
-        public static DirectedLabeledGraph<EA.Element, EA.Connector> Create(ElementRepository repo, EA.Element rootNode,
-            Func<EA.Element, EA.Connector, EA.Element, bool> edgeFilter)
+        public static DirectedLabeledGraph<ModelEntity.Element, ModelEntity.Connector> Create(ModelEntityRepository repo, ModelEntity.Element rootNode,
+            Func<ModelEntity.Element, ModelEntity.Connector, ModelEntity.Element, bool> edgeFilter)
         {
             return Create(repo, rootNode,
-                new DirectedLabeledGraph<EA.Element, EA.Connector>(rootNode, new ElementComparer(), new ConnectorComparer()),
+                new DirectedLabeledGraph<ModelEntity.Element, ModelEntity.Connector>(rootNode),
                 edgeFilter);
         }
 
-        private static DirectedLabeledGraph<EA.Element, EA.Connector> Create(ElementRepository repo, EA.Element source,
-            DirectedLabeledGraph<EA.Element, EA.Connector> dependencyGraph,
-            Func<EA.Element, EA.Connector, EA.Element, bool> edgeFilter)
+        private static DirectedLabeledGraph<ModelEntity.Element, ModelEntity.Connector> Create(
+            ModelEntityRepository repo, 
+            ModelEntity.Element source,
+            DirectedLabeledGraph<ModelEntity.Element, ModelEntity.Connector> dependencyGraph,
+            Func<ModelEntity.Element, ModelEntity.Connector, ModelEntity.Element, bool> edgeFilter)
         {
-            var targets = from connector in source.Connectors.Cast<EA.Connector>()
-                          let target = OppositeEnd(repo, source, connector)
+            var targets = from connector in source.Connectors()
+                          from target in connector.OppositeEnd(source, repo.GetElement)
                           where edgeFilter(source, connector, target)
                           select Tuple.Create(source, connector, target);
 
             return targets.Aggregate(dependencyGraph, (graph, edge) =>
             {
                 var connected = graph.Connect(edge.Item1, edge.Item2, edge.Item3);
-                if (graph.NodeLabels.Any(nl => nl.ElementGUID == edge.Item3.ElementGUID))
+                if (graph.NodeLabels.Any(nl => nl.Guid == edge.Item3.Guid))
                 {
                     return connected;
                 }
@@ -44,22 +47,10 @@ namespace AdAddIn.PopulateDependencies
             });
         }
 
-        private static EA.Element OppositeEnd(ElementRepository repo, EA.Element sourceNode, EA.Connector c)
-        {
-            if (c.ClientID == sourceNode.ElementID)
-            {
-                return repo.GetElement(c.SupplierID).Value;
-            }
-            else
-            {
-                return repo.GetElement(c.ClientID).Value;
-            }
-        }
-
         /// <summary>
         /// Use this method as edge filter to create a dependency tree consisting of all reachable elements.
         /// </summary>
-        public static bool TraverseAllConnectors(EA.Element from, EA.Connector via, EA.Element to)
+        public static bool TraverseAllConnectors(ModelEntity.Element from, ModelEntity.Connector via, ModelEntity.Element to)
         {
             return true;
         }
@@ -68,7 +59,7 @@ namespace AdAddIn.PopulateDependencies
         /// Use this method as edge filter to create dependency trees that consists only of connectors as
         /// used in the specified domain.
         /// </summary>
-        public static Func<EA.Element, EA.Connector, EA.Element, bool> TraverseOnlyTechnologyConnectors(MDGTechnology technology)
+        public static Func<ModelEntity.Element, ModelEntity.Connector, ModelEntity.Element, bool> TraverseOnlyTechnologyConnectors(MDGTechnology technology)
         {
             var stypesByDirection = technology.ConnectorStereotypes.ToLookup(c => c.Direction.GetOrElse(Direction.Unspecified));
 
@@ -78,8 +69,8 @@ namespace AdAddIn.PopulateDependencies
 
             return (from, via, to) =>
             {
-                return (forwardTypes.Any(stype => via.Is(stype)) && via.ClientID == from.ElementID)
-                     || (backwardTypes.Any(stype => via.Is(stype)) && via.SupplierID == from.ElementID);
+                return (forwardTypes.Any(stype => via.EaObject.Is(stype)) && via.EaObject.ClientID == from.EaObject.ElementID)
+                     || (backwardTypes.Any(stype => via.EaObject.Is(stype)) && via.EaObject.SupplierID == from.EaObject.ElementID);
             };
         }
 
