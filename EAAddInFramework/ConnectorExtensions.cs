@@ -13,5 +13,10 @@ namespace EAAddInFramework
         {
             return c.Stereotype == stereotype.Name && c.Type == stereotype.Type.Name;
         }
+
+        public static IEnumerable<EA.TaggedValue> TaggedValues(this EA.Connector c)
+        {
+            return c.TaggedValues.Cast<EA.TaggedValue>();
+        }
     }
 }

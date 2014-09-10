@@ -1,6 +1,6 @@
 ﻿using AdAddIn.ADTechnology;
-using AdAddIn.ExportProblemSpace;
 using EAAddInFramework;
+using EAAddInFramework.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Utils;
 
-namespace AdAddIn.CopyMetadata
+namespace AdAddIn.DataAccess
 {
-    public class ProblemOccurrence : ModelEntity.Element
+    public class ProblemOccurrence : AdEntity
     {
-        private ProblemOccurrence(EA.Element e) : base(e) { }
-
-        public static Option<ProblemOccurrence> Wrap(EA.Element element)
-        {
-            return from e in element.AsOption()
-                   where e.Is(Solution.ProblemOccurrence)
-                   select new ProblemOccurrence(e);
-        }
+        internal ProblemOccurrence(EA.Element e, IEntityWrapper wrapper) : base(e, wrapper) { }
 
         public Solution.ProblemOccurrenceState State
         {
@@ -33,16 +26,16 @@ namespace AdAddIn.CopyMetadata
             }
             set
             {
-                Val.Set(Solution.ProblemOccurrenceStateTag, value.Name);
+                EaObject.Set(Solution.ProblemOccurrenceStateTag, value.Name);
             }
         }
 
-        public IEnumerable<OptionOccurrence> GetAlternatives(Func<int, Option<EA.Element>> getElementById)
+        public IEnumerable<OptionOccurrence> GetAlternatives(Func<int, Option<ModelEntity.Element>> getElementById)
         {
-            return from connector in Val.Connectors()
+            return from connector in EaObject.Connectors()
                    where connector.Is(ConnectorStereotypes.HasAlternative)
                    from target in getElementById(connector.SupplierID)
-                   from optionOcc in OptionOccurrence.Wrap(target)
+                   from optionOcc in Wrapper.Wrap(target.EaObject).Match<OptionOccurrence>()
                    select optionOcc;
         }
 

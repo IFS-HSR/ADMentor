@@ -1,6 +1,7 @@
 ﻿using AdAddIn.ADTechnology;
 using AdAddIn.DataAccess;
 using EAAddInFramework;
+using EAAddInFramework.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +13,24 @@ namespace AdAddIn.CopyMetadata
 {
     class UpdateMetadataOfNewElementsCommand : ICommand<Func<EA.Element>, EntityModified>
     {
-        private readonly ElementRepository Repo;
+        private readonly ModelEntityRepository Repo;
 
-        public UpdateMetadataOfNewElementsCommand(ElementRepository repo)
+        public UpdateMetadataOfNewElementsCommand(ModelEntityRepository repo)
         {
             Repo = repo;
         }
 
         public EntityModified Execute(Func<EA.Element> getElement)
         {
-            var element = getElement();
-
-            return Repo.UpdateMetadata(element);
+            return Repo.Wrapper.Wrap(getElement())
+                .Match<AdEntity>()
+                .Match(
+                    element =>
+                    {
+                        element.CopyDataFromClassifier(Repo.GetElement);
+                        return EntityModified.Modified;
+                    },
+                    () => EntityModified.NotModified);
         }
 
         public bool CanExecute(Func<EA.Element> getElement)

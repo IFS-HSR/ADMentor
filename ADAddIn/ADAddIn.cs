@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Utils;
 using AdAddIn.InstantiateProblemSpace;
 using AdAddIn.ExportProblemSpace;
+using EAAddInFramework.DataAccess;
 
 namespace AdAddIn
 {
@@ -35,12 +36,14 @@ namespace AdAddIn
 
         public override void bootstrap(IReadableAtom<EA.Repository> eaRepository)
         {
+            var entityWrapper = new AdEntityWrapper();
+            var entityRepository = new AdRepository(eaRepository, entityWrapper);
             var elementRepository = new ElementRepository(eaRepository);
             var packageRepository = new PackageRepository(eaRepository);
             var diagramRepository = new DiagramRepository(eaRepository);
 
-            var updateMetadataCommand = new UpdateMetadataOfNewElementsCommand(elementRepository);
-            var updateStatesCommand = new UpdateProblemOccurrenceStateCommand(elementRepository, diagramRepository);
+            var updateMetadataCommand = new UpdateMetadataOfNewElementsCommand(entityRepository);
+            var updateStatesCommand = new UpdateProblemOccurrenceStateCommand(entityRepository);
             var populateDependenciesCommand = new PopulateDependenciesCommand(
                 elementRepository, diagramRepository, new DependencySelectorForm(elementRepository));
             var instantiateProblemSpace = new InstantiateProblemSpaceCommand(packageRepository, elementRepository, diagramRepository, new InstantiateSolutionForm());
@@ -48,7 +51,7 @@ namespace AdAddIn
             Register(new Menu(technology.Name,
                 new MenuItem("Locate Option/Problem", new GoToClassifierCommand(elementRepository, eaRepository)),
                 new MenuItem("Establish Dependencies from Problem Space", populateDependenciesCommand.AsMenuCommand()),
-                new MenuItem("Tailor Problem Space", new ExportProblemSpaceCommand(elementRepository, packageRepository, new TailorPackageExportForm()).AsMenuCommand()),
+                new MenuItem("Tailor Problem Space", new ExportProblemSpaceCommand(entityRepository, new TailorPackageExportForm()).AsMenuCommand()),
                 new MenuItem("Create Solution from Problem Space", instantiateProblemSpace.AsMenuCommand())));
 
             OnElementCreated.Add(updateMetadataCommand);

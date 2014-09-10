@@ -37,6 +37,11 @@ namespace EAAddInFramework
             return e.Connectors.Cast<EA.Connector>();
         }
 
+        public static IEnumerable<EA.TaggedValue> TaggedValues(this EA.Element e)
+        {
+            return e.TaggedValues.Cast<EA.TaggedValue>();
+        }
+
         public static Option<String> Get(this EA.Element e, TaggedValue taggedValue)
         {
             return (from tv in e.TaggedValues.Cast<EA.TaggedValue>()

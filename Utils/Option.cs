@@ -92,7 +92,7 @@ namespace Utils
 
         public override bool Equals(object other)
         {
-            return other.TryCast<Option<T>>().Match(
+            return other.Match<Option<T>>().Match(
                 opt => IsDefined == opt.IsDefined && opt.Match(
                     val => Value.Equals(val),
                     () => true),
@@ -156,11 +156,25 @@ namespace Utils
                 () => els);
         }
 
+        public static T GetOrElse<T>(this Option<T> opt, Func<T> els)
+        {
+            return opt.Match(
+                v => v,
+                () => els());
+        }
+
         public static Option<T> OrElse<T>(this Option<T> opt, Option<T> els)
         {
             return opt.Match(
                 v => opt,
                 () => els);
+        }
+
+        public static Option<T> OrElse<T>(this Option<T> opt, Func<Option<T>> els)
+        {
+            return opt.Match(
+                v => opt,
+                () => els());
         }
 
         public static T GetOrDefault<T>(this Option<T> opt)
@@ -205,7 +219,7 @@ namespace Utils
             });
         }
 
-        public static Option<T> TryCast<T>(this object o) where T : class
+        public static Option<T> Match<T>(this object o) where T : class
         {
             if (o is T)
                 return Options.Some(o as T);

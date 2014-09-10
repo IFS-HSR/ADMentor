@@ -2,6 +2,7 @@
 using AdAddIn.DataAccess;
 using AdAddIn.PopulateDependencies;
 using EAAddInFramework;
+using EAAddInFramework.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,26 +14,24 @@ namespace AdAddIn.CopyMetadata
 {
     public class UpdateProblemOccurrenceStateCommand : ICommand<Func<EA.Element>, Unit>
     {
-        private readonly ElementRepository ElementRepo;
-        private readonly DiagramRepository DiagramRepo;
+        private readonly ModelEntityRepository Repo;
 
-        public UpdateProblemOccurrenceStateCommand(ElementRepository elementRepo, DiagramRepository diagramRepo)
+        public UpdateProblemOccurrenceStateCommand(ModelEntityRepository repo)
         {
-            ElementRepo = elementRepo;
-            DiagramRepo = diagramRepo;
+            Repo = repo;
         }
 
         public Unit Execute(Func<EA.Element> getElement)
         {
-            var problemOccs = from optionOcc in OptionOccurrence.Wrap(getElement())
-                              from problemOcc in optionOcc.GetAssociatedProblemOccurrences(ElementRepo.GetElement)
+            var problemOccs = from optionOcc in Repo.Wrapper.Wrap(getElement()).Match<OptionOccurrence>()
+                              from problemOcc in optionOcc.GetAssociatedProblemOccurrences(Repo.GetElement)
                               select problemOcc;
 
             problemOccs.ForEach(problemOcc =>
             {
-                var alternatives = problemOcc.GetAlternatives(ElementRepo.GetElement);
+                var alternatives = problemOcc.GetAlternatives(Repo.GetElement);
                 problemOcc.State = problemOcc.DeduceState(alternatives);
-                ElementRepo.ElementChanged(problemOcc.Val);
+                Repo.PropagateChanges(problemOcc);
             });
 
             return Unit.Instance;

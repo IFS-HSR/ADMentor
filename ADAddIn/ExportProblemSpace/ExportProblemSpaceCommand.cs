@@ -1,6 +1,7 @@
 ﻿using AdAddIn.ADTechnology;
 using AdAddIn.DataAccess;
 using EAAddInFramework;
+using EAAddInFramework.DataAccess;
 using EAAddInFramework.MDGBuilder;
 using System;
 using System.Collections.Generic;
@@ -14,27 +15,25 @@ namespace AdAddIn.ExportProblemSpace
 {
     public class ExportProblemSpaceCommand : ICommand<EA.Package, Unit>
     {
-        private readonly ElementRepository ElementRepo;
-        private readonly PackageRepository PackageRepo;
         private readonly TailorPackageExportForm Form;
+        private readonly ModelEntityRepository Repo;
 
-        public ExportProblemSpaceCommand(ElementRepository elementRepo, PackageRepository packageRepo, TailorPackageExportForm form)
+        public ExportProblemSpaceCommand(ModelEntityRepository repo, TailorPackageExportForm form)
         {
-            ElementRepo = elementRepo;
-            PackageRepo = packageRepo;
+            Repo = repo;
             Form = form;
         }
 
-        public Unit Execute(EA.Package package)
+        public Unit Execute(EA.Package p)
         {
-            var elements = from p in package.DescendantPackages()
-                           from element in p.Elements()
-                           select element.AsModelEntity();
-            var diagrams = from p in package.DescendantPackages()
-                           from diagram in p.Diagrams()
-                           select diagram.AsModelEntity();
-            var packages = from p in package.DescendantPackages()
-                           select p.AsModelEntity();
+            var package = Repo.Wrapper.Wrap(p);
+            var packages = package.AllDescendants().Run();
+            var elements = from descendant in packages
+                           from element in descendant.Elements()
+                           select element;
+            var diagrams = from descendant in packages
+                           from diagram in descendant.Diagrams()
+                           select diagram;
 
             var filters = Filter.Or("", new[]{
                 Filter.And("Elements", e => e.Match<ModelEntity.Element>().IsDefined, new[] {
@@ -71,13 +70,13 @@ namespace AdAddIn.ExportProblemSpace
             return Unit.Instance;
         }
 
-        private LabeledTree<ModelEntity, Unit> CreatePackageHierarchy(EA.Package root)
+        private LabeledTree<ModelEntity, Unit> CreatePackageHierarchy(ModelEntity.Package root)
         {
-            var subnodes = root.Elements().Select(e => LabeledTree.Node<ModelEntity, Unit>(e.AsModelEntity()))
-                .Concat(root.Diagrams().Select(d => LabeledTree.Node<ModelEntity, Unit>(d.AsModelEntity())))
+            var subnodes = root.Elements().Select(e => LabeledTree.Node<ModelEntity, Unit>(e))
+                .Concat(root.Diagrams().Select(d => LabeledTree.Node<ModelEntity, Unit>(d)))
                 .Concat(root.Packages().Select(p => CreatePackageHierarchy(p)));
 
-            return LabeledTree.Node(root.AsModelEntity(),
+            return LabeledTree.Node(root,
                 from subnode in subnodes
                 select LabeledTree.Edge(Unit.Instance, subnode));
         }
@@ -128,7 +127,7 @@ namespace AdAddIn.ExportProblemSpace
             return CreatePropertyFilter(taggedValue.Name, allEntities, entity =>
             {
                 return (from value in entity.Get(taggedValue)
-                        from referencedElement in ElementRepo.GetElement(value)
+                        from referencedElement in Repo.GetElement(value)
                         select referencedElement.Name).GetOrElse("");
             });
         }
@@ -165,8 +164,8 @@ namespace AdAddIn.ExportProblemSpace
             return this.Adapt((Option<ContextItem> contextItem) =>
             {
                 return from ci in contextItem
-                       from package in PackageRepo.GetPackage(ci.Guid)
-                       select package;
+                       from package in Repo.GetPackage(ci.Guid)
+                       select package.EaObject;
             });
         }
     }
