@@ -68,12 +68,11 @@ namespace AdAddIn.PopulateDependencies
                     select solutionEntity);
         }
 
-        public ICommand<Func<EA.Element>, EntityModified> AsElementCreatedHandler()
+        public ICommand<EA.Element, EntityModified> AsElementCreatedHandler()
         {
             return this.Adapt(
-                (Func<EA.Element> getElement) =>
+                (EA.Element element) =>
                 {
-                    var element = getElement();
                     if (element.IsNew())
                     {
                         return Repo.Wrapper.Wrap(element).Match<SolutionEntity>();

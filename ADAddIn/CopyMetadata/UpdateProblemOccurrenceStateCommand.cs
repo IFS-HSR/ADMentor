@@ -41,11 +41,11 @@ namespace AdAddIn.CopyMetadata
             return true;
         }
 
-        public ICommand<Func<EA.Element>, object> AsElementModifiedHandler()
+        public ICommand<EA.Element, object> AsElementModifiedHandler()
         {
-            return this.Adapt((Func<EA.Element> getElement) =>
+            return this.Adapt((EA.Element element) =>
             {
-                return Repo.Wrapper.Wrap(getElement()).Match<OptionOccurrence>();
+                return Repo.Wrapper.Wrap(element).Match<OptionOccurrence>();
             });
         }
     }

@@ -162,13 +162,13 @@ namespace EAAddInFramework
             return true;
         }
 
-        public readonly EventManager<Func<EA.Element>, EntityModified> OnElementCreated =
-            new EventManager<Func<EA.Element>, EntityModified>(
+        public readonly EventManager<EA.Element, EntityModified> OnElementCreated =
+            new EventManager<EA.Element, EntityModified>(
                 EntityModified.NotModified,
                 (acc, v) => acc == EntityModified.Modified ? acc : v);
 
-        public readonly EventManager<Func<EA.Element>, object> OnElementModified =
-            new EventManager<Func<EA.Element>, object>(
+        public readonly EventManager<EA.Element, object> OnElementModified =
+            new EventManager<EA.Element, object>(
                 Unit.Instance,
                 (acc, _) => acc);
 
@@ -205,7 +205,7 @@ namespace EAAddInFramework
             var connectorId = info.ExtractConnectorId();
             logger.Debug("Attempt to delete connector with id {0}", connectorId);
 
-            var deleteConnector = OnDeleteEntity.Handle(entityWrapper.Val.Wrap(eaRepository.Val.GetConnectorByID(connectorId)));
+            var deleteConnector = OnDeleteEntity.Handle(() => entityWrapper.Val.Wrap(eaRepository.Val.GetConnectorByID(connectorId)));
 
             return deleteConnector;
         }

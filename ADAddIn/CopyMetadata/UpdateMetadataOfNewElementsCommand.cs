@@ -31,11 +31,11 @@ namespace AdAddIn.CopyMetadata
             return true;
         }
 
-        public ICommand<Func<EA.Element>, EntityModified> AsElementCreatedHandler()
+        public ICommand<EA.Element, EntityModified> AsElementCreatedHandler()
         {
-            return this.Adapt((Func<EA.Element> getElement) =>
+            return this.Adapt((EA.Element element) =>
             {
-                return Repo.Wrapper.Wrap(getElement()).Match<AdEntity>();
+                return Repo.Wrapper.Wrap(element).Match<AdEntity>();
             });
         }
     }

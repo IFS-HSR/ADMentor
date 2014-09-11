@@ -26,15 +26,23 @@ namespace EAAddInFramework
             Handlers.Add(cmd);
         }
 
-        internal R Handle(T arg)
+        internal R Handle(Func<T> getArg)
         {
-            return Handlers.Aggregate(InitVal, (acc, cmd) =>
+            if (Handlers.Count > 0)
             {
-                if (cmd.CanExecute(arg))
-                    return Accumulate(acc, cmd.Execute(arg));
-                else
-                    return acc;
-            });
+                var arg = getArg();
+                return Handlers.Aggregate(InitVal, (acc, cmd) =>
+                {
+                    if (cmd.CanExecute(arg))
+                        return Accumulate(acc, cmd.Execute(arg));
+                    else
+                        return acc;
+                });
+            }
+            else
+            {
+                return InitVal;
+            }
         }
     }
 }
