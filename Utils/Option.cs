@@ -149,6 +149,21 @@ namespace Utils
                 action(opt.Value);
         }
 
+        public static void Match<T>(this Option<T> opt, Action<T> then, Action els)
+        {
+            opt.Match(
+                v =>
+                {
+                    then(v);
+                    return Unit.Instance;
+                },
+                () =>
+                {
+                    els();
+                    return Unit.Instance;
+                });
+        }
+
         public static T GetOrElse<T>(this Option<T> opt, T els)
         {
             return opt.Match(

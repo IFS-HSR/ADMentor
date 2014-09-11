@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Utils;
 
@@ -114,10 +115,10 @@ namespace EAAddInFramework.DataAccess
         public Option<String> Get(TaggedValue taggedValue)
         {
             var taggedValues = Match(
-                (Package p) => p.EaObject.Element.TaggedValues(),
+                (Package p) => p.EaObject.Element.TaggedValues.Cast<EA.TaggedValue>(),
                 (Diagram d) => new List<EA.TaggedValue>().AsEnumerable(),
-                (Element e) => e.EaObject.TaggedValues(),
-                (Connector c) => c.EaObject.TaggedValues());
+                (Element e) => e.EaObject.TaggedValues.Cast<EA.TaggedValue>(),
+                (Connector c) => c.EaObject.TaggedValues.Cast<EA.TaggedValue>());
             return (from tv in taggedValues
                     where tv.Name.Equals(taggedValue.Name)
                     select tv.Value).FirstOption();
@@ -222,7 +223,7 @@ namespace EAAddInFramework.DataAccess
             public Option<ElementStereotype> GetStereotype(IEnumerable<ElementStereotype> stereotypes)
             {
                 return (from stype in stereotypes
-                        where EaObject.Is(stype)
+                        where Is(stype)
                         select stype).FirstOption();
             }
 
@@ -235,6 +236,37 @@ namespace EAAddInFramework.DataAccess
             {
                 return from c in EaObject.Connectors.Cast<EA.Connector>()
                        select Wrapper.Wrap(c);
+            }
+
+            public bool Is(ElementStereotype stype)
+            {
+                return Stereotype.Equals(stype.Name) && Type.Equals(stype.Type.Name);
+            }
+
+            public bool IsNew()
+            {
+                return DateTime.Now - EaObject.Created < TimeSpan.FromSeconds(1);
+            }
+
+            public void Set(TaggedValue taggedValue, String value)
+            {
+                (from tv in EaObject.TaggedValues.Cast<EA.TaggedValue>()
+                 where tv.Name == taggedValue.Name
+                 select tv)
+                    .FirstOption()
+                    .Match(
+                        tv =>
+                        {
+                            tv.Value = value;
+                            tv.Update();
+                        },
+                        () =>
+                        {
+                            var tv = EaObject.TaggedValues.AddNew(taggedValue.Name, "") as EA.TaggedValue;
+                            tv.Value = value;
+                            tv.Update();
+                            EaObject.TaggedValues.Refresh();
+                        });
             }
         }
 
@@ -261,8 +293,18 @@ namespace EAAddInFramework.DataAccess
             public Option<ConnectorStereotype> GetStereotype(IEnumerable<ConnectorStereotype> stereotypes)
             {
                 return (from stype in stereotypes
-                        where EaObject.Is(stype)
+                        where Is(stype)
                         select stype).FirstOption();
+            }
+
+            public Option<Element> Source(Func<int, Option<Element>> getElementById)
+            {
+                return getElementById(EaObject.ClientID);
+            }
+
+            public Option<Element> Target(Func<int, Option<Element>> getElementById)
+            {
+                return getElementById(EaObject.SupplierID);
             }
 
             public Option<Element> OppositeEnd(Element thisEnd, Func<int, Option<Element>> getElementById)
@@ -271,6 +313,11 @@ namespace EAAddInFramework.DataAccess
                     return getElementById(EaObject.SupplierID);
                 else
                     return getElementById(EaObject.ClientID);
+            }
+
+            public bool Is(ConnectorStereotype connectorStereotype)
+            {
+                return Stereotype.Equals(connectorStereotype.Name) && Type.Equals(connectorStereotype.Type.Name);
             }
         }
 
@@ -293,6 +340,15 @@ namespace EAAddInFramework.DataAccess
             {
                 get { return EaObject.DiagramGUID; }
             }
+
+            public bool Is(MDGBuilder.Diagram diagramType)
+            {
+                var match = Regex.Match(EaObject.StyleEx, diagramStylePattern);
+
+                return EaObject.Type.Equals(diagramType.Type.Name) && match.Success && match.Groups["diagramType"].Value.Equals(diagramType.Name);
+            }
+
+            private static string diagramStylePattern = @"MDGDgm=(?<technology>\w+)::(?<diagramType>\w+)";
         }
     }
 }

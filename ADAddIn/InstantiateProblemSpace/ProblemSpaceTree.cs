@@ -43,7 +43,7 @@ namespace AdAddIn.InstantiateProblemSpace
                                  where element is OptionEntity || element is Problem
                                  select new ElementInstantiation(element);
             var diagrams = from diagram in problemSpacePackage.Diagrams()
-                           where diagram.EaObject.Is(DiagramTypes.ProblemSpace)
+                           where diagram.Is(DiagramTypes.ProblemSpace)
                            select diagram;
             var children = from childPackage in problemSpacePackage.Packages()
                            let childTree = Create(childPackage)
@@ -82,7 +82,7 @@ namespace AdAddIn.InstantiateProblemSpace
             return new ProblemSpaceTree(Package, PackageInstance, instantiations, Diagrams, children);
         }
 
-        public void InstantiateSolutionConnectors()
+        public void InstantiateSolutionConnectors(ModelEntityRepository repo)
         {
             var allInstantiations = AllInstantiations();
             var connections = from instantiation in allInstantiations
@@ -97,7 +97,7 @@ namespace AdAddIn.InstantiateProblemSpace
 
             connections.ForEach((source, connectorStype, target) =>
             {
-                connectorStype.Create(source.EaObject, target.EaObject);
+                repo.Connect(source, target, connectorStype);
             });
         }
 
@@ -122,7 +122,7 @@ namespace AdAddIn.InstantiateProblemSpace
 
         private void CopyDiagramObjects(DiagramRepository diagramRepo, EA.Diagram problemDiagram, EA.Diagram solutionDiagram, IEnumerable<ElementInstantiation> instantiations)
         {
-            var newObjects = from problemObject in problemDiagram.DiagramObjects()
+            var newObjects = from problemObject in problemDiagram.DiagramObjects.Cast<EA.DiagramObject>()
                              join instantiation in instantiations
                                on problemObject.ElementID equals instantiation.Element.Id
                              from solutionElement in instantiation.Instance

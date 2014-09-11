@@ -69,35 +69,9 @@ namespace AdAddIn.PopulateDependencies
 
             return (from, via, to) =>
             {
-                return (forwardTypes.Any(stype => via.EaObject.Is(stype)) && via.EaObject.ClientID == from.EaObject.ElementID)
-                     || (backwardTypes.Any(stype => via.EaObject.Is(stype)) && via.EaObject.SupplierID == from.EaObject.ElementID);
+                return (forwardTypes.Any(stype => via.Is(stype)) && via.EaObject.ClientID == from.Id)
+                     || (backwardTypes.Any(stype => via.Is(stype)) && via.EaObject.SupplierID == from.Id);
             };
-        }
-
-        public class ElementComparer : IEqualityComparer<EA.Element>
-        {
-            public bool Equals(EA.Element x, EA.Element y)
-            {
-                return x.ElementGUID == y.ElementGUID;
-            }
-
-            public int GetHashCode(EA.Element obj)
-            {
-                return obj.ElementGUID.GetHashCode();
-            }
-        }
-
-        public class ConnectorComparer : IEqualityComparer<EA.Connector>
-        {
-            public bool Equals(EA.Connector x, EA.Connector y)
-            {
-                return x.ConnectorGUID == y.ConnectorGUID;
-            }
-
-            public int GetHashCode(EA.Connector obj)
-            {
-                return obj.ConnectorGUID.GetHashCode();
-            }
         }
     }
 }

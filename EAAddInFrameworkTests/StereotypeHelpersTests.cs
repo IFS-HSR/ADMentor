@@ -20,34 +20,34 @@ namespace EAAddInFrameworkTests
             type: ConnectorType.Dependency,
             direction: Direction.SourceToDestination);
 
-        [TestMethod]
-        public void UseCompositionKindWhenCreatingConnectors()
-        {
-            var rut = new RepositoryUnderTest();
+        //[TestMethod]
+        //public void UseCompositionKindWhenCreatingConnectors()
+        //{
+        //    var rut = new RepositoryUnderTest();
 
-            var a = ElementType.Class.DefaultStereotype.Create(rut.TestPackage, "A");
-            var b = ElementType.Class.DefaultStereotype.Create(rut.TestPackage, "B");
+        //    var a = ElementType.Class.DefaultStereotype.Create(rut.TestPackage, "A");
+        //    var b = ElementType.Class.DefaultStereotype.Create(rut.TestPackage, "B");
 
-            var c = MyAggregation.Create(a, b);
+        //    var c = MyAggregation.Create(a, b);
 
-            Assert.AreEqual((int)CompositionKind.CompositionType.Shared, c.ClientEnd.Aggregation);
-            Assert.AreEqual((int)CompositionKind.CompositionType.None, c.SupplierEnd.Aggregation);
-        }
+        //    Assert.AreEqual((int)CompositionKind.CompositionType.Shared, c.ClientEnd.Aggregation);
+        //    Assert.AreEqual((int)CompositionKind.CompositionType.None, c.SupplierEnd.Aggregation);
+        //}
 
-        [TestMethod]
-        public void UseDirectionWhenCreatingConnectors()
-        {
-            var rut = new RepositoryUnderTest();
+        //[TestMethod]
+        //public void UseDirectionWhenCreatingConnectors()
+        //{
+        //    var rut = new RepositoryUnderTest();
 
-            var a = ElementType.Class.DefaultStereotype.Create(rut.TestPackage, "A");
-            var b = ElementType.Class.DefaultStereotype.Create(rut.TestPackage, "B");
+        //    var a = ElementType.Class.DefaultStereotype.Create(rut.TestPackage, "A");
+        //    var b = ElementType.Class.DefaultStereotype.Create(rut.TestPackage, "B");
 
-            var c = MyDependency.Create(a, b);
+        //    var c = MyDependency.Create(a, b);
 
-            Assert.IsTrue(c.SupplierEnd.IsNavigable);
-            Assert.AreEqual(Direction.Navigateability.Navigable.Name, c.SupplierEnd.Navigable);
-            Assert.IsFalse(c.ClientEnd.IsNavigable);
-            Assert.AreEqual(Direction.Navigateability.Unspecified.Name, c.ClientEnd.Navigable);
-        }
+        //    Assert.IsTrue(c.SupplierEnd.IsNavigable);
+        //    Assert.AreEqual(Direction.Navigateability.Navigable.Name, c.SupplierEnd.Navigable);
+        //    Assert.IsFalse(c.ClientEnd.IsNavigable);
+        //    Assert.AreEqual(Direction.Navigateability.Unspecified.Name, c.ClientEnd.Navigable);
+        //}
     }
 }

@@ -39,7 +39,7 @@ namespace AdAddIn.InstantiateProblemSpace
                     .InstantiateSolutionPackages(parentPackage)
                     .InstantiateSolutionElements(Repo);
                 RenameSolutionPackage(instantiatedTree, solutionName);
-                instantiatedTree.InstantiateSolutionConnectors();
+                instantiatedTree.InstantiateSolutionConnectors(Repo);
                 instantiatedTree.CreateSolutionDiagrams(DiagramRepo);
             });
 

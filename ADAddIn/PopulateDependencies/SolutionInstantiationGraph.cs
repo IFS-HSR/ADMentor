@@ -79,12 +79,12 @@ namespace AdAddIn.PopulateDependencies
                                 stype == ConnectorStereotypes.HasAlternative && solutionSource is OptionOccurrence;
                             var alreadyExisting = solutionSource.Connectors().Any(c =>
                             {
-                                return c.EaObject.Is(stype) && (c.EaObject.SupplierID == solutionTarget.Id || c.EaObject.ClientID == solutionTarget.Id);
+                                return c.Is(stype) && (c.EaObject.SupplierID == solutionTarget.Id || c.EaObject.ClientID == solutionTarget.Id);
                             });
 
                             if (!connectsAlternativeToProblem && !alreadyExisting)
                             {
-                                stype.Create(solutionSource.EaObject, solutionTarget.EaObject);
+                                Repo.Connect(solutionSource, solutionTarget, stype);
                             }
                         });
                     });

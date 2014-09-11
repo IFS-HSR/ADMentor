@@ -72,7 +72,7 @@ namespace AdAddIn.PopulateDependencies
             return this.Adapt(
                 (ModelEntity entity) =>
                     from solutionEntity in entity.Match<SolutionEntity>()
-                    where solutionEntity.EaObject.IsNew()
+                    where solutionEntity.IsNew()
                     select solutionEntity);
         }
     }

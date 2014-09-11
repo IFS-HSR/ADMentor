@@ -75,7 +75,7 @@ namespace AdAddIn.PopulateDependencies
             return edges.Select(edge =>
             {
                 var stype = edge.Label.GetStereotype(ADTechnology.Technologies.AD.ConnectorStereotypes).Value;
-                var connectorName = edge.Label.EaObject.SupplierID == edge.Target.Label.Element.EaObject.ElementID
+                var connectorName = edge.Label.EaObject.SupplierID == edge.Target.Label.Element.Id
                     ? stype.DisplayName
                     : stype.ReverseDisplayName.GetOrElse(stype.DisplayName);
                 var label = String.Format("{0}: {1}", connectorName, edge.Target.Label.Element.Name);

@@ -31,16 +31,16 @@ namespace AdAddIn.DataAccess
             }
             set
             {
-                EaObject.Set(Solution.ProblemOccurrenceStateTag, value.Name);
+                Set(Solution.ProblemOccurrenceStateTag, value.Name);
             }
         }
 
         public IEnumerable<OptionOccurrence> GetAlternatives(Func<int, Option<ModelEntity.Element>> getElementById)
         {
-            return from connector in EaObject.Connectors()
+            return from connector in Connectors()
                    where connector.Is(ConnectorStereotypes.HasAlternative)
-                   from target in getElementById(connector.SupplierID)
-                   from optionOcc in Wrapper.Wrap(target.EaObject).Match<OptionOccurrence>()
+                   from target in connector.Target(getElementById)
+                   from optionOcc in target.Match<OptionOccurrence>()
                    select optionOcc;
         }
 
@@ -78,16 +78,16 @@ namespace AdAddIn.DataAccess
             }
             set
             {
-                EaObject.Set(Solution.OptionStateTag, value.Name);
+                Set(Solution.OptionStateTag, value.Name);
             }
         }
 
         public IEnumerable<ProblemOccurrence> GetAssociatedProblemOccurrences(Func<int, Option<ModelEntity.Element>> getElementById)
         {
-            return from connector in EaObject.Connectors()
+            return from connector in Connectors()
                    where connector.Is(ConnectorStereotypes.HasAlternative)
-                   from source in getElementById(connector.ClientID)
-                   from problemOcc in Wrapper.Wrap(source.EaObject).Match<ProblemOccurrence>()
+                   from source in connector.Source(getElementById)
+                   from problemOcc in source.Match<ProblemOccurrence>()
                    select problemOcc;
         }
     }

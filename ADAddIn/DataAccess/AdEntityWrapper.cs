@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AdAddIn.ADTechnology;
+using EAAddInFramework.MDGBuilder;
 
 namespace AdAddIn.DataAccess
 {
@@ -13,16 +14,21 @@ namespace AdAddIn.DataAccess
     {
         public override ModelEntity.Element Wrap(EA.Element e)
         {
-            if (e.Is(Solution.OptionOccurrence))
+            if (StereotypeIs(e, Solution.OptionOccurrence))
                 return new OptionOccurrence(e, this);
-            else if (e.Is(Solution.ProblemOccurrence))
+            else if (StereotypeIs(e, Solution.ProblemOccurrence))
                 return new ProblemOccurrence(e, this);
-            else if (e.Is(ProblemSpace.Problem))
+            else if (StereotypeIs(e, ProblemSpace.Problem))
                 return new Problem(e, this);
-            else if (e.Is(ProblemSpace.Option))
+            else if (StereotypeIs(e, ProblemSpace.Option))
                 return new OptionEntity(e, this);
             else
                 return base.Wrap(e);
+        }
+
+        private bool StereotypeIs(EA.Element e, ElementStereotype stype)
+        {
+            return e.Type.Equals(stype.Type.Name) && e.Stereotype.Equals(stype.Name);
         }
     }
 }
