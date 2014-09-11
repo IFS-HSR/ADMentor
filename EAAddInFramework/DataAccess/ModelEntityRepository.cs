@@ -144,5 +144,31 @@ namespace EAAddInFramework.DataAccess
         {
             return GetPackage(element.EaObject.PackageID).Value;
         }
+
+        public Option<ModelEntity.Diagram> GetCurrentDiagram()
+        {
+            return Repo.Val.GetCurrentDiagram()
+                .AsOption()
+                .Select(Wrapper.Wrap);
+        }
+
+        public void Reload(ModelEntity.Diagram diagram)
+        {
+            Repo.Val.ReloadDiagram(diagram.Id);
+        }
+
+        public void Save(ModelEntity.Diagram diagram)
+        {
+            Repo.Val.SaveDiagram(diagram.Id);
+        }
+
+        public ModelEntity.Diagram Create(string name, Diagram diagramType, ModelEntity.Package package, String technologyId)
+        {
+            var diagram = package.EaObject.Diagrams.AddNew(name, diagramType.Type.Name) as EA.Diagram;
+            diagram.StyleEx = String.Format("MDGDgm={0}::{1};", technologyId, diagramType.Name);
+            diagram.Update();
+            package.EaObject.Diagrams.Refresh();
+            return Wrapper.Wrap(diagram);
+        }
     }
 }

@@ -20,12 +20,9 @@ namespace AdAddIn.PopulateDependencies
 
         private readonly IDependencySelector Selector;
 
-        private readonly DiagramRepository DiagramRepo;
-
-        public PopulateDependenciesCommand(ModelEntityRepository repo, DiagramRepository diagramRepo, IDependencySelector selector)
+        public PopulateDependenciesCommand(ModelEntityRepository repo, IDependencySelector selector)
         {
             Repo = repo;
-            DiagramRepo = diagramRepo;
             Selector = selector;
         }
 
@@ -40,7 +37,7 @@ namespace AdAddIn.PopulateDependencies
                 let targetPackage = Repo.FindPackageContaining(solutionEntity)
                 let instantiatedSolution = markedSolution.InstantiateSelectedItems(targetPackage)
                 let _1 = instantiatedSolution.InstantiateMissingSolutionConnectors()
-                let _2 = instantiatedSolution.CreateDiagramElements(DiagramRepo, currentDiagram)
+                let _2 = instantiatedSolution.CreateDiagramElements(currentDiagram)
                 select EntityModified.Modified;
 
             return modified.GetOrElse(EntityModified.NotModified);
@@ -51,10 +48,10 @@ namespace AdAddIn.PopulateDependencies
             return GetCurrentDiagramContaining(element).IsDefined;
         }
 
-        private Option<EA.Diagram> GetCurrentDiagramContaining(ModelEntity.Element element)
+        private Option<ModelEntity.Diagram> GetCurrentDiagramContaining(ModelEntity.Element element)
         {
-            return from diagram in DiagramRepo.GetCurrentDiagram()
-                   where DiagramRepo.Contains(diagram, element.EaObject)
+            return from diagram in Repo.GetCurrentDiagram()
+                   where diagram.GetObject(element).IsDefined
                    select diagram;
         }
 

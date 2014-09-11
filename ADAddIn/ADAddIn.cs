@@ -38,13 +38,12 @@ namespace AdAddIn
         {
             var entityWrapper = new AdEntityWrapper();
             var entityRepository = new AdRepository(eaRepository, entityWrapper);
-            var diagramRepository = new DiagramRepository(eaRepository);
 
             var updateMetadataCommand = new UpdateMetadataOfNewElementsCommand(entityRepository);
             var updateStatesCommand = new UpdateProblemOccurrenceStateCommand(entityRepository);
             var populateDependenciesCommand = new PopulateDependenciesCommand(
-                entityRepository, diagramRepository, new DependencySelectorForm(entityRepository));
-            var instantiateProblemSpace = new InstantiateProblemSpaceCommand(entityRepository, diagramRepository, new InstantiateSolutionForm());
+                entityRepository, new DependencySelectorForm(entityRepository));
+            var instantiateProblemSpace = new InstantiateProblemSpaceCommand(entityRepository, new InstantiateSolutionForm());
 
             Register(new Menu(technology.Name,
                 new MenuItem("Locate Option/Problem", new GoToClassifierCommand(eaRepository)),

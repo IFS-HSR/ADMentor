@@ -349,6 +349,30 @@ namespace EAAddInFramework.DataAccess
             }
 
             private static string diagramStylePattern = @"MDGDgm=(?<technology>\w+)::(?<diagramType>\w+)";
+
+            public IEnumerable<DiagramObject> Objects()
+            {
+                return from o in EaObject.DiagramObjects.Cast<EA.DiagramObject>()
+                       select Wrapper.Wrap(o);
+            }
+
+            public Option<DiagramObject> GetObject(Element forElement)
+            {
+                return (from o in Objects()
+                        where o.EaObject.ElementID.Equals(forElement.Id)
+                        select o).FirstOption();
+            }
+
+            public DiagramObject AddObject(Element e, int left, int right, int top, int bottom)
+            {
+                var pos = String.Format("l={0};r={1};t={2};b={3};", left, right, top, bottom);
+                var obj = EaObject.DiagramObjects.AddNew(pos, "") as EA.DiagramObject;
+                obj.ElementID = e.Id;
+                obj.Update();
+                EaObject.DiagramObjects.Refresh();
+
+                return Wrapper.Wrap(obj);
+            }
         }
     }
 }

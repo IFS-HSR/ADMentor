@@ -101,37 +101,38 @@ namespace AdAddIn.InstantiateProblemSpace
             });
         }
 
-        public void CreateSolutionDiagrams(DiagramRepository diagramRepo)
+        public void CreateSolutionDiagrams(ModelEntityRepository repo)
         {
-            CreateSolutionDiagrams(diagramRepo, AllInstantiations());
+            CreateSolutionDiagrams(repo, AllInstantiations());
         }
 
-        private void CreateSolutionDiagrams(DiagramRepository diagramRepo, IEnumerable<ElementInstantiation> instantiations)
+        private void CreateSolutionDiagrams(ModelEntityRepository repo, IEnumerable<ElementInstantiation> instantiations)
         {
             PackageInstance.Do(solutionPackage =>
             {
                 Diagrams.ForEach(problemDiagram =>
                 {
-                    var solutionDiagram = diagramRepo.Create(DiagramTypes.SolutionOverview, solutionPackage.EaObject, problemDiagram.Name);
-                    CopyDiagramObjects(diagramRepo, problemDiagram.EaObject, solutionDiagram, instantiations);
+                    var solutionDiagram = repo.Create(problemDiagram.Name, DiagramTypes.SolutionOverview, solutionPackage, ADTechnology.Technologies.AD.ID);
+                    CopyDiagramObjects(problemDiagram, solutionDiagram, instantiations);
                 });
             });
 
-            Children.ForEach(c => c.CreateSolutionDiagrams(diagramRepo, instantiations));
+            Children.ForEach(c => c.CreateSolutionDiagrams(repo, instantiations));
         }
 
-        private void CopyDiagramObjects(DiagramRepository diagramRepo, EA.Diagram problemDiagram, EA.Diagram solutionDiagram, IEnumerable<ElementInstantiation> instantiations)
+        private void CopyDiagramObjects(ModelEntity.Diagram problemDiagram, ModelEntity.Diagram solutionDiagram, IEnumerable<ElementInstantiation> instantiations)
         {
-            var newObjects = from problemObject in problemDiagram.DiagramObjects.Cast<EA.DiagramObject>()
+            var newObjects = from problemObject in problemDiagram.Objects()
                              join instantiation in instantiations
-                               on problemObject.ElementID equals instantiation.Element.Id
+                               on problemObject.EaObject.ElementID equals instantiation.Element.Id
                              from solutionElement in instantiation.Instance
                              select Tuple.Create(problemObject, solutionElement);
 
             newObjects.ForEach((problemObject, solutionElement) =>
             {
-                diagramRepo.AddToDiagram(solutionDiagram, solutionElement.EaObject,
-                    left: problemObject.left, right: problemObject.right, top: problemObject.top, bottom: problemObject.bottom);
+                solutionDiagram.AddObject(solutionElement,
+                    left: problemObject.EaObject.left, right: problemObject.EaObject.right,
+                    top: problemObject.EaObject.top, bottom: problemObject.EaObject.bottom);
             });
         }
     }

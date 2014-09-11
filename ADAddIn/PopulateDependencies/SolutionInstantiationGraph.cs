@@ -36,7 +36,7 @@ namespace AdAddIn.PopulateDependencies
         }
 
         private static DirectedLabeledGraph<ElementInstantiation, ModelEntity.Connector> Compare(
-            DirectedLabeledGraph<ModelEntity.Element, ModelEntity.Connector> problemSpace, 
+            DirectedLabeledGraph<ModelEntity.Element, ModelEntity.Connector> problemSpace,
             DirectedLabeledGraph<ModelEntity.Element, ModelEntity.Connector> solution)
         {
             return problemSpace.MapNodeLabels<ElementInstantiation>(problemItem =>
@@ -117,7 +117,7 @@ namespace AdAddIn.PopulateDependencies
         /// <param name="diagram"></param>
         /// <param name="problemSpace"></param>
         /// <returns></returns>
-        public Unit CreateDiagramElements(DiagramRepository diagramRepo, EA.Diagram diagram)
+        public Unit CreateDiagramElements(ModelEntity.Diagram diagram)
         {
             var siblings = new Dictionary<ElementInstantiation, int>();
 
@@ -127,26 +127,26 @@ namespace AdAddIn.PopulateDependencies
 
                 to.Instance.Do(toInstance =>
                 {
-                    if (!diagramRepo.FindDiagramObject(diagram, toInstance.EaObject).IsDefined)
+                    if (!diagram.GetObject(toInstance).IsDefined)
                     {
                         from.Instance.Do(fromInstance =>
                         {
-                            var parentObject = diagramRepo.FindDiagramObject(diagram, fromInstance.EaObject).Value;
+                            var parentObject = diagram.GetObject(fromInstance).Value;
 
                             var verticalOffset = leftHandSiblings * 110 - 40;
                             var horizontalOffset = -200 - leftHandSiblings * 20;
 
-                            diagramRepo.AddToDiagram(diagram, toInstance.EaObject,
-                                left: parentObject.left + verticalOffset, right: parentObject.right + verticalOffset,
-                                top: parentObject.top + horizontalOffset, bottom: parentObject.bottom + horizontalOffset);
+                            diagram.AddObject(toInstance,
+                                left: parentObject.EaObject.left + verticalOffset, right: parentObject.EaObject.right + verticalOffset,
+                                top: parentObject.EaObject.top + horizontalOffset, bottom: parentObject.EaObject.bottom + horizontalOffset);
 
                             siblings[from] = leftHandSiblings + 1;
                         });
                     }
                 });
             });
-            diagramRepo.ReloadDiagram(diagram);
-            diagramRepo.SaveDiagram(diagram);
+            Repo.Reload(diagram);
+            Repo.Save(diagram);
 
             return Unit.Instance;
         }

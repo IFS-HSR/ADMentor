@@ -12,6 +12,7 @@ namespace EAAddInFramework.DataAccess
         ModelEntity.Element Wrap(EA.Element e);
         ModelEntity.Connector Wrap(EA.Connector c);
         ModelEntity.Diagram Wrap(EA.Diagram d);
+        DiagramObject Wrap(EA.DiagramObject obj);
     }
 
     public class EntityWrapper : IEntityWrapper{
@@ -33,6 +34,11 @@ namespace EAAddInFramework.DataAccess
         public virtual ModelEntity.Diagram Wrap(EA.Diagram d)
         {
             return new ModelEntity.Diagram(d, this);
+        }
+
+        public virtual DiagramObject Wrap(EA.DiagramObject obj)
+        {
+            return new DiagramObject(obj);
         }
     }
 }
