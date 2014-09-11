@@ -13,6 +13,11 @@ namespace EAAddInFramework
             return Int32.Parse(info.Get("ElementId").Value.ToString());
         }
 
+        public static int ExtractConnectorId(this EA.EventProperties info)
+        {
+            return Int32.Parse(info.Get("ConnectorId").Value.ToString());
+        }
+
         public static string ExtractType(this EA.EventProperties info)
         {
             return info.Get("Type").Value.ToString();

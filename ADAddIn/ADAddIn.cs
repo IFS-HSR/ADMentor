@@ -34,7 +34,7 @@ namespace AdAddIn
             return Options.Some(technology);
         }
 
-        public override void bootstrap(IReadableAtom<EA.Repository> eaRepository)
+        public override Option<IEntityWrapper> Bootstrap(IReadableAtom<EA.Repository> eaRepository)
         {
             var entityWrapper = new AdEntityWrapper();
             var entityRepository = new AdRepository(eaRepository, entityWrapper);
@@ -56,6 +56,8 @@ namespace AdAddIn
             OnElementCreated.Add(populateDependenciesCommand.AsElementCreatedHandler());
 
             OnElementModified.Add(updateStatesCommand.AsElementModifiedHandler());
+
+            return Options.Some(entityWrapper);
         }
     }
 }

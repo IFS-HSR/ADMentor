@@ -1,4 +1,5 @@
-﻿using EAAddInFramework.MDGBuilder;
+﻿using EAAddInFramework.DataAccess;
+using EAAddInFramework.MDGBuilder;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace EAAddInFramework
 
         private readonly Atom<Option<MDGTechnology>> technology = new LoggedAtom<Option<MDGTechnology>>("ea.addIn.technology", Options.None<MDGTechnology>());
 
+        private readonly Atom<IEntityWrapper> entityWrapper = new LoggedAtom<IEntityWrapper>("ea.addIn.entityWrapper", new EntityWrapper());
+
         public EAAddIn()
         {
             logger.Info("Init add-in {0}", AddInName);
@@ -27,7 +30,7 @@ namespace EAAddInFramework
 
         public abstract String AddInName { get; }
 
-        public abstract void bootstrap(IReadableAtom<EA.Repository> repository);
+        public abstract Option<IEntityWrapper> Bootstrap(IReadableAtom<EA.Repository> repository);
 
         public virtual Option<MDGTechnology> BootstrapTechnology()
         {
@@ -74,7 +77,10 @@ namespace EAAddInFramework
             RepositoryChanged(repository);
 
             logger.Info("Start add-in {0}", AddInName);
-            bootstrap(eaRepository);
+            Bootstrap(eaRepository).Do(wrapper =>
+            {
+                entityWrapper.Exchange(wrapper, GetType());
+            });
 
             return "";
         }
@@ -166,6 +172,11 @@ namespace EAAddInFramework
                 Unit.Instance,
                 (acc, _) => acc);
 
+        public readonly EventManager<ModelEntity, bool> OnDeleteEntity =
+            new EventManager<ModelEntity, bool>(
+                true,
+                (acc, v) => acc && v);
+
         /// <summary>
         /// EA_OnPostNewElement notifies Add-Ins that a new element has been created on a diagram. It enables Add-Ins to
         /// modify the element upon creation.
@@ -185,6 +196,18 @@ namespace EAAddInFramework
             var entityModified = OnElementCreated.Handle(() => eaRepository.Val.GetElementByID(elementId));
 
             return entityModified.AsBool;
+        }
+
+        public bool EA_OnPreDeleteConnector(EA.Repository repository, EA.EventProperties info)
+        {
+            RepositoryChanged(repository);
+
+            var connectorId = info.ExtractConnectorId();
+            logger.Debug("Attempt to delete connector with id {0}", connectorId);
+
+            var deleteConnector = OnDeleteEntity.Handle(entityWrapper.Val.Wrap(eaRepository.Val.GetConnectorByID(connectorId)));
+
+            return deleteConnector;
         }
 
         public void EA_OnNotifyContextItemModified(EA.Repository repository, string guid, EA.ObjectType ot)
