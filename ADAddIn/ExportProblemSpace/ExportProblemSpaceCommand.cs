@@ -158,12 +158,12 @@ namespace AdAddIn.ExportProblemSpace
             return true;
         }
 
-        public ICommand<Option<ContextItem>, object> AsMenuCommand()
+        public ICommand<Option<ModelEntity>, object> AsMenuCommand()
         {
-            return this.Adapt((Option<ContextItem> contextItem) =>
+            return this.Adapt((Option<ModelEntity> contextItem) =>
             {
                 return from ci in contextItem
-                       from package in Repo.GetPackage(ci.Guid)
+                       from package in ci.Match<ModelEntity.Package>()
                        select package;
             });
         }

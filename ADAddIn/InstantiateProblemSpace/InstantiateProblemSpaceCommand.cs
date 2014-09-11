@@ -60,13 +60,13 @@ namespace AdAddIn.InstantiateProblemSpace
             return p.GetParent(Repo.GetPackage).IsDefined;
         }
 
-        public ICommand<Option<ContextItem>, object> AsMenuCommand()
+        public ICommand<Option<ModelEntity>, object> AsMenuCommand()
         {
             return this.Adapt(
-                (Option<ContextItem> contextItem) =>
+                (Option<ModelEntity> contextItem) =>
                 {
                     return from ci in contextItem
-                           from p in Repo.GetPackage(ci.Guid)
+                           from p in ci.Match<ModelEntity.Package>()
                            select p;
                 });
         }

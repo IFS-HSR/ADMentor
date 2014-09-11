@@ -14,7 +14,8 @@ namespace EAAddInFramework
 
         private readonly Atom<EA.Repository> eaRepository = new LoggedAtom<EA.Repository>("ea.repository", null);
 
-        private readonly Atom<Option<ContextItem>> contextItem = new LoggedAtom<Option<ContextItem>>("ea.contextItem", Options.None<ContextItem>());
+        private readonly Atom<Lazy<Option<ModelEntity>>> contextItem =
+            new LoggedAtom<Lazy<Option<ModelEntity>>>("ea.contextItem", new Lazy<Option<ModelEntity>>(() => Options.None<ModelEntity>()));
 
         private readonly MenuHandler menuHandler;
 
@@ -52,21 +53,39 @@ namespace EAAddInFramework
 
         private void ContextItemChanged(EA.ObjectType type, string guid)
         {
-            if (type == EA.ObjectType.otRepository)
-            {
-                contextItem.Exchange(Options.None<ContextItem>(), GetType());
+            switch(type){
+                case EA.ObjectType.otElement:
+                    SetContextItem(() => Options.Some(eaRepository.Val.GetElementByGuid(guid)));
+                    break;
+                case EA.ObjectType.otConnector:
+                    SetContextItem(() => Options.Some(eaRepository.Val.GetConnectorByGuid(guid)));
+                    break;
+                case EA.ObjectType.otDiagram:
+                    SetContextItem(() => Options.Some(eaRepository.Val.GetDiagramByGuid(guid)));
+                    break;
+                case EA.ObjectType.otPackage:
+                    SetContextItem(() => Options.Some(eaRepository.Val.GetPackageByGuid(guid)));
+                    break;
+                default:
+                    SetContextItem(() => Options.None<object>());
+                    break;
             }
-            else
-            {
-                contextItem.Exchange(new ContextItem(type, guid).AsOption(), GetType());
-            }
+        }
+
+        private void SetContextItem(Func<Option<dynamic>> getEaObject)
+        {
+            contextItem.Exchange(
+                new Lazy<Option<ModelEntity>>(
+                    () => getEaObject().Select(eaObject => entityWrapper.Val.Wrap(eaObject) as ModelEntity),
+                    System.Threading.LazyThreadSafetyMode.None),
+                GetType());
         }
 
         private void MenuLocationChanged(string menuLocation)
         {
             if (menuLocation == "MainMenu")
             {
-                contextItem.Exchange(Options.None<ContextItem>(), GetType());
+                SetContextItem(() => Options.None<object>());
             }
         }
         #endregion

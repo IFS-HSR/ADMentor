@@ -18,7 +18,7 @@ namespace EAAddInFramework.DataAccess
             Wrapper = wrapper;
         }
 
-        public IEntityWrapper Wrapper { get; private set; }
+        protected IEntityWrapper Wrapper { get; private set; }
 
         public Option<ModelEntity.Element> GetElement(int id)
         {

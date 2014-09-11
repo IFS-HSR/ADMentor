@@ -29,15 +29,15 @@ namespace AdAddIn.PopulateDependencies
             Selector = selector;
         }
 
-        public EntityModified Execute(SolutionEntity element)
+        public EntityModified Execute(SolutionEntity solutionEntity)
         {
             var modified =
-                from currentDiagram in GetCurrentDiagramContaining(element)
-                from solution in SolutionInstantiationGraph.Create(Repo, element)
+                from currentDiagram in GetCurrentDiagramContaining(solutionEntity)
+                from solution in SolutionInstantiationGraph.Create(Repo, solutionEntity)
                 let solutionTree = solution.Graph.ToTree(DirectedLabeledGraph.TraverseEdgeOnlyOnce<ModelEntity.Connector>())
                 from markedSolutionTree in Selector.GetSelectedDependencies(solutionTree)
                 let markedSolution = solution.WithSelection(markedSolutionTree.NodeLabels)
-                let targetPackage = Repo.FindPackageContaining(element)
+                let targetPackage = Repo.FindPackageContaining(solutionEntity)
                 let instantiatedSolution = markedSolution.InstantiateSelectedItems(targetPackage)
                 let _1 = instantiatedSolution.InstantiateMissingSolutionConnectors()
                 let _2 = instantiatedSolution.CreateDiagramElements(DiagramRepo, currentDiagram)
@@ -58,13 +58,12 @@ namespace AdAddIn.PopulateDependencies
                    select diagram;
         }
 
-        public ICommand<Option<ContextItem>, object> AsMenuCommand()
+        public ICommand<Option<ModelEntity>, object> AsMenuCommand()
         {
             return this.Adapt(
-                (Option<ContextItem> contextItem) =>
+                (Option<ModelEntity> contextItem) =>
                     from ci in contextItem
-                    from e in Repo.GetElement(ci.Guid)
-                    from solutionEntity in e.Match<SolutionEntity>()
+                    from solutionEntity in ci.Match<SolutionEntity>()
                     select solutionEntity);
         }
 
@@ -72,11 +71,9 @@ namespace AdAddIn.PopulateDependencies
         {
             return this.Adapt(
                 (ModelEntity entity) =>
-                {
-                    return from solutionEntity in entity.Match<SolutionEntity>()
-                           where solutionEntity.EaObject.IsNew()
-                           select solutionEntity;
-                });
+                    from solutionEntity in entity.Match<SolutionEntity>()
+                    where solutionEntity.EaObject.IsNew()
+                    select solutionEntity);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AdAddIn.ADTechnology;
 using AdAddIn.DataAccess;
 using EAAddInFramework;
+using EAAddInFramework.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace AdAddIn.Navigation
     /// This command is only executable if an element is selected and the element is an
     /// invocation/instance of another element.
     /// </summary>
-    public class GoToClassifierCommand : ICommand<Option<ContextItem>, Unit>
+    public class GoToClassifierCommand : ICommand<Option<ModelEntity>, Unit>
     {
         private readonly IReadableAtom<EA.Repository> EARepo;
 
@@ -24,7 +25,7 @@ namespace AdAddIn.Navigation
             EARepo = eaRepo;
         }
 
-        public Unit Execute(Option<ContextItem> contextItem)
+        public Unit Execute(Option<ModelEntity> contextItem)
         {
             GetClassifier(contextItem).Do(c =>
             {
@@ -34,17 +35,16 @@ namespace AdAddIn.Navigation
             return Unit.Instance;
         }
 
-        public bool CanExecute(Option<ContextItem> contextItem)
+        public bool CanExecute(Option<ModelEntity> contextItem)
         {
             return GetClassifier(contextItem).IsDefined;
         }
 
-        private Option<EA.Element> GetClassifier(Option<ContextItem> contextItem)
+        private Option<EA.Element> GetClassifier(Option<ModelEntity> contextItem)
         {
             return from ci in contextItem
-                   where ci.Type == EA.ObjectType.otElement
-                   from element in EARepo.Val.GetElementByGuid(ci.Guid).AsOption()
-                   from classifier in EARepo.Val.GetElementByID(element.ClassifierID).AsOption()
+                   from element in ci.Match<ModelEntity.Element>()
+                   from classifier in Options.Try(() => EARepo.Val.GetElementByID(element.EaObject.ClassifierID))
                    select classifier;
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EAAddInFramework.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,11 +14,11 @@ namespace EAAddInFramework
 
         IList<IMenuItem> Children { get; }
 
-        bool IsVisible(Option<ContextItem> contextItem);
+        bool IsVisible(Option<ModelEntity> contextItem);
 
-        bool IsEnabled(Option<ContextItem> contextItem);
+        bool IsEnabled(Option<ModelEntity> contextItem);
 
-        void OnClick(Option<ContextItem> contextItem);
+        void OnClick(Option<ModelEntity> contextItem);
     }
 
     public class Menu : IMenuItem
@@ -32,22 +33,22 @@ namespace EAAddInFramework
 
         public IList<IMenuItem> Children { get; private set; }
 
-        public virtual bool IsVisible(Option<ContextItem> contextItem)
+        public virtual bool IsVisible(Option<ModelEntity> contextItem)
         {
             return Children.Any(child => child.IsVisible(contextItem));
         }
 
-        public virtual bool IsEnabled(Option<ContextItem> contextItem)
+        public virtual bool IsEnabled(Option<ModelEntity> contextItem)
         {
             return Children.Any(child => child.IsEnabled(contextItem));
         }
 
-        public void OnClick(Option<ContextItem> contextItem) { }
+        public void OnClick(Option<ModelEntity> contextItem) { }
     }
 
     public class MenuItem : IMenuItem
     {
-        public MenuItem(String name, ICommand<Option<ContextItem>, Object> cmd)
+        public MenuItem(String name, ICommand<Option<ModelEntity>, Object> cmd)
         {
             Name = name;
             Command = cmd;
@@ -55,24 +56,24 @@ namespace EAAddInFramework
 
         public string Name { get; private set; }
 
-        public ICommand<Option<ContextItem>, Object> Command { get; private set; }
+        public ICommand<Option<ModelEntity>, Object> Command { get; private set; }
 
         public IList<IMenuItem> Children
         {
             get { return new List<IMenuItem>() { }; }
         }
 
-        public virtual bool IsVisible(Option<ContextItem> contextItem)
+        public virtual bool IsVisible(Option<ModelEntity> contextItem)
         {
             return true;
         }
 
-        public virtual bool IsEnabled(Option<ContextItem> contextItem)
+        public virtual bool IsEnabled(Option<ModelEntity> contextItem)
         {
             return Command.CanExecute(contextItem);
         }
 
-        public void OnClick(Option<ContextItem> contextItem)
+        public void OnClick(Option<ModelEntity> contextItem)
         {
             Command.Execute(contextItem);
         }
@@ -80,11 +81,11 @@ namespace EAAddInFramework
 
     class MenuHandler
     {
-        private readonly IReadableAtom<Option<ContextItem>> contextItem;
+        private readonly IReadableAtom<Lazy<Option<ModelEntity>>> ContextItem;
 
-        public MenuHandler(IReadableAtom<Option<ContextItem>> contextItem)
+        public MenuHandler(IReadableAtom<Lazy<Option<ModelEntity>>> contextItem)
         {
-            this.contextItem = contextItem;
+            ContextItem = contextItem;
         }
 
         private Menu root = new Menu("");
@@ -98,7 +99,7 @@ namespace EAAddInFramework
         public String[] GetMenuItems(String parentMenu)
         {
             var itemNames = (from item in GetChildren(parentMenu, root)
-                             where item.IsVisible(contextItem.Val)
+                             where item.IsVisible(ContextItem.Val.Value)
                              select GetEAMenuName(item)).ToArray();
 
             if (itemNames.Count() == 0)
@@ -114,14 +115,14 @@ namespace EAAddInFramework
         public void HandleClick(String parentName, String itemName)
         {
             GetItem(parentName, itemName, root)
-                .Do(item => item.OnClick(contextItem.Val));
+                .Do(item => item.OnClick(ContextItem.Val.Value));
         }
 
         public bool IsItemEnabled(String parentName, String itemName)
         {
             return GetItem(parentName, itemName, root)
                 .Match(
-                    item => item.IsEnabled(contextItem.Val),
+                    item => item.IsEnabled(ContextItem.Val.Value),
                     () => true
                 );
         }
