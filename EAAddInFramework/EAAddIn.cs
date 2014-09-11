@@ -162,20 +162,25 @@ namespace EAAddInFramework
             return true;
         }
 
-        public readonly EventManager<EA.Element, EntityModified> OnElementCreated =
-            new EventManager<EA.Element, EntityModified>(
+        public readonly EventManager<ModelEntity, EntityModified> OnEntityCreated =
+            new EventManager<ModelEntity, EntityModified>(
                 EntityModified.NotModified,
                 (acc, v) => acc == EntityModified.Modified ? acc : v);
 
-        public readonly EventManager<EA.Element, object> OnElementModified =
-            new EventManager<EA.Element, object>(
+        public readonly EventManager<ModelEntity, object> OnEntityModified =
+            new EventManager<ModelEntity, object>(
                 Unit.Instance,
                 (acc, _) => acc);
 
-        public readonly EventManager<ModelEntity, bool> OnDeleteEntity =
-            new EventManager<ModelEntity, bool>(
-                true,
-                (acc, v) => acc && v);
+        public readonly EventManager<ModelEntity, DeleteEntity> OnDeleteEntity =
+            new EventManager<ModelEntity, DeleteEntity>(
+                DeleteEntity.Delete,
+                (acc, v) => acc == DeleteEntity.PreventDelete ? acc : v);
+
+        private R Handle<R>(EventManager<ModelEntity, R> em, Func<dynamic> getEaObject)
+        {
+            return em.Handle(() => entityWrapper.Val.Wrap(getEaObject()));
+        }
 
         /// <summary>
         /// EA_OnPostNewElement notifies Add-Ins that a new element has been created on a diagram. It enables Add-Ins to
@@ -193,7 +198,7 @@ namespace EAAddInFramework
             var elementId = info.ExtractElementId();
             logger.Debug("Element with id {0} created", elementId);
 
-            var entityModified = OnElementCreated.Handle(() => eaRepository.Val.GetElementByID(elementId));
+            var entityModified = Handle(OnEntityCreated, () => eaRepository.Val.GetElementByID(elementId));
 
             return entityModified.AsBool;
         }
@@ -205,20 +210,20 @@ namespace EAAddInFramework
             var connectorId = info.ExtractConnectorId();
             logger.Debug("Attempt to delete connector with id {0}", connectorId);
 
-            var deleteConnector = OnDeleteEntity.Handle(() => entityWrapper.Val.Wrap(eaRepository.Val.GetConnectorByID(connectorId)));
+            var deleteConnector = Handle(OnDeleteEntity, () => eaRepository.Val.GetConnectorByID(connectorId));
 
-            return deleteConnector;
+            return deleteConnector.AsBool;
         }
 
         public void EA_OnNotifyContextItemModified(EA.Repository repository, string guid, EA.ObjectType ot)
         {
             RepositoryChanged(repository);
 
-            logger.Debug("Element {0} of type {1} modified", guid, ot);
+            logger.Debug("Context item {0} of type {1} modified", guid, ot);
 
             if (ot == EA.ObjectType.otElement)
             {
-                OnElementModified.Handle(() => eaRepository.Val.GetElementByGuid(guid));
+                Handle(OnEntityModified, () => eaRepository.Val.GetElementByGuid(guid));
             }
         }
 
@@ -260,6 +265,16 @@ namespace EAAddInFramework
         public static readonly EntityModified NotModified = new EntityModified(false);
 
         private EntityModified(bool val) { AsBool = val; }
+
+        public bool AsBool { get; private set; }
+    }
+
+    public class DeleteEntity
+    {
+        public static readonly DeleteEntity Delete = new DeleteEntity(true);
+        public static readonly DeleteEntity PreventDelete = new DeleteEntity(false);
+
+        private DeleteEntity(bool val) { AsBool = val; }
 
         public bool AsBool { get; private set; }
     }

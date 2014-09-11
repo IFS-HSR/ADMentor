@@ -68,19 +68,14 @@ namespace AdAddIn.PopulateDependencies
                     select solutionEntity);
         }
 
-        public ICommand<EA.Element, EntityModified> AsElementCreatedHandler()
+        public ICommand<ModelEntity, EntityModified> AsEntityCreatedHandler()
         {
             return this.Adapt(
-                (EA.Element element) =>
+                (ModelEntity entity) =>
                 {
-                    if (element.IsNew())
-                    {
-                        return Repo.Wrapper.Wrap(element).Match<SolutionEntity>();
-                    }
-                    else
-                    {
-                        return Options.None<SolutionEntity>();
-                    }
+                    return from solutionEntity in entity.Match<SolutionEntity>()
+                           where solutionEntity.EaObject.IsNew()
+                           select solutionEntity;
                 });
         }
     }

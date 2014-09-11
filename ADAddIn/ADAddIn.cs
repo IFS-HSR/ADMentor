@@ -52,10 +52,10 @@ namespace AdAddIn
                 new MenuItem("Tailor Problem Space", new ExportProblemSpaceCommand(entityRepository, new TailorPackageExportForm()).AsMenuCommand()),
                 new MenuItem("Create Solution from Problem Space", instantiateProblemSpace.AsMenuCommand())));
 
-            OnElementCreated.Add(updateMetadataCommand.AsElementCreatedHandler());
-            OnElementCreated.Add(populateDependenciesCommand.AsElementCreatedHandler());
+            OnEntityCreated.Add(updateMetadataCommand.AsEntityCreatedHandler());
+            OnEntityCreated.Add(populateDependenciesCommand.AsEntityCreatedHandler());
 
-            OnElementModified.Add(updateStatesCommand.AsElementModifiedHandler());
+            OnEntityModified.Add(updateStatesCommand.AsEntityModifiedHandler());
 
             return Options.Some(entityWrapper);
         }

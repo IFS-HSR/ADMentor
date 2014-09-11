@@ -41,11 +41,11 @@ namespace AdAddIn.CopyMetadata
             return true;
         }
 
-        public ICommand<EA.Element, object> AsElementModifiedHandler()
+        public ICommand<ModelEntity, object> AsEntityModifiedHandler()
         {
-            return this.Adapt((EA.Element element) =>
+            return this.Adapt((ModelEntity entity) =>
             {
-                return Repo.Wrapper.Wrap(element).Match<OptionOccurrence>();
+                return entity.Match<OptionOccurrence>();
             });
         }
     }
