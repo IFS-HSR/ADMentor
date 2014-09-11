@@ -40,7 +40,9 @@ namespace AdAddIn
             var entityRepository = new AdRepository(eaRepository, entityWrapper);
 
             var updateMetadataCommand = new UpdateMetadataOfNewElementsCommand(entityRepository);
-            var updateStatesCommand = new UpdateProblemOccurrenceStateCommand(entityRepository);
+            var updateStateOnAlternativesChanged = new UpdateProblemOccurrenceStateOnAlternativesChanged(entityRepository);
+            var updateStateOnAlternativesAdded = new UpdateProblemOccurrenceStateOnAlternativesAdded(entityRepository);
+            var updateStateOnRemoveAlternative = new UpdateProblemOccurrenceStateOnRemoveAlternative(entityRepository);
             var populateDependenciesCommand = new PopulateDependenciesCommand(
                 entityRepository, new DependencySelectorForm(entityRepository));
             var instantiateProblemSpace = new InstantiateProblemSpaceCommand(entityRepository, new InstantiateSolutionForm());
@@ -53,8 +55,11 @@ namespace AdAddIn
 
             OnEntityCreated.Add(updateMetadataCommand.AsEntityCreatedHandler());
             OnEntityCreated.Add(populateDependenciesCommand.AsEntityCreatedHandler());
+            OnEntityCreated.Add(updateStateOnAlternativesAdded.AsOnEntityCreatedHandler());
 
-            OnEntityModified.Add(updateStatesCommand.AsEntityModifiedHandler());
+            OnEntityModified.Add(updateStateOnAlternativesChanged.AsEntityModifiedHandler());
+
+            OnDeleteEntity.Add(updateStateOnRemoveAlternative.AsOnDeleteEntityHandler());
 
             return Options.Some(entityWrapper);
         }

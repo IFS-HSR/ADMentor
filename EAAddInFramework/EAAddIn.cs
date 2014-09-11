@@ -171,15 +171,6 @@ namespace EAAddInFramework
         #endregion
 
         #region element actions
-        public bool EA_OnPreNewElement(EA.Repository repository, EA.EventProperties info)
-        {
-            RepositoryChanged(repository);
-
-            logger.Debug("Create element with type = {0}, stereotype = {1}, parentId = {2}, diagramId = {3}",
-                info.ExtractType(), info.ExtractStereotype(), info.ExtractParentId(), info.ExtractDiagramId());
-
-            return true;
-        }
 
         public readonly EventManager<ModelEntity, EntityModified> OnEntityCreated =
             new EventManager<ModelEntity, EntityModified>(
@@ -201,6 +192,16 @@ namespace EAAddInFramework
             return em.Handle(() => entityWrapper.Val.Wrap(getEaObject()));
         }
 
+        public bool EA_OnPreNewElement(EA.Repository repository, EA.EventProperties info)
+        {
+            RepositoryChanged(repository);
+
+            logger.Debug("Create element with type = {0}, stereotype = {1}, parentId = {2}, diagramId = {3}",
+                info.ExtractType(), info.ExtractStereotype(), info.ExtractParentId(), info.ExtractDiagramId());
+
+            return true;
+        }
+
         /// <summary>
         /// EA_OnPostNewElement notifies Add-Ins that a new element has been created on a diagram. It enables Add-Ins to
         /// modify the element upon creation.
@@ -218,6 +219,30 @@ namespace EAAddInFramework
             logger.Debug("Element with id {0} created", elementId);
 
             var entityModified = Handle(OnEntityCreated, () => eaRepository.Val.GetElementByID(elementId));
+
+            return entityModified.AsBool;
+        }
+
+        public bool EA_OnPreDeleteElement(EA.Repository repository, EA.EventProperties info)
+        {
+            RepositoryChanged(repository);
+
+            var elementId = info.ExtractElementId();
+            logger.Debug("Attempt to delete element with id {0}", elementId);
+
+            var deleteElement = Handle(OnDeleteEntity, () => eaRepository.Val.GetElementByID(elementId));
+
+            return deleteElement.AsBool;
+        }
+
+        public bool EA_OnPostNewConnector(EA.Repository repository, EA.EventProperties info)
+        {
+            RepositoryChanged(repository);
+
+            var connectorId = info.ExtractConnectorId();
+            logger.Debug("Element with id {0} created", connectorId);
+
+            var entityModified = Handle(OnEntityCreated, () => eaRepository.Val.GetConnectorByID(connectorId));
 
             return entityModified.AsBool;
         }

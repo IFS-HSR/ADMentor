@@ -67,11 +67,13 @@
     <Compile Include="ADTechnology\StakeholderRoles.cs" />
     <Compile Include="ADTechnology\Technology.cs" />
     <Compile Include="ADTechnology\Toolboxes.cs" />
+    <Compile Include="CopyMetadata\UpdateOptionOccurrenceStateOnAlternativesAdded.cs" />
+    <Compile Include="CopyMetadata\UpdateProblemOccurrenceStateOnRemoveAlternative.cs" />
     <Compile Include="DataAccess\AdEntity.cs" />
     <Compile Include="DataAccess\AdEntityWrapper.cs" />
     <Compile Include="DataAccess\AdRepository.cs" />
     <Compile Include="CopyMetadata\UpdateMetadataOfNewElementsCommand.cs" />
-    <Compile Include="CopyMetadata\UpdateProblemOccurrenceStateCommand.cs" />
+    <Compile Include="CopyMetadata\UpdateProblemOccurrenceStateOnAlternativesChanged.cs" />
     <Compile Include="DataAccess\ElementInstantiation.cs" />
     <Compile Include="DataAccess\ProblemSpaceEntities.cs" />
     <Compile Include="DataAccess\SolutionEntities.cs" />

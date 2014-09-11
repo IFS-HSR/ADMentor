@@ -12,11 +12,11 @@ using Utils;
 
 namespace AdAddIn.CopyMetadata
 {
-    public class UpdateProblemOccurrenceStateCommand : ICommand<OptionOccurrence, Unit>
+    public class UpdateProblemOccurrenceStateOnAlternativesChanged : ICommand<OptionOccurrence, Unit>
     {
         private readonly ModelEntityRepository Repo;
 
-        public UpdateProblemOccurrenceStateCommand(ModelEntityRepository repo)
+        public UpdateProblemOccurrenceStateOnAlternativesChanged(ModelEntityRepository repo)
         {
             Repo = repo;
         }
