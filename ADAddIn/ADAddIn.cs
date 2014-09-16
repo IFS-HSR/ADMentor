@@ -46,11 +46,12 @@ namespace AdAddIn
             var populateDependenciesCommand = new PopulateDependenciesCommand(
                 entityRepository, new DependencySelectorForm(entityRepository));
             var instantiateProblemSpace = new InstantiateProblemSpaceCommand(entityRepository, new InstantiateSolutionForm());
+            var exportProblemSpace = new ExportProblemSpaceCommand(entityRepository, new TailorPackageExportForm(), new XmlExporter.Factory(eaRepository));
 
             Register(new Menu(technology.Name,
                 new MenuItem("Locate Option/Problem", new GoToClassifierCommand(eaRepository)),
                 new MenuItem("Establish Dependencies from Problem Space", populateDependenciesCommand.AsMenuCommand()),
-                new MenuItem("Tailor Problem Space", new ExportProblemSpaceCommand(entityRepository, new TailorPackageExportForm()).AsMenuCommand()),
+                new MenuItem("Tailor Problem Space", exportProblemSpace.AsMenuCommand()),
                 new MenuItem("Create Solution from Problem Space", instantiateProblemSpace.AsMenuCommand())));
 
             OnEntityCreated.Add(updateMetadataCommand.AsEntityCreatedHandler());

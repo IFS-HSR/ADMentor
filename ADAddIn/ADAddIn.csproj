@@ -78,12 +78,14 @@
     <Compile Include="DataAccess\ProblemSpaceEntities.cs" />
     <Compile Include="DataAccess\SolutionEntities.cs" />
     <Compile Include="ExportProblemSpace\ExportProblemSpaceCommand.cs" />
+    <Compile Include="ExportProblemSpace\RepositorySelector.cs" />
     <Compile Include="ExportProblemSpace\TailorPackageExportForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ExportProblemSpace\TailorPackageExportForm.Designer.cs">
       <DependentUpon>TailorPackageExportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExportProblemSpace\XmlExporter.cs" />
     <Compile Include="InstantiateProblemSpace\InstantiateProblemSpaceCommand.cs" />
     <Compile Include="InstantiateProblemSpace\ProblemSpaceTree.cs" />
     <Compile Include="InstantiateProblemSpace\InstantiateSolutionForm.cs">

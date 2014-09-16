@@ -15,13 +15,15 @@ namespace AdAddIn.ExportProblemSpace
 {
     public class ExportProblemSpaceCommand : ICommand<ModelEntity.Package, Unit>
     {
-        private readonly TailorPackageExportForm Form;
+        private readonly TailorPackageExportForm FilterForm;
         private readonly ModelEntityRepository Repo;
+        private readonly XmlExporter.Factory ExporterFactory;
 
-        public ExportProblemSpaceCommand(ModelEntityRepository repo, TailorPackageExportForm form)
+        public ExportProblemSpaceCommand(ModelEntityRepository repo, TailorPackageExportForm form, XmlExporter.Factory exporterFactory)
         {
             Repo = repo;
-            Form = form;
+            FilterForm = form;
+            ExporterFactory = exporterFactory;
         }
 
         public Unit Execute(ModelEntity.Package package)
@@ -58,12 +60,17 @@ namespace AdAddIn.ExportProblemSpace
 
             var hierarchy = CreatePackageHierarchy(package);
 
-            Form.SelectFilter(filters, filter =>
+            FilterForm.SelectFilter(filters, filter =>
             {
                 return ApplyFilter(hierarchy, filter);
             }).Do(selectedFilter =>
             {
-                throw new NotImplementedException();
+                var selectedGuids = ApplyFilter(hierarchy, selectedFilter).NodeLabels.Select(e=>e.Guid).ToImmutableHashSet();
+
+                ExporterFactory.WithXmlExporter(package, exporter => {
+                    exporter.RemoveEntities(guid => !selectedGuids.Contains(guid) && !Repo.GetConnector(guid).IsDefined);
+                    exporter.WriteTo(@"c:\out.xml");
+                });
             });
 
             return Unit.Instance;

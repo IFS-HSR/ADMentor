@@ -72,6 +72,18 @@ namespace EAAddInFramework.DataAccess
                    });
         }
 
+        public Option<ModelEntity.Connector> GetConnector(string guid)
+        {
+            return from c in Options.Try(() => Repo.Val.GetConnectorByGuid(guid))
+                   select Wrapper.Wrap(c);
+        }
+
+        public Option<ModelEntity.Connector> GetConnector(int id)
+        {
+            return from c in Options.Try(() => Repo.Val.GetConnectorByID(id))
+                   select Wrapper.Wrap(c);
+        }
+
         public virtual ModelEntity.Connector Connect(ModelEntity.Element source, ModelEntity.Element target, ConnectorStereotype stereotype)
         {
             var c = source.EaObject.Connectors.AddNew("", stereotype.Type.Name) as EA.Connector;
