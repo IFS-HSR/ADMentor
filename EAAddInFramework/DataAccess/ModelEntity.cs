@@ -16,7 +16,7 @@ namespace EAAddInFramework.DataAccess
     /// Instances of ModelEntity are adapters for Elements, Connectors, Packages and Diagrams with a common interface for
     /// accessing data.
     /// </summary>
-    public abstract class ModelEntity
+    public abstract class ModelEntity : IEquatable<ModelEntity>
     {
         private ModelEntity(IEntityWrapper wrapper)
         {
@@ -65,8 +65,13 @@ namespace EAAddInFramework.DataAccess
         public override bool Equals(object obj)
         {
             return (from otherEntity in obj.Match<ModelEntity>()
-                    select Guid.Equals(otherEntity.Guid))
+                    select Equals(otherEntity))
                     .GetOrElse(false);
+        }
+
+        public bool Equals(ModelEntity other)
+        {
+            return Guid.Equals(other.Guid);
         }
 
         public override int GetHashCode()

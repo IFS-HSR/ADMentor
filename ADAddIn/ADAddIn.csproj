@@ -79,6 +79,7 @@
     <Compile Include="DataAccess\SolutionEntities.cs" />
     <Compile Include="ExportProblemSpace\ExportProblemSpaceCommand.cs" />
     <Compile Include="ExportProblemSpace\RepositorySelector.cs" />
+    <Compile Include="ExportProblemSpace\SelectExportPathDialog.cs" />
     <Compile Include="ExportProblemSpace\TailorPackageExportForm.cs">
       <SubType>Form</SubType>
     </Compile>

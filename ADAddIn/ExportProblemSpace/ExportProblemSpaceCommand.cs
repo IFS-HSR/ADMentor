@@ -65,19 +65,35 @@ namespace AdAddIn.ExportProblemSpace
                 return ApplyFilter(hierarchy, filter);
             }).Do(selectedHierarchy =>
             {
-                var selectedGuids = selectedHierarchy
-                    .NodeLabels
-                    .Select(e => e.Guid)
-                    .ToImmutableHashSet();
-
-                ExporterFactory.WithXmlExporter(package, exporter =>
+                new SelectExportPathDialog().WithSelectedFile(outStream =>
                 {
-                    exporter.RemoveEntities(guid => !selectedGuids.Contains(guid) && !Repo.GetConnector(guid).IsDefined);
-                    exporter.WriteTo(@"c:\out.xml");
+                    var selectedEntities = selectedHierarchy
+                        .NodeLabels
+                        .Run();
+
+                    ExporterFactory.WithXmlExporter(package, exporter =>
+                    {
+                        exporter.RemoveEntities(guid => !selectedEntities.Select(e => e.Guid).Contains(guid)
+                            && !IsExportableConnector(guid, selectedEntities));
+                        exporter.WriteTo(outStream);
+                    });
                 });
             });
 
             return Unit.Instance;
+        }
+
+        private bool IsExportableConnector(String guid, IEnumerable<ModelEntity> selectedEntities)
+        {
+            return Repo.GetConnector(guid).Match(
+                connector =>
+                {
+                    return (from source in connector.Source(Repo.GetElement)
+                            from target in connector.Target(Repo.GetElement)
+                            select selectedEntities.Any(e => source.Equals(e)) && selectedEntities.Any(e => target.Equals(e)))
+                           .GetOrElse(false);
+                },
+                () => false);
         }
 
         private LabeledTree<ModelEntity, Unit> CreatePackageHierarchy(ModelEntity.Package root)

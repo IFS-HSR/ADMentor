@@ -35,9 +35,9 @@ namespace AdAddIn.ExportProblemSpace
              select entity).Remove();
         }
 
-        public void WriteTo(string path)
+        public void WriteTo(Stream outStream)
         {
-            using (var writer = XmlWriter.Create(path))
+            using (var writer = XmlWriter.Create(outStream))
             {
                 Document.WriteTo(writer);
             }
