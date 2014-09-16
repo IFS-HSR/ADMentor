@@ -18,12 +18,15 @@ namespace AdAddIn.ExportProblemSpace
         private readonly TailorPackageExportForm FilterForm;
         private readonly ModelEntityRepository Repo;
         private readonly XmlExporter.Factory ExporterFactory;
+        private readonly SelectExportPathDialog ExportFileDialog;
 
-        public ExportProblemSpaceCommand(ModelEntityRepository repo, TailorPackageExportForm form, XmlExporter.Factory exporterFactory)
+        public ExportProblemSpaceCommand(ModelEntityRepository repo, TailorPackageExportForm form,
+            XmlExporter.Factory exporterFactory, SelectExportPathDialog exportFileDialog)
         {
             Repo = repo;
             FilterForm = form;
             ExporterFactory = exporterFactory;
+            ExportFileDialog = exportFileDialog;
         }
 
         public Unit Execute(ModelEntity.Package package)
@@ -60,25 +63,18 @@ namespace AdAddIn.ExportProblemSpace
 
             var hierarchy = CreatePackageHierarchy(package);
 
-            FilterForm.SelectFilter(filters, filter =>
-            {
-                return ApplyFilter(hierarchy, filter);
-            }).Do(selectedHierarchy =>
-            {
-                new SelectExportPathDialog().WithSelectedFile(outStream =>
+            FilterForm.SelectFilter(filters, filter => ApplyFilter(hierarchy, filter))
+                .Do(selectedHierarchy =>
                 {
-                    var selectedEntities = selectedHierarchy
-                        .NodeLabels
-                        .Run();
-
-                    ExporterFactory.WithXmlExporter(package, exporter =>
+                    ExportFileDialog.WithSelectedFile(outStream =>
                     {
-                        exporter.RemoveEntities(guid => !selectedEntities.Select(e => e.Guid).Contains(guid)
-                            && !IsExportableConnector(guid, selectedEntities));
-                        exporter.WriteTo(outStream);
+                        ExporterFactory.WithXmlExporter(package, exporter =>
+                        {
+                            exporter.Tailor(selectedHierarchy.NodeLabels);
+                            exporter.WriteTo(outStream);
+                        });
                     });
                 });
-            });
 
             return Unit.Instance;
         }
@@ -129,14 +125,10 @@ namespace AdAddIn.ExportProblemSpace
 
             var filters = from value in values
                           orderby value.GetOrElse("")
-                          select Filter.Create<ModelEntity>(
-                            value.GetOrElse("<empty>"),
-                            entity =>
-                            {
-                                return entity.Match<T, bool>(
-                                    e => selectProperty(e).Equals(value.GetOrElse("")),
-                                    () => false);
-                            });
+                          let filter = Filter.Create<T>(
+                                value.GetOrElse("<empty>"),
+                                entity => selectProperty(entity).Equals(value.GetOrElse("")))
+                          select LiftFilter(filter);
 
             return Filter.Or(name, filters);
         }
@@ -168,16 +160,29 @@ namespace AdAddIn.ExportProblemSpace
 
             var filters = from keyword in keywords
                           orderby keyword
-                          select ModelFilter<T>(
+                          let filter = Filter.Create<T>(
                                 keyword == "" ? "<empty>" : keyword,
-                                entity => entity.Keywords.Contains(keyword));
+                                entity => entity.Keywords.Contains(keyword))
+                          select LiftFilter(filter);
 
             return Filter.Or("Keyword", filters);
         }
 
-        private IFilter<ModelEntity> ModelFilter<T>(String name, Func<T, bool> accept) where T : ModelEntity
+        /// <summary>
+        /// Creates a filter over all model entities that accepts when the argument is of type T
+        /// and <c>filter</c> accepts. If the filter argument is a model entity not in T the filter
+        /// rejects.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        private IFilter<ModelEntity> LiftFilter<T>(IFilter<T> filter) where T : ModelEntity
         {
-            return Filter.Create<ModelEntity>(name, me => me.Match<T, bool>(e => accept(e), () => false));
+            Func<ModelEntity, bool> accept =
+                me => me.Match<T>().Match(
+                    e => filter.Accept(e),
+                    () => false);
+            return Filter.Create<ModelEntity>(filter.Name, accept);
         }
 
         public bool CanExecute(ModelEntity.Package _)

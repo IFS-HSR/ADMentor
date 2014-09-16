@@ -21,6 +21,14 @@ namespace EAAddInFramework.DataAccess
 
         protected IEntityWrapper Wrapper { get; private set; }
 
+        public object GetEntity(string guid)
+        {
+            return (GetElement(guid) as Option<ModelEntity>)
+                .OrElse(() => GetConnector(guid))
+                .OrElse(() => GetDiagram(guid))
+                .OrElse(() => GetPackage(guid));
+        }
+
         public Option<ModelEntity.Element> GetElement(int id)
         {
             return from e in Options.Try(() => Repo.Val.GetElementByID(id))
@@ -155,6 +163,18 @@ namespace EAAddInFramework.DataAccess
         public ModelEntity.Package FindPackageContaining(ModelEntity.Element element)
         {
             return GetPackage(element.EaObject.PackageID).Value;
+        }
+
+        public Option<ModelEntity.Diagram> GetDiagram(int id)
+        {
+            return from d in Options.Try(() => Repo.Val.GetDiagramByID(id))
+                   select Wrapper.Wrap(d);
+        }
+
+        public Option<ModelEntity.Diagram> GetDiagram(string guid)
+        {
+            return from d in Options.Try(() => Repo.Val.GetDiagramByGuid(guid) as EA.Diagram)
+                   select Wrapper.Wrap(d);
         }
 
         public Option<ModelEntity.Diagram> GetCurrentDiagram()

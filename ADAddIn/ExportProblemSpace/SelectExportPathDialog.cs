@@ -8,20 +8,18 @@ using System.Windows.Forms;
 
 namespace AdAddIn.ExportProblemSpace
 {
-    class SelectExportPathDialog
+    public class SelectExportPathDialog
     {
-        public SelectExportPathDialog()
+        public void WithSelectedFile(Action<Stream> act)
         {
-        }
-
-        public void WithSelectedFile(Action<Stream> act){
             var dialog = new SaveFileDialog();
 
             dialog.Filter = "XML files (*.xml)|*.xml";
 
             var res = dialog.ShowDialog();
 
-            if(res == DialogResult.OK){
+            if (res == DialogResult.OK)
+            {
                 using (var stream = dialog.OpenFile())
                 {
                     act(stream);

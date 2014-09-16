@@ -146,6 +146,12 @@ namespace EAAddInFramework.DataAccess
             }
         }
 
+        public override string ToString()
+        {
+            var metatype = MetaType == "" ? "" : String.Format("<<{0}>>", MetaType);
+            return String.Format("{0}: {1} {2}", GetType().Name, metatype, Name);
+        }
+
         public class Package : ModelEntity
         {
             public Package(EA.Package eaPackage, IEntityWrapper wrapper)
