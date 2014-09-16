@@ -27,7 +27,7 @@ namespace AdAddIn.ExportProblemSpace
 
         public void RemoveEntities(Func<string, bool> remove)
         {
-            var modelEntities = Document.XPathSelectElements("//UML:Namespace.ownedElement/*[@xmi.id]", NamespaceManager);
+            var modelEntities = Document.XPathSelectElements("//UML:Namespace.ownedElement/*[@xmi.id and @isRoot != \"true\"]", NamespaceManager);
             var diagramEntities = Document.XPathSelectElements("//XMI.content/UML:Diagram", NamespaceManager);
 
             (from entity in modelEntities.Concat(diagramEntities)
