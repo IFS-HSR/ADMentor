@@ -63,11 +63,15 @@ namespace AdAddIn.ExportProblemSpace
             FilterForm.SelectFilter(filters, filter =>
             {
                 return ApplyFilter(hierarchy, filter);
-            }).Do(selectedFilter =>
+            }).Do(selectedHierarchy =>
             {
-                var selectedGuids = ApplyFilter(hierarchy, selectedFilter).NodeLabels.Select(e=>e.Guid).ToImmutableHashSet();
+                var selectedGuids = selectedHierarchy
+                    .NodeLabels
+                    .Select(e => e.Guid)
+                    .ToImmutableHashSet();
 
-                ExporterFactory.WithXmlExporter(package, exporter => {
+                ExporterFactory.WithXmlExporter(package, exporter =>
+                {
                     exporter.RemoveEntities(guid => !selectedGuids.Contains(guid) && !Repo.GetConnector(guid).IsDefined);
                     exporter.WriteTo(@"c:\out.xml");
                 });

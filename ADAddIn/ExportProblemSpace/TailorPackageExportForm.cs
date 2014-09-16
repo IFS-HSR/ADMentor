@@ -14,14 +14,13 @@ namespace AdAddIn.ExportProblemSpace
 {
     public partial class TailorPackageExportForm : Form
     {
-        private Atom<Func<IFilter<ModelEntity>, LabeledTree<ModelEntity, Unit>>> getModelHierarchy;
-        private Atom<CompositeFilter<ModelEntity>> rootFilter;
+        private Atom<Func<IFilter<ModelEntity>, LabeledTree<ModelEntity, Unit>>> GetModelHierarchy = new Atom<Func<IFilter<ModelEntity>, LabeledTree<ModelEntity, Unit>>>(null);
+        private Atom<CompositeFilter<ModelEntity>> OriginalFilter = new Atom<CompositeFilter<ModelEntity>>(null);
+        private Atom<IFilter<ModelEntity>> SelectedFilter = new Atom<IFilter<ModelEntity>>(null);
+        private Atom<LabeledTree<ModelEntity, Unit>> ModelHierarchy = new Atom<LabeledTree<ModelEntity, Unit>>(null);
 
         public TailorPackageExportForm()
         {
-            getModelHierarchy = new Atom<Func<IFilter<ModelEntity>, LabeledTree<ModelEntity, Unit>>>(null);
-            rootFilter = new Atom<CompositeFilter<ModelEntity>>(null);
-
             InitializeComponent();
 
             filterTreeView.CheckBoxes = true;
@@ -30,11 +29,11 @@ namespace AdAddIn.ExportProblemSpace
             hierarchyTreeView.AfterCheck += hierarchyTreeView_AfterCheck;
         }
 
-        public Option<IFilter<ModelEntity>> SelectFilter(CompositeFilter<ModelEntity> filter,
+        public Option<LabeledTree<ModelEntity, Unit>> SelectFilter(CompositeFilter<ModelEntity> filter,
             Func<IFilter<ModelEntity>, LabeledTree<ModelEntity, Unit>> getModelHierarchy)
         {
-            this.getModelHierarchy.Exchange(getModelHierarchy, GetType());
-            rootFilter.Exchange(filter, GetType());
+            GetModelHierarchy.Exchange(getModelHierarchy, GetType());
+            OriginalFilter.Exchange(filter, GetType());
 
             filterTreeView.Nodes.Clear();
             var filterNodes = ToTreeNodes(filter.Filters);
@@ -46,11 +45,11 @@ namespace AdAddIn.ExportProblemSpace
 
             if (result == System.Windows.Forms.DialogResult.OK)
             {
-                return Options.Some(ToFilter(rootFilter.Val, filterTreeView.Nodes.Cast<TreeNode>()));
+                return Options.Some(ModelHierarchy.Val);
             }
             else
             {
-                return Options.None<CompositeFilter<ModelEntity>>();
+                return Options.None<LabeledTree<ModelEntity, Unit>>();
             }
         }
 
@@ -104,13 +103,28 @@ namespace AdAddIn.ExportProblemSpace
             }
         }
 
+        private void UpdateSelectedFilter()
+        {
+            var filter = ToFilter(OriginalFilter.Val, filterTreeView.Nodes.Cast<TreeNode>());
+
+            SelectedFilter.Exchange(filter, GetType());
+        }
+
+        private void UpdateModelHierarchy()
+        {
+            UpdateSelectedFilter();
+
+            var hierarchy = GetModelHierarchy.Val(SelectedFilter.Val);
+
+            ModelHierarchy.Exchange(hierarchy, GetType());
+        }
+
         private void UpdateHierarchyTreeView()
         {
-            var filter = ToFilter(rootFilter.Val, filterTreeView.Nodes.Cast<TreeNode>());
-            var hierarchy = getModelHierarchy.Val(filter);
+            UpdateModelHierarchy();
 
             hierarchyTreeView.Nodes.Clear();
-            hierarchyTreeView.Nodes.Add(ToTreeNode(hierarchy));
+            hierarchyTreeView.Nodes.Add(ToTreeNode(ModelHierarchy.Val));
             hierarchyTreeView.ExpandAll();
         }
 
