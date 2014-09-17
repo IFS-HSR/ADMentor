@@ -201,17 +201,26 @@ namespace EAAddInFramework.DataAccess
                        select Wrapper.Wrap(d);
             }
 
+            /// <summary>
+            /// All children of this package.
+            /// </summary>
+            /// <returns></returns>
             public IEnumerable<Package> Packages()
             {
                 return from p in EaObject.Packages.Cast<EA.Package>()
                        select Wrapper.Wrap(p);
             }
 
-            public IEnumerable<Package> AllDescendants()
+            /// <summary>
+            /// This package with all packages that are descendant of this package.
+            /// </summary>
+            /// <returns></returns>
+            public IEnumerable<Package> SubPackages()
             {
-                return from child in Packages()
-                       from descendant in new List<Package> { child }.Concat(child.AllDescendants())
-                       select descendant;
+                return new[] { this }.Concat(
+                    from child in Packages()
+                    from descendant in child.SubPackages()
+                    select descendant);
             }
 
             public ModelEntity.Package Create(String packageName)

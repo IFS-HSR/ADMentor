@@ -31,7 +31,7 @@ namespace AdAddIn.ExportProblemSpace
 
         public Unit Execute(ModelEntity.Package package)
         {
-            var packages = package.AllDescendants().Run();
+            var packages = package.SubPackages().Run();
             var elements = from descendant in packages
                            from element in descendant.Elements()
                            select element;
