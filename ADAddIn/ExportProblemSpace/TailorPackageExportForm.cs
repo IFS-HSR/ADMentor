@@ -130,7 +130,7 @@ namespace AdAddIn.ExportProblemSpace
 
         private TreeNode ToTreeNode(LabeledTree<ModelEntity, Unit> tree)
         {
-            var node = new TreeNode(tree.Label.Name);
+            var node = new TreeNode(tree.Label.ToString());
             var children = from edge in tree.Edges
                            select ToTreeNode(edge.Target);
             node.Nodes.AddRange(children.ToArray());

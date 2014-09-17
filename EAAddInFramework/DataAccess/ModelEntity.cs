@@ -117,6 +117,18 @@ namespace EAAddInFramework.DataAccess
             }
         }
 
+        public String EntityType
+        {
+            get
+            {
+                return Match(
+                    (Package _) => "Package",
+                    (Diagram _) => "Diagram",
+                    (Element _) => "Element",
+                    (Connector _) => "Connector");
+            }
+        }
+
         public Option<String> Get(TaggedValue taggedValue)
         {
             var taggedValues = Match(
@@ -148,8 +160,8 @@ namespace EAAddInFramework.DataAccess
 
         public override string ToString()
         {
-            var metatype = MetaType == "" ? "" : String.Format("<<{0}>>", MetaType);
-            return String.Format("{0}: {1} {2}", GetType().Name, metatype, Name);
+            var stereotype = Stereotype == "" ? "" : String.Format("<<{0}>>", Stereotype);
+            return String.Format("{0}: {1} {2}", EntityType, stereotype, Name);
         }
 
         public class Package : ModelEntity

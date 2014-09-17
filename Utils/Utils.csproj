@@ -52,6 +52,7 @@
     <Compile Include="Either.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="DirectedLabeledGraph.cs" />
+    <Compile Include="FuncExtensions.cs" />
     <Compile Include="IFilter.cs" />
     <Compile Include="ImmutableCollectionsExtensions.cs" />
     <Compile Include="LabeledTree.cs" />

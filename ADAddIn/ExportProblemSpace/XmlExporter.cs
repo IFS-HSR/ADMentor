@@ -1,6 +1,7 @@
 ﻿using EAAddInFramework.DataAccess;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -36,9 +37,10 @@ namespace AdAddIn.ExportProblemSpace
                              where entitiesToExport.Contains(oppositeEnd)
                              select connector;
 
-            var allExportedEntities = entitiesToExport.Concat(connectors);
+            var exportedEntityGuids = (from entity in entitiesToExport.Concat(connectors)
+                                       select entity.Guid).ToImmutableHashSet();
 
-            Tailor(guid => allExportedEntities.Any(e => e.Guid.Equals(guid)));
+            Tailor(guid => exportedEntityGuids.Contains(guid));
         }
 
         public void Tailor(Func<string, bool> keep)
@@ -49,8 +51,17 @@ namespace AdAddIn.ExportProblemSpace
             (from entity in modelEntities.Concat(diagramEntities)
              // don't remove EA root elements
              where entity.Attribute("isRoot").AsOption().Match(a => !a.Value.Equals("true"), () => true)
+             // don't remove collaboration containers (contain associated package elements and boundary elements)
+             where !entity.Attribute("xmi.id").Value.Contains("Collaboration")
              where !keep(ProjectInterface.XMLtoGUID(entity.Attribute("xmi.id").Value))
              select entity).Remove();
+
+            // user defined tagged values are stored separated from the entity itself. Get rid of them if not needed.
+            var taggedValues = Document.XPathSelectElements("//XMI.content/UML:TaggedValue", NamespaceManager);
+
+            (from taggedValue in taggedValues
+             where !keep(ProjectInterface.XMLtoGUID(taggedValue.Attribute("modelElement").Value))
+             select taggedValue).Remove();
         }
 
         public void WriteTo(Stream outStream)
