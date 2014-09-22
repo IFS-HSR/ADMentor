@@ -79,19 +79,6 @@ namespace AdAddIn.ExportProblemSpace
             return Unit.Instance;
         }
 
-        private bool IsExportableConnector(String guid, IEnumerable<ModelEntity> selectedEntities)
-        {
-            return Repo.GetConnector(guid).Match(
-                connector =>
-                {
-                    return (from source in connector.Source(Repo.GetElement)
-                            from target in connector.Target(Repo.GetElement)
-                            select selectedEntities.Any(e => source.Equals(e)) && selectedEntities.Any(e => target.Equals(e)))
-                           .GetOrElse(false);
-                },
-                () => false);
-        }
-
         private LabeledTree<ModelEntity, Unit> CreatePackageHierarchy(ModelEntity.Package root)
         {
             var subnodes = root.Elements().Select(e => LabeledTree.Node<ModelEntity, Unit>(e))

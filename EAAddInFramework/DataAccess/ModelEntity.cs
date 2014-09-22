@@ -160,8 +160,8 @@ namespace EAAddInFramework.DataAccess
 
         public override string ToString()
         {
-            var stereotype = Stereotype == "" ? "" : String.Format("<<{0}>>", Stereotype);
-            return String.Format("{0}: {1} {2}", EntityType, stereotype, Name);
+            var stereotype = MetaType == "" ? "" : String.Format("<<{0}>> ", MetaType);
+            return String.Format("{0}: {1}{2}", EntityType, stereotype, Name);
         }
 
         public class Package : ModelEntity
