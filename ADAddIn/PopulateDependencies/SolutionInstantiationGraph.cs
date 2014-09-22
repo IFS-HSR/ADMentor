@@ -76,7 +76,7 @@ namespace AdAddIn.PopulateDependencies
                         edge.GetStereotype(ADTechnology.Technologies.AD.ConnectorStereotypes).Do(stype =>
                         {
                             var connectsAlternativeToProblem =
-                                stype == ConnectorStereotypes.HasAlternative && solutionSource is OptionOccurrence;
+                                stype == ConnectorStereotypes.AddressedBy && solutionSource is OptionOccurrence;
                             var alreadyExisting = solutionSource.Connectors().Any(c =>
                             {
                                 return c.Is(stype) && (c.EaObject.SupplierID == solutionTarget.Id || c.EaObject.ClientID == solutionTarget.Id);

@@ -62,7 +62,7 @@
     <Compile Include="ADTechnology\Common.cs" />
     <Compile Include="ADTechnology\ConnectorStereotypes.cs" />
     <Compile Include="ADTechnology\DiagramTypes.cs" />
-    <Compile Include="ADTechnology\Solution.cs" />
+    <Compile Include="ADTechnology\SolutionSpace.cs" />
     <Compile Include="ADTechnology\ProblemSpace.cs" />
     <Compile Include="ADTechnology\StakeholderRoles.cs" />
     <Compile Include="ADTechnology\Technology.cs" />
@@ -126,7 +126,7 @@
     <EmbeddedResource Include="ADTechnology\OptionOccurrence.bmp" />
     <EmbeddedResource Include="ADTechnology\ProblemOccurrence.bmp" />
     <EmbeddedResource Include="ADTechnology\ProblemSpaceTemplate.xml" />
-    <EmbeddedResource Include="ADTechnology\SolutionOverviewTemplate.xml" />
+    <EmbeddedResource Include="ADTechnology\SolutionSpaceTemplate.xml" />
     <EmbeddedResource Include="ADTechnology\DemoTemplate.xml" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

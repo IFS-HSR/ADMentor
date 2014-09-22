@@ -14,8 +14,7 @@ namespace AdAddIn.ADTechnology
             displayName: "Problem Space Connectors",
             description: "",
             stereotypes: new []{
-                ConnectorStereotypes.HasAlternative,
-                ConnectorStereotypes.Includes,
+                ConnectorStereotypes.AddressedBy,
                 ConnectorStereotypes.Raises,
                 ConnectorStereotypes.Supports,
                 ConnectorStereotypes.ConflictsWith,
@@ -39,9 +38,9 @@ namespace AdAddIn.ADTechnology
             }
         );
 
-        public static readonly Toolbox SolutionOverviewTools = new Toolbox(
-            name: "SolutionOverviewTools",
-            displayName: "Solution Overview Tools",
+        public static readonly Toolbox SolutionSpaceTools = new Toolbox(
+            name: "SolutionSpaceTools",
+            displayName: "Solution Space Tools",
             description: "Elements and connectors for modelling the decision process during a project.",
             pages: new []{
                 new ToolboxPage(
@@ -49,13 +48,13 @@ namespace AdAddIn.ADTechnology
                     displayName: "Elements",
                     description: "",
                     stereotypes: new []{
-                        Solution.ProblemOccurrence,
-                        Solution.OptionOccurrence
+                        SolutionSpace.ProblemOccurrence,
+                        SolutionSpace.OptionOccurrence
                     }),
                 ProblemSpaceConncetorsPage,
                 new ToolboxPage(
-                    name: "SolutionOverviewConnectors",
-                    displayName: "Solution Overview Connectors",
+                    name: "SolutionSpaceConnectors",
+                    displayName: "Solution Space Connectors",
                     description: "",
                     stereotypes: new []{
                         ConnectorStereotypes.Challenges,

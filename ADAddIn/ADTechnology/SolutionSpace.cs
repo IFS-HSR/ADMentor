@@ -9,7 +9,7 @@ using Utils;
 
 namespace AdAddIn.ADTechnology
 {
-    public static class Solution
+    public static class SolutionSpace
     {
         public static readonly IEnumerable<ITaggedValue> SolutionTaggedValues = new[]{
             Common.RevisionDate
@@ -17,13 +17,12 @@ namespace AdAddIn.ADTechnology
 
         public class OptionState : Enumeration
         {
-            /* Decision States according to "QUOSA;Kruchten;Building Up and Reasoning About Architectural Knowledge" */
-            public static readonly OptionState Candidate = new OptionState("Candidate", Color.LightSkyBlue);
+            public static readonly OptionState Eligible = new OptionState("Eligible", Color.LightSkyBlue);
             public static readonly OptionState Chosen = new OptionState("Chosen", Color.LightGreen);
             public static readonly OptionState Neglected = new OptionState("Neglected", Color.LightGray);
 
             public static readonly IEnumerable<OptionState> AllStates = new OptionState[] {
-                Candidate, Chosen, Neglected
+                Eligible, Chosen, Neglected
             };
 
             private OptionState(String name, Color color)
@@ -38,7 +37,7 @@ namespace AdAddIn.ADTechnology
         public static readonly TaggedValue OptionStateTag = new TaggedValue(
             name: "State",
             description: "Option State",
-            type: TaggedValueTypes.Enum(values: OptionState.AllStates).WithDefaultValue(OptionState.Candidate));
+            type: TaggedValueTypes.Enum(values: OptionState.AllStates).WithDefaultValue(OptionState.Eligible));
 
         public static readonly ElementStereotype OptionOccurrence = new ElementStereotype(
             name: "adOptionOccurrence",
@@ -52,7 +51,7 @@ namespace AdAddIn.ADTechnology
 
                     " + GenerateFillColors("State", OptionState.AllStates.ToDictionary(ds => ds.Name, ds => ds.Color)) + @"
 
-	                Rectangle(0,0,100,100);
+	                roundrect(0,0,100,100,30,30);
 
                     println(""(#TAG:state#)"");
 
@@ -66,6 +65,8 @@ namespace AdAddIn.ADTechnology
                     }
                 }
             ",
+            width: 100,
+            height: 70,
             taggedValues: SolutionTaggedValues.Concat(new TaggedValue[]{
                 OptionStateTag
             }));
@@ -127,6 +128,8 @@ namespace AdAddIn.ADTechnology
                     }
                 }
             ",
+            width: 100,
+            height: 70,
              taggedValues: SolutionTaggedValues.Concat(new TaggedValue[]{
                 ProblemOccurrenceStateTag
              }));

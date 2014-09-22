@@ -22,7 +22,7 @@ namespace AdAddIn.ADTechnology
             name: "adProblem",
             displayName: "Problem",
             type: ElementType.Class,
-            instanceType: Solution.ProblemOccurrence,
+            instanceType: SolutionSpace.ProblemOccurrence,
             icon: new Icon("AdAddIn.ADTechnology.Problem.bmp"),
             shapeScript: @"
                 shape main{
@@ -40,30 +40,30 @@ namespace AdAddIn.ADTechnology
 	                Println(""#NAME#"");
                 }
             ",
-            backgroundColor: Color.LightSkyBlue,
             width: 100,
             height: 70,
+            backgroundColor: Color.LightSkyBlue,
             taggedValues: ProblemSpaceTaggedValues);
 
         public static readonly ElementStereotype Option = new ElementStereotype(
             name: "adOption",
             displayName: "Option",
             type: ElementType.Class,
-            instanceType: Solution.OptionOccurrence,
+            instanceType: SolutionSpace.OptionOccurrence,
             icon: new Icon("AdAddIn.ADTechnology.Option.bmp"),
             shapeScript: @"
                 shape main{
 	                h_align = ""center"";
 	                v_align = ""center"";
 
-	                Rectangle(0,0,100,100);
+	                roundrect(0,0,100,100,30,30);
 
 	                Print(""#name#"");
                 }
             ",
-            backgroundColor: Color.LightYellow,
             width: 100,
             height: 70,
+            backgroundColor: Color.LightYellow,
             taggedValues: ProblemSpaceTaggedValues);
     }
 }

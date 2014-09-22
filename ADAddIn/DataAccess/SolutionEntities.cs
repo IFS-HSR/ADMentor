@@ -19,46 +19,46 @@ namespace AdAddIn.DataAccess
     {
         internal ProblemOccurrence(EA.Element e, IEntityWrapper wrapper) : base(e, wrapper) { }
 
-        public Solution.ProblemOccurrenceState State
+        public SolutionSpace.ProblemOccurrenceState State
         {
             get
             {
-                return (from value in Get(Solution.ProblemOccurrenceStateTag)
-                        join state in Solution.ProblemOccurrenceState.AllStates on value equals state.Name
+                return (from value in Get(SolutionSpace.ProblemOccurrenceStateTag)
+                        join state in SolutionSpace.ProblemOccurrenceState.AllStates on value equals state.Name
                         select state)
                         .FirstOption()
-                        .GetOrElse(Solution.ProblemOccurrenceState.Open);
+                        .GetOrElse(SolutionSpace.ProblemOccurrenceState.Open);
             }
             set
             {
-                Set(Solution.ProblemOccurrenceStateTag, value.Name);
+                Set(SolutionSpace.ProblemOccurrenceStateTag, value.Name);
             }
         }
 
         public IEnumerable<OptionOccurrence> GetAlternatives(Func<int, Option<ModelEntity.Element>> getElementById)
         {
             return from connector in Connectors()
-                   where connector.Is(ConnectorStereotypes.HasAlternative)
+                   where connector.Is(ConnectorStereotypes.AddressedBy)
                    from target in connector.Target(getElementById)
                    from optionOcc in target.Match<OptionOccurrence>()
                    select optionOcc;
         }
 
-        public Solution.ProblemOccurrenceState DeduceState(IEnumerable<OptionOccurrence> alternatives)
+        public SolutionSpace.ProblemOccurrenceState DeduceState(IEnumerable<OptionOccurrence> alternatives)
         {
             var noAlternatives = alternatives.Count();
-            var noCandidates = alternatives.Count(a => a.State == Solution.OptionState.Candidate);
-            var noChosen = alternatives.Count(a => a.State == Solution.OptionState.Chosen);
-            var noNeglected = alternatives.Count(a => a.State == Solution.OptionState.Neglected);
+            var noCandidates = alternatives.Count(a => a.State == SolutionSpace.OptionState.Eligible);
+            var noChosen = alternatives.Count(a => a.State == SolutionSpace.OptionState.Chosen);
+            var noNeglected = alternatives.Count(a => a.State == SolutionSpace.OptionState.Neglected);
 
             if (noAlternatives == noCandidates)
-                return Solution.ProblemOccurrenceState.Open;
+                return SolutionSpace.ProblemOccurrenceState.Open;
             else if (noCandidates > 0 && noCandidates < noAlternatives)
-                return Solution.ProblemOccurrenceState.PartiallySolved;
+                return SolutionSpace.ProblemOccurrenceState.PartiallySolved;
             else if (noChosen > 0 && noCandidates == 0)
-                return Solution.ProblemOccurrenceState.Solved;
+                return SolutionSpace.ProblemOccurrenceState.Solved;
             else
-                return Solution.ProblemOccurrenceState.NotApplicable;
+                return SolutionSpace.ProblemOccurrenceState.NotApplicable;
         }
     }
 
@@ -66,26 +66,26 @@ namespace AdAddIn.DataAccess
     {
         internal OptionOccurrence(EA.Element e, IEntityWrapper wrapper) : base(e, wrapper) { }
 
-        public Solution.OptionState State
+        public SolutionSpace.OptionState State
         {
             get
             {
-                return (from value in Get(Solution.OptionStateTag)
-                        join state in Solution.OptionState.AllStates on value equals state.Name
+                return (from value in Get(SolutionSpace.OptionStateTag)
+                        join state in SolutionSpace.OptionState.AllStates on value equals state.Name
                         select state)
                         .FirstOption()
-                        .GetOrElse(Solution.OptionState.Candidate);
+                        .GetOrElse(SolutionSpace.OptionState.Eligible);
             }
             set
             {
-                Set(Solution.OptionStateTag, value.Name);
+                Set(SolutionSpace.OptionStateTag, value.Name);
             }
         }
 
         public IEnumerable<ProblemOccurrence> GetAssociatedProblemOccurrences(Func<int, Option<ModelEntity.Element>> getElementById)
         {
             return from connector in Connectors()
-                   where connector.Is(ConnectorStereotypes.HasAlternative)
+                   where connector.Is(ConnectorStereotypes.AddressedBy)
                    from source in connector.Source(getElementById)
                    from problemOcc in source.Match<ProblemOccurrence>()
                    select problemOcc;

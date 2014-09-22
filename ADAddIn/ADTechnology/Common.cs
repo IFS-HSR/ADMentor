@@ -27,7 +27,7 @@ namespace AdAddIn.ADTechnology
         }
 
         public static readonly TaggedValue IntellectualPropertyRights = new TaggedValue(
-            name: "Intellectual Property Rights",
+            name: "IPR Classification",
             type: TaggedValueTypes.String);
 
         public static readonly TaggedValue OrganisationalReach = new TaggedValue(

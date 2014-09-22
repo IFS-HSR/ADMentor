@@ -21,7 +21,7 @@ namespace AdAddIn.ADTechnology
             displayName: "Solution Overview",
             description: "Models problems occured during a project and how they have been addressed",
             type: DiagramType.Activity,
-            toolbox: Toolboxes.SolutionOverviewTools);
+            toolbox: Toolboxes.SolutionSpaceTools);
 
         public static readonly Diagram StakeholderOverview = new Diagram(
             name: "StakeholderOverview",

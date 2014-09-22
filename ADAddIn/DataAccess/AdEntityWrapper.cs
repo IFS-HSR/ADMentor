@@ -14,9 +14,9 @@ namespace AdAddIn.DataAccess
     {
         public override ModelEntity.Element Wrap(EA.Element e)
         {
-            if (StereotypeIs(e, Solution.OptionOccurrence))
+            if (StereotypeIs(e, SolutionSpace.OptionOccurrence))
                 return new OptionOccurrence(e, this);
-            else if (StereotypeIs(e, Solution.ProblemOccurrence))
+            else if (StereotypeIs(e, SolutionSpace.ProblemOccurrence))
                 return new ProblemOccurrence(e, this);
             else if (StereotypeIs(e, ProblemSpace.Problem))
                 return new Problem(e, this);
