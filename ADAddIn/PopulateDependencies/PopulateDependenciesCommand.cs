@@ -28,6 +28,8 @@ namespace AdAddIn.PopulateDependencies
 
         public EntityModified Execute(SolutionEntity solutionEntity)
         {
+            Repo.SaveAllDiagrams();
+
             var modified =
                 from currentDiagram in GetCurrentDiagramContaining(solutionEntity)
                 from solution in SolutionInstantiationGraph.Create(Repo, solutionEntity)

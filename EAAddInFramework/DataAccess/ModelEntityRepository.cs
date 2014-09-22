@@ -194,6 +194,11 @@ namespace EAAddInFramework.DataAccess
             Repo.Val.SaveDiagram(diagram.Id);
         }
 
+        public void SaveAllDiagrams()
+        {
+            Repo.Val.SaveAllDiagrams();
+        }
+
         public ModelEntity.Diagram Create(string name, Diagram diagramType, ModelEntity.Package package, String technologyId)
         {
             var diagram = package.EaObject.Diagrams.AddNew(name, diagramType.Type.Name) as EA.Diagram;

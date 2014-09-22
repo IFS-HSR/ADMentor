@@ -33,6 +33,8 @@ namespace AdAddIn.InstantiateProblemSpace
 
             requiredData.ForEach((problemSpaceTree, parentPackage, solutionName) =>
             {
+                Repo.SaveAllDiagrams();
+
                 var instantiatedTree = problemSpaceTree
                     .InstantiateSolutionPackages(parentPackage)
                     .InstantiateSolutionElements(Repo);
