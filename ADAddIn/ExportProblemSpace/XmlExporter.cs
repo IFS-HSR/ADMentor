@@ -28,6 +28,11 @@ namespace AdAddIn.ExportProblemSpace
             Repo = repo;
         }
 
+        /// <summary>
+        /// Removes all entities in the underlying XMI document that are not part of <c>entitiesToExport</c>
+        /// or connectors connecting two elements in <c>entitiesToExport</c>.
+        /// </summary>
+        /// <param name="entitiesToExport"></param>
         public void Tailor(IEnumerable<ModelEntity> entitiesToExport)
         {
             var connectors = from entity in entitiesToExport
@@ -43,6 +48,10 @@ namespace AdAddIn.ExportProblemSpace
             Tailor(guid => exportedEntityGuids.Contains(guid));
         }
 
+        /// <summary>
+        /// Removes all entities in the underlying XMI document for which <c>keep(entity.guid)</c> is false.
+        /// </summary>
+        /// <param name="keep"></param>
         public void Tailor(Func<string, bool> keep)
         {
             var modelEntities = Document.XPathSelectElements("//UML:Namespace.ownedElement/*[@xmi.id]", NamespaceManager);
@@ -57,11 +66,14 @@ namespace AdAddIn.ExportProblemSpace
              select entity).Remove();
 
             // user defined tagged values are stored separated from the entity itself. Get rid of them if not needed.
-            var taggedValues = Document.XPathSelectElements("//XMI.content/UML:TaggedValue", NamespaceManager);
-
-            (from taggedValue in taggedValues
+            (from taggedValue in Document.XPathSelectElements("//XMI.content/UML:TaggedValue", NamespaceManager)
              where !keep(ProjectInterface.XMLtoGUID(taggedValue.Attribute("modelElement").Value))
              select taggedValue).Remove();
+
+            // also remove all no longer necessary diagram elements
+            (from diagramElement in Document.XPathSelectElements("//UML:DiagramElement", NamespaceManager)
+             where !keep(ProjectInterface.XMLtoGUID(diagramElement.Attribute("subject").Value))
+             select diagramElement).Remove();
         }
 
         public void WriteTo(Stream outStream)
