@@ -18,6 +18,14 @@ namespace AdAddIn.DataAccess
             {
                 EaObject.Name = classifier.EaObject.Name;
                 EaObject.Notes = classifier.EaObject.Notes;
+                EaObject.Tag = classifier.EaObject.Tag; // keywords
+                EaObject.Alias = classifier.EaObject.Alias;
+                EaObject.Status = classifier.EaObject.Status;
+                EaObject.Complexity = classifier.EaObject.Complexity;
+                EaObject.Version = classifier.EaObject.Version;
+                EaObject.Phase = classifier.EaObject.Phase;
+                EaObject.Author = classifier.EaObject.Author;
+
                 EaObject.Update();
             });
         }
