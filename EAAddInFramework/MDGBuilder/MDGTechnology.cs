@@ -11,7 +11,7 @@ namespace EAAddInFramework.MDGBuilder
 {
     public class MDGTechnology
     {
-        public MDGTechnology(String id, String name, String version = "1.0.0", String description = "",
+        public MDGTechnology(String id, String name, String version, String description = "",
             IEnumerable<Diagram> diagrams = null, IEnumerable<ModelTemplate> modelTemplates = null)
         {
             ID = id;
@@ -80,7 +80,9 @@ namespace EAAddInFramework.MDGBuilder
             {
                 return (from s in Stereotypes
                         from t in s.TaggedValues
-                        select t).Distinct(new TaggedValueComparer());
+                        select t)
+                        .Distinct(new TaggedValueComparer())
+                        .Concat(new[]{GetModelIdTag()});
             }
         }
 
@@ -103,6 +105,8 @@ namespace EAAddInFramework.MDGBuilder
                 new XAttribute("name", "Property Types"), new XAttribute("table", "t_propertytypes"), new XAttribute("filter", "Property='#Property#'")
             }.Concat(TaggedValues.Select(tv => tv.ToXmlType()));
 
+            var versionTag = GetModelIdTag();
+
             return new XDocument(
                 new XElement("MDG.Technology", new XAttribute("version", "1.0"),
                     new XElement("Documentation", new XAttribute("id", ID), new XAttribute("name", Name), new XAttribute("version", Version), new XAttribute("notes", Description)),
@@ -112,7 +116,7 @@ namespace EAAddInFramework.MDGBuilder
                             new XElement("Content",
                                 new XElement("Stereotypes",
                                     from s in Stereotypes
-                                    select s.ToXml()),
+                                    select s.ToXml(versionTag)),
                                 new XElement("QuickLink", new XAttribute("data", getQuickLinkData()))))),
                     new XElement("TaggedValueTypes",
                         new XElement("RefData", new XAttribute("version", "1.0"), new XAttribute("exporter", "EA.25"),
@@ -141,6 +145,18 @@ namespace EAAddInFramework.MDGBuilder
                                    from ql in c.GetQuickLinkEntries()
                                    select ql;
             return quickLinkEntries.Join("\n");
+        }
+
+        internal String GetModelId()
+        {
+            return String.Format("{0}:{1}", ID, Version);
+        }
+
+        public static readonly String ModelIdTagName = "XModelId";
+
+        private ITaggedValue GetModelIdTag()
+        {
+            return new TaggedValue(ModelIdTagName, TaggedValueTypes.Const(GetModelId()));
         }
     }
 }

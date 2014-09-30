@@ -68,7 +68,7 @@ namespace EAAddInFramework.MDGBuilder
 
         public Option<CompositionKind> CompositionKind { get; private set; }
 
-        public XElement ToXml()
+        public XElement ToXml(ITaggedValue versionTag)
         {
             var taggedValues = LineStyle.Select(ls => TaggedValues.Concat(new [] {
                 new TaggedValue(name: "_lineStyle", type: TaggedValueTypes.String.WithDefaultValue(ls.ToString()))
@@ -82,7 +82,7 @@ namespace EAAddInFramework.MDGBuilder
                         new XElement("Property", new XAttribute("name", "direction"), new XAttribute("value", Direction.Select(d => d.Name).GetOrElse(""))),
                         new XElement("Property", new XAttribute("name", "compositionKind"), new XAttribute("value", CompositionKind.Select(c => c.Name).GetOrElse(""))))),
                 new XElement("TaggedValues",
-                    from tv in taggedValues
+                    from tv in taggedValues.Concat(new[] { versionTag})
                     select tv.ToXml()));
         }
     }

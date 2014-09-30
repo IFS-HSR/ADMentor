@@ -49,8 +49,6 @@ namespace EAAddInFramework.MDGBuilder
                 return new XElement("DataRow",
                     new XElement("Column",
                         new XAttribute("name", "Property"), new XAttribute("value", Name)),
-                    //new XElement("Column",
-                    //    new XAttribute("name", "Description"), new XAttribute("value", Name)),
                     new XElement("Column",
                         new XAttribute("name", "Notes"), new XAttribute("value", notes)));
             });

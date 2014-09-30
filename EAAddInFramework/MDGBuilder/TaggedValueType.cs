@@ -39,6 +39,15 @@ namespace EAAddInFramework.MDGBuilder
             {"Type", "Memo"}
         });
 
+        public static ITaggedValueType Const(String value)
+        {
+            return new StructuredType(new Dictionary<String, String>
+            {
+                {"Type", "Const"},
+                {"Default", value}
+            });
+        }
+
         public static ITaggedValueType Reference(ElementStereotype stype)
         {
             return new StructuredType(new Dictionary<String, String> {

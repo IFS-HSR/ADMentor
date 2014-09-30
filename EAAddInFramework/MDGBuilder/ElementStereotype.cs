@@ -16,7 +16,7 @@ namespace EAAddInFramework.MDGBuilder
         String DisplayName { get; }
         Enumeration Type { get; }
         IEnumerable<ITaggedValue> TaggedValues { get; }
-        XElement ToXml();
+        XElement ToXml(ITaggedValue versionTag);
     }
 
     public class ElementStereotype : IStereotype
@@ -62,7 +62,7 @@ namespace EAAddInFramework.MDGBuilder
 
         public Option<ElementStereotype> InstanceType { get; set; }
 
-        public XElement ToXml()
+        public XElement ToXml(ITaggedValue versionTag)
         {
             return new XElement("Stereotype", new XAttribute("name", Name), new XAttribute("metatype", DisplayName),
                 new XAttribute("instanceType", InstanceType.Select(it => it.Name).GetOrElse("")),
@@ -74,7 +74,7 @@ namespace EAAddInFramework.MDGBuilder
                 new XElement("AppliesTo",
                     new XElement("Apply", new XAttribute("type", Type.ToString()))),
                 new XElement("TaggedValues",
-                    from tv in TaggedValues
+                    from tv in TaggedValues.Concat(new[] { versionTag })
                     select tv.ToXml()));
         }
 
