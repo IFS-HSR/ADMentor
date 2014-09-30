@@ -12,6 +12,7 @@ namespace AdAddIn.ADTechnology
     public static class SolutionSpace
     {
         public static readonly IEnumerable<ITaggedValue> SolutionTaggedValues = new[]{
+            Common.DueDate,
             Common.RevisionDate
         };
 
@@ -35,7 +36,7 @@ namespace AdAddIn.ADTechnology
         }
 
         public static readonly TaggedValue OptionStateTag = new TaggedValue(
-            name: "State",
+            name: "Option State",
             description: "Option State",
             type: TaggedValueTypes.Enum(values: OptionState.AllStates).WithDefaultValue(OptionState.Eligible));
 
@@ -44,27 +45,28 @@ namespace AdAddIn.ADTechnology
             displayName: "Option Occurrence",
             type: ElementType.Object,
             icon: new Icon("AdAddIn.ADTechnology.OptionOccurrence.bmp"),
-            shapeScript: @"
-                shape main{
+            shapeScript: String.Format(@"
+                shape main{{
 	                h_align = ""center"";
 	                v_align = ""center"";
 
-                    " + GenerateFillColors("State", OptionState.AllStates.ToDictionary(ds => ds.Name, ds => ds.Color)) + @"
+                    {0}
 
 	                roundrect(0,0,100,100,30,30);
 
-                    println(""(#TAG:state#)"");
+                    println(""(#TAG:{1}#)"");
 
-	                if(HasProperty(""name"", """")){
-                        if(HasProperty(""classifier.name"", """")){
-                        } else {
+	                if(HasProperty(""name"", """")){{
+                        if(HasProperty(""classifier.name"", """")){{
+                        }} else {{
                             Println(""#classifier.name#"");
-                        }
-	                }else{
+                        }}
+	                }}else{{
 	                    Print(""#name#"");
-                    }
-                }
-            ",
+                    }}
+                }}", 
+                GenerateFillColors(OptionStateTag.Name, OptionState.AllStates.ToDictionary(ds => ds.Name, ds => ds.Color)), 
+                OptionStateTag.Name),
             width: 100,
             height: 70,
             taggedValues: SolutionTaggedValues.Concat(new TaggedValue[]{
@@ -92,7 +94,7 @@ namespace AdAddIn.ADTechnology
         }
 
         public static readonly TaggedValue ProblemOccurrenceStateTag = new TaggedValue(
-            name: "State",
+            name: "Problem State",
             description: "Problem State",
             type: TaggedValueTypes.Enum(values: ProblemOccurrenceState.AllStates).WithDefaultValue(ProblemOccurrenceState.Open));
 
@@ -101,12 +103,12 @@ namespace AdAddIn.ADTechnology
             displayName: "Problem Occurrence",
             type: ElementType.Object,
             icon: new Icon("AdAddIn.ADTechnology.ProblemOccurrence.bmp"),
-            shapeScript: @"
-                shape main{
+            shapeScript: String.Format(@"
+                shape main{{
 	                h_align = ""center"";
 	                v_align = ""center"";
 
-                    " + GenerateFillColors("State", ProblemOccurrenceState.AllStates.ToDictionary(ds => ds.Name, ds => ds.Color)) + @"
+                    {0}
 
 	                StartPath();
 	                MoveTo(50,0);
@@ -116,18 +118,19 @@ namespace AdAddIn.ADTechnology
 	                EndPath();
 	                FillAndStrokePath();
 
-                    println(""(#TAG:state#)"");
+                    println(""(#TAG:{1}#)"");
 
-	                if(HasProperty(""name"", """")){
-                        if(HasProperty(""classifier.name"", """")){
-                        } else {
+	                if(HasProperty(""name"", """")){{
+                        if(HasProperty(""classifier.name"", """")){{
+                        }} else {{
                             Println(""#classifier.name#"");
-                        }
-	                }else{
+                        }}
+	                }}else{{
 	                    Print(""#name#"");
-                    }
-                }
-            ",
+                    }}
+                }}",
+                GenerateFillColors(ProblemOccurrenceStateTag.Name, ProblemOccurrenceState.AllStates.ToDictionary(ds => ds.Name, ds => ds.Color)),
+                ProblemOccurrenceStateTag.Name),
             width: 100,
             height: 70,
              taggedValues: SolutionTaggedValues.Concat(new TaggedValue[]{

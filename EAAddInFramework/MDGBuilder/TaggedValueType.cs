@@ -47,6 +47,15 @@ namespace EAAddInFramework.MDGBuilder
                 {"Stereotypes", stype.Name}
             });
         }
+
+        public static ITaggedValueType ReferenceList(ElementStereotype stype)
+        {
+            return new StructuredType(new Dictionary<String, String> {
+                {"Type", "RefGUIDList"},
+                {"Values", stype.Type.Name},
+                {"Stereotypes", stype.Name}
+            });
+        }
     }
 
     class PrimitiveType<T> : IDefaultableTaggedValueType<T>

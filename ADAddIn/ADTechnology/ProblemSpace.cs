@@ -11,7 +11,8 @@ namespace AdAddIn.ADTechnology
     public static class ProblemSpace
     {
         public static readonly IEnumerable<ITaggedValue> ProblemSpaceTaggedValues = new[]{
-            StakeholderRoles.StakeholderRoleRef,
+            StakeholderRoles.OwnerRole,
+            StakeholderRoles.StakeholderRolesRef,
             Common.ProjectStage,
             Common.Viewpoint,
             Common.OrganisationalReach,

@@ -49,7 +49,7 @@ namespace AdAddIn.ExportProblemSpace
                     CreateTaggedValueFilter(Common.OrganisationalReach, elements),
                     CreateTaggedValueFilter(Common.ProjectStage, elements),
                     CreateTaggedValueFilter(Common.Viewpoint, elements),
-                    CreateTaggedValueRefFilter(StakeholderRoles.StakeholderRoleRef, elements)
+                    CreateTaggedValueRefFilter(StakeholderRoles.StakeholderRolesRef, elements)
                 }),
                 Filter.And("Diagrams", e => e.Match<ModelEntity.Diagram>().IsDefined, new []{
                     CreatePropertyFilter("Meta Type", diagrams, d => d.MetaType),

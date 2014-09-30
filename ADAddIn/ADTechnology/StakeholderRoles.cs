@@ -14,8 +14,12 @@ namespace AdAddIn.ADTechnology
             displayName: "Stakeholder Role",
             type: ElementType.Actor);
 
-        public static readonly TaggedValue StakeholderRoleRef = new TaggedValue(
-            name: "Stakeholder Role",
+        public static readonly TaggedValue StakeholderRolesRef = new TaggedValue(
+            name: "Stakeholder Roles",
+            type: TaggedValueTypes.ReferenceList(StakeholderRole));
+
+        public static readonly TaggedValue OwnerRole = new TaggedValue(
+            name: "Owner Role",
             type: TaggedValueTypes.Reference(StakeholderRole));
     }
 }

@@ -42,6 +42,10 @@ namespace AdAddIn.ADTechnology
             name: "Viewpoint",
             type: TaggedValueTypes.String);
 
+        public static readonly TaggedValue DueDate = new TaggedValue(
+            name: "Due Date",
+            type: TaggedValueTypes.DateTime);
+
         public static readonly TaggedValue RevisionDate = new TaggedValue(
             name: "Revision Date",
             type: TaggedValueTypes.DateTime);
