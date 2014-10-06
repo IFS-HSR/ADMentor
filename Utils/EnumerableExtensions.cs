@@ -56,5 +56,18 @@ namespace Utils
         {
             return ts.ToList();
         }
+
+        public static Option<V> Get<K, V>(this IDictionary<K, V> dict, K key) where V : class
+        {
+            V value = null;
+            if (dict.TryGetValue(key, out value))
+            {
+                return Options.Some(value);
+            }
+            else
+            {
+                return Options.None<V>();
+            }
+        }
     }
 }

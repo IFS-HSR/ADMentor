@@ -14,21 +14,21 @@ namespace AdAddIn.ADTechnology
             public static readonly OrganisationalReachValue Global = new OrganisationalReachValue("Global");
             public static readonly OrganisationalReachValue Organisation = new OrganisationalReachValue("Organisation");
             public static readonly OrganisationalReachValue Division = new OrganisationalReachValue("Division");
+            public static readonly OrganisationalReachValue BusinessUnit = new OrganisationalReachValue("Business Unit");
             public static readonly OrganisationalReachValue Program = new OrganisationalReachValue("Program");
             public static readonly OrganisationalReachValue Project = new OrganisationalReachValue("Project");
             public static readonly OrganisationalReachValue Subproject = new OrganisationalReachValue("Subproject");
-            public static readonly OrganisationalReachValue BusinessUnit = new OrganisationalReachValue("Business Unit");
             public static readonly OrganisationalReachValue Individual = new OrganisationalReachValue("Individual");
 
             public static readonly IEnumerable<OrganisationalReachValue> All = new[] {
-                Global, Organisation, Program, Project, Subproject, BusinessUnit, Individual
+                Global, Organisation, Division, BusinessUnit, Program, Project, Subproject, Individual
             };
 
             private OrganisationalReachValue(String name) : base(name) { }
         }
 
         public static readonly TaggedValue IntellectualPropertyRights = new TaggedValue(
-            name: "IPR Classification",
+            name: "Intellectual Property Rights",
             type: TaggedValueTypes.String.WithDefaultValue("Unrestricted"));
 
         public static readonly TaggedValue OrganisationalReach = new TaggedValue(

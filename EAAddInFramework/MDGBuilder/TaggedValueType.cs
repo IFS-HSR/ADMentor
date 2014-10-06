@@ -150,13 +150,18 @@ namespace EAAddInFramework.MDGBuilder
 
         public XElement CreateTag(string tagName)
         {
+            // If default value is not set, the value will not be written to the element itself but only
+            // referenced in the type definition. Thus, the value would not be persistent over model changes.
+            // This is especially problematic for const values.
+            var defaultValue = Properties.Get("Default").GetOrElse("");
+
             return new XElement("Tag",
                 new XAttribute("name", tagName),
                 new XAttribute("type", tagName),
                 new XAttribute("description", ""),
                 new XAttribute("unit", ""),
                 new XAttribute("values", ""),
-                new XAttribute("default", ""));
+                new XAttribute("default", defaultValue));
         }
 
         public Option<string> CreateTypeDescription()
