@@ -11,11 +11,6 @@ namespace AdAddIn.ADTechnology
 {
     public static class SolutionSpace
     {
-        public static readonly IEnumerable<ITaggedValue> SolutionTaggedValues = new[]{
-            Common.DueDate,
-            Common.RevisionDate
-        };
-
         public class OptionState : Enumeration
         {
             public static readonly OptionState Eligible = new OptionState("Eligible", Color.LightSkyBlue);
@@ -69,9 +64,9 @@ namespace AdAddIn.ADTechnology
                 OptionStateTag.Name),
             width: 100,
             height: 70,
-            taggedValues: SolutionTaggedValues.Concat(new TaggedValue[]{
+            taggedValues: new TaggedValue[]{
                 OptionStateTag
-            }));
+            });
 
         public class ProblemOccurrenceState : Enumeration
         {
@@ -133,9 +128,11 @@ namespace AdAddIn.ADTechnology
                 ProblemOccurrenceStateTag.Name),
             width: 100,
             height: 70,
-             taggedValues: SolutionTaggedValues.Concat(new TaggedValue[]{
-                ProblemOccurrenceStateTag
-             }));
+            taggedValues: new[]{
+                ProblemOccurrenceStateTag,
+                Common.DueDate,
+                Common.RevisionDate
+            });
 
         private static String GenerateFillColors(String tagName, IDictionary<String, Color> valueColors)
         {

@@ -10,15 +10,6 @@ namespace AdAddIn.ADTechnology
 {
     public static class ProblemSpace
     {
-        public static readonly IEnumerable<ITaggedValue> ProblemSpaceTaggedValues = new[]{
-            Common.OwnerRole,
-            Common.StakeholderRoles,
-            Common.ProjectStage,
-            Common.Viewpoint,
-            Common.OrganisationalReach,
-            Common.IntellectualPropertyRights
-        };
-
         public static readonly ElementStereotype Problem = new ElementStereotype(
             name: "adProblem",
             displayName: "Problem",
@@ -44,7 +35,14 @@ namespace AdAddIn.ADTechnology
             width: 100,
             height: 70,
             backgroundColor: Color.LightSkyBlue,
-            taggedValues: ProblemSpaceTaggedValues);
+            taggedValues: new[]{
+                Common.OwnerRole,
+                Common.StakeholderRoles,
+                Common.ProjectStage,
+                Common.Viewpoint,
+                Common.OrganisationalReach,
+                Common.IntellectualPropertyRights
+            });
 
         public static readonly ElementStereotype Option = new ElementStereotype(
             name: "adOption",
@@ -65,6 +63,8 @@ namespace AdAddIn.ADTechnology
             width: 100,
             height: 70,
             backgroundColor: Color.LightYellow,
-            taggedValues: ProblemSpaceTaggedValues);
+            taggedValues: new[]{
+                Common.IntellectualPropertyRights
+            });
     }
 }
