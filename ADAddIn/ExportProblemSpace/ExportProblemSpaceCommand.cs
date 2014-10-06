@@ -49,7 +49,8 @@ namespace AdAddIn.ExportProblemSpace
                     CreateTaggedValueFilter(Common.OrganisationalReach, elements),
                     CreateTaggedValueFilter(Common.ProjectStage, elements),
                     CreateTaggedValueFilter(Common.Viewpoint, elements),
-                    CreateTaggedValueRefFilter(StakeholderRoles.StakeholderRolesRef, elements)
+                    CreateTaggedValueFilter(Common.StakeholderRoles, elements),
+                    CreateTaggedValueFilter(Common.OwnerRole, elements)
                 }),
                 Filter.And("Diagrams", e => e.Match<ModelEntity.Diagram>().IsDefined, new []{
                     CreatePropertyFilter("Meta Type", diagrams, d => d.MetaType),
@@ -124,17 +125,6 @@ namespace AdAddIn.ExportProblemSpace
             where T : ModelEntity
         {
             return CreatePropertyFilter(taggedValue.Name, allEntities, entity => entity.Get(taggedValue).GetOrElse(""));
-        }
-
-        private IFilter<ModelEntity> CreateTaggedValueRefFilter<T>(TaggedValue taggedValue, IEnumerable<T> allEntities)
-            where T : ModelEntity
-        {
-            return CreatePropertyFilter(taggedValue.Name, allEntities, entity =>
-            {
-                return (from value in entity.Get(taggedValue)
-                        from referencedElement in Repo.GetElement(value)
-                        select referencedElement.Name).GetOrElse("");
-            });
         }
 
         private IFilter<ModelEntity> CreateKeywordFilter<T>(IEnumerable<T> allEntities)

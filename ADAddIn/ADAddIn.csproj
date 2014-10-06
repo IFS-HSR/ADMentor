@@ -64,7 +64,6 @@
     <Compile Include="ADTechnology\DiagramTypes.cs" />
     <Compile Include="ADTechnology\SolutionSpace.cs" />
     <Compile Include="ADTechnology\ProblemSpace.cs" />
-    <Compile Include="ADTechnology\StakeholderRoles.cs" />
     <Compile Include="ADTechnology\Technology.cs" />
     <Compile Include="ADTechnology\Toolboxes.cs" />
     <Compile Include="CopyMetadata\UpdateOptionOccurrenceStateOnAlternativesAdded.cs" />

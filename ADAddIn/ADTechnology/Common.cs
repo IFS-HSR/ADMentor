@@ -13,6 +13,7 @@ namespace AdAddIn.ADTechnology
         {
             public static readonly OrganisationalReachValue Global = new OrganisationalReachValue("Global");
             public static readonly OrganisationalReachValue Organisation = new OrganisationalReachValue("Organisation");
+            public static readonly OrganisationalReachValue Division = new OrganisationalReachValue("Division");
             public static readonly OrganisationalReachValue Program = new OrganisationalReachValue("Program");
             public static readonly OrganisationalReachValue Project = new OrganisationalReachValue("Project");
             public static readonly OrganisationalReachValue Subproject = new OrganisationalReachValue("Subproject");
@@ -28,11 +29,11 @@ namespace AdAddIn.ADTechnology
 
         public static readonly TaggedValue IntellectualPropertyRights = new TaggedValue(
             name: "IPR Classification",
-            type: TaggedValueTypes.String);
+            type: TaggedValueTypes.String.WithDefaultValue("Unrestricted"));
 
         public static readonly TaggedValue OrganisationalReach = new TaggedValue(
             name: "Organisational Reach",
-            type: TaggedValueTypes.Enum(OrganisationalReachValue.All));
+            type: TaggedValueTypes.Enum(OrganisationalReachValue.All).WithDefaultValue(OrganisationalReachValue.Project));
 
         public static readonly TaggedValue ProjectStage = new TaggedValue(
             name: "Project Stage",
@@ -49,5 +50,13 @@ namespace AdAddIn.ADTechnology
         public static readonly TaggedValue RevisionDate = new TaggedValue(
             name: "Revision Date",
             type: TaggedValueTypes.DateTime);
+
+        public static readonly TaggedValue OwnerRole = new TaggedValue(
+            name: "Owner Role",
+            type: TaggedValueTypes.String.WithDefaultValue("Any"));
+
+        public static readonly TaggedValue StakeholderRoles = new TaggedValue(
+            name: "Stakeholder Roles",
+            type: TaggedValueTypes.String.WithDefaultValue("Any"));
     }
 }

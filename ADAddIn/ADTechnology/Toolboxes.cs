@@ -62,20 +62,5 @@ namespace AdAddIn.ADTechnology
                     })
             }
         );
-
-        public static readonly Toolbox StakeholderTools = new Toolbox(
-            name: "StakeholderTools",
-            displayName: "Stakeholder Tools",
-            description: "",
-            pages: new []{
-                new ToolboxPage(
-                    name: "Elements",
-                    displayName: "Elements",
-                    description: "",
-                    stereotypes: new []{
-                        StakeholderRoles.StakeholderRole
-                    })
-            }
-        );
     }
 }
