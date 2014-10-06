@@ -16,7 +16,7 @@ namespace AdAddIn.ADTechnology
             stereotypes: new []{
                 ConnectorStereotypes.AddressedBy,
                 ConnectorStereotypes.Raises,
-                ConnectorStereotypes.Supports,
+                ConnectorStereotypes.Suggests,
                 ConnectorStereotypes.ConflictsWith,
                 ConnectorStereotypes.BoundTo
             });

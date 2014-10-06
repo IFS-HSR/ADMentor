@@ -9,9 +9,6 @@ namespace AdAddIn.ADTechnology
 {
     public static class ConnectorStereotypes
     {
-        /// <summary>
-        /// Problem -Addressed By-> Option
-        /// </summary>
         public static readonly ConnectorStereotype AddressedBy = new ConnectorStereotype(
             name: "adAddressedBy",
             displayName: "Addressed By",
@@ -24,10 +21,6 @@ namespace AdAddIn.ADTechnology
                 new Connection(from: SolutionSpace.ProblemOccurrence, to: SolutionSpace.OptionOccurrence)
             });
 
-        /// <summary>
-        /// Option -Raises-> Problem
-        /// Problem -Raises-> Problem
-        /// </summary>
         public static readonly ConnectorStereotype Raises = new ConnectorStereotype(
             name: "adRaises",
             displayName: "Raises",
@@ -41,23 +34,19 @@ namespace AdAddIn.ADTechnology
                 new Connection(from: SolutionSpace.ProblemOccurrence, to: SolutionSpace.ProblemOccurrence)
             });
 
-        /// <summary>
-        /// Option -Supports-> Option
-        /// </summary>
-        public static readonly ConnectorStereotype Supports = new ConnectorStereotype(
-            name: "adSupports",
-            displayName: "Supports",
-            reverseDisplayName: "Supported By",
+        public static readonly ConnectorStereotype Suggests = new ConnectorStereotype(
+            name: "adSuggests",
+            displayName: "Suggests",
+            reverseDisplayName: "Suggested By",
             type: ConnectorType.Dependency,
             direction: Direction.SourceToDestination,
             connects: new[]{
                 new Connection(from: ProblemSpace.Option, to: ProblemSpace.Option),
-                new Connection(from: SolutionSpace.OptionOccurrence, to: SolutionSpace.OptionOccurrence)
+                new Connection(from: SolutionSpace.OptionOccurrence, to: SolutionSpace.OptionOccurrence),
+                new Connection(from: ElementType.Issue.DefaultStereotype, to: SolutionSpace.OptionOccurrence),
+                new Connection(from: ElementType.Requirement.DefaultStereotype, to: SolutionSpace.OptionOccurrence)
             });
 
-        /// <summary>
-        /// Option <-ConflictsWith-> Option
-        /// </summary>
         public static readonly ConnectorStereotype ConflictsWith = new ConnectorStereotype(
             name: "adConflictsWith",
             displayName: "Conflicts With",
@@ -68,9 +57,6 @@ namespace AdAddIn.ADTechnology
                 new Connection(from: SolutionSpace.OptionOccurrence, to: SolutionSpace.OptionOccurrence)
             });
 
-        /// <summary>
-        /// Option <-IsBoundTo-> Option
-        /// </summary>
         public static readonly ConnectorStereotype BoundTo = new ConnectorStereotype(
             name: "adBoundTo",
             displayName: "Bound To",
@@ -81,9 +67,6 @@ namespace AdAddIn.ADTechnology
                 new Connection(from: SolutionSpace.OptionOccurrence, to: SolutionSpace.OptionOccurrence)
             });
 
-        /// <summary>
-        /// Issue/Requirement -Challenges-> Decision
-        /// </summary>
         public static readonly ConnectorStereotype Challenges = new ConnectorStereotype(
             name: "adChallenges",
             displayName: "Challenges",
@@ -95,9 +78,6 @@ namespace AdAddIn.ADTechnology
                 new Connection(from: ElementType.Requirement.DefaultStereotype, to: SolutionSpace.OptionOccurrence)
             });
 
-        /// <summary>
-        /// Decision -Overrides-> Decision
-        /// </summary>
         public static readonly ConnectorStereotype Overrides = new ConnectorStereotype(
             name: "adOverrides",
             displayName: "Overrides",
