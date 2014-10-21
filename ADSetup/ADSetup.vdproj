@@ -904,7 +904,7 @@
                     "_01520196B9A0169C4ADE4866CC1A5694"
                     {
                     "Name" = "8:System.Diagnostics.Tools.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Diagnostics.Tools.dll"
@@ -914,10 +914,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -935,7 +935,7 @@
                     "_07808515C4AB22F3912F54D26E1CADFE"
                     {
                     "Name" = "8:System.Reflection.Emit.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Reflection.Emit.dll"
@@ -945,10 +945,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -997,7 +997,7 @@
                     "_21B4CED77ADCA5C219DA8B46518D7E91"
                     {
                     "Name" = "8:System.Threading.Tasks.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Threading.Tasks.dll"
@@ -1007,10 +1007,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1028,7 +1028,7 @@
                     "_23F40A496EC3A94521EF14952EE3AF23"
                     {
                     "Name" = "8:System.Linq.Queryable.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Linq.Queryable.dll"
@@ -1038,10 +1038,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1059,7 +1059,7 @@
                     "_25BB7C97052E3089C0797DBFA1A37DCB"
                     {
                     "Name" = "8:System.ServiceModel.Duplex.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.ServiceModel.Duplex.dll"
@@ -1069,10 +1069,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1090,7 +1090,7 @@
                     "_2DC539E95552FF65374F2DB020C9FE17"
                     {
                     "Name" = "8:System.ComponentModel.EventBasedAsync.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.ComponentModel.EventBasedAsync.dll"
@@ -1100,10 +1100,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1121,7 +1121,7 @@
                     "_358597743AFD809FD1AB10A6A72D7B9E"
                     {
                     "Name" = "8:System.Net.NetworkInformation.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Net.NetworkInformation.dll"
@@ -1131,10 +1131,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1152,7 +1152,7 @@
                     "_45CE6612019FC544C37BC7F432B8B1C0"
                     {
                     "Name" = "8:System.Reflection.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Reflection.dll"
@@ -1162,10 +1162,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1183,7 +1183,7 @@
                     "_460749E8BFD91B3B496FC23E9BE8FD06"
                     {
                     "Name" = "8:System.ObjectModel.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.ObjectModel.dll"
@@ -1193,10 +1193,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1214,7 +1214,7 @@
                     "_47156996627887271F7316FDDCD4C1D2"
                     {
                     "Name" = "8:System.Linq.Parallel.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Linq.Parallel.dll"
@@ -1224,10 +1224,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1245,7 +1245,7 @@
                     "_483E0B811F1EDDDF520FEC2937634817"
                     {
                     "Name" = "8:System.Runtime.Numerics.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Runtime.Numerics.dll"
@@ -1255,10 +1255,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1276,7 +1276,7 @@
                     "_4E57AEAA9F404885DF61EA8B18903025"
                     {
                     "Name" = "8:System.Diagnostics.Contracts.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Diagnostics.Contracts.dll"
@@ -1286,10 +1286,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1307,7 +1307,7 @@
                     "_4FEFAA26B73DECB41136FED45D7B444A"
                     {
                     "Name" = "8:System.Text.Encoding.Extensions.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Text.Encoding.Extensions.dll"
@@ -1317,10 +1317,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1338,7 +1338,7 @@
                     "_54AA30A03760B10BB07E3674B41D432D"
                     {
                     "Name" = "8:System.Diagnostics.Debug.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Diagnostics.Debug.dll"
@@ -1348,10 +1348,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1369,7 +1369,7 @@
                     "_58E9D9D501FDBC30978D775AED510C2B"
                     {
                     "Name" = "8:System.ComponentModel.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.ComponentModel.dll"
@@ -1379,10 +1379,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1400,7 +1400,7 @@
                     "_5E882AA9AFE36D5FC6EBB2DAF5FEC3A5"
                     {
                     "Name" = "8:System.Collections.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Collections.dll"
@@ -1410,10 +1410,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1431,7 +1431,7 @@
                     "_5FFFF16FDB7A80D4C4BCA16F92230689"
                     {
                     "Name" = "8:System.IO.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.IO.dll"
@@ -1441,10 +1441,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1462,7 +1462,7 @@
                     "_60B53A2DE9EBF1A478B2DBD47A578B69"
                     {
                     "Name" = "8:System.ServiceModel.Http.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.ServiceModel.Http.dll"
@@ -1472,10 +1472,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1493,7 +1493,7 @@
                     "_6CFB23A353B7FAA857EBA5A788B70223"
                     {
                     "Name" = "8:System.Runtime.InteropServices.WindowsRuntime.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Runtime.InteropServices.WindowsRuntime.dll"
@@ -1503,10 +1503,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1524,7 +1524,7 @@
                     "_7003BA95BE1CE9589C2CCCA835ED7CB6"
                     {
                     "Name" = "8:System.Reflection.Extensions.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Reflection.Extensions.dll"
@@ -1534,10 +1534,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1555,7 +1555,7 @@
                     "_71A29F65D3AFE985C358D9F78368C22C"
                     {
                     "Name" = "8:System.ServiceModel.Primitives.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.ServiceModel.Primitives.dll"
@@ -1565,10 +1565,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1606,7 +1606,7 @@
                     "_73FB048E582F6B4280FE0E61AAC31B6D"
                     {
                     "Name" = "8:System.Runtime.InteropServices.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Runtime.InteropServices.dll"
@@ -1616,10 +1616,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1637,7 +1637,7 @@
                     "_7D896C5D5EE7A444DDF1F10BD6C34591"
                     {
                     "Name" = "8:System.Net.Requests.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Net.Requests.dll"
@@ -1647,10 +1647,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1668,7 +1668,7 @@
                     "_7F18DC33E64639507D452CD038393BD1"
                     {
                     "Name" = "8:System.Linq.Expressions.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Linq.Expressions.dll"
@@ -1678,10 +1678,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1699,7 +1699,7 @@
                     "_84587C1757FCE8AD0C849ECE267402D6"
                     {
                     "Name" = "8:System.Diagnostics.Tracing.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Diagnostics.Tracing.dll"
@@ -1709,10 +1709,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1730,7 +1730,7 @@
                     "_883CA04D2862E2A949856557BA393301"
                     {
                     "Name" = "8:System.Reflection.Emit.ILGeneration.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Reflection.Emit.ILGeneration.dll"
@@ -1740,10 +1740,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1761,7 +1761,7 @@
                     "_8CFB2EC7E36D2834A0342DAAB970AB33"
                     {
                     "Name" = "8:System.Runtime.Extensions.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Runtime.Extensions.dll"
@@ -1771,10 +1771,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1823,7 +1823,7 @@
                     "_99AA32C3B8BF66BFC1878EEDCDE0684E"
                     {
                     "Name" = "8:System.Text.RegularExpressions.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Text.RegularExpressions.dll"
@@ -1833,10 +1833,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1854,7 +1854,7 @@
                     "_99B00E101B03E0FA4850F89E80E37BE6"
                     {
                     "Name" = "8:System.Threading.Tasks.Parallel.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Threading.Tasks.Parallel.dll"
@@ -1864,10 +1864,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1885,7 +1885,7 @@
                     "_9E5EB3D8B26F1E28F20F7A1F86A2A012"
                     {
                     "Name" = "8:System.Runtime.Serialization.Primitives.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Runtime.Serialization.Primitives.dll"
@@ -1895,10 +1895,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1916,7 +1916,7 @@
                     "_9E79C85C032C0A45A5EA90D038C13017"
                     {
                     "Name" = "8:System.Reflection.Emit.Lightweight.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Reflection.Emit.Lightweight.dll"
@@ -1926,10 +1926,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1947,7 +1947,7 @@
                     "_A9BE0E7C73F6C434981F95040980BDD7"
                     {
                     "Name" = "8:System.Resources.ResourceManager.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Resources.ResourceManager.dll"
@@ -1957,10 +1957,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -1978,7 +1978,7 @@
                     "_B247E81DB3D0091D5B50233FC14C723D"
                     {
                     "Name" = "8:System.ServiceModel.Security.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.ServiceModel.Security.dll"
@@ -1988,10 +1988,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2009,7 +2009,7 @@
                     "_B492970E6B0933620EE3DCF9134FC16D"
                     {
                     "Name" = "8:System.Text.Encoding.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Text.Encoding.dll"
@@ -2019,10 +2019,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2040,7 +2040,7 @@
                     "_B578D08C5A71837877F8FFD0A0BD6310"
                     {
                     "Name" = "8:System.Globalization.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Globalization.dll"
@@ -2050,10 +2050,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2071,7 +2071,7 @@
                     "_B7340A952B848B42B60BE51BFDE1B3F9"
                     {
                     "Name" = "8:System.Collections.Concurrent.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Collections.Concurrent.dll"
@@ -2081,10 +2081,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2122,7 +2122,7 @@
                     "_C0908DAE4AA57CA524D6EFAD76875814"
                     {
                     "Name" = "8:System.Runtime.Serialization.Json.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Runtime.Serialization.Json.dll"
@@ -2132,10 +2132,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2153,7 +2153,7 @@
                     "_C47A15074616C9A489C9BA43B5D3C07F"
                     {
                     "Name" = "8:System.Linq.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Linq.dll"
@@ -2163,10 +2163,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2184,7 +2184,7 @@
                     "_C6953A9452C46F2FCA02542D710B26B8"
                     {
                     "Name" = "8:System.Xml.XDocument.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Xml.XDocument.dll"
@@ -2194,10 +2194,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2215,7 +2215,7 @@
                     "_C9D4730FCD9AF88B76FA0A969E3F81F0"
                     {
                     "Name" = "8:System.Net.Primitives.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Net.Primitives.dll"
@@ -2225,10 +2225,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2246,7 +2246,7 @@
                     "_CEBF78B9088D0E54F5560B3694BB430D"
                     {
                     "Name" = "8:System.Collections.Immutable.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Collections.Immutable.dll"
@@ -2256,10 +2256,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2277,7 +2277,7 @@
                     "_D0AE974B62B06D005EDAF4F5A8371340"
                     {
                     "Name" = "8:System.ComponentModel.Annotations.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.ComponentModel.Annotations.dll"
@@ -2287,10 +2287,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2308,7 +2308,7 @@
                     "_D1D881071851A9E8C0220BCA327A6AED"
                     {
                     "Name" = "8:System.Dynamic.Runtime.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Dynamic.Runtime.dll"
@@ -2318,10 +2318,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2370,7 +2370,7 @@
                     "_D9CFD337F9A409378694D500F3B0E7FB"
                     {
                     "Name" = "8:System.Runtime.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Runtime.dll"
@@ -2380,10 +2380,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2401,7 +2401,7 @@
                     "_E4C511AA748261E26B22C7E685B6DC26"
                     {
                     "Name" = "8:System.Xml.XmlSerializer.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Xml.XmlSerializer.dll"
@@ -2411,10 +2411,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2432,7 +2432,7 @@
                     "_E4F09ABF79160E6D2C9D1F6F8E91A3E7"
                     {
                     "Name" = "8:System.Xml.ReaderWriter.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Xml.ReaderWriter.dll"
@@ -2442,10 +2442,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2463,7 +2463,7 @@
                     "_E537EF15970AED7C09AA5ABDE753F565"
                     {
                     "Name" = "8:System.Runtime.Serialization.Xml.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Runtime.Serialization.Xml.dll"
@@ -2473,10 +2473,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2507,7 +2507,7 @@
             "ReadOnly" = "11:FALSE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2525,7 +2525,7 @@
                     "_F185BA3C6D746FA7FBB68687BADF765F"
                     {
                     "Name" = "8:System.IO.Compression.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.IO.Compression.dll"
@@ -2535,10 +2535,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2556,7 +2556,7 @@
                     "_FB0754D4510E45DEB004B818BAA21A4F"
                     {
                     "Name" = "8:System.ServiceModel.NetTcp.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.ServiceModel.NetTcp.dll"
@@ -2566,10 +2566,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2587,7 +2587,7 @@
                     "_FB52DBE7A40532BD9A2C7F79847EB1EE"
                     {
                     "Name" = "8:System.Security.Principal.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Security.Principal.dll"
@@ -2597,10 +2597,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2618,7 +2618,7 @@
                     "_FCA5E28C5F84847FD33BF304C2B92B44"
                     {
                     "Name" = "8:System.Threading.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Threading.dll"
@@ -2628,10 +2628,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2649,7 +2649,7 @@
                     "_FD7593C355DFB2B4B031EFDA283060AB"
                     {
                     "Name" = "8:System.Reflection.Primitives.dll"
-                    "Attributes" = "3:512"
+                    "Attributes" = "3:513"
                     }
                 }
             "SourcePath" = "8:System.Reflection.Primitives.dll"
@@ -2659,10 +2659,10 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
+            "ReadOnly" = "11:TRUE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -2738,7 +2738,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ADMentor"
         "ProductCode" = "8:{469A980A-85DF-40FC-BEC3-ED535B7A1894}"
-        "PackageCode" = "8:{C53CB865-52AD-4168-9B67-764183FA8A4F}"
+        "PackageCode" = "8:{4484902C-4A78-4FC2-8C1D-C60C8BB3ED18}"
         "UpgradeCode" = "8:{C3B94152-7707-4F11-B2A6-7869A748BDB9}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
