@@ -53,7 +53,8 @@ namespace AdAddIn
                 new MenuItem("Locate Option/Problem", new GoToClassifierCommand(eaRepository)),
                 new MenuItem("Establish Dependencies from Problem Space", populateDependenciesCommand.AsMenuCommand()),
                 new MenuItem("Tailor Problem Space", exportProblemSpace.AsMenuCommand()),
-                new MenuItem("Create Solution from Problem Space", instantiateProblemSpace.AsMenuCommand())));
+                new MenuItem("Create Solution from Problem Space", instantiateProblemSpace.AsMenuCommand()),
+                new MenuItem("TEST", new TestFilterConfigurationCommand().AsMenuCommand())));
 
             OnEntityCreated.Add(updateMetadataCommand.AsEntityCreatedHandler());
             OnEntityCreated.Add(populateDependenciesCommand.AsEntityCreatedHandler());

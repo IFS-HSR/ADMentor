@@ -51,6 +51,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="DataAccess\ModelFilterTest.cs" />
     <Compile Include="PopulateDependencies\DependencyGraphTest.cs" />
     <Compile Include="PopulateDependencies\SolutionInstantiationGraphTests.cs" />
     <Compile Include="PopulateDependencies\InstantiateSolutionInstantiationGraphTests.cs" />

@@ -10,7 +10,7 @@ namespace Utils
     /// Encapsualtes a stateful reference or value.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Atom<T>: IReadableAtom<T>, IWriteableAtom<T>
+    public class Atom<T> : IReadableAtom<T>, IWriteableAtom<T>
     {
         private T value;
 
@@ -48,5 +48,38 @@ namespace Utils
         void Swap(Func<T, T> fn, Type sender);
 
         void Exchange(T v, Type sender);
+    }
+
+    public interface IObservableAtom<T>
+    {
+        void AddListener(Action<T> l);
+
+        void RemoveListener(Action<T> l);
+    }
+
+    public class ObservableAtom<T> : Atom<T>, IObservableAtom<T>
+    {
+        private readonly ISet<Action<T>> listeners = new HashSet<Action<T>>();
+
+        public ObservableAtom(T t) : base(t) { }
+
+        public override void Exchange(T v, Type sender)
+        {
+            base.Exchange(v, sender);
+            listeners.ForEach(l =>
+            {
+                l(v);
+            });
+        }
+
+        public void AddListener(Action<T> l)
+        {
+            listeners.Add(l);
+        }
+
+        public void RemoveListener(Action<T> l)
+        {
+            listeners.Remove(l);
+        }
     }
 }

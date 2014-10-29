@@ -129,6 +129,17 @@ namespace EAAddInFramework.DataAccess
             }
         }
 
+        public Option<Package> GetParent(Func<int, Option<Package>> getPackageById)
+        {
+            return from id in Match(
+                    (Package p) => p.EaObject.ParentID.AsOption(),
+                    (Element e) => e.EaObject.PackageID.AsOption(),
+                    (Diagram d) => d.EaObject.PackageID.AsOption(),
+                    (Connector _) => Options.None<int>())
+                   from p in getPackageById(id)
+                   select p;
+        }
+
         public Option<String> Get(TaggedValue taggedValue)
         {
             var taggedValues = Match(
@@ -182,11 +193,6 @@ namespace EAAddInFramework.DataAccess
             public override string Guid
             {
                 get { return EaObject.PackageGUID; }
-            }
-
-            public Option<Package> GetParent(Func<int, Option<Package>> getPackageById)
-            {
-                return getPackageById(EaObject.ParentID);
             }
 
             public IEnumerable<Element> Elements()
@@ -343,8 +349,9 @@ namespace EAAddInFramework.DataAccess
             {
                 if (EaObject.ClientID == thisEnd.Id)
                     return getElementById(EaObject.SupplierID);
-                else
+                else if (EaObject.SupplierID == thisEnd.Id)
                     return getElementById(EaObject.ClientID);
+                else return Options.None<Element>();
             }
 
             public bool Is(ConnectorStereotype connectorStereotype)
