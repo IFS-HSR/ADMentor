@@ -49,6 +49,17 @@ namespace ADAddInTests.DataAccess
         }
 
         [TestMethod]
+        public void ReplaceRoot()
+        {
+            var original = new ModelFilter.Any();
+            var replacement = new ModelFilter.Any();
+
+            var res = original.Replace(original, replacement);
+
+            Assert.AreEqual(replacement, res);
+        }
+
+        [TestMethod]
         public void AddAlternativeToSingelFilter()
         {
             var filter = new ModelFilter.Any();
@@ -104,6 +115,17 @@ namespace ADAddInTests.DataAccess
             Assert.AreEqual(2, children.Count());
             Assert.IsInstanceOfType(children.ElementAt(0), typeof(ModelFilter.And));
             Assert.AreEqual(alt, children.ElementAt(1));
+        }
+
+        [TestMethod]
+        public void RemoveLastButOneChild()
+        {
+            var f = new ModelFilter.Any();
+            var root = new ModelFilter.And(f, new ModelFilter.Any());
+
+            var res = root.Remove(f);
+
+            Assert.IsInstanceOfType(res, typeof(ModelFilter.Any));
         }
     }
 }

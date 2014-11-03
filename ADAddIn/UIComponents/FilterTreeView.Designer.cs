@@ -89,6 +89,7 @@
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(80, 22);
             this.btnRemove.Text = "Remove Rule";
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // FilterTreeView
             // 

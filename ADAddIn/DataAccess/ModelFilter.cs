@@ -2,6 +2,7 @@
 using EAAddInFramework.MDGBuilder;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -191,12 +192,12 @@ namespace AdAddIn.DataAccess
 
     public static class FilterExtensions
     {
-        public static Option<ModelFilter> FindParent(this ModelFilter outer, ModelFilter inner)
+        public static Option<ModelFilter> FindParent(this ModelFilter root, ModelFilter inner)
         {
-            return outer.Match<ModelFilter.Composite>().Match(
+            return root.Match<ModelFilter.Composite>().Match(
                 composite =>
                 {
-                    if (composite.Filters.Contains(inner)) return Options.Some(outer);
+                    if (composite.Filters.Contains(inner)) return Options.Some(root);
                     else return (from child in composite.Filters
                                  from parent in child.FindParent(inner)
                                  select parent).FirstOption();
@@ -204,43 +205,94 @@ namespace AdAddIn.DataAccess
                 () => Options.None<ModelFilter>());
         }
 
-        public static ModelFilter Replace(this ModelFilter outer, ModelFilter original, ModelFilter replacement)
+        public static ModelFilter Replace(this ModelFilter root, ModelFilter original, ModelFilter replacement)
         {
-            return outer.Match<ModelFilter.Composite>().Match(
-                composite =>
+            return Normalize(_Replace(root, original, replacement));
+        }
+
+        private static ModelFilter _Replace(ModelFilter root, ModelFilter original, ModelFilter replacement)
+        {
+            if (root.Equals(original))
+                return replacement;
+            else
+                return root.Match<ModelFilter.Composite>().Match(
+                    composite =>
+                    {
+                        var newChildren = composite.Filters.Select(q => _Replace(q, original, replacement));
+                        return composite.Copy(newChildren);
+                    },
+                    () =>
+                    {
+                        return root;
+                    });
+        }
+
+        private static ModelFilter Normalize(ModelFilter filter)
+        {
+            return filter.Match<ModelFilter.Composite>().Match(
+                compositeFilter =>
                 {
-                    var newChildren = composite.Filters.Select(q => q.Replace(original, replacement));
-                    return composite.Copy(newChildren);
+                    var children = filter.Match<ModelFilter.Or>().Match(
+                        or => or.Filters.Aggregate(ImmutableList.Create<ModelFilter>(), (acc, child) =>
+                                child.Match<ModelFilter.Or>().Match(
+                                    orChild => acc.AddRange((orChild).Filters),
+                                    () => acc.Add(child))),
+                        () =>
+                        {
+                            return filter.Match<ModelFilter.And>().Match(
+                                and => and.Filters.Aggregate(ImmutableList.Create<ModelFilter>(), (acc, child) =>
+                                        child.Match<ModelFilter.And>().Match(
+                                            andChild => acc.AddRange((andChild).Filters),
+                                            () => acc.Add(child))),
+                                () => { throw new ArgumentException(); });
+                        });
+
+                    var normalizedChildren = children.Select(Normalize);
+
+                    if (normalizedChildren.Count() == 1)
+                        return normalizedChildren.ElementAt(0);
+                    else
+                        return compositeFilter.Copy(normalizedChildren);
                 },
                 () =>
                 {
-                    if (outer.Equals(original))
-                        return replacement;
-                    else
-                        return outer;
+                    return filter;
                 });
         }
 
-        public static ModelFilter AddAlternative(this ModelFilter outer, ModelFilter selected, ModelFilter newAlternative)
+        public static ModelFilter AddAlternative(this ModelFilter root, ModelFilter selected, ModelFilter newAlternative)
         {
-            var parentOfSelected = outer.FindParent(selected).GetOrElse(outer);
-
-            var res = parentOfSelected.Match<ModelFilter.Or>().Select(or =>
-                or.Copy(or.Filters.Concat(new[] { newAlternative })));
-
-            return res.GetOrElse(
-                () => outer.Replace(selected, new ModelFilter.Or(selected, newAlternative)));
+            return root.Replace(selected, new ModelFilter.Or(selected, newAlternative));
         }
 
-        public static ModelFilter AddRestriction(this ModelFilter outer, ModelFilter selected, ModelFilter newRestriction)
+        public static ModelFilter AddRestriction(this ModelFilter root, ModelFilter selected, ModelFilter newRestriction)
         {
-            var parentOfSelected = outer.FindParent(selected).GetOrElse(outer);
+            return root.Replace(selected, new ModelFilter.And(selected, newRestriction));
+        }
 
-            var res = parentOfSelected.Match<ModelFilter.And>().Select(and =>
-                        and.Copy(and.Filters.Concat(new[] { newRestriction })));
+        public static ModelFilter Remove(this ModelFilter root, ModelFilter filterToRemove)
+        {
+            return Normalize(_Remove(root, filterToRemove));
+        }
 
-            return res.GetOrElse(
-                () => outer.Replace(selected, new ModelFilter.And(selected, newRestriction)));
+        private static ModelFilter _Remove(ModelFilter root, ModelFilter filterToRemove)
+        {
+            return root.Match<ModelFilter.Composite>().Match(
+                comp =>
+                {
+                    var newChildren = comp.Filters.SelectMany<ModelFilter, ModelFilter>(f =>
+                    {
+                        if (f.Equals(filterToRemove))
+                            return new ModelFilter[] { };
+                        else
+                            return new[] { _Remove(f, filterToRemove) };
+                    });
+                    return comp.Copy(newChildren);
+                },
+                () =>
+                {
+                    return root;
+                });
         }
     }
 }

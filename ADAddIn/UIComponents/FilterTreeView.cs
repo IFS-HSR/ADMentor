@@ -14,27 +14,46 @@ namespace AdAddIn.UIComponents
 {
     public partial class FilterTreeView : UserControl
     {
-        private Atom<Option<ModelFilter>> SelectedFilter = new Atom<Option<ModelFilter>>(Options.None<ModelFilter>());
+        private ObservableAtom<Option<ModelFilter>> SelectedFilter = new ObservableAtom<Option<ModelFilter>>(Options.None<ModelFilter>());
 
         public FilterTreeView()
         {
             InitializeComponent();
 
+            SelectedFilter.AddListener(OnSelectedFilterChanged);
+
             Filter = new ObservableAtom<ModelFilter>(new ModelFilter.Any());
             Filter.AddListener(OnFilterChanged);
             UpdateTree(Filter.Val);
 
-            NewFilter = new Atom<Func<ModelFilter>>(() => new ModelFilter.Any());
+            CreateNewFilter = () => Options.None<ModelFilter>();
         }
 
         public ObservableAtom<ModelFilter> Filter { get; private set; }
+
+        public Func<Option<ModelFilter>> CreateNewFilter { get; private set; }
 
         private void OnFilterChanged(ModelFilter filter)
         {
             UpdateTree(filter);
         }
 
-        public Atom<Func<ModelFilter>> NewFilter { get; private set; }
+        private void OnSelectedFilterChanged(Option<ModelFilter> selected)
+        {
+            selected.Match(
+                f =>
+                {
+                    btnAddAlternative.Enabled = true;
+                    btnAddRestriction.Enabled = true;
+                    btnRemove.Enabled = true;
+                },
+                () =>
+                {
+                    btnAddAlternative.Enabled = false;
+                    btnAddRestriction.Enabled = false;
+                    btnRemove.Enabled = false;
+                });
+        }
 
         private void UpdateTree(ModelFilter filter)
         {
@@ -72,21 +91,32 @@ namespace AdAddIn.UIComponents
         {
             SelectedFilter.Val.Do(selectedFilter =>
             {
-                var alternative = NewFilter.Val();
-                var newFilter = Filter.Val.AddAlternative(selectedFilter, alternative);
-
-                Filter.Exchange(newFilter, GetType());
+                CreateNewFilter().Match(newFilter =>
+                {
+                    Filter.Swap(f => f.AddAlternative(selectedFilter, newFilter), GetType());
+                    SelectedFilter.Exchange(Options.None<ModelFilter>(), GetType());
+                }, () => { });
             });
         }
 
-        private void btnAddRestriction_Click(object sender, EventArgs e)
+        private void btnAddRestriction_Click(object _, EventArgs __)
         {
             SelectedFilter.Val.Do(selectedFilter =>
             {
-                var alternative = NewFilter.Val();
-                var newFilter = Filter.Val.AddRestriction(selectedFilter, alternative);
+                CreateNewFilter().Match(newFilter =>
+                {
+                    Filter.Swap(f => f.AddRestriction(selectedFilter, newFilter), GetType());
+                    SelectedFilter.Exchange(Options.None<ModelFilter>(), GetType());
+                }, () => { });
+            });
+        }
 
-                Filter.Exchange(newFilter, GetType());
+        private void btnRemove_Click(object _, EventArgs __)
+        {
+            SelectedFilter.Val.Do(selectedFilter =>
+            {
+                Filter.Swap(f => f.Remove(selectedFilter), GetType());
+                SelectedFilter.Exchange(Options.None<ModelFilter>(), GetType());
             });
         }
     }
