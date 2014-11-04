@@ -19,6 +19,8 @@ namespace EAAddInFramework.MDGBuilder
     public interface IDefaultableTaggedValueType<T> : ITaggedValueType
     {
         IDefaultableTaggedValueType<T> WithDefaultValue(T defaultValue);
+
+        Option<T> DefaultValue { get; }
     }
 
     public static class TaggedValueTypes
@@ -111,7 +113,7 @@ namespace EAAddInFramework.MDGBuilder
 
         public IEnumerable<T> Values { get; private set; }
 
-        public Option<T> DefaultValue { get; set; }
+        public Option<T> DefaultValue { get; private set; }
 
         public IDefaultableTaggedValueType<T> WithDefaultValue(T defaultValue)
         {

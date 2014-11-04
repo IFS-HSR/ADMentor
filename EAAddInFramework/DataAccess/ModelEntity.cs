@@ -144,12 +144,42 @@ namespace EAAddInFramework.DataAccess
         {
             var taggedValues = Match(
                 (Package p) => p.EaObject.Element.TaggedValues.Cast<EA.TaggedValue>(),
-                (Diagram d) => new List<EA.TaggedValue>().AsEnumerable(),
+                (Diagram d) => Enumerable.Empty<EA.TaggedValue>(),
                 (Element e) => e.EaObject.TaggedValues.Cast<EA.TaggedValue>(),
                 (Connector c) => c.EaObject.TaggedValues.Cast<EA.TaggedValue>());
             return (from tv in taggedValues
                     where tv.Name.Equals(taggedValue.Name)
                     select tv.Value).FirstOption();
+        }
+
+        public void Set(ITaggedValue taggedValue, String value)
+        {
+            this.Match(
+                (Package p) => p.EaObject.Element.TaggedValues,
+                (Diagram d) => null,
+                (Element e) => e.EaObject.TaggedValues,
+                (Connector c) => c.EaObject.TaggedValues)
+            .AsOption()
+            .Do(taggedValues =>
+            {
+                (from tv in taggedValues.Cast<EA.TaggedValue>()
+                 where tv.Name.Equals(taggedValue.Name)
+                 select tv)
+                .FirstOption()
+                .Match(
+                    tv =>
+                    {
+                        tv.Value = value;
+                        tv.Update();
+                    },
+                    () =>
+                    {
+                        var tv = taggedValues.AddNew(taggedValue.Name, "") as EA.TaggedValue;
+                        tv.Value = value;
+                        tv.Update();
+                        taggedValues.Refresh();
+                    });
+            });
         }
 
         public IImmutableSet<String> Keywords
@@ -167,6 +197,11 @@ namespace EAAddInFramework.DataAccess
                             .Select(w => w.Trim().ToLower())
                         select keyword).ToImmutableHashSet();
             }
+        }
+
+        public bool Is(IStereotype stype)
+        {
+            return Stereotype.Equals(stype.Name) && Type.Equals(stype.Type.Name);
         }
 
         public override string ToString()
@@ -195,7 +230,7 @@ namespace EAAddInFramework.DataAccess
                 get { return EaObject.PackageGUID; }
             }
 
-            public Element Element()
+            public Element AssociatedElement()
             {
                 return Wrapper.Wrap(EaObject.Element);
             }
@@ -281,35 +316,9 @@ namespace EAAddInFramework.DataAccess
                        select Wrapper.Wrap(c);
             }
 
-            public bool Is(IStereotype stype)
-            {
-                return Stereotype.Equals(stype.Name) && Type.Equals(stype.Type.Name);
-            }
-
             public bool IsNew()
             {
                 return DateTime.Now - EaObject.Created < TimeSpan.FromSeconds(1);
-            }
-
-            public void Set(ITaggedValue taggedValue, String value)
-            {
-                (from tv in EaObject.TaggedValues.Cast<EA.TaggedValue>()
-                 where tv.Name.Equals(taggedValue.Name)
-                 select tv)
-                    .FirstOption()
-                    .Match(
-                        tv =>
-                        {
-                            tv.Value = value;
-                            tv.Update();
-                        },
-                        () =>
-                        {
-                            var tv = EaObject.TaggedValues.AddNew(taggedValue.Name, "") as EA.TaggedValue;
-                            tv.Value = value;
-                            tv.Update();
-                            EaObject.TaggedValues.Refresh();
-                        });
             }
         }
 

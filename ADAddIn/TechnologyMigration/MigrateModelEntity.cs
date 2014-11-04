@@ -22,66 +22,48 @@ namespace AdAddIn.TechnologyMigration
 
         public Unit Execute(ModelEntity e)
         {
-            GetModelId(e).Do(modelId =>
+            GetOutDatedModelId(e).Do(modelId =>
             {
-                AddRefinementLevelTag(e);
+                AddMissingTags(e);
                 UpdateModelId(e);
             });
 
             return Unit.Instance;
         }
 
-        private void AddRefinementLevelTag(ModelEntity entity)
+        private void AddMissingTags(ModelEntity entity)
         {
-            var stereotypesWithRefinementLevel =
-                from stype in Technology.Stereotypes
-                where stype.TaggedValues.Contains(Common.RefinementLevel)
-                select stype;
+            var missingTags = from stype in Technology.Stereotypes
+                              where entity.Is(stype)
+                              from tag in stype.TaggedValues
+                              where !entity.Get(tag).IsDefined
+                              select tag;
 
-            Func<ModelEntity.Element, Unit> updateElement = element =>
+            missingTags.ForEach(missingTag =>
             {
-                if (stereotypesWithRefinementLevel.Any(stype => element.Is(stype)))
-                {
-                    if (!element.Get(Common.RefinementLevel).IsDefined)
-                    {
-                        element.Set(Common.RefinementLevel, "");
-                    }
-                }
-                return Unit.Instance;
-            };
+                var defaultValue = missingTag.Match<IDefaultableTaggedValueType<String>>().Match(
+                    defaultableTag => defaultableTag.DefaultValue.GetOrElse(""),
+                    () => "");
 
-            entity.Match(
-                (ModelEntity.Element element) => updateElement(element),
-                (ModelEntity.Package package) => updateElement(package.Element()),
-                () => Unit.Instance);
+                entity.Set(missingTag, defaultValue);
+            });
         }
 
         private void UpdateModelId(ModelEntity entity)
         {
-
-            Func<ModelEntity.Element, Unit> updateElement = element =>
-            {
-                element.Set(Technology.ModelIdTag, Technology.ModelId.ToString());
-                return Unit.Instance;
-            };
-
-            entity.Match(
-                (ModelEntity.Element element) => updateElement(element),
-                (ModelEntity.Package package) => updateElement(package.Element()),
-                () => Unit.Instance);
+            entity.Set(Technology.ModelIdTag, Technology.ModelId.ToString());
         }
 
         public bool CanExecute(ModelEntity e)
         {
-            return GetModelId(e).Match(
-                mid => mid.IsPredecessorOf(Technology.ModelId),
-                () => false);
+            return GetOutDatedModelId(e).IsDefined;
         }
 
-        private Option<ModelId> GetModelId(ModelEntity e)
+        private Option<ModelId> GetOutDatedModelId(ModelEntity e)
         {
             return from raw in e.Get(Technology.ModelIdTag)
                    from modelId in ModelId.Parse(raw)
+                   where modelId.IsPredecessorOf(Technology.ModelId)
                    select modelId;
         }
 
