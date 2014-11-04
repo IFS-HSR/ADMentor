@@ -250,7 +250,7 @@ namespace Utils
 
         public static Option<T> Match<T>(this object o) where T : class
         {
-            if (o is T)
+            if (o != null && o is T)
                 return Options.Some(o as T);
             else
                 return Options.None<T>();
