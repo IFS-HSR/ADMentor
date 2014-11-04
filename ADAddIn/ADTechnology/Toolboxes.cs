@@ -32,7 +32,8 @@ namespace AdAddIn.ADTechnology
                     description: "",
                     stereotypes: new []{
                         ProblemSpace.Problem,
-                        ProblemSpace.Option
+                        ProblemSpace.Option,
+                        ProblemSpace.ProblemSpacePackage
                     }),
                 ProblemSpaceConncetorsPage
             }
@@ -49,7 +50,8 @@ namespace AdAddIn.ADTechnology
                     description: "",
                     stereotypes: new []{
                         SolutionSpace.ProblemOccurrence,
-                        SolutionSpace.OptionOccurrence
+                        SolutionSpace.OptionOccurrence,
+                        SolutionSpace.SolutionSpacePackage
                     }),
                 ProblemSpaceConncetorsPage,
                 new ToolboxPage(

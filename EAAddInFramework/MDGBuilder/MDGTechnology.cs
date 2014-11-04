@@ -50,8 +50,8 @@ namespace EAAddInFramework.MDGBuilder
             get
             {
                 return from s in Stereotypes
-                       where s is ConnectorStereotype
-                       select s as ConnectorStereotype;
+                       from c in s.Match<ConnectorStereotype>()
+                       select c;
             }
         }
 
@@ -60,8 +60,8 @@ namespace EAAddInFramework.MDGBuilder
             get
             {
                 return from s in Stereotypes
-                       where s is ElementStereotype
-                       select s as ElementStereotype;
+                       from e in s.Match<ElementStereotype>()
+                       select e;
             }
         }
 
@@ -82,7 +82,7 @@ namespace EAAddInFramework.MDGBuilder
                         from t in s.TaggedValues
                         select t)
                         .Distinct(new TaggedValueComparer())
-                        .Concat(new[]{GetModelIdTag()});
+                        .Concat(new[] { GetModelIdTag() });
             }
         }
 

@@ -152,6 +152,8 @@
     <EmbeddedResource Include="ADTechnology\ProblemSpaceTemplate.xml" />
     <EmbeddedResource Include="ADTechnology\SolutionSpaceTemplate.xml" />
     <EmbeddedResource Include="ADTechnology\DemoTemplate.xml" />
+    <EmbeddedResource Include="ADTechnology\ProblemSpacePackage.bmp" />
+    <EmbeddedResource Include="ADTechnology\SolutionSpacePackage.bmp" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

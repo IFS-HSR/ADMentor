@@ -66,5 +66,13 @@ namespace AdAddIn.ADTechnology
             taggedValues: new[]{
                 Common.IntellectualPropertyRights
             });
+
+        public static readonly PackageStereotype ProblemSpacePackage = new PackageStereotype(
+            name: "adProblemSpace",
+            displayName: "ProblemSpace",
+            icon: new Icon("AdAddIn.ADTechnology.ProblemSpacePackage.bmp"),
+            taggedValues: new[]{
+                Common.IntellectualPropertyRights
+            });
     }
 }

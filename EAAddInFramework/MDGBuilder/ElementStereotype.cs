@@ -86,6 +86,12 @@ namespace EAAddInFramework.MDGBuilder
         }
     }
 
+    public class PackageStereotype : ElementStereotype
+    {
+        public PackageStereotype(String name, String displayName, Icon icon = null, IEnumerable<ITaggedValue> taggedValues = null)
+            : base(name: name, displayName: displayName, type: ElementType.Package, icon: icon, taggedValues: taggedValues) { }
+    }
+
     public class ElementType : Enumeration
     {
         public static readonly ElementType Action = new ElementType("Action");
@@ -95,9 +101,12 @@ namespace EAAddInFramework.MDGBuilder
         public static readonly ElementType Event = new ElementType("Event");
         public static readonly ElementType Issue = new ElementType("Issue");
         public static readonly ElementType Object = new ElementType("Object");
+        public static readonly ElementType Package = new ElementType("Package");
         public static readonly ElementType Requirement = new ElementType("Requirement");
 
-        private ElementType(String name) : base(name) {
+        private ElementType(String name)
+            : base(name)
+        {
             DefaultStereotype = new ElementStereotype(name: "", displayName: Name, type: this);
         }
 

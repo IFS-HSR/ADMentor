@@ -140,5 +140,10 @@ namespace AdAddIn.ADTechnology
                     select String.Format(@"if(HasTag(""{0}"", ""{1}"")) {{ SetFillColor({2}, {3}, {4}); }}",
                         tagName, p.Key, p.Value.R, p.Value.G, p.Value.B)).Join("\n");
         }
+
+        public static readonly PackageStereotype SolutionSpacePackage = new PackageStereotype(
+            name: "adSolutionSpace",
+            displayName: "SolutionSpace",
+            icon: new Icon("AdAddIn.ADTechnology.SolutionSpacePackage.bmp"));
     }
 }
