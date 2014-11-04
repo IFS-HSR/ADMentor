@@ -127,5 +127,15 @@ namespace ADAddInTests.DataAccess
 
             Assert.IsInstanceOfType(res, typeof(ModelFilter.Any));
         }
+
+        [TestMethod]
+        public void RemoveRoot()
+        {
+            var root = new ModelFilter.And(new ModelFilter.Any(), new ModelFilter.Any());
+
+            var res = root.Remove(root);
+
+            Assert.IsInstanceOfType(res, typeof(ModelFilter.Any));
+        }
     }
 }

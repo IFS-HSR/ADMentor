@@ -28,25 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.filterTreeView1 = new AdAddIn.UIComponents.FilterTreeView();
+            this.filterTreeView = new AdAddIn.UIComponents.FilterTreeView();
             this.SuspendLayout();
             // 
-            // filterTreeView1
+            // filterTreeView
             // 
-            this.filterTreeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.filterTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.filterTreeView1.Location = new System.Drawing.Point(12, 12);
-            this.filterTreeView1.Name = "filterTreeView1";
-            this.filterTreeView1.Size = new System.Drawing.Size(530, 353);
-            this.filterTreeView1.TabIndex = 0;
+            this.filterTreeView.Location = new System.Drawing.Point(12, 12);
+            this.filterTreeView.Name = "filterTreeView";
+            this.filterTreeView.Size = new System.Drawing.Size(530, 353);
+            this.filterTreeView.TabIndex = 0;
             // 
             // ElementFilterConfiguration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(554, 377);
-            this.Controls.Add(this.filterTreeView1);
+            this.Controls.Add(this.filterTreeView);
             this.Name = "ElementFilterConfiguration";
             this.Text = "ElementFilterConfiguration";
             this.ResumeLayout(false);
@@ -55,6 +55,6 @@
 
         #endregion
 
-        private AdAddIn.UIComponents.FilterTreeView filterTreeView1;
+        private AdAddIn.UIComponents.FilterTreeView filterTreeView;
     }
 }

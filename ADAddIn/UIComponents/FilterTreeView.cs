@@ -31,7 +31,7 @@ namespace AdAddIn.UIComponents
 
         public ObservableAtom<ModelFilter> Filter { get; private set; }
 
-        public Func<Option<ModelFilter>> CreateNewFilter { get; private set; }
+        public Func<Option<ModelFilter>> CreateNewFilter { get; set; }
 
         private void OnFilterChanged(ModelFilter filter)
         {

@@ -73,66 +73,27 @@ namespace AdAddIn.DataAccess
             public override String Name { get { return "Any"; } }
         }
 
-        public class Is : ModelFilter
+        public class BinaryFilter : ModelFilter
         {
-            public Is(Field<String> field, String value)
+            public BinaryFilter(Field<String> field, Operator op, String value)
             {
                 Field = field;
                 Value = value;
+                Operator = op;
             }
 
-            public Field<String> Field { get; private set; }
-
-            public String Value { get; private set; }
-
-            public override bool Accept(ModelEntity e)
-            {
-                return Value.Equals(Field.GetValue(e));
-            }
-
-            public override String Name { get { return String.Format("{0} is {1}", Field.Name, Value); } }
-        }
-
-        public class Contains : ModelFilter
-        {
-            public Contains(Field<IEnumerable<String>> field, String value)
-            {
-                Field = field;
-                Value = value;
-            }
-
-            public Field<IEnumerable<String>> Field { get; private set; }
+            public Field<string> Field { get; private set; }
 
             public string Value { get; private set; }
 
-            public override bool Accept(ModelEntity e)
-            {
-                var fieldValues = Field.GetValue(e);
-                return fieldValues.Any(v => v.Equals(Value));
-            }
-
-            public override String Name { get { return String.Format("{0} contains {1}", Field.Name, Value); } }
-        }
-
-        public class Matches : ModelFilter
-        {
-            public Matches(Field<String> field, String value)
-            {
-                Field = field;
-                Value = value;
-            }
-
-            public Field<String> Field { get; private set; }
-
-            public String Value { get; private set; }
+            public Operator Operator { get; private set; }
 
             public override bool Accept(ModelEntity e)
             {
-                var pattern = new Regex(Value, RegexOptions.IgnoreCase);
-                return pattern.IsMatch(Field.GetValue(e));
+                return Operator.Apply(Value, Field.GetValue(e));
             }
 
-            public override String Name { get { return String.Format("{0} matches {1}", Field.Name, Value); } }
+            public override string Name { get { return String.Format("{0} {1} \"{2}\"", Field, Operator, Value); } }
         }
     }
 
@@ -140,7 +101,12 @@ namespace AdAddIn.DataAccess
     {
         public abstract T GetValue(ModelEntity e);
 
-        public abstract String Name { get; }
+        public virtual String Name { get { return GetType().Name; } }
+
+        public override string ToString()
+        {
+            return Name;
+        }
 
         public class ElementName : Field<string>
         {
@@ -156,10 +122,16 @@ namespace AdAddIn.DataAccess
         {
             public override string GetValue(ModelEntity e)
             {
+                return e.Type;
+            }
+        }
+
+        public class Stereotype : Field<String>
+        {
+            public override string GetValue(ModelEntity e)
+            {
                 return e.Stereotype;
             }
-
-            public override String Name { get { return "Type"; } }
         }
 
         public class Keywords : Field<IEnumerable<String>>
@@ -168,8 +140,6 @@ namespace AdAddIn.DataAccess
             {
                 return e.Keywords;
             }
-
-            public override String Name { get { return "Keywords"; } }
         }
 
         public class TaggedValueField : Field<String>
@@ -187,6 +157,33 @@ namespace AdAddIn.DataAccess
             }
 
             public override String Name { get { return Tag.Name; } }
+        }
+    }
+
+    public abstract class Operator
+    {
+        public abstract bool Apply(String expected, String actual);
+
+        public override string ToString()
+        {
+            return GetType().Name;
+        }
+
+        public class Is : Operator
+        {
+            public override bool Apply(String expected, String actual)
+            {
+                return expected.Equals(actual);
+            }
+        }
+
+        public class Matches : Operator
+        {
+            public override bool Apply(string expected, string actual)
+            {
+                var pattern = new Regex(expected, RegexOptions.IgnoreCase);
+                return pattern.IsMatch(actual);
+            }
         }
     }
 
@@ -277,22 +274,25 @@ namespace AdAddIn.DataAccess
 
         private static ModelFilter _Remove(ModelFilter root, ModelFilter filterToRemove)
         {
-            return root.Match<ModelFilter.Composite>().Match(
-                comp =>
-                {
-                    var newChildren = comp.Filters.SelectMany<ModelFilter, ModelFilter>(f =>
+            if (filterToRemove.Equals(root))
+                return new ModelFilter.Any();
+            else
+                return root.Match<ModelFilter.Composite>().Match(
+                    comp =>
                     {
-                        if (f.Equals(filterToRemove))
-                            return new ModelFilter[] { };
-                        else
-                            return new[] { _Remove(f, filterToRemove) };
+                        var newChildren = comp.Filters.SelectMany<ModelFilter, ModelFilter>(f =>
+                        {
+                            if (f.Equals(filterToRemove))
+                                return new ModelFilter[] { };
+                            else
+                                return new[] { _Remove(f, filterToRemove) };
+                        });
+                        return comp.Copy(newChildren);
+                    },
+                    () =>
+                    {
+                        return root;
                     });
-                    return comp.Copy(newChildren);
-                },
-                () =>
-                {
-                    return root;
-                });
         }
     }
 }

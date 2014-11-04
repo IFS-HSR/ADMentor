@@ -164,6 +164,20 @@ namespace Utils
                 });
         }
 
+        public static R Match<T, U, R>(this Option<Tuple<T, U>> opt, Func<T, U, R> then, Func<R> els)
+        {
+            return opt.Match(
+                v => then(v.Item1, v.Item2),
+                () => els());
+        }
+
+        public static void Match<T, U>(this Option<Tuple<T, U>> opt, Action<T, U> then, Action els)
+        {
+            opt.Match(
+                (t, u) => { then(t, u); return Unit.Instance; },
+                () => { els(); return Unit.Instance; });
+        }
+
         public static T GetOrElse<T>(this Option<T> opt, T els)
         {
             return opt.Match(
@@ -240,6 +254,13 @@ namespace Utils
                 return Options.Some(o as T);
             else
                 return Options.None<T>();
+        }
+
+        public static Option<Tuple<T, U>> Zip<T, U>(this Option<T> lhs, Option<U> rhs)
+        {
+            return from l in lhs
+                   from r in rhs
+                   select Tuple.Create(l, r);
         }
     }
 

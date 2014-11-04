@@ -77,6 +77,12 @@
     <Compile Include="DataAccess\ModelFilter.cs" />
     <Compile Include="DataAccess\ProblemSpaceEntities.cs" />
     <Compile Include="DataAccess\SolutionEntities.cs" />
+    <Compile Include="ExportProblemSpace\CreateFilterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExportProblemSpace\CreateFilterForm.Designer.cs">
+      <DependentUpon>CreateFilterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExportProblemSpace\ElementFilterConfiguration.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,6 +158,9 @@
     </Content>
     <EmbeddedResource Include="ADTechnology\Option.bmp" />
     <EmbeddedResource Include="ADTechnology\Problem.bmp" />
+    <EmbeddedResource Include="ExportProblemSpace\CreateFilterForm.resx">
+      <DependentUpon>CreateFilterForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ExportProblemSpace\ElementFilterConfiguration.resx">
       <DependentUpon>ElementFilterConfiguration.cs</DependentUpon>
     </EmbeddedResource>
