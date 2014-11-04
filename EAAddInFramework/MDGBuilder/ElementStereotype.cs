@@ -88,8 +88,9 @@ namespace EAAddInFramework.MDGBuilder
 
     public class PackageStereotype : ElementStereotype
     {
-        public PackageStereotype(String name, String displayName, Icon icon = null, IEnumerable<ITaggedValue> taggedValues = null)
-            : base(name: name, displayName: displayName, type: ElementType.Package, icon: icon, taggedValues: taggedValues) { }
+        public PackageStereotype(String name, String displayName, Icon icon = null, IEnumerable<ITaggedValue> taggedValues = null,
+            Color? backgroundColor = null)
+            : base(name: name, displayName: displayName, type: ElementType.Package, icon: icon, taggedValues: taggedValues, backgroundColor: backgroundColor) { }
     }
 
     public class ElementType : Enumeration

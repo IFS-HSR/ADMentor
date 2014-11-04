@@ -58,5 +58,9 @@ namespace AdAddIn.ADTechnology
         public static readonly TaggedValue StakeholderRoles = new TaggedValue(
             name: "Stakeholder Roles",
             type: TaggedValueTypes.String.WithDefaultValue("Any"));
+
+        public static readonly TaggedValue RefinementLevel = new TaggedValue(
+            name: "Refinement Level",
+            type: TaggedValueTypes.String);
     }
 }

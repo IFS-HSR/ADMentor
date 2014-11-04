@@ -144,6 +144,7 @@ namespace AdAddIn.ADTechnology
         public static readonly PackageStereotype SolutionSpacePackage = new PackageStereotype(
             name: "adSolutionSpace",
             displayName: "SolutionSpace",
-            icon: new Icon("AdAddIn.ADTechnology.SolutionSpacePackage.bmp"));
+            icon: new Icon("AdAddIn.ADTechnology.SolutionSpacePackage.bmp"),
+            backgroundColor: Color.PaleGoldenrod);
     }
 }
