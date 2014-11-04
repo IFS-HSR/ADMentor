@@ -11,15 +11,19 @@ namespace EAAddInFramework.MDGBuilder
 {
     public class MDGTechnology
     {
-        public MDGTechnology(String id, String name, String version, String description = "",
+        public MDGTechnology(String id, String name, String version, int modelVersion, String description = "",
             IEnumerable<Diagram> diagrams = null, IEnumerable<ModelTemplate> modelTemplates = null)
         {
             ID = id;
             Name = name;
             Version = version;
+            ModelVersion = modelVersion;
             Description = description;
             Diagrams = diagrams ?? new Diagram[] { };
             ModelTemplates = modelTemplates ?? new ModelTemplate[] { };
+
+            ModelId = new ModelId(ID, ModelVersion);
+            ModelIdTag = new TaggedValue("XModelId", TaggedValueTypes.Const(ModelId.ToString()));
         }
 
         public string ID { get; private set; }
@@ -27,6 +31,12 @@ namespace EAAddInFramework.MDGBuilder
         public string Name { get; private set; }
 
         public string Version { get; private set; }
+
+        public int ModelVersion { get; private set; }
+
+        public ModelId ModelId { get; private set; }
+
+        public ITaggedValue ModelIdTag { get; private set; }
 
         public string Description { get; private set; }
 
@@ -82,7 +92,7 @@ namespace EAAddInFramework.MDGBuilder
                         from t in s.TaggedValues
                         select t)
                         .Distinct(new TaggedValueComparer())
-                        .Concat(new[] { GetModelIdTag() });
+                        .Concat(new[] { ModelIdTag });
             }
         }
 
@@ -105,8 +115,6 @@ namespace EAAddInFramework.MDGBuilder
                 new XAttribute("name", "Property Types"), new XAttribute("table", "t_propertytypes"), new XAttribute("filter", "Property='#Property#'")
             }.Concat(TaggedValues.Select(tv => tv.ToXmlType()));
 
-            var versionTag = GetModelIdTag();
-
             return new XDocument(
                 new XElement("MDG.Technology", new XAttribute("version", "1.0"),
                     new XElement("Documentation", new XAttribute("id", ID), new XAttribute("name", Name), new XAttribute("version", Version), new XAttribute("notes", Description)),
@@ -116,7 +124,7 @@ namespace EAAddInFramework.MDGBuilder
                             new XElement("Content",
                                 new XElement("Stereotypes",
                                     from s in Stereotypes
-                                    select s.ToXml(versionTag)),
+                                    select s.ToXml(ModelIdTag)),
                                 new XElement("QuickLink", new XAttribute("data", getQuickLinkData()))))),
                     new XElement("TaggedValueTypes",
                         new XElement("RefData", new XAttribute("version", "1.0"), new XAttribute("exporter", "EA.25"),
@@ -145,18 +153,6 @@ namespace EAAddInFramework.MDGBuilder
                                    from ql in c.GetQuickLinkEntries()
                                    select ql;
             return quickLinkEntries.Join("\n");
-        }
-
-        internal String GetModelId()
-        {
-            return String.Format("{0}:{1}", ID, Version);
-        }
-
-        public static readonly String ModelIdTagName = "XModelId";
-
-        private ITaggedValue GetModelIdTag()
-        {
-            return new TaggedValue(ModelIdTagName, TaggedValueTypes.Const(GetModelId()));
         }
     }
 }

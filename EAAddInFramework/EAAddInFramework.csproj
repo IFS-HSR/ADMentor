@@ -51,6 +51,7 @@
     <Compile Include="DataAccess\EntityWrapper.cs" />
     <Compile Include="DataAccess\ModelEntity.cs" />
     <Compile Include="DataAccess\ModelEntityRepository.cs" />
+    <Compile Include="MDGBuilder\ModelId.cs" />
     <Compile Include="RepositoryUnderTest.cs" />
     <Compile Include="EAAddIn.cs" />
     <Compile Include="EventManager.cs" />

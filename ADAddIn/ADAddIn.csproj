@@ -129,6 +129,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="TechnologyMigration\MigrateModelEntity.cs" />
     <Compile Include="UIComponents\FilterTreeView.cs">
       <SubType>UserControl</SubType>
     </Compile>

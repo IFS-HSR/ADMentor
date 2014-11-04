@@ -140,7 +140,7 @@ namespace EAAddInFramework.DataAccess
                    select p;
         }
 
-        public Option<String> Get(TaggedValue taggedValue)
+        public Option<String> Get(ITaggedValue taggedValue)
         {
             var taggedValues = Match(
                 (Package p) => p.EaObject.Element.TaggedValues.Cast<EA.TaggedValue>(),
@@ -193,6 +193,11 @@ namespace EAAddInFramework.DataAccess
             public override string Guid
             {
                 get { return EaObject.PackageGUID; }
+            }
+
+            public Element Element()
+            {
+                return Wrapper.Wrap(EaObject.Element);
             }
 
             public IEnumerable<Element> Elements()
@@ -276,7 +281,7 @@ namespace EAAddInFramework.DataAccess
                        select Wrapper.Wrap(c);
             }
 
-            public bool Is(ElementStereotype stype)
+            public bool Is(IStereotype stype)
             {
                 return Stereotype.Equals(stype.Name) && Type.Equals(stype.Type.Name);
             }
@@ -286,10 +291,10 @@ namespace EAAddInFramework.DataAccess
                 return DateTime.Now - EaObject.Created < TimeSpan.FromSeconds(1);
             }
 
-            public void Set(TaggedValue taggedValue, String value)
+            public void Set(ITaggedValue taggedValue, String value)
             {
                 (from tv in EaObject.TaggedValues.Cast<EA.TaggedValue>()
-                 where tv.Name == taggedValue.Name
+                 where tv.Name.Equals(taggedValue.Name)
                  select tv)
                     .FirstOption()
                     .Match(

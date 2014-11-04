@@ -15,6 +15,7 @@ using Utils;
 using AdAddIn.InstantiateProblemSpace;
 using AdAddIn.ExportProblemSpace;
 using EAAddInFramework.DataAccess;
+using AdAddIn.TechnologyMigration;
 
 namespace AdAddIn
 {
@@ -54,6 +55,7 @@ namespace AdAddIn
                 new MenuItem("Establish Dependencies from Problem Space", populateDependenciesCommand.AsMenuCommand()),
                 new MenuItem("Tailor Problem Space", exportProblemSpace.AsMenuCommand()),
                 new MenuItem("Create Solution from Problem Space", instantiateProblemSpace.AsMenuCommand()),
+                new MenuItem("Migrate Element to Current Model Version", new MigrateModelEntity(technology).AsMenuCommand()),
                 new MenuItem("TEST", new TestFilterConfigurationCommand().AsMenuCommand())));
 
             OnEntityCreated.Add(updateMetadataCommand.AsEntityCreatedHandler());
