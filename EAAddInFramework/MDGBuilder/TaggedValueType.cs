@@ -16,7 +16,12 @@ namespace EAAddInFramework.MDGBuilder
         Option<String> CreateTypeDescription();
     }
 
-    public interface IDefaultableTaggedValueType<T> : ITaggedValueType
+    public interface IDefaultableTaggedValueType : ITaggedValueType
+    {
+        Option<String> DefaultValueAsString { get; }
+    }
+
+    public interface IDefaultableTaggedValueType<T> : IDefaultableTaggedValueType
     {
         IDefaultableTaggedValueType<T> WithDefaultValue(T defaultValue);
 
@@ -81,6 +86,14 @@ namespace EAAddInFramework.MDGBuilder
 
         public Option<T> DefaultValue { get; private set; }
 
+        public Option<string> DefaultValueAsString
+        {
+            get
+            {
+                return DefaultValue.Select(v => v.ToString());
+            }
+        }
+
         public IDefaultableTaggedValueType<T> WithDefaultValue(T defaultValue)
         {
             return new PrimitiveType<T>(TypeName, defaultValue.AsOption());
@@ -114,6 +127,14 @@ namespace EAAddInFramework.MDGBuilder
         public IEnumerable<T> Values { get; private set; }
 
         public Option<T> DefaultValue { get; private set; }
+
+        public Option<string> DefaultValueAsString
+        {
+            get
+            {
+                return DefaultValue.Select(v => v.ToString());
+            }
+        }
 
         public IDefaultableTaggedValueType<T> WithDefaultValue(T defaultValue)
         {

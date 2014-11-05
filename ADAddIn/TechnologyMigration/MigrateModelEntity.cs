@@ -41,11 +41,11 @@ namespace AdAddIn.TechnologyMigration
 
             missingTags.ForEach(missingTag =>
             {
-                var defaultValue = missingTag.Match<IDefaultableTaggedValueType<String>>().Match(
-                    defaultableTag => defaultableTag.DefaultValue.GetOrElse(""),
-                    () => "");
+                var defaultValue = (from defaultableType in missingTag.Type.Match<IDefaultableTaggedValueType>()
+                                    from dv in defaultableType.DefaultValueAsString
+                                    select dv);
 
-                entity.Set(missingTag, defaultValue);
+                entity.Set(missingTag, defaultValue.GetOrElse(""));
             });
         }
 
