@@ -39,6 +39,7 @@ namespace AdAddIn
         {
             var entityWrapper = new AdEntityWrapper();
             var entityRepository = new AdRepository(eaRepository, entityWrapper);
+            var migrator = new Migrator(technology);
 
             var updateMetadataCommand = new UpdateMetadataOfNewElementsCommand(entityRepository);
             var updateStateOnAlternativesChanged = new UpdateProblemOccurrenceStateOnAlternativesChanged(entityRepository);
@@ -55,7 +56,7 @@ namespace AdAddIn
                 new MenuItem("Establish Dependencies from Problem Space", populateDependenciesCommand.AsMenuCommand()),
                 new MenuItem("Tailor Problem Space", exportProblemSpace.AsMenuCommand()),
                 new MenuItem("Create Solution from Problem Space", instantiateProblemSpace.AsMenuCommand()),
-                new MenuItem("Migrate Element to Current Model Version", new MigrateModelEntity(technology).AsMenuCommand()),
+                new MenuItem("Migrate Element(s) to Current Model Version", new MigrateModelEntities(migrator).AsMenuCommand()),
                 new MenuItem("TEST", new TestFilterConfigurationCommand().AsMenuCommand())));
 
             OnEntityCreated.Add(updateMetadataCommand.AsEntityCreatedHandler());

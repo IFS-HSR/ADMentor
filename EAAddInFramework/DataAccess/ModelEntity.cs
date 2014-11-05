@@ -142,14 +142,16 @@ namespace EAAddInFramework.DataAccess
 
         public Option<String> Get(ITaggedValue taggedValue)
         {
+            // All tagged values are equal but some are more equal (ConnectorTags)
+            // thats why we have to use dynamic for working with tagged values in a generic way
             var taggedValues = Match(
-                (Package p) => p.EaObject.Element.TaggedValues.Cast<EA.TaggedValue>(),
-                (Diagram d) => Enumerable.Empty<EA.TaggedValue>(),
-                (Element e) => e.EaObject.TaggedValues.Cast<EA.TaggedValue>(),
-                (Connector c) => c.EaObject.TaggedValues.Cast<EA.TaggedValue>());
+                (Package p) => p.EaObject.Element.TaggedValues.Cast<dynamic>(),
+                (Diagram d) => Enumerable.Empty<dynamic>(),
+                (Element e) => e.EaObject.TaggedValues.Cast<dynamic>(),
+                (Connector c) => c.EaObject.TaggedValues.Cast<dynamic>());
             return (from tv in taggedValues
                     where tv.Name.Equals(taggedValue.Name)
-                    select tv.Value).FirstOption();
+                    select tv.Value as String).FirstOption();
         }
 
         public void Set(ITaggedValue taggedValue, String value)
@@ -162,7 +164,9 @@ namespace EAAddInFramework.DataAccess
             .AsOption()
             .Do(taggedValues =>
             {
-                (from tv in taggedValues.Cast<EA.TaggedValue>()
+                // All tagged values are equal but some are more equal (ConnectorTags)
+                // thats why we have to use dynamic for working with tagged values in a generic way
+                (from tv in taggedValues.Cast<dynamic>()
                  where tv.Name.Equals(taggedValue.Name)
                  select tv)
                 .FirstOption()

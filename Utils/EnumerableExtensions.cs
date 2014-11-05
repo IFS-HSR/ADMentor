@@ -32,6 +32,11 @@ namespace Utils
             }
         }
 
+        public static bool IsEmpty<T>(this IEnumerable<T> es)
+        {
+            return !es.FirstOption().IsDefined;
+        }
+
         public static String Join<T>(this IEnumerable<T> es, String separator)
         {
             return String.Join(separator, es);

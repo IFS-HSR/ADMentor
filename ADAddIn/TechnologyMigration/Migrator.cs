@@ -1,6 +1,4 @@
-﻿using AdAddIn.ADTechnology;
-using EAAddInFramework;
-using EAAddInFramework.DataAccess;
+﻿using EAAddInFramework.DataAccess;
 using EAAddInFramework.MDGBuilder;
 using System;
 using System.Collections.Generic;
@@ -11,29 +9,32 @@ using Utils;
 
 namespace AdAddIn.TechnologyMigration
 {
-    internal class MigrateModelEntity : ICommand<ModelEntity, Unit>
+    public class Migrator
     {
-        private readonly MDGTechnology Technology;
-
-        public MigrateModelEntity(MDGTechnology technology)
+        public Migrator(MDGTechnology currentTechnology)
         {
-            Technology = technology;
+            CurrentTechnology = currentTechnology;
         }
 
-        public Unit Execute(ModelEntity e)
+        public MDGTechnology CurrentTechnology { get; private set; }
+
+        public bool CanMigrate(ModelEntity e)
         {
-            GetOutDatedModelId(e).Do(modelId =>
+            return GetOutDatedModelId(e).IsDefined;
+        }
+
+        public void Migrate(ModelEntity e)
+        {
+            GetOutDatedModelId(e).Do(_ =>
             {
                 AddMissingTags(e);
                 UpdateModelId(e);
             });
-
-            return Unit.Instance;
         }
 
         private void AddMissingTags(ModelEntity entity)
         {
-            var missingTags = from stype in Technology.Stereotypes
+            var missingTags = from stype in CurrentTechnology.Stereotypes
                               where entity.Is(stype)
                               from tag in stype.TaggedValues
                               where !entity.Get(tag).IsDefined
@@ -51,25 +52,15 @@ namespace AdAddIn.TechnologyMigration
 
         private void UpdateModelId(ModelEntity entity)
         {
-            entity.Set(Technology.ModelIdTag, Technology.ModelId.ToString());
-        }
-
-        public bool CanExecute(ModelEntity e)
-        {
-            return GetOutDatedModelId(e).IsDefined;
+            entity.Set(CurrentTechnology.ModelIdTag, CurrentTechnology.ModelId.ToString());
         }
 
         private Option<ModelId> GetOutDatedModelId(ModelEntity e)
         {
-            return from raw in e.Get(Technology.ModelIdTag)
+            return from raw in e.Get(CurrentTechnology.ModelIdTag)
                    from modelId in ModelId.Parse(raw)
-                   where modelId.IsPredecessorOf(Technology.ModelId)
+                   where modelId.IsPredecessorOf(CurrentTechnology.ModelId)
                    select modelId;
-        }
-
-        internal ICommand<Option<ModelEntity>, Unit> AsMenuCommand()
-        {
-            return this.Adapt((Option<ModelEntity> ci) => ci);
         }
     }
 }
