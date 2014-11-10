@@ -21,6 +21,15 @@ namespace AdAddIn.ADTechnology
                 ConnectorStereotypes.BoundTo
             });
 
+        public static readonly ToolboxPage QOCConncetorsPage = new ToolboxPage(
+            name: "QOCConnectors",
+            displayName: "QOC Connectors",
+            description: "",
+            stereotypes: new[]{
+                ConnectorStereotypes.PositiveAssessement,
+                ConnectorStereotypes.NegativeAssessement
+            });
+
         public static readonly Toolbox ProblemSpaceTools = new Toolbox(
             name: "ProblemSpaceTools",
             displayName: "Problem Space Tools",
@@ -35,7 +44,8 @@ namespace AdAddIn.ADTechnology
                         ProblemSpace.Option,
                         ProblemSpace.ProblemSpacePackage
                     }),
-                ProblemSpaceConncetorsPage
+                ProblemSpaceConncetorsPage,
+                QOCConncetorsPage
             }
         );
 
