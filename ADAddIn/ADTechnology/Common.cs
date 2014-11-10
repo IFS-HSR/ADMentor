@@ -43,6 +43,10 @@ namespace AdAddIn.ADTechnology
             name: "Viewpoint",
             type: TaggedValueTypes.String);
 
+        public static readonly TaggedValue KnowledgeProvenance = new TaggedValue(
+            name: "Knowledge Provenance",
+            type: TaggedValueTypes.String);
+
         public static readonly TaggedValue DueDate = new TaggedValue(
             name: "Due Date",
             type: TaggedValueTypes.DateTime);

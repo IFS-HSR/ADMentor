@@ -35,7 +35,9 @@ namespace AdAddIn.ADTechnology
                 new Connection(from: ProblemSpace.Option, to: ProblemSpace.ProblemSpacePackage),
                 new Connection(from: SolutionSpace.OptionOccurrence, to: SolutionSpace.SolutionSpacePackage),
                 new Connection(from: ProblemSpace.Problem, to: ProblemSpace.ProblemSpacePackage),
-                new Connection(from: SolutionSpace.ProblemOccurrence, to: SolutionSpace.SolutionSpacePackage)
+                new Connection(from: SolutionSpace.ProblemOccurrence, to: SolutionSpace.SolutionSpacePackage),
+                new Connection(from: ProblemSpace.ProblemSpacePackage, to: ProblemSpace.ProblemSpacePackage),
+                new Connection(from: SolutionSpace.SolutionSpacePackage, to: SolutionSpace.SolutionSpacePackage)
             });
 
         public static readonly ConnectorStereotype Suggests = new ConnectorStereotype(

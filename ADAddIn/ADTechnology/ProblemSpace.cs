@@ -42,7 +42,8 @@ namespace AdAddIn.ADTechnology
                 Common.Viewpoint,
                 Common.OrganisationalReach,
                 Common.IntellectualPropertyRights,
-                Common.RefinementLevel
+                Common.RefinementLevel,
+                Common.KnowledgeProvenance
             });
 
         public static readonly ElementStereotype Option = new ElementStereotype(
@@ -65,17 +66,20 @@ namespace AdAddIn.ADTechnology
             height: 70,
             backgroundColor: Color.LightYellow,
             taggedValues: new[]{
-                Common.IntellectualPropertyRights
+                Common.IntellectualPropertyRights,
+                Common.KnowledgeProvenance
             });
 
         public static readonly PackageStereotype ProblemSpacePackage = new PackageStereotype(
             name: "adProblemSpace",
             displayName: "ProblemSpace",
-            icon: new Icon("AdAddIn.ADTechnology.ProblemSpacePackage.bmp"),
             backgroundColor: Color.PaleGoldenrod,
             taggedValues: new[]{
                 Common.IntellectualPropertyRights,
-                Common.RefinementLevel
+                Common.RefinementLevel,
+                Common.ProjectStage,
+                Common.Viewpoint,
+                Common.KnowledgeProvenance
             });
     }
 }
