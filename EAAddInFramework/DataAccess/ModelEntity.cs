@@ -140,50 +140,64 @@ namespace EAAddInFramework.DataAccess
                    select p;
         }
 
+        public IEnumerable<String> GetPath(Func<int, Option<Package>> getPackageById)
+        {
+            return GetParent(getPackageById).Match(
+                p => p.GetPath(getPackageById).Concat(new[] { Name }),
+                () => new[] { Name });
+        }
+        private Option<EA.Collection> GetTaggedValuesCollection()
+        {
+            return Match(
+                       (Package p) => Options.Some(p.EaObject.Element.TaggedValues),
+                       (Diagram d) => Options.None<EA.Collection>(),
+                       (Element e) => Options.Some(e.EaObject.TaggedValues),
+                       (Connector c) => Options.Some(c.EaObject.TaggedValues));
+        }
+
+        public ImmutableDictionary<String, String> TaggedValues
+        {
+            get
+            {
+                // All tagged values are equal but some are more equal (ConnectorTags)
+                // thats why we have to use dynamic for working with tagged values in a generic way
+                var taggedValues = GetTaggedValuesCollection()
+                    .Select(tvc => tvc.Cast<dynamic>())
+                    .GetOrElse(Enumerable.Empty<dynamic>());
+                return taggedValues.ToImmutableDictionary(tv => tv.Name as String, tv => tv.Value as String);
+            }
+        }
+
         public Option<String> Get(ITaggedValue taggedValue)
         {
-            // All tagged values are equal but some are more equal (ConnectorTags)
-            // thats why we have to use dynamic for working with tagged values in a generic way
-            var taggedValues = Match(
-                (Package p) => p.EaObject.Element.TaggedValues.Cast<dynamic>(),
-                (Diagram d) => Enumerable.Empty<dynamic>(),
-                (Element e) => e.EaObject.TaggedValues.Cast<dynamic>(),
-                (Connector c) => c.EaObject.TaggedValues.Cast<dynamic>());
-            return (from tv in taggedValues
-                    where tv.Name.Equals(taggedValue.Name)
-                    select tv.Value as String).FirstOption();
+            return TaggedValues.Get(taggedValue.Name);
         }
 
         public void Set(ITaggedValue taggedValue, String value)
         {
-            this.Match(
-                (Package p) => p.EaObject.Element.TaggedValues,
-                (Diagram d) => null,
-                (Element e) => e.EaObject.TaggedValues,
-                (Connector c) => c.EaObject.TaggedValues)
-            .AsOption()
-            .Do(taggedValues =>
-            {
-                // All tagged values are equal but some are more equal (ConnectorTags)
-                // thats why we have to use dynamic for working with tagged values in a generic way
-                (from tv in taggedValues.Cast<dynamic>()
-                 where tv.Name.Equals(taggedValue.Name)
-                 select tv)
-                .FirstOption()
-                .Match(
-                    tv =>
-                    {
-                        tv.Value = value;
-                        tv.Update();
-                    },
-                    () =>
-                    {
-                        var tv = taggedValues.AddNew(taggedValue.Name, "") as EA.TaggedValue;
-                        tv.Value = value;
-                        tv.Update();
-                        taggedValues.Refresh();
-                    });
-            });
+            GetTaggedValuesCollection()
+                .Do(taggedValues =>
+                {
+                    // All tagged values are equal but some are more equal (ConnectorTags)
+                    // thats why we have to use dynamic for working with tagged values in a generic way
+                    (from tv in taggedValues.Cast<dynamic>()
+                     where tv.Name.Equals(taggedValue.Name)
+                     select tv)
+                    .FirstOption()
+                    .Match(
+                        tv =>
+                        {
+                            tv.Value = value;
+                            tv.Update();
+                        },
+                        () =>
+                        {
+                            var tv = taggedValues.AddNew(taggedValue.Name, "") as EA.TaggedValue;
+                            tv.Value = value;
+                            tv.Update();
+                            taggedValues.Refresh();
+                        });
+                });
         }
 
         public IImmutableSet<String> Keywords
@@ -200,6 +214,14 @@ namespace EAAddInFramework.DataAccess
                             .Split(new[] { ',', ';' })
                             .Select(w => w.Trim().ToLower())
                         select keyword).ToImmutableHashSet();
+            }
+        }
+
+        public String Notes
+        {
+            get
+            {
+                return (this as dynamic).EaObject.Notes as String;
             }
         }
 
