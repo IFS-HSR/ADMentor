@@ -6,28 +6,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Utils;
 
 namespace AdAddIn.ExportToADRepo
 {
     public class ExportToADRepoCommand : ICommand<ModelEntity.Package, Unit>
     {
-        private readonly ADRepoClient client;
+        private readonly AdRepository repository;
 
         public ExportToADRepoCommand(AdRepository repo)
         {
-            client = new ADRepoClient(new Uri("http://localhost:9000/"), repo);
+            repository = repo;
         }
 
         public Unit Execute(ModelEntity.Package package)
         {
-            var entities = from p in package.SubPackages()
-                           from e in p.Elements()
-                           from entity in e.Match<AdEntity>()
-                           select entity;
-
-            entities.ForEach(client.ExportEntity);
-
+            var adRepoHost = Microsoft.VisualBasic.Interaction.InputBox("ADRepo URL", "Export to ADRepo", "http://localhost:9000/");
+            var client = new ADRepoClient(new Uri(adRepoHost), repository);
+            client.ExportPackage(package);
             return Unit.Instance;
         }
 

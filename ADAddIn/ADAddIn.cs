@@ -57,7 +57,7 @@ namespace AdAddIn
                 new MenuItem("Tailor Problem Space", exportProblemSpace.AsMenuCommand()),
                 new MenuItem("Create Solution from Problem Space", instantiateProblemSpace.AsMenuCommand()),
                 new MenuItem("Migrate Element(s) to Current Model Version", new MigrateModelEntities(migrator).AsMenuCommand()),
-                new MenuItem("TEST", new TestFilterConfigurationCommand().AsMenuCommand()),
+                //new MenuItem("TEST", new TestFilterConfigurationCommand().AsMenuCommand()),
                 new MenuItem("Export to ADRepo", new ExportToADRepo.ExportToADRepoCommand(entityRepository).AsMenuCommand())));
 
             OnEntityCreated.Add(updateMetadataCommand.AsEntityCreatedHandler());

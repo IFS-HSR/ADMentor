@@ -66,5 +66,9 @@ namespace AdAddIn.ADTechnology
         public static readonly TaggedValue RefinementLevel = new TaggedValue(
             name: "Refinement Level",
             type: TaggedValueTypes.String);
+
+        public static readonly TaggedValue RemoteId = new TaggedValue(
+            name: "xRemoteId",
+            type: TaggedValueTypes.Const(""));
     }
 }

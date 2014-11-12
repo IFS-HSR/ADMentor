@@ -62,9 +62,9 @@ namespace Utils
             return ts.ToList();
         }
 
-        public static Option<V> Get<K, V>(this IDictionary<K, V> dict, K key) where V : class
+        public static Option<V> Get<K, V>(this IDictionary<K, V> dict, K key)
         {
-            V value = null;
+            V value = default(V);
             if (dict.TryGetValue(key, out value))
             {
                 return Options.Some(value);
@@ -72,6 +72,18 @@ namespace Utils
             else
             {
                 return Options.None<V>();
+            }
+        }
+
+        public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> ts, Func<T, TKey> getKey)
+        {
+            HashSet<TKey> keys = new HashSet<TKey>();
+            foreach (var t in ts)
+            {
+                if (keys.Add(getKey(t)))
+                {
+                    yield return t;
+                }
             }
         }
     }
