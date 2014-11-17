@@ -23,12 +23,12 @@ namespace AdAddIn.ADTechnology
                         new ModelTemplate(
                             name: "Problem Space",
                             description: "",
-                            icon: ModelIcon.ComponentModel,
+                            icon: ModelIcon.ClassModel,
                             resourceName: "AdAddIn.ADTechnology.ProblemSpaceTemplate.xml"),
                         new ModelTemplate(
                             name: "Solution Space",
                             description: "",
-                            icon: ModelIcon.DynamicModel,
+                            icon: ModelIcon.DeploymentModel,
                             resourceName: "AdAddIn.ADTechnology.SolutionSpaceTemplate.xml"),
                         new ModelTemplate(
                             name: "AD Mentor Demo",
