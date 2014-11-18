@@ -165,6 +165,24 @@ namespace EAAddInFramework.DataAccess
             return GetPackage(element.EaObject.PackageID).Value;
         }
 
+        public ModelEntity.Package CreateRootModel(String name)
+        {
+            var p = Repo.Val.Models.AddNew(name, "") as EA.Package;
+            
+            try
+            {
+                p.Update();
+            }
+            catch (COMException ce)
+            {
+                throw new ApplicationException(p.GetLastError(), ce);
+            }
+
+            Repo.Val.Models.Refresh();
+
+            return Wrapper.Wrap(p);
+        }
+
         public Option<ModelEntity.Diagram> GetDiagram(int id)
         {
             return from d in Options.Try(() => Repo.Val.GetDiagramByID(id))

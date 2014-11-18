@@ -26,19 +26,17 @@ namespace AdAddIn.InstantiateProblemSpace
 
         public Unit Execute(ModelEntity.Package problemSpace)
         {
-            var requiredData = from parentPackage in problemSpace.GetParent(Repo.GetPackage)
-                               let problemSpaceTree = ProblemSpaceTree.Create(problemSpace)
-                               from solutionName in SolutionNameForm.GetSolutionName(problemSpaceTree)
-                               select Tuple.Create(problemSpaceTree, parentPackage, solutionName);
+                               var problemSpaceTree = ProblemSpaceTree.Create(problemSpace);
 
-            requiredData.ForEach((problemSpaceTree, parentPackage, solutionName) =>
+            SolutionNameForm.GetSolutionName(problemSpaceTree).Do(solutionName =>
             {
                 Repo.SaveAllDiagrams();
 
+                var parentPackage = problemSpace.GetParent(Repo.GetPackage);
+
                 var instantiatedTree = problemSpaceTree
-                    .InstantiateSolutionPackages(parentPackage)
+                    .InstantiateSolutionPackages(parentPackage, Repo, Options.Some(solutionName))
                     .InstantiateSolutionElements(Repo);
-                RenameSolutionPackage(instantiatedTree, solutionName);
                 instantiatedTree.InstantiateSolutionConnectors(Repo);
                 instantiatedTree.CreateSolutionDiagrams(Repo);
             });
@@ -46,18 +44,9 @@ namespace AdAddIn.InstantiateProblemSpace
             return Unit.Instance;
         }
 
-        private void RenameSolutionPackage(ProblemSpaceTree instantiatedTree, string solutionName)
-        {
-            instantiatedTree.PackageInstance.Do(solutionPackage =>
-            {
-                solutionPackage.EaObject.Name = solutionName;
-                solutionPackage.EaObject.Update();
-            });
-        }
-
         public bool CanExecute(ModelEntity.Package p)
         {
-            return p.GetParent(Repo.GetPackage).IsDefined;
+            return true;
         }
 
         public ICommand<Option<ModelEntity>, object> AsMenuCommand()

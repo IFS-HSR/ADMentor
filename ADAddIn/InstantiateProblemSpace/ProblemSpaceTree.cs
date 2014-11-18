@@ -61,10 +61,14 @@ namespace AdAddIn.InstantiateProblemSpace
             });
         }
 
-        public ProblemSpaceTree InstantiateSolutionPackages(ModelEntity.Package parentPackage)
+        public ProblemSpaceTree InstantiateSolutionPackages(Option<ModelEntity.Package> parentPackage, ModelEntityRepository repo, Option<String> name)
         {
-            var solutionPackage = parentPackage.Create(Package.Name);
-            var children = Children.Select(c => c.InstantiateSolutionPackages(solutionPackage));
+            var solutionPackageName = name.GetOrElse(Package.Name);
+            var solutionPackage = parentPackage.Match(
+                parent => parent.Create(solutionPackageName),
+                () => repo.CreateRootModel(solutionPackageName));
+
+            var children = Children.Select(c => c.InstantiateSolutionPackages(solutionPackage.AsOption(), repo, Options.None<String>()));
 
             return new ProblemSpaceTree(Package, Options.Some(solutionPackage), ElementInstantiations, Diagrams, children);
         }
