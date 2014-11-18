@@ -165,10 +165,12 @@ namespace EAAddInFramework.DataAccess
             return GetPackage(element.EaObject.PackageID).Value;
         }
 
-        public ModelEntity.Package CreateRootModel(String name)
+        public ModelEntity.Package CreatePackage(String name, Option<ModelEntity.Package> parent, Option<PackageStereotype> stereotype)
         {
-            var p = Repo.Val.Models.AddNew(name, "") as EA.Package;
-            
+            var collection = parent.Select(pa => pa.EaObject.Packages).GetOrElse(Repo.Val.Models);
+
+            var p = collection.AddNew(name, "") as EA.Package;
+
             try
             {
                 p.Update();
@@ -178,7 +180,15 @@ namespace EAAddInFramework.DataAccess
                 throw new ApplicationException(p.GetLastError(), ce);
             }
 
-            Repo.Val.Models.Refresh();
+            (from e in p.Element.AsOption()
+             from stype in stereotype
+             select Tuple.Create(e, stype)).ForEach((e, stype) =>
+             {
+                 e.Stereotype = stype.Name;
+                 e.Update();
+             });
+
+            collection.Refresh();
 
             return Wrapper.Wrap(p);
         }

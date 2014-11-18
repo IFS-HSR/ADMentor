@@ -64,9 +64,7 @@ namespace AdAddIn.InstantiateProblemSpace
         public ProblemSpaceTree InstantiateSolutionPackages(Option<ModelEntity.Package> parentPackage, ModelEntityRepository repo, Option<String> name)
         {
             var solutionPackageName = name.GetOrElse(Package.Name);
-            var solutionPackage = parentPackage.Match(
-                parent => parent.Create(solutionPackageName),
-                () => repo.CreateRootModel(solutionPackageName));
+            var solutionPackage = repo.CreatePackage(solutionPackageName, parentPackage, SolutionSpace.SolutionSpacePackage.AsOption());
 
             var children = Children.Select(c => c.InstantiateSolutionPackages(solutionPackage.AsOption(), repo, Options.None<String>()));
 

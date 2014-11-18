@@ -328,14 +328,6 @@ namespace EAAddInFramework.DataAccess
                         select descendant);
                 }
             }
-
-            public ModelEntity.Package Create(String packageName)
-            {
-                var newPackage = EaObject.Packages.AddNew(packageName, "") as EA.Package;
-                newPackage.Update();
-                EaObject.Packages.Refresh();
-                return Wrapper.Wrap(newPackage);
-            }
         }
 
         public class Element : ModelEntity
