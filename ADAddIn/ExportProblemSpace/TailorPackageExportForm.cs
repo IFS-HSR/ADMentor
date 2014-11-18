@@ -26,6 +26,7 @@ namespace AdAddIn.ExportProblemSpace
             filterTreeView.CheckBoxes = true;
             filterTreeView.AfterCheck += filterTreeView_AfterCheck;
 
+            hierarchyTreeView.CheckBoxes = true;
             hierarchyTreeView.AfterCheck += hierarchyTreeView_AfterCheck;
         }
 
@@ -38,6 +39,10 @@ namespace AdAddIn.ExportProblemSpace
             filterTreeView.Nodes.Clear();
             var filterNodes = ToTreeNodes(filter.Filters);
             filterTreeView.Nodes.AddRange(filterNodes.ToArray());
+            filterTreeView.Nodes.Cast<TreeNode>().ForEach(node =>
+            {
+                node.Checked = true;
+            });
 
             UpdateHierarchyTreeView();
 
@@ -45,7 +50,8 @@ namespace AdAddIn.ExportProblemSpace
 
             if (result == System.Windows.Forms.DialogResult.OK)
             {
-                return Options.Some(ModelHierarchy.Val);
+                var hierarchyRoot = hierarchyTreeView.Nodes[0];
+                return Options.Some(ToHierarchy(ModelHierarchy.Val, hierarchyRoot.Nodes.Cast<TreeNode>()));
             }
             else
             {
@@ -126,16 +132,29 @@ namespace AdAddIn.ExportProblemSpace
             hierarchyTreeView.Nodes.Clear();
             hierarchyTreeView.Nodes.Add(ToTreeNode(ModelHierarchy.Val));
             hierarchyTreeView.ExpandAll();
+            CheckAll(hierarchyTreeView.Nodes);
         }
 
         private TreeNode ToTreeNode(LabeledTree<ModelEntity, Unit> tree)
         {
             var node = new TreeNode(tree.Label.ToString());
+            node.Tag = tree;
             var children = from edge in tree.Edges
                            select ToTreeNode(edge.Target);
             node.Nodes.AddRange(children.ToArray());
 
             return node;
+        }
+
+        private LabeledTree<ModelEntity, Unit> ToHierarchy(LabeledTree<ModelEntity, Unit> tree, IEnumerable<TreeNode> nodes)
+        {
+            var edges = from edge in tree.Edges
+                        from node in nodes
+                        where node.Checked && ReferenceEquals(node.Tag, edge.Target)
+                        let newTarget = ToHierarchy(edge.Target, node.Nodes.Cast<TreeNode>())
+                        select LabeledTree.Edge<ModelEntity, Unit>(Unit.Instance, newTarget);
+
+            return LabeledTree.Node(tree.Label, edges);
         }
 
         private IFilter<ModelEntity> ToFilter(IFilter<ModelEntity> filter, IEnumerable<TreeNode> nodes)
@@ -151,6 +170,15 @@ namespace AdAddIn.ExportProblemSpace
                     return compositeFilter.Copy(filters: subfilters);
                 },
                 () => filter);
+        }
+
+        private void CheckAll(TreeNodeCollection nodes)
+        {
+            nodes.Cast<TreeNode>().ForEach(n =>
+            {
+                n.Checked = true;
+                CheckAll(n.Nodes);
+            });
         }
 
         private void DeselectChildren(TreeNode node)
