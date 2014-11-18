@@ -20,7 +20,7 @@ namespace AdAddIn.TechnologyMigration
         {
             return from candidate in rootEntity.Match(
                         (ModelEntity.Package p) => CollectChildren(p),
-                        (ModelEntity.Element e) => e.Connectors().Concat(new[] { rootEntity }),
+                        (ModelEntity.Element e) => e.Connectors.Concat(new[] { rootEntity }),
                         () => new ModelEntity[] { rootEntity })
                    where Migrator.CanMigrate(candidate)
                    select candidate;
@@ -28,15 +28,15 @@ namespace AdAddIn.TechnologyMigration
 
         private IEnumerable<ModelEntity> CollectChildren(ModelEntity.Package package)
         {
-            var packages = from p in package.SubPackages()
+            var packages = from p in package.SubPackages
                            select p;
 
-            var elements = from p in package.SubPackages()
-                           from e in p.Elements()
+            var elements = from p in package.SubPackages
+                           from e in p.Elements
                            select e;
 
             var connectors = from e in elements
-                             from c in e.Connectors()
+                             from c in e.Connectors
                              select c;
 
             return packages

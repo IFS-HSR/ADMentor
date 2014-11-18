@@ -59,14 +59,35 @@ namespace EAAddInFramework.DataAccess
                         () => onMatch4(this as T4))));
         }
 
-        public abstract int Id { get; }
-        public abstract String Guid { get; }
+        public int Id
+        {
+            get
+            {
+                return Match(
+                    (Package p) => p.EaObject.PackageID,
+                    (Diagram d) => d.EaObject.DiagramID,
+                    (Element e) => e.EaObject.ElementID,
+                    (Connector c) => c.EaObject.ConnectorID);
+            }
+        }
+
+        public String Guid
+        {
+            get
+            {
+                return Match(
+                    (Package p) => p.EaObject.PackageGUID,
+                    (Diagram d) => d.EaObject.DiagramGUID,
+                    (Element e) => e.EaObject.ElementGUID,
+                    (Connector c) => c.EaObject.ConnectorGUID);
+            }
+        }
 
         public override bool Equals(object obj)
         {
-            return (from otherEntity in obj.Match<ModelEntity>()
-                    select Equals(otherEntity))
-                    .GetOrElse(false);
+            return obj.Match<ModelEntity>()
+                .Select(otherEntity => Equals(otherEntity))
+                .GetOrElse(false);
         }
 
         public bool Equals(ModelEntity other)
@@ -92,7 +113,7 @@ namespace EAAddInFramework.DataAccess
             get
             {
                 return Match(
-                    (Package p) => p.EaObject.Element.Stereotype as String,
+                    (Package p) => p.AssociatedElement.Select(e => e.Stereotype).GetOrElse(""),
                     () => (this as dynamic).EaObject.Stereotype as String);
             }
         }
@@ -102,7 +123,7 @@ namespace EAAddInFramework.DataAccess
             get
             {
                 return Match(
-                    (Package p) => p.EaObject.Element.Type as String,
+                    (Package p) => p.AssociatedElement.Select(e => e.Type).GetOrElse(""),
                     () => (this as dynamic).EaObject.Type as String);
             }
         }
@@ -112,7 +133,7 @@ namespace EAAddInFramework.DataAccess
             get
             {
                 return Match(
-                    (Package p) => p.EaObject.Element.MetaType as String,
+                    (Package p) => p.AssociatedElement.Select(e => e.MetaType).GetOrElse("") as String,
                     () => (this as dynamic).EaObject.MetaType as String);
             }
         }
@@ -146,13 +167,19 @@ namespace EAAddInFramework.DataAccess
                 p => p.GetPath(getPackageById).Concat(new[] { Name }),
                 () => new[] { Name });
         }
-        private Option<EA.Collection> GetTaggedValuesCollection()
+
+        private Option<EA.Collection> TaggedValuesCollection
         {
-            return Match(
-                       (Package p) => Options.Some(p.EaObject.Element.TaggedValues),
-                       (Diagram d) => Options.None<EA.Collection>(),
-                       (Element e) => Options.Some(e.EaObject.TaggedValues),
-                       (Connector c) => Options.Some(c.EaObject.TaggedValues));
+            get
+            {
+                return Match(
+                           (Package p) => from e in p.AssociatedElement
+                                          from c in e.TaggedValuesCollection
+                                          select c,
+                           (Diagram d) => Options.None<EA.Collection>(),
+                           (Element e) => Options.Some(e.EaObject.TaggedValues),
+                           (Connector c) => Options.Some(c.EaObject.TaggedValues));
+            }
         }
 
         public ImmutableDictionary<String, String> TaggedValues
@@ -161,7 +188,7 @@ namespace EAAddInFramework.DataAccess
             {
                 // All tagged values are equal but some are more equal (ConnectorTags)
                 // thats why we have to use dynamic for working with tagged values in a generic way
-                var taggedValues = GetTaggedValuesCollection()
+                var taggedValues = TaggedValuesCollection
                     .Select(tvc => tvc.Cast<dynamic>())
                     .GetOrElse(Enumerable.Empty<dynamic>());
                 return taggedValues.ToImmutableDictionary(tv => tv.Name as String, tv => tv.Value as String);
@@ -175,7 +202,7 @@ namespace EAAddInFramework.DataAccess
 
         public void Set(ITaggedValue taggedValue, String value)
         {
-            GetTaggedValuesCollection()
+            TaggedValuesCollection
                 .Do(taggedValues =>
                 {
                     // All tagged values are equal but some are more equal (ConnectorTags)
@@ -246,53 +273,60 @@ namespace EAAddInFramework.DataAccess
 
             public EA.Package EaObject { get; private set; }
 
-            public override int Id
+            public Option<Element> AssociatedElement
             {
-                get { return EaObject.PackageID; }
+                get
+                {
+                    // root models do not have an associated element!
+                    return from e in EaObject.Element.AsOption()
+                           select Wrapper.Wrap(e);
+                }
             }
 
-            public override string Guid
+            public IEnumerable<Element> Elements
             {
-                get { return EaObject.PackageGUID; }
+                get
+                {
+                    return from e in EaObject.Elements.Cast<EA.Element>()
+                           select Wrapper.Wrap(e);
+                }
             }
 
-            public Element AssociatedElement()
+            public IEnumerable<Diagram> Diagrams
             {
-                return Wrapper.Wrap(EaObject.Element);
-            }
-
-            public IEnumerable<Element> Elements()
-            {
-                return from e in EaObject.Elements.Cast<EA.Element>()
-                       select Wrapper.Wrap(e);
-            }
-
-            public IEnumerable<Diagram> Diagrams()
-            {
-                return from d in EaObject.Diagrams.Cast<EA.Diagram>()
-                       select Wrapper.Wrap(d);
+                get
+                {
+                    return from d in EaObject.Diagrams.Cast<EA.Diagram>()
+                           select Wrapper.Wrap(d);
+                }
             }
 
             /// <summary>
             /// All children of this package.
             /// </summary>
             /// <returns></returns>
-            public IEnumerable<Package> Packages()
+            public IEnumerable<Package> Packages
             {
-                return from p in EaObject.Packages.Cast<EA.Package>()
-                       select Wrapper.Wrap(p);
+                get
+                {
+                    return from p in EaObject.Packages.Cast<EA.Package>()
+                           select Wrapper.Wrap(p);
+                }
             }
 
             /// <summary>
             /// This package with all packages that are descendant of this package.
             /// </summary>
             /// <returns></returns>
-            public IEnumerable<Package> SubPackages()
+            public IEnumerable<Package> SubPackages
             {
-                return new[] { this }.Concat(
-                    from child in Packages()
-                    from descendant in child.SubPackages()
-                    select descendant);
+                get
+                {
+                    return new[] { this }.Concat(
+                        from child in Packages
+                        from descendant in child.SubPackages
+                        select descendant);
+                }
             }
 
             public ModelEntity.Package Create(String packageName)
@@ -314,16 +348,6 @@ namespace EAAddInFramework.DataAccess
 
             public EA.Element EaObject { get; private set; }
 
-            public override int Id
-            {
-                get { return EaObject.ElementID; }
-            }
-
-            public override string Guid
-            {
-                get { return EaObject.ElementGUID; }
-            }
-
             public Option<ElementStereotype> GetStereotype(IEnumerable<ElementStereotype> stereotypes)
             {
                 return (from stype in stereotypes
@@ -336,10 +360,13 @@ namespace EAAddInFramework.DataAccess
                 return getElementById(EaObject.ClassifierID);
             }
 
-            public IEnumerable<Connector> Connectors()
+            public IEnumerable<Connector> Connectors
             {
-                return from c in EaObject.Connectors.Cast<EA.Connector>()
-                       select Wrapper.Wrap(c);
+                get
+                {
+                    return from c in EaObject.Connectors.Cast<EA.Connector>()
+                           select Wrapper.Wrap(c);
+                }
             }
 
             public bool IsNew()
@@ -357,16 +384,6 @@ namespace EAAddInFramework.DataAccess
             }
 
             public EA.Connector EaObject { get; private set; }
-
-            public override int Id
-            {
-                get { return EaObject.ConnectorID; }
-            }
-
-            public override string Guid
-            {
-                get { return EaObject.ConnectorGUID; }
-            }
 
             public Option<ConnectorStereotype> GetStereotype(IEnumerable<ConnectorStereotype> stereotypes)
             {
@@ -410,16 +427,6 @@ namespace EAAddInFramework.DataAccess
 
             public EA.Diagram EaObject { get; private set; }
 
-            public override int Id
-            {
-                get { return EaObject.DiagramID; }
-            }
-
-            public override string Guid
-            {
-                get { return EaObject.DiagramGUID; }
-            }
-
             public bool Is(MDGBuilder.Diagram diagramType)
             {
                 var match = Regex.Match(EaObject.StyleEx, diagramStylePattern);
@@ -429,15 +436,18 @@ namespace EAAddInFramework.DataAccess
 
             private static string diagramStylePattern = @"MDGDgm=(?<technology>\w+)::(?<diagramType>\w+)";
 
-            public IEnumerable<DiagramObject> Objects()
+            public IEnumerable<DiagramObject> Objects
             {
-                return from o in EaObject.DiagramObjects.Cast<EA.DiagramObject>()
-                       select Wrapper.Wrap(o);
+                get
+                {
+                    return from o in EaObject.DiagramObjects.Cast<EA.DiagramObject>()
+                           select Wrapper.Wrap(o);
+                }
             }
 
             public Option<DiagramObject> GetObject(Element forElement)
             {
-                return (from o in Objects()
+                return (from o in Objects
                         where o.EaObject.ElementID.Equals(forElement.Id)
                         select o).FirstOption();
             }

@@ -49,22 +49,14 @@ namespace EAAddInFramework
         private void RepositoryChanged(EA.Repository repository)
         {
             eaRepository.Exchange(repository, GetType());
-        }
 
-        private void ContextItemChanged(EA.ObjectType type, string guid)
-        {
-            switch(type){
+            switch (eaRepository.Val.GetTreeSelectedItemType())
+            {
                 case EA.ObjectType.otElement:
-                    SetContextItem(() => Options.Some(eaRepository.Val.GetElementByGuid(guid)));
-                    break;
                 case EA.ObjectType.otConnector:
-                    SetContextItem(() => Options.Some(eaRepository.Val.GetConnectorByGuid(guid)));
-                    break;
                 case EA.ObjectType.otDiagram:
-                    SetContextItem(() => Options.Some(eaRepository.Val.GetDiagramByGuid(guid)));
-                    break;
                 case EA.ObjectType.otPackage:
-                    SetContextItem(() => Options.Some(eaRepository.Val.GetPackageByGuid(guid)));
+                    SetContextItem(() => Options.Some(eaRepository.Val.GetTreeSelectedObject()));
                     break;
                 default:
                     SetContextItem(() => Options.None<object>());
@@ -274,7 +266,6 @@ namespace EAAddInFramework
         public void EA_OnContextItemChanged(EA.Repository repository, string guid, EA.ObjectType ot)
         {
             RepositoryChanged(repository);
-            ContextItemChanged(ot, guid);
 
             logger.Debug("Context item changed to {0} of object type {1}", guid, ot);
         }

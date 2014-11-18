@@ -31,12 +31,12 @@ namespace AdAddIn.ExportProblemSpace
 
         public Unit Execute(ModelEntity.Package package)
         {
-            var packages = package.SubPackages().Run();
+            var packages = package.SubPackages.Run();
             var elements = from descendant in packages
-                           from element in descendant.Elements()
+                           from element in descendant.Elements
                            select element;
             var diagrams = from descendant in packages
-                           from diagram in descendant.Diagrams()
+                           from diagram in descendant.Diagrams
                            select diagram;
 
             var filters = Filter.Or("", new[]{
@@ -82,9 +82,9 @@ namespace AdAddIn.ExportProblemSpace
 
         private LabeledTree<ModelEntity, Unit> CreatePackageHierarchy(ModelEntity.Package root)
         {
-            var subnodes = root.Elements().Select(e => LabeledTree.Node<ModelEntity, Unit>(e))
-                .Concat(root.Diagrams().Select(d => LabeledTree.Node<ModelEntity, Unit>(d)))
-                .Concat(root.Packages().Select(p => CreatePackageHierarchy(p)));
+            var subnodes = root.Elements.Select(e => LabeledTree.Node<ModelEntity, Unit>(e))
+                .Concat(root.Diagrams.Select(d => LabeledTree.Node<ModelEntity, Unit>(d)))
+                .Concat(root.Packages.Select(p => CreatePackageHierarchy(p)));
 
             return LabeledTree.Node(root,
                 from subnode in subnodes

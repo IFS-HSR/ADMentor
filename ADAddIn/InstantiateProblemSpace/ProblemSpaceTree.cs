@@ -39,13 +39,13 @@ namespace AdAddIn.InstantiateProblemSpace
 
         public static ProblemSpaceTree Create(ModelEntity.Package problemSpacePackage)
         {
-            var instantiations = from element in problemSpacePackage.Elements()
+            var instantiations = from element in problemSpacePackage.Elements
                                  where element is OptionEntity || element is Problem
                                  select new ElementInstantiation(element);
-            var diagrams = from diagram in problemSpacePackage.Diagrams()
+            var diagrams = from diagram in problemSpacePackage.Diagrams
                            where diagram.Is(DiagramTypes.ProblemSpace)
                            select diagram;
-            var children = from childPackage in problemSpacePackage.Packages()
+            var children = from childPackage in problemSpacePackage.Packages
                            let childTree = Create(childPackage)
                            where childTree.AllInstantiations().Count() > 0
                            select childTree;
@@ -87,7 +87,7 @@ namespace AdAddIn.InstantiateProblemSpace
             var allInstantiations = AllInstantiations();
             var connections = from instantiation in allInstantiations
                               from source in instantiation.Instance
-                              from connector in instantiation.Element.Connectors()
+                              from connector in instantiation.Element.Connectors
                               where connector.EaObject.ClientID == instantiation.Element.Id
                               from connectorStype in connector.GetStereotype(ADTechnology.Technologies.AD.ConnectorStereotypes)
                               join targetInstantiation in allInstantiations
@@ -122,7 +122,7 @@ namespace AdAddIn.InstantiateProblemSpace
 
         private void CopyDiagramObjects(ModelEntity.Diagram problemDiagram, ModelEntity.Diagram solutionDiagram, IEnumerable<ElementInstantiation> instantiations)
         {
-            var newObjects = from problemObject in problemDiagram.Objects()
+            var newObjects = from problemObject in problemDiagram.Objects
                              join instantiation in instantiations
                                on problemObject.EaObject.ElementID equals instantiation.Element.Id
                              from solutionElement in instantiation.Instance

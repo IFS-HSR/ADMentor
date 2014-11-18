@@ -37,7 +37,7 @@ namespace AdAddIn.ExportProblemSpace
         {
             var connectors = from entity in entitiesToExport
                              from element in entity.Match<ModelEntity.Element>()
-                             from connector in element.Connectors()
+                             from connector in element.Connectors
                              from oppositeEnd in connector.OppositeEnd(element, Repo.GetElement)
                              where entitiesToExport.Contains(oppositeEnd)
                              select connector;

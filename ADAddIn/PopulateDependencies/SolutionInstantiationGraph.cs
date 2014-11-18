@@ -77,7 +77,7 @@ namespace AdAddIn.PopulateDependencies
                         {
                             var connectsAlternativeToProblem =
                                 stype == ConnectorStereotypes.AddressedBy && solutionSource is OptionOccurrence;
-                            var alreadyExisting = solutionSource.Connectors().Any(c =>
+                            var alreadyExisting = solutionSource.Connectors.Any(c =>
                             {
                                 return c.Is(stype) && (c.EaObject.SupplierID == solutionTarget.Id || c.EaObject.ClientID == solutionTarget.Id);
                             });

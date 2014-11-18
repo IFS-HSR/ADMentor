@@ -37,7 +37,7 @@ namespace AdAddIn.DataAccess
 
         public IEnumerable<OptionOccurrence> GetAlternatives(Func<int, Option<ModelEntity.Element>> getElementById)
         {
-            return from connector in Connectors()
+            return from connector in Connectors
                    where connector.Is(ConnectorStereotypes.AddressedBy)
                    from target in connector.Target(getElementById)
                    from optionOcc in target.Match<OptionOccurrence>()
@@ -84,7 +84,7 @@ namespace AdAddIn.DataAccess
 
         public IEnumerable<ProblemOccurrence> GetAssociatedProblemOccurrences(Func<int, Option<ModelEntity.Element>> getElementById)
         {
-            return from connector in Connectors()
+            return from connector in Connectors
                    where connector.Is(ConnectorStereotypes.AddressedBy)
                    from source in connector.Source(getElementById)
                    from problemOcc in source.Match<ProblemOccurrence>()

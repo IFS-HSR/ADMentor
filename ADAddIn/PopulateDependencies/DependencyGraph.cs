@@ -28,7 +28,7 @@ namespace AdAddIn.PopulateDependencies
             DirectedLabeledGraph<ModelEntity.Element, ModelEntity.Connector> dependencyGraph,
             Func<ModelEntity.Element, ModelEntity.Connector, ModelEntity.Element, bool> edgeFilter)
         {
-            var targets = from connector in source.Connectors()
+            var targets = from connector in source.Connectors
                           from target in connector.OppositeEnd(source, repo.GetElement)
                           where edgeFilter(source, connector, target)
                           select Tuple.Create(source, connector, target);

@@ -29,8 +29,8 @@ namespace AdAddIn.ExportToADRepo
         public void ExportPackage(ModelEntity.Package package)
         {
 
-            var entities = from p in package.SubPackages()
-                           from e in p.Elements()
+            var entities = from p in package.SubPackages
+                           from e in p.Elements
                            from entity in e.Match<AdEntity>()
                            select entity;
 
@@ -39,7 +39,7 @@ namespace AdAddIn.ExportToADRepo
                              select Tuple.Create(e.Guid, remoteId)).ToDictionary();
 
             var relations = from e in entities
-                            from c in e.Connectors()
+                            from c in e.Connectors
                             from source in c.Source(repository.GetElement)
                             from sourceId in entityIds.Get(source.Guid)
                             from target in c.Target(repository.GetElement)
