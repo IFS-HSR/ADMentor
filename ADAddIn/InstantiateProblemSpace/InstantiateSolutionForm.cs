@@ -18,11 +18,11 @@ namespace AdAddIn.InstantiateProblemSpace
             InitializeComponent();
         }
 
-        public Option<String> GetSolutionName(ProblemSpaceTree problemSpaceTree)
+        public Option<String> GetSolutionName()
         {
             textBoxName.Clear();
 
-            if (ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (ShowDialog() == System.Windows.Forms.DialogResult.OK && !textBoxName.Text.Equals(""))
             {
                 return Options.Some(textBoxName.Text);
             }

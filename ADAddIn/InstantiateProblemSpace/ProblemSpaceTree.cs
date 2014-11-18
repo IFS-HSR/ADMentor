@@ -47,7 +47,7 @@ namespace AdAddIn.InstantiateProblemSpace
                            select diagram;
             var children = from childPackage in problemSpacePackage.Packages
                            let childTree = Create(childPackage)
-                           where childTree.AllInstantiations().Count() > 0
+                           where childTree.AllInstantiations().Any()
                            select childTree;
 
             return new ProblemSpaceTree(problemSpacePackage, Options.None<ModelEntity.Package>(), instantiations, diagrams, children);
@@ -55,10 +55,17 @@ namespace AdAddIn.InstantiateProblemSpace
 
         public IEnumerable<ElementInstantiation> AllInstantiations()
         {
+            // if this package has been instantiated, we also add the instantiation of its
+            // associated element (if any) to the instantiations. This allows us to also create
+            // connectors and diagram objects for instantiated packages.
+            var packageElementInstantiation = from element in Package.AssociatedElement
+                                              from instance in PackageInstance
+                                              select new ElementInstantiation(element, instance.AssociatedElement);
+
             return Children.Aggregate(ElementInstantiations, (acc, child) =>
             {
                 return acc.Concat(child.AllInstantiations());
-            });
+            }).Concat(packageElementInstantiation);
         }
 
         public ProblemSpaceTree InstantiateSolutionPackages(Option<ModelEntity.Package> parentPackage, ModelEntityRepository repo, Option<String> name)
@@ -86,7 +93,7 @@ namespace AdAddIn.InstantiateProblemSpace
 
         public void InstantiateSolutionConnectors(ModelEntityRepository repo)
         {
-            var allInstantiations = AllInstantiations();
+            var allInstantiations = AllInstantiations().Run();
             var connections = from instantiation in allInstantiations
                               from source in instantiation.Instance
                               from connector in instantiation.Element.Connectors

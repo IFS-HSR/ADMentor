@@ -26,13 +26,12 @@ namespace AdAddIn.InstantiateProblemSpace
 
         public Unit Execute(ModelEntity.Package problemSpace)
         {
-                               var problemSpaceTree = ProblemSpaceTree.Create(problemSpace);
-
-            SolutionNameForm.GetSolutionName(problemSpaceTree).Do(solutionName =>
+            SolutionNameForm.GetSolutionName().Do(solutionName =>
             {
                 Repo.SaveAllDiagrams();
 
                 var parentPackage = problemSpace.GetParent(Repo.GetPackage);
+                var problemSpaceTree = ProblemSpaceTree.Create(problemSpace);
 
                 var instantiatedTree = problemSpaceTree
                     .InstantiateSolutionPackages(parentPackage, Repo, Options.Some(solutionName))
