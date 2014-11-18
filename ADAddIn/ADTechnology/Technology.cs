@@ -12,7 +12,7 @@ namespace AdAddIn.ADTechnology
         public static readonly MDGTechnology AD = new MDGTechnology(
             id: "ADMentor",
             name: "AD Mentor",
-            version: "0.2.0",
+            version: "0.3.0",
             modelVersion: 2,
             description: "Modelling Language for documentation and reuse of architectural decisions",
             diagrams: new Diagram[]{
