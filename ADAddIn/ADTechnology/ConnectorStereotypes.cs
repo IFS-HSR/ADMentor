@@ -94,8 +94,8 @@ namespace AdAddIn.ADTechnology
                 new Connection(from: SolutionSpace.OptionOccurrence, to: SolutionSpace.OptionOccurrence)
             });
 
-        public static readonly ConnectorStereotype PositiveAssessement = new ConnectorStereotype(
-            name: "adPositiveAssessement",
+        public static readonly ConnectorStereotype AssessesPositively = new ConnectorStereotype(
+            name: "adAssessesPositively",
             displayName: "Assesses Positively",
             reverseDisplayName: "Positively Assessed By",
             type: ConnectorType.Association,
@@ -104,8 +104,8 @@ namespace AdAddIn.ADTechnology
                 new Connection(from: ElementType.Requirement.DefaultStereotype, to: ProblemSpace.Option)
             });
 
-        public static readonly ConnectorStereotype NegativeAssessement = new ConnectorStereotype(
-            name: "adNegativeAssessement",
+        public static readonly ConnectorStereotype AssessesNegatively = new ConnectorStereotype(
+            name: "adAssessesNegatively",
             displayName: "Assesses Negatively",
             reverseDisplayName: "Negatively Assessed By",
             type: ConnectorType.Dependency,

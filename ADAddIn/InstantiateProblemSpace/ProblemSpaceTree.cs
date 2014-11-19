@@ -2,6 +2,7 @@
 using AdAddIn.DataAccess;
 using EAAddInFramework;
 using EAAddInFramework.DataAccess;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace AdAddIn.InstantiateProblemSpace
 {
     public class ProblemSpaceTree
     {
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         private ProblemSpaceTree(
             ModelEntity.Package package,
             Option<ModelEntity.Package> packageInstance,
@@ -106,7 +109,14 @@ namespace AdAddIn.InstantiateProblemSpace
 
             connections.ForEach((source, connectorStype, target) =>
             {
-                repo.Connect(source, target, connectorStype);
+                try
+                {
+                    repo.Connect(source, target, connectorStype);
+                }
+                catch (Exception)
+                {
+                    // TODO: proper error handling
+                }
             });
         }
 

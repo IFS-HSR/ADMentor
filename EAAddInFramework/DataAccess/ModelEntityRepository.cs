@@ -94,6 +94,12 @@ namespace EAAddInFramework.DataAccess
 
         public virtual ModelEntity.Connector Connect(ModelEntity.Element source, ModelEntity.Element target, ConnectorStereotype stereotype)
         {
+            if (stereotype.Type == ConnectorType.Association && (source.Type.Equals(ElementType.Package.Name) || target.Type.Equals(ElementType.Package.Name)))
+            {
+                // seems strange but it's true; EA crashes if you try to create such a connection! Thus, we stop before it's getting really ugly.
+                throw new ApplicationException(String.Format("Cannot create connection {0} - {1} - {2}", source, stereotype.Name, target));
+            }
+
             var c = source.EaObject.Connectors.AddNew("", stereotype.Type.Name) as EA.Connector;
 
             c.Stereotype = stereotype.Name;
@@ -103,9 +109,9 @@ namespace EAAddInFramework.DataAccess
             {
                 c.Update();
             }
-            catch (COMException ce)
+            catch (Exception e)
             {
-                throw new ApplicationException(c.GetLastError(), ce);
+                throw new ApplicationException(c.GetLastError(), e);
             }
 
             SpecifyComposition(stereotype, c);

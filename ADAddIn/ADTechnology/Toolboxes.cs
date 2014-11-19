@@ -26,8 +26,8 @@ namespace AdAddIn.ADTechnology
             displayName: "QOC Connectors",
             description: "",
             stereotypes: new[]{
-                ConnectorStereotypes.PositiveAssessement,
-                ConnectorStereotypes.NegativeAssessement
+                ConnectorStereotypes.AssessesPositively,
+                ConnectorStereotypes.AssessesNegatively
             });
 
         public static readonly Toolbox ProblemSpaceTools = new Toolbox(
