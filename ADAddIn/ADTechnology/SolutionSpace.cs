@@ -143,7 +143,7 @@ namespace AdAddIn.ADTechnology
 
         public static readonly PackageStereotype SolutionSpacePackage = new PackageStereotype(
             name: "adSolutionSpace",
-            displayName: "SolutionSpace",
+            displayName: "Solution Space Package",
             backgroundColor: Color.PaleGoldenrod,
             taggedValues: new[]{
                 Common.IntellectualPropertyRights

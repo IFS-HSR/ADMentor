@@ -129,13 +129,6 @@ namespace EAAddInFramework.MDGBuilder
             };
         }
 
-        private String LinkDirection(String direction)
-        {
-            return ConnectorStereotype.CompositionKind.Match(
-                ck => ck.Type == CompositionKind.CompositionType.None ? direction : "undirected",
-                () => direction);
-        }
-
         private String MakeToExistingElementQuickLink()
         {
             return String.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},",
@@ -148,7 +141,7 @@ namespace EAAddInFramework.MDGBuilder
                 /* G */"",
                 /* H */ConnectorStereotype.Type.Name,
                 /* I */ConnectorStereotype.Name,
-                /* J */LinkDirection("to"),
+                /* J */"to",
                 /* K */ConnectorStereotype.DisplayName,
                 /* L */"",
                 /* M */"TRUE",
@@ -175,7 +168,7 @@ namespace EAAddInFramework.MDGBuilder
                 /* G */"",
                 /* H */ConnectorStereotype.Type.Name,
                 /* I */ConnectorStereotype.Name,
-                /* J */LinkDirection("from"),
+                /* J */"from",
                 /* K */ConnectorStereotype.ReverseDisplayName.GetOrElse(ConnectorStereotype.DisplayName),
                 /* L */"",
                 /* M */"TRUE",
@@ -202,7 +195,7 @@ namespace EAAddInFramework.MDGBuilder
                 /* G */To.Name,
                 /* H */ConnectorStereotype.Type.Name,
                 /* I */ConnectorStereotype.Name,
-                /* J */LinkDirection("to"),
+                /* J */"to",
                 /* K */"",
                 /* L */To.DisplayName,
                 /* M */"TRUE",
@@ -229,7 +222,7 @@ namespace EAAddInFramework.MDGBuilder
                 /* G */From.Name,
                 /* H */ConnectorStereotype.Type.Name,
                 /* I */ConnectorStereotype.Name,
-                /* J */LinkDirection("from"),
+                /* J */"from",
                 /* K */"",
                 /* L */From.DisplayName,
                 /* M */"TRUE",

@@ -52,13 +52,13 @@ namespace AdAddIn
                 entityRepository, new TailorPackageExportForm(), new XmlExporter.Factory(entityRepository, eaRepository), new SelectExportPathDialog());
 
             Register(new Menu(technology.Name,
-                new MenuItem("Locate Option/Problem", new GoToClassifierCommand(eaRepository)),
                 new MenuItem("Tailor Problem Space", exportProblemSpace.AsMenuCommand()),
                 new MenuItem("Create Solution Space from Problem Space", instantiateProblemSpace.AsMenuCommand()),
+                new MenuItem("Locate Option/Problem", new GoToClassifierCommand(eaRepository)),
                 new MenuItem("Establish Dependencies from Problem Space", populateDependenciesCommand.AsMenuCommand()),
                 new MenuItem("Migrate Element(s) to Current Model Version", new MigrateModelEntities(migrator).AsMenuCommand()),
                 //new MenuItem("TEST", new TestFilterConfigurationCommand().AsMenuCommand()),
-                new MenuItem("Export to ADRepo", new ExportToADRepo.ExportToADRepoCommand(entityRepository).AsMenuCommand())));
+                new MenuItem("Export to AD Repo", new ExportToADRepo.ExportToADRepoCommand(entityRepository).AsMenuCommand())));
 
             OnEntityCreated.Add(updateMetadataCommand.AsEntityCreatedHandler());
             OnEntityCreated.Add(populateDependenciesCommand.AsEntityCreatedHandler());

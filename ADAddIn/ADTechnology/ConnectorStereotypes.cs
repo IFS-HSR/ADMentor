@@ -14,7 +14,7 @@ namespace AdAddIn.ADTechnology
             displayName: "Addressed By",
             reverseDisplayName: "Addresses",
             type: ConnectorType.Association,
-            direction: Direction.Unspecified,
+            direction: Direction.SourceToDestination,
             compositionKind: CompositionKind.AggregateAtSource,
             connects: new[]{
                 new Connection(from: ProblemSpace.Problem, to: ProblemSpace.Option),
@@ -96,8 +96,8 @@ namespace AdAddIn.ADTechnology
 
         public static readonly ConnectorStereotype PositiveAssessement = new ConnectorStereotype(
             name: "adPositiveAssessement",
-            displayName: "Positive Assessement",
-            reverseDisplayName: "Positive Assessed By",
+            displayName: "Assesses Positively",
+            reverseDisplayName: "Positively Assessed By",
             type: ConnectorType.Association,
             direction: Direction.Unspecified,
             connects: new[]{
@@ -106,8 +106,8 @@ namespace AdAddIn.ADTechnology
 
         public static readonly ConnectorStereotype NegativeAssessement = new ConnectorStereotype(
             name: "adNegativeAssessement",
-            displayName: "Negative Assessement",
-            reverseDisplayName: "Negative Assessed By",
+            displayName: "Assesses Negatively",
+            reverseDisplayName: "Negatively Assessed By",
             type: ConnectorType.Dependency,
             direction: Direction.Unspecified,
             connects: new[]{
