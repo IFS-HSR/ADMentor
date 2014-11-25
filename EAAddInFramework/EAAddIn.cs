@@ -14,10 +14,13 @@ namespace EAAddInFramework
 
         private readonly Atom<EA.Repository> eaRepository = new LoggedAtom<EA.Repository>("ea.repository", null);
 
-        private readonly Atom<Lazy<Option<ModelEntity>>> contextItem =
-            new LoggedAtom<Lazy<Option<ModelEntity>>>("ea.contextItem", new Lazy<Option<ModelEntity>>(() => Options.None<ModelEntity>()));
-
         private readonly MenuHandler menuHandler;
+
+        private readonly Atom<Option<ModelEntity>> contextItem =
+            new LoggedAtom<Option<ModelEntity>>("ea.contextItem", Options.None<ModelEntity>());
+
+        private readonly Atom<Option<ContextItemHandler>> contextItemHandler =
+            new LoggedAtom<Option<ContextItemHandler>>("ea.contextItemHandler", Options.None<ContextItemHandler>());
 
         private readonly Atom<Option<MDGTechnology>> technology = new LoggedAtom<Option<MDGTechnology>>("ea.addIn.technology", Options.None<MDGTechnology>());
 
@@ -49,36 +52,6 @@ namespace EAAddInFramework
         private void RepositoryChanged(EA.Repository repository)
         {
             eaRepository.Exchange(repository, GetType());
-
-            switch (eaRepository.Val.GetTreeSelectedItemType())
-            {
-                case EA.ObjectType.otElement:
-                case EA.ObjectType.otConnector:
-                case EA.ObjectType.otDiagram:
-                case EA.ObjectType.otPackage:
-                    SetContextItem(() => Options.Some(eaRepository.Val.GetTreeSelectedObject()));
-                    break;
-                default:
-                    SetContextItem(() => Options.None<object>());
-                    break;
-            }
-        }
-
-        private void SetContextItem(Func<Option<dynamic>> getEaObject)
-        {
-            contextItem.Exchange(
-                new Lazy<Option<ModelEntity>>(
-                    () => getEaObject().Select(eaObject => entityWrapper.Val.Wrap(eaObject) as ModelEntity),
-                    System.Threading.LazyThreadSafetyMode.None),
-                GetType());
-        }
-
-        private void MenuLocationChanged(string menuLocation)
-        {
-            if (menuLocation == "MainMenu")
-            {
-                SetContextItem(() => Options.None<object>());
-            }
         }
         #endregion
 
@@ -92,6 +65,9 @@ namespace EAAddInFramework
             {
                 entityWrapper.Exchange(wrapper, GetType());
             });
+
+            var ciHandler = new ContextItemHandler(contextItem, eaRepository, entityWrapper);
+            contextItemHandler.Exchange(Options.Some(ciHandler), GetType());
 
             return "";
         }
@@ -130,7 +106,7 @@ namespace EAAddInFramework
         public object EA_GetMenuItems(EA.Repository repository, String menuLocation, String menuName)
         {
             RepositoryChanged(repository);
-            MenuLocationChanged(menuLocation);
+            contextItemHandler.Val.Do(cih => cih.MenuLocationChanged(menuLocation));
 
             var itemNames = menuHandler.GetMenuItems(menuName);
 
@@ -142,7 +118,7 @@ namespace EAAddInFramework
         public void EA_GetMenuState(EA.Repository repository, string menuLocation, string menuName, string itemName, ref bool isEnabled, ref bool isChecked)
         {
             RepositoryChanged(repository);
-            MenuLocationChanged(menuLocation);
+            contextItemHandler.Val.Do(cih => cih.MenuLocationChanged(menuLocation));
 
             var enabled = menuHandler.IsItemEnabled(menuName, itemName);
 
@@ -154,7 +130,7 @@ namespace EAAddInFramework
         public void EA_MenuClick(EA.Repository repository, string menuLocation, string menuName, string itemName)
         {
             RepositoryChanged(repository);
-            MenuLocationChanged(menuLocation);
+            contextItemHandler.Val.Do(cih => cih.MenuLocationChanged(menuLocation));
 
             logger.Debug("Handle click on \"{0}\" in \"{1}\"", itemName, menuName);
 
@@ -266,6 +242,8 @@ namespace EAAddInFramework
         public void EA_OnContextItemChanged(EA.Repository repository, string guid, EA.ObjectType ot)
         {
             RepositoryChanged(repository);
+
+            contextItemHandler.Val.Do(cih => cih.ContextItemChanged(guid, ot));
 
             logger.Debug("Context item changed to {0} of object type {1}", guid, ot);
         }

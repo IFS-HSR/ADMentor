@@ -81,9 +81,9 @@ namespace EAAddInFramework
 
     class MenuHandler
     {
-        private readonly IReadableAtom<Lazy<Option<ModelEntity>>> ContextItem;
+        private readonly IReadableAtom<Option<ModelEntity>> ContextItem;
 
-        public MenuHandler(IReadableAtom<Lazy<Option<ModelEntity>>> contextItem)
+        public MenuHandler(IReadableAtom<Option<ModelEntity>> contextItem)
         {
             ContextItem = contextItem;
         }
@@ -99,7 +99,7 @@ namespace EAAddInFramework
         public String[] GetMenuItems(String parentMenu)
         {
             var itemNames = (from item in GetChildren(parentMenu, root)
-                             where item.IsVisible(ContextItem.Val.Value)
+                             where item.IsVisible(ContextItem.Val)
                              select GetEAMenuName(item)).ToArray();
 
             if (itemNames.Count() == 0)
@@ -115,14 +115,14 @@ namespace EAAddInFramework
         public void HandleClick(String parentName, String itemName)
         {
             GetItem(parentName, itemName, root)
-                .Do(item => item.OnClick(ContextItem.Val.Value));
+                .Do(item => item.OnClick(ContextItem.Val));
         }
 
         public bool IsItemEnabled(String parentName, String itemName)
         {
             return GetItem(parentName, itemName, root)
                 .Match(
-                    item => item.IsEnabled(ContextItem.Val.Value),
+                    item => item.IsEnabled(ContextItem.Val),
                     () => true
                 );
         }

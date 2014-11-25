@@ -47,6 +47,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContextItemHandler.cs" />
     <Compile Include="DataAccess\DiagramObject.cs" />
     <Compile Include="DataAccess\EntityWrapper.cs" />
     <Compile Include="DataAccess\ModelEntity.cs" />
