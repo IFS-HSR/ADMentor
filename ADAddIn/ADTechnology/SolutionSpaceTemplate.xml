@@ -23,7 +23,7 @@
 						<UML:TaggedValue tag="packageFlags" value="isModel=1;VICON=3;CRC=0;"/>
 						<UML:TaggedValue tag="phase" value="1.0"/>
 						<UML:TaggedValue tag="status" value="Proposed"/>
-						<UML:TaggedValue tag="author" value="Lukas"/>
+						<UML:TaggedValue tag="author" value=""/>
 						<UML:TaggedValue tag="complexity" value="1"/>
 						<UML:TaggedValue tag="ea_stype" value="Public"/>
 						<UML:TaggedValue tag="tpos" value="0"/>
@@ -36,7 +36,7 @@
 		<UML:Diagram name="Solution Space" xmi.id="EAID_1D3A20D9_3D28_4535_A9F6_2BE5A1366015" diagramType="ActivityDiagram" owner="EAPK_6B447212_5ABC_47b2_822E_D7F6375ED131" toolName="Enterprise Architect 2.5">
 			<UML:ModelElement.taggedValue>
 				<UML:TaggedValue tag="version" value="1.0"/>
-				<UML:TaggedValue tag="author" value="Lukas"/>
+				<UML:TaggedValue tag="author" value=""/>
 				<UML:TaggedValue tag="created_date" value="2014-09-22 13:53:43"/>
 				<UML:TaggedValue tag="modified_date" value="2014-11-19 14:46:50"/>
 				<UML:TaggedValue tag="package" value="EAPK_6B447212_5ABC_47b2_822E_D7F6375ED131"/>
