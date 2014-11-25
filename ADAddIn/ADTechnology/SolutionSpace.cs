@@ -13,12 +13,13 @@ namespace AdAddIn.ADTechnology
     {
         public class OptionState : Enumeration
         {
-            public static readonly OptionState Eligible = new OptionState("Eligible", Color.LightSkyBlue);
+            public static readonly OptionState Eligible = new OptionState("Eligible", Color.Khaki);
+            public static readonly OptionState Tentative = new OptionState("Tentative", Color.SpringGreen);
             public static readonly OptionState Chosen = new OptionState("Chosen", Color.LightGreen);
             public static readonly OptionState Neglected = new OptionState("Neglected", Color.LightGray);
 
             public static readonly IEnumerable<OptionState> AllStates = new OptionState[] {
-                Eligible, Chosen, Neglected
+                Eligible, Tentative, Chosen, Neglected
             };
 
             private OptionState(String name, Color color)

@@ -48,12 +48,13 @@ namespace AdAddIn.DataAccess
         {
             var noAlternatives = alternatives.Count();
             var noCandidates = alternatives.Count(a => a.State == SolutionSpace.OptionState.Eligible);
+            var noTentative = alternatives.Count(a => a.State == SolutionSpace.OptionState.Tentative);
             var noChosen = alternatives.Count(a => a.State == SolutionSpace.OptionState.Chosen);
             var noNeglected = alternatives.Count(a => a.State == SolutionSpace.OptionState.Neglected);
 
             if (noAlternatives == noCandidates)
                 return SolutionSpace.ProblemOccurrenceState.Open;
-            else if (noCandidates > 0 && noCandidates < noAlternatives)
+            else if (noCandidates + noTentative > 0)
                 return SolutionSpace.ProblemOccurrenceState.PartiallySolved;
             else if (noChosen > 0 && noCandidates == 0)
                 return SolutionSpace.ProblemOccurrenceState.Solved;
