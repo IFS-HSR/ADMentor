@@ -1,4 +1,5 @@
-﻿using EAAddInFramework.DataAccess;
+﻿using AdAddIn.ADTechnology;
+using EAAddInFramework.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,6 @@ namespace AdAddIn.DataAccess
         {
             getElementById(EaObject.ClassifierID).Do(classifier =>
             {
-                EaObject.Name = classifier.EaObject.Name;
                 EaObject.Notes = classifier.EaObject.Notes;
                 EaObject.Tag = classifier.EaObject.Tag; // keywords
                 EaObject.Alias = classifier.EaObject.Alias;
@@ -25,6 +25,15 @@ namespace AdAddIn.DataAccess
                 EaObject.Version = classifier.EaObject.Version;
                 EaObject.Phase = classifier.EaObject.Phase;
                 EaObject.Author = classifier.EaObject.Author;
+
+                ProblemSpace.Problem.TaggedValues
+                    .Concat(ProblemSpace.Option.TaggedValues)
+                    .Distinct()
+                    .SelectMany(tv => classifier.Get(tv).Select(v => Tuple.Create(tv, v)))
+                    .ForEach((taggedValue, valueInClassifier) =>
+                    {
+                        this.Set(taggedValue, valueInClassifier);
+                    });
 
                 EaObject.Update();
             });
