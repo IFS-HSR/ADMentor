@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EAAddInFramework.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,13 +32,41 @@ namespace EAAddInFramework
 
         public static ICommand<S, R> Adapt<S, T, R>(this ICommand<T, R> cmd, Func<S, Option<T>> map)
         {
-            return Create<S,R>(arg =>
+            return Create<S, R>(arg =>
             {
                 return cmd.Execute(map(arg).Value);
             }, arg =>
             {
                 return map(arg).IsDefined && cmd.CanExecute(map(arg).Value);
             });
+        }
+
+        public static ICommand<Option<ModelEntity>, object> ToMenuHandler<T, R>(this ICommand<T, R> cmd)
+            where T : ModelEntity
+            where R : class
+        {
+            return cmd.Adapt((Option<ModelEntity> ci) => from e in ci
+                                                         from t in e.Match<T>()
+                                                         select t);
+        }
+
+        public static ICommand<ModelEntity, EntityModified> ToEntityCreatedHandler<T>(this ICommand<T, EntityModified> cmd)
+            where T : ModelEntity
+        {
+            return cmd.Adapt((ModelEntity entity) => entity.Match<T>());
+        }
+
+        public static ICommand<ModelEntity, object> ToEntityModifiedHandler<T, R>(this ICommand<T, R> cmd)
+            where T : ModelEntity
+            where R : class
+        {
+            return cmd.Adapt((ModelEntity entity) => entity.Match<T>());
+        }
+
+        public static ICommand<ModelEntity, DeleteEntity> ToOnDeleteEntityHandler<T>(this ICommand<T, DeleteEntity> cmd)
+            where T : ModelEntity
+        {
+            return cmd.Adapt((ModelEntity entity) => entity.Match<T>());
         }
     }
 

@@ -69,6 +69,7 @@
     <Compile Include="ADTechnology\ProblemSpace.cs" />
     <Compile Include="ADTechnology\Technology.cs" />
     <Compile Include="ADTechnology\Toolboxes.cs" />
+    <Compile Include="Analysis\AnalysePackageCommand.cs" />
     <Compile Include="CopyMetadata\UpdateOptionOccurrenceStateOnAlternativesAdded.cs" />
     <Compile Include="CopyMetadata\UpdateProblemOccurrenceStateOnRemoveAlternative.cs" />
     <Compile Include="DataAccess\AdEntity.cs" />

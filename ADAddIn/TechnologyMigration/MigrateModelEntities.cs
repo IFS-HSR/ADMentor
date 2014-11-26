@@ -53,10 +53,5 @@ namespace AdAddIn.TechnologyMigration
         {
             return true;
         }
-
-        internal ICommand<Option<ModelEntity>, Unit> AsMenuCommand()
-        {
-            return this.Adapt((Option<ModelEntity> ci) => ci);
-        }
     }
 }

@@ -57,15 +57,6 @@ namespace AdAddIn.PopulateDependencies
                    select diagram;
         }
 
-        public ICommand<Option<ModelEntity>, object> AsMenuCommand()
-        {
-            return this.Adapt(
-                (Option<ModelEntity> contextItem) =>
-                    from ci in contextItem
-                    from solutionEntity in ci.Match<SolutionEntity>()
-                    select solutionEntity);
-        }
-
         public ICommand<ModelEntity, EntityModified> AsEntityCreatedHandler()
         {
             return this.Adapt(

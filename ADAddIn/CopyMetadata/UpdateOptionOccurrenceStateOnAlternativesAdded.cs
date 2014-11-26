@@ -37,10 +37,5 @@ namespace AdAddIn.CopyMetadata
         {
             return true;
         }
-
-        public ICommand<ModelEntity, EntityModified> AsOnEntityCreatedHandler()
-        {
-            return this.Adapt((ModelEntity e) => e.Match<ModelEntity.Connector>());
-        }
     }
 }

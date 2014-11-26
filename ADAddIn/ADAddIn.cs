@@ -52,19 +52,19 @@ namespace AdAddIn
                 entityRepository, new TailorPackageExportForm(), new XmlExporter.Factory(entityRepository, eaRepository), new SelectExportPathDialog());
 
             Register(new Menu(technology.Name,
-                new MenuItem("Tailor Problem Space", exportProblemSpace.AsMenuCommand()),
-                new MenuItem("Create Solution Space from Problem Space", instantiateProblemSpace.AsMenuCommand()),
+                new MenuItem("Tailor Problem Space", exportProblemSpace.ToMenuHandler()),
+                new MenuItem("Create Solution Space from Problem Space", instantiateProblemSpace.ToMenuHandler()),
                 new MenuItem("Locate Option/Problem", new GoToClassifierCommand(eaRepository)),
-                new MenuItem("Establish Dependencies from Problem Space", populateDependenciesCommand.AsMenuCommand()),
-                new MenuItem("Migrate Element(s) to Current Model Version", new MigrateModelEntities(migrator).AsMenuCommand()),
+                new MenuItem("Establish Dependencies from Problem Space", populateDependenciesCommand.ToMenuHandler()),
+                new MenuItem("Migrate Element(s) to Current Model Version", new MigrateModelEntities(migrator).ToMenuHandler()),
                 //new MenuItem("TEST", new TestFilterConfigurationCommand().AsMenuCommand()),
-                new MenuItem("Export to AD Repo", new ExportToADRepo.ExportToADRepoCommand(entityRepository).AsMenuCommand())));
+                new MenuItem("Export to AD Repo", new ExportToADRepo.ExportToADRepoCommand(entityRepository).ToMenuHandler())));
 
-            OnEntityCreated.Add(updateMetadataCommand.AsEntityCreatedHandler());
+            OnEntityCreated.Add(updateMetadataCommand.ToEntityCreatedHandler());
             OnEntityCreated.Add(populateDependenciesCommand.AsEntityCreatedHandler());
-            OnEntityCreated.Add(updateStateOnAlternativesAdded.AsOnEntityCreatedHandler());
+            OnEntityCreated.Add(updateStateOnAlternativesAdded.ToEntityCreatedHandler());
 
-            OnEntityModified.Add(updateStateOnAlternativesChanged.AsEntityModifiedHandler());
+            OnEntityModified.Add(updateStateOnAlternativesChanged.ToEntityModifiedHandler());
 
             OnDeleteEntity.Add(updateStateOnRemoveAlternative.AsOnDeleteEntityHandler());
 

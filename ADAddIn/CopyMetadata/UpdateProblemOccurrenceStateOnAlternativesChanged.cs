@@ -40,13 +40,5 @@ namespace AdAddIn.CopyMetadata
         {
             return true;
         }
-
-        public ICommand<ModelEntity, object> AsEntityModifiedHandler()
-        {
-            return this.Adapt((ModelEntity entity) =>
-            {
-                return entity.Match<OptionOccurrence>();
-            });
-        }
     }
 }

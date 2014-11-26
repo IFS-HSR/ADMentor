@@ -47,16 +47,5 @@ namespace AdAddIn.InstantiateProblemSpace
         {
             return true;
         }
-
-        public ICommand<Option<ModelEntity>, object> AsMenuCommand()
-        {
-            return this.Adapt(
-                (Option<ModelEntity> contextItem) =>
-                {
-                    return from ci in contextItem
-                           from p in ci.Match<ModelEntity.Package>()
-                           select p;
-                });
-        }
     }
 }
