@@ -16,6 +16,7 @@ using AdAddIn.InstantiateProblemSpace;
 using AdAddIn.ExportProblemSpace;
 using EAAddInFramework.DataAccess;
 using AdAddIn.TechnologyMigration;
+using AdAddIn.Analysis;
 
 namespace AdAddIn
 {
@@ -57,6 +58,7 @@ namespace AdAddIn
                 new MenuItem("Locate Option/Problem", new GoToClassifierCommand(eaRepository)),
                 new MenuItem("Establish Dependencies from Problem Space", populateDependenciesCommand.ToMenuHandler()),
                 new MenuItem("Migrate Element(s) to Current Model Version", new MigrateModelEntities(migrator).ToMenuHandler()),
+                new MenuItem("Package Metrics", new AnalysePackageCommand(entityRepository).ToMenuHandler()),
                 //new MenuItem("TEST", new TestFilterConfigurationCommand().AsMenuCommand()),
                 new MenuItem("Export to AD Repo", new ExportToADRepo.ExportToADRepoCommand(entityRepository).ToMenuHandler())));
 
