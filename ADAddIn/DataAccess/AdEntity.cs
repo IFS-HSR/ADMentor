@@ -17,6 +17,8 @@ namespace AdAddIn.DataAccess
         {
             getElementById(EaObject.ClassifierID).Do(classifier =>
             {
+                // name must be copied to instance or it wont have a name in package browser
+                EaObject.Name = classifier.EaObject.Name;
                 EaObject.Notes = classifier.EaObject.Notes;
                 EaObject.Tag = classifier.EaObject.Tag; // keywords
                 EaObject.Alias = classifier.EaObject.Alias;
