@@ -13,8 +13,8 @@ namespace AdAddIn.ADTechnology
     {
         public class OptionState : Enumeration
         {
-            public static readonly OptionState Eligible = new OptionState("Eligible", Color.Khaki);
-            public static readonly OptionState Tentative = new OptionState("Tentative", Color.SpringGreen);
+            public static readonly OptionState Eligible = new OptionState("Eligible", Color.LightYellow);
+            public static readonly OptionState Tentative = new OptionState("Tentative", Color.Khaki);
             public static readonly OptionState Chosen = new OptionState("Chosen", Color.LightGreen);
             public static readonly OptionState Neglected = new OptionState("Neglected", Color.LightGray);
 
@@ -145,7 +145,6 @@ namespace AdAddIn.ADTechnology
         public static readonly PackageStereotype SolutionSpacePackage = new PackageStereotype(
             name: "adSolutionSpace",
             displayName: "Solution Space Package",
-            backgroundColor: Color.PaleGoldenrod,
             taggedValues: new[]{
                 Common.IntellectualPropertyRights
             });

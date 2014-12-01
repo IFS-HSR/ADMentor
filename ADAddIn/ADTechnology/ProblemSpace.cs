@@ -73,7 +73,6 @@ namespace AdAddIn.ADTechnology
         public static readonly PackageStereotype ProblemSpacePackage = new PackageStereotype(
             name: "adProblemSpace",
             displayName: "Problem Space Package",
-            backgroundColor: Color.PaleGoldenrod,
             taggedValues: new[]{
                 Common.IntellectualPropertyRights,
                 Common.RefinementLevel,
