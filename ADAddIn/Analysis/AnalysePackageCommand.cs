@@ -24,15 +24,15 @@ namespace AdAddIn.Analysis
 
         public Unit Execute(ModelEntity.Package package)
         {
-            var elements = (from p in package.SubPackages
+            var packages = package.SubPackages.Run();
+
+            var elements = (from p in packages
                             from e in p.Elements
                             select e).Run();
 
-            var packages = package.SubPackages.Run();
-
             var elementsPerPackage = from p in packages
-                                      from e in p.Elements
-                                      group e by p;
+                                     from e in p.Elements
+                                     group e by p;
 
             var optionsPerProblem = from e in elements
                                     from o in e.Match<OptionEntity>()
@@ -42,13 +42,20 @@ namespace AdAddIn.Analysis
                                     from p in target.Match<Problem>()
                                     group o by p;
 
-            var oosPerPo = from e in elements
-                            from oo in e.Match<OptionOccurrence>()
-                            from c in e.Connectors
-                            where c.Is(ConnectorStereotypes.AddressedBy)
-                            from target in c.OppositeEnd(e, Repository.GetElement)
-                            from po in target.Match<ProblemOccurrence>()
-                            group oo by po;
+            var optionOccurrences = (from e in elements
+                                     from oo in e.Match<OptionOccurrence>()
+                                     select oo).Run();
+
+            var oosPerPo = from oo in optionOccurrences
+                           from c in oo.Connectors
+                           where c.Is(ConnectorStereotypes.AddressedBy)
+                           from target in c.OppositeEnd(oo, Repository.GetElement)
+                           from po in target.Match<ProblemOccurrence>()
+                           group oo by po;
+
+            var oosPerState = from oo in optionOccurrences
+                              group oo by oo.State into g
+                              select Entry(g.Key.Name, g.Count());
 
             var metrics = Category(package.Name,
                 Category("Common",
@@ -61,8 +68,9 @@ namespace AdAddIn.Analysis
                     Entry("Options per Problem", CreateSummary(optionsPerProblem, g => g.Count()))),
                 Category("Solution Space",
                     Entry("Problem Occurrences", elements.Count(e => e is ProblemOccurrence)),
-                    Entry("Option Occurrences", elements.Count(e => e is OptionOccurrence)),
-                    Entry("Options per Problems", CreateSummary(oosPerPo, g => g.Count()))));
+                    Entry("Option Occurrences", optionOccurrences.Count()),
+                    Entry("Options per Problem", CreateSummary(oosPerPo, g => g.Count())),
+                    Category("States", oosPerState.ToArray())));
 
             MessageBox.Show(metrics.ToString());
 
@@ -71,7 +79,10 @@ namespace AdAddIn.Analysis
 
         private String CreateSummary<TKey, TElement>(IEnumerable<IGrouping<TKey, TElement>> groups, Func<IGrouping<TKey, TElement>, int> selector)
         {
-            return String.Format("Min {0} / Avg {1} / Max {2}", groups.Min(selector), groups.Average(selector), groups.Max(selector));
+            var data = groups.IsEmpty() ?
+                Tuple.Create("-", "-", "-") :
+                Tuple.Create(groups.Min(selector).ToString(), groups.Average(selector).ToString("N"), groups.Max(selector).ToString());
+            return String.Format("Min {0} / Avg {1} / Max {2}", data.Item1, data.Item2, data.Item3);
         }
 
         public bool CanExecute(ModelEntity.Package _)
