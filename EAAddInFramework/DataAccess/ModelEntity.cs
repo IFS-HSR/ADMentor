@@ -191,7 +191,10 @@ namespace EAAddInFramework.DataAccess
                 var taggedValues = TaggedValuesCollection
                     .Select(tvc => tvc.Cast<dynamic>())
                     .GetOrElse(Enumerable.Empty<dynamic>());
-                return taggedValues.ToImmutableDictionary(tv => tv.Name as String, tv => tv.Value as String);
+                return taggedValues
+                    // in some cases it is possible that an element has multiple tagged values with the same name
+                    .DistinctBy(tv => tv.Name)
+                    .ToImmutableDictionary(tv => tv.Name as String, tv => tv.Value as String);
             }
         }
 
