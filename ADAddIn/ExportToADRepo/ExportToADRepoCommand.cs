@@ -23,8 +23,11 @@ namespace AdAddIn.ExportToADRepo
         public Unit Execute(ModelEntity.Package package)
         {
             var adRepoHost = Microsoft.VisualBasic.Interaction.InputBox("ADRepo URL", "Export to ADRepo", "http://localhost:9000/");
-            var client = new ADRepoClient(new Uri(adRepoHost), repository);
-            client.ExportPackage(package);
+            Options.Try(() => new Uri(adRepoHost)).Do(uri =>
+            {
+                var client = new ADRepoClient(uri, repository);
+                client.ExportPackage(package);
+            });
             return Unit.Instance;
         }
 
