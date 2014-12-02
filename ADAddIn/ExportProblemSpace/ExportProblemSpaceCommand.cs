@@ -32,12 +32,12 @@ namespace AdAddIn.ExportProblemSpace
         public Unit Execute(ModelEntity.Package package)
         {
             var packages = package.SubPackages.Run();
-            var elements = from descendant in packages
-                           from element in descendant.Elements
-                           select element;
-            var diagrams = from descendant in packages
-                           from diagram in descendant.Diagrams
-                           select diagram;
+            var elements = (from descendant in packages
+                            from element in descendant.Elements
+                            select element).Run();
+            var diagrams = (from descendant in packages
+                            from diagram in descendant.Diagrams
+                            select diagram).Run();
 
             var filters = Filter.Or("", new[]{
                 Filter.And("Elements", e => e.Match<ModelEntity.Element>().IsDefined, new[] {
