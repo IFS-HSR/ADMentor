@@ -16,8 +16,9 @@ namespace AdAddIn.ADTechnology
             modelVersion: 2,
             description: "Modelling Language for documentation and reuse of architectural decisions",
             diagrams: new Diagram[]{
-                        ADTechnology.DiagramTypes.ProblemSpace,
-                        ADTechnology.DiagramTypes.SolutionOverview
+                        DiagramTypes.ProblemSpace,
+                        DiagramTypes.QOC,
+                        DiagramTypes.SolutionOverview
                     },
             modelTemplates: new ModelTemplate[]{
                         new ModelTemplate(

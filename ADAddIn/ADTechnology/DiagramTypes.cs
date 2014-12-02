@@ -16,6 +16,13 @@ namespace AdAddIn.ADTechnology
             type: DiagramType.Activity,
             toolbox: Toolboxes.ProblemSpaceTools);
 
+        public static readonly Diagram QOC = new Diagram(
+            name: "QOC",
+            displayName: "QOC",
+            description: "Models questions, options and criterions",
+            type: DiagramType.Activity,
+            toolbox: Toolboxes.ProblemSpaceTools);
+
         public static readonly Diagram SolutionOverview = new Diagram(
             name: "SolutionOverview",
             displayName: "Solution Overview",
