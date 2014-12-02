@@ -70,6 +70,13 @@
     <Compile Include="ADTechnology\Technology.cs" />
     <Compile Include="ADTechnology\Toolboxes.cs" />
     <Compile Include="Analysis\AnalysePackageCommand.cs" />
+    <Compile Include="Analysis\DisplayMetricsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Analysis\DisplayMetricsForm.Designer.cs">
+      <DependentUpon>DisplayMetricsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Analysis\Metrics.cs" />
     <Compile Include="CopyMetadata\UpdateOptionOccurrenceStateOnAlternativesAdded.cs" />
     <Compile Include="CopyMetadata\UpdateProblemOccurrenceStateOnRemoveAlternative.cs" />
     <Compile Include="DataAccess\AdEntity.cs" />
@@ -169,6 +176,9 @@
     </Content>
     <EmbeddedResource Include="ADTechnology\Option.bmp" />
     <EmbeddedResource Include="ADTechnology\Problem.bmp" />
+    <EmbeddedResource Include="Analysis\DisplayMetricsForm.resx">
+      <DependentUpon>DisplayMetricsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ExportProblemSpace\CreateFilterForm.resx">
       <DependentUpon>CreateFilterForm.cs</DependentUpon>
     </EmbeddedResource>

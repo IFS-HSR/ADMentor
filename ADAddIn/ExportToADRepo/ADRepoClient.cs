@@ -89,7 +89,7 @@ namespace AdAddIn.ExportToADRepo
                 js.Add("state", entity.Get(SolutionSpace.OptionStateTag).Value);
             }
 
-            var response = httpClient.PostAsync("element", new StringContent(js.ToString(), Encoding.Default, "application/json")).Result;
+            var response = httpClient.PostAsync("element", new StringContent(js.ToString(), Encoding.UTF8, "application/json")).Result;
 
             if (response.IsSuccessStatusCode)
             {

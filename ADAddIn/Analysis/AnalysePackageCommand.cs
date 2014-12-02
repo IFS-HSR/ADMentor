@@ -2,6 +2,7 @@
 using AdAddIn.DataAccess;
 using EAAddInFramework;
 using EAAddInFramework.DataAccess;
+using EAAddInFramework.MDGBuilder;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -16,10 +17,12 @@ namespace AdAddIn.Analysis
     public class AnalysePackageCommand : ICommand<ModelEntity.Package, Unit>
     {
         private readonly ModelEntityRepository Repository;
+        private readonly DisplayMetricsForm DisplayMetricsForm;
 
-        public AnalysePackageCommand(ModelEntityRepository repo)
+        public AnalysePackageCommand(ModelEntityRepository repo, DisplayMetricsForm displayMetricsForm)
         {
             Repository = repo;
+            DisplayMetricsForm = displayMetricsForm;
         }
 
         public Unit Execute(ModelEntity.Package package)
@@ -31,54 +34,65 @@ namespace AdAddIn.Analysis
                             select e).Run();
 
             var elementsPerPackage = from p in packages
-                                     from e in p.Elements
-                                     group e by p;
+                                     select Tuple.Create(p, p.Elements.Run());
 
-            var optionsPerProblem = from e in elements
-                                    from o in e.Match<OptionEntity>()
-                                    from c in e.Connectors
-                                    where c.Is(ConnectorStereotypes.AddressedBy)
-                                    from target in c.OppositeEnd(e, Repository.GetElement)
-                                    from p in target.Match<Problem>()
-                                    group o by p;
+            var optionsPerProblem = FindTargetsPerSource<Problem, OptionEntity>(elements, ConnectorStereotypes.AddressedBy);
+            var problemsPerOption = FindTargetsPerSource<OptionEntity, Problem>(elements, ConnectorStereotypes.AddressedBy);
 
-            var optionOccurrences = (from e in elements
-                                     from oo in e.Match<OptionOccurrence>()
-                                     select oo).Run();
+            var optionOccsPerProblemOcc = FindTargetsPerSource<ProblemOccurrence, OptionOccurrence>(elements, ConnectorStereotypes.AddressedBy);
+            var problemOccsPerOptionOcc = FindTargetsPerSource<OptionOccurrence, ProblemOccurrence>(elements, ConnectorStereotypes.AddressedBy);
 
-            var oosPerPo = from oo in optionOccurrences
-                           from c in oo.Connectors
-                           where c.Is(ConnectorStereotypes.AddressedBy)
-                           from target in c.OppositeEnd(oo, Repository.GetElement)
-                           from po in target.Match<ProblemOccurrence>()
-                           group oo by po;
-
-            var oosPerState = from oo in optionOccurrences
+            var oosPerState = from e in elements
+                              from oo in e.Match<OptionOccurrence>()
                               group oo by oo.State into g
-                              select Entry(g.Key.Name, g.Count());
+                              select Metrics.Entry(g.Key.Name, g.Count());
 
-            var metrics = Category(package.Name,
-                Category("Common",
-                    Entry("Elements", elements.Count()),
-                    Entry("Packages", packages.Count()),
-                    Entry("Elements per Package", CreateSummary(elementsPerPackage, g => g.Count()))),
-                Category("Problem Space",
-                    Entry("Problems", elements.Count(e => e is Problem)),
-                    Entry("Options", elements.Count(e => e is OptionEntity)),
-                    Entry("Options per Problem", CreateSummary(optionsPerProblem, g => g.Count()))),
-                Category("Solution Space",
-                    Entry("Problem Occurrences", elements.Count(e => e is ProblemOccurrence)),
-                    Entry("Option Occurrences", optionOccurrences.Count()),
-                    Entry("Options per Problem", CreateSummary(oosPerPo, g => g.Count())),
-                    Category("States", oosPerState.ToArray())));
+            var posPerState = from e in elements
+                              from po in e.Match<ProblemOccurrence>()
+                              group po by po.State into g
+                              select Metrics.Entry(g.Key.Name, g.Count());
 
-            MessageBox.Show(metrics.ToString());
+            var metrics = Metrics.Category(package.Name,
+                Metrics.Category("Common",
+                    Metrics.Entry("Elements", elements.Count()),
+                    Metrics.Entry("Packages", packages.Count()),
+                    Metrics.Entry("Elements per Package", CreateSummary(elementsPerPackage))),
+                Metrics.Category("Problem Space",
+                    Metrics.Entry("Problems", elements.Count(e => e is Problem)),
+                    Metrics.Entry("Options", elements.Count(e => e is OptionEntity)),
+                    Metrics.Entry("Options per Problem", CreateSummary(optionsPerProblem)),
+                    Metrics.Entry("Problems per Option", CreateSummary(problemsPerOption))),
+                Metrics.Category("Solution Space",
+                    Metrics.Entry("Problem Occurrences", elements.Count(e => e is ProblemOccurrence)),
+                    Metrics.Entry("Option Occurrences", elements.Count(e => e is OptionOccurrence)),
+                    Metrics.Entry("Options per Problem", CreateSummary(optionOccsPerProblemOcc)),
+                    Metrics.Entry("Problems per Option", CreateSummary(problemOccsPerOptionOcc)),
+                    Metrics.Category("Problem States", posPerState.ToArray()),
+                    Metrics.Category("Option States", oosPerState.ToArray())));
+
+            DisplayMetricsForm.Display(metrics);
 
             return Unit.Instance;
         }
 
-        private String CreateSummary<TKey, TElement>(IEnumerable<IGrouping<TKey, TElement>> groups, Func<IGrouping<TKey, TElement>, int> selector)
+        private IEnumerable<Tuple<TSource, IEnumerable<TTarget>>> FindTargetsPerSource<TSource, TTarget>(
+            IEnumerable<ModelEntity.Element> elements, ConnectorStereotype connectorStype)
+            where TSource : ModelEntity.Element
+            where TTarget : ModelEntity.Element
         {
+            return (from e in elements
+                    from source in e.Match<TSource>()
+                    let targets = (from c in source.Connectors
+                                   where c.Is(connectorStype)
+                                   from otherEnd in c.OppositeEnd(source, Repository.GetElement)
+                                   from target in otherEnd.Match<TTarget>()
+                                   select target).Run()
+                    select Tuple.Create(source, targets)).Run();
+        }
+
+        private String CreateSummary<TKey, TElement>(IEnumerable<Tuple<TKey, IEnumerable<TElement>>> groups)
+        {
+            Func<Tuple<TKey, IEnumerable<TElement>>, int> selector = (kv) => kv.Item2.Count();
             var data = groups.IsEmpty() ?
                 Tuple.Create("-", "-", "-") :
                 Tuple.Create(groups.Min(selector).ToString(), groups.Average(selector).ToString("N"), groups.Max(selector).ToString());
@@ -88,67 +102,6 @@ namespace AdAddIn.Analysis
         public bool CanExecute(ModelEntity.Package _)
         {
             return true;
-        }
-
-        private Metric Category(String name, params Metric[] members)
-        {
-            return new Category(name, members);
-        }
-
-        private Metric Entry<T>(String key, T value)
-        {
-            return new Entry<T>(key, value);
-        }
-    }
-
-    interface Metric
-    {
-        String ToString(String prefix);
-    }
-
-    class Category : Metric
-    {
-        public Category(String name, IEnumerable<Metric> members)
-        {
-            Name = name;
-            Members = members;
-        }
-
-        public string Name { get; private set; }
-
-        public IEnumerable<Metric> Members { get; private set; }
-
-        public override string ToString()
-        {
-            return ToString("");
-        }
-
-        public string ToString(String prefix)
-        {
-            return String.Format("{0}{1}:\n{2}", prefix, Name, Members.Select(m => m.ToString(prefix + "  ")).Join("\n"));
-        }
-    }
-
-    class Entry<T> : Metric
-    {
-        public Entry(String key, T value)
-        {
-            Key = key;
-            Value = value;
-        }
-
-        public string Key { get; private set; }
-
-        public T Value { get; private set; }
-
-        public override string ToString()
-        {
-            return ToString("");
-        }
-
-        public string ToString(String prefix)
-        {
-            return String.Format("{0}{1}: {2}", prefix, Key, Value.ToString());
         }
     }
 }

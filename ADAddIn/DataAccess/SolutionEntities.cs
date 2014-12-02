@@ -56,7 +56,7 @@ namespace AdAddIn.DataAccess
                 return SolutionSpace.ProblemOccurrenceState.Open;
             else if (noCandidates + noTentative > 0)
                 return SolutionSpace.ProblemOccurrenceState.PartiallySolved;
-            else if (noChosen > 0 && noCandidates == 0)
+            else if (noChosen > 0)
                 return SolutionSpace.ProblemOccurrenceState.Solved;
             else
                 return SolutionSpace.ProblemOccurrenceState.NotApplicable;
