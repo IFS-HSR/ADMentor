@@ -3,6 +3,7 @@ using EAAddInFramework.MDGBuilder;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Utils;
 
@@ -22,9 +23,17 @@ namespace EAAddInFramework
         private readonly Atom<Option<ContextItemHandler>> contextItemHandler =
             new LoggedAtom<Option<ContextItemHandler>>("ea.contextItemHandler", Options.None<ContextItemHandler>());
 
-        private readonly Atom<Option<MDGTechnology>> technology = new LoggedAtom<Option<MDGTechnology>>("ea.addIn.technology", Options.None<MDGTechnology>());
+        private readonly Atom<Option<MDGTechnology>> technology = 
+            new LoggedAtom<Option<MDGTechnology>>("ea.addIn.technology", Options.None<MDGTechnology>());
 
-        private readonly Atom<IEntityWrapper> entityWrapper = new LoggedAtom<IEntityWrapper>("ea.addIn.entityWrapper", new EntityWrapper());
+        private readonly Atom<IEntityWrapper> entityWrapper = 
+            new LoggedAtom<IEntityWrapper>("ea.addIn.entityWrapper", new EntityWrapper());
+
+        private readonly Atom<IEnumerable<ValidationRule>> validationRules =
+            new LoggedAtom<IEnumerable<ValidationRule>>("ea.addIn.validationRules", new ValidationRule[]{});
+
+        private readonly Atom<Option<ValidationHandler>> validationHandler = 
+            new LoggedAtom<Option<ValidationHandler>>("ea.addIn.validationHandler", Options.None<ValidationHandler>());
 
         public EAAddIn()
         {
@@ -34,7 +43,7 @@ namespace EAAddInFramework
 
         public abstract String AddInName { get; }
 
-        public abstract Option<IEntityWrapper> Bootstrap(IReadableAtom<EA.Repository> repository);
+        public abstract Tuple<Option<IEntityWrapper>, IEnumerable<ValidationRule>> Bootstrap(IReadableAtom<EA.Repository> repository);
 
         public virtual Option<MDGTechnology> BootstrapTechnology()
         {
@@ -61,10 +70,15 @@ namespace EAAddInFramework
             RepositoryChanged(repository);
 
             logger.Info("Start add-in {0}", AddInName);
-            Bootstrap(eaRepository).Do(wrapper =>
+
+            var data = Bootstrap(eaRepository);
+
+            data.Item1.Do(wrapper =>
             {
                 entityWrapper.Exchange(wrapper, GetType());
             });
+
+            validationRules.Exchange(data.Item2, GetType());
 
             var ciHandler = new ContextItemHandler(contextItem, eaRepository, entityWrapper);
             contextItemHandler.Exchange(Options.Some(ciHandler), GetType());
@@ -268,6 +282,52 @@ namespace EAAddInFramework
             }
 
             return false;
+        }
+        #endregion
+
+        #region validation
+        public void EA_OnInitializeUserRules(EA.Repository repository) {
+            RepositoryChanged(repository);
+
+            logger.Debug("User rules initialization requested");
+
+            var projectInterface = repository.GetProjectInterface();
+            var categories = (from rule in validationRules.Val
+                              select rule.Category).Distinct();
+
+            var catToId = ImmutableDictionary.Create<String, String>();
+
+            categories.ForEach(cat =>
+            {
+                var id = projectInterface.DefineRuleCategory(cat);
+                catToId = catToId.Add(cat, id);
+            });
+
+            var idToRule = ImmutableDictionary.Create<String, ValidationRule>();
+
+            validationRules.Val.ForEach(rule =>
+            {
+                var id = projectInterface.DefineRule(catToId[rule.Category], EA.EnumMVErrorType.mvError, "");
+                idToRule = idToRule.Add(id, rule);
+            });
+
+            if (idToRule.Count > 0)
+            {
+                validationHandler.Exchange(Options.Some(new ValidationHandler(eaRepository, catToId, idToRule)), GetType());
+            }
+        }
+
+        public void EA_OnRunElementRule(EA.Repository repository, string ruleID, EA.Element element) 
+        {
+            RepositoryChanged(repository);
+
+            validationHandler.Val.Do(handler =>
+            {
+                handler.ExecuteRule(ruleID, () =>
+                {
+                    return entityWrapper.Val.Wrap(element);
+                });
+            });
         }
         #endregion
     }

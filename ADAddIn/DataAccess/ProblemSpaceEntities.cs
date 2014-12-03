@@ -1,9 +1,11 @@
-﻿using EAAddInFramework.DataAccess;
+﻿using AdAddIn.ADTechnology;
+using EAAddInFramework.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utils;
 
 namespace AdAddIn.DataAccess
 {
@@ -15,10 +17,28 @@ namespace AdAddIn.DataAccess
     public class Problem : ProblemSpaceEntity
     {
         internal Problem(EA.Element e, IEntityWrapper wrapper) : base(e, wrapper) { }
+
+        public IEnumerable<OptionEntity> GetOptions(Func<int, Option<ModelEntity.Element>> getElementById)
+        {
+            return from connector in Connectors
+                   where connector.Is(ConnectorStereotypes.AddressedBy)
+                   from source in connector.OppositeEnd(this, getElementById)
+                   from option in source.Match<OptionEntity>()
+                   select option;
+        }
     }
 
     public class OptionEntity : ProblemSpaceEntity
     {
         internal OptionEntity(EA.Element e, IEntityWrapper wrapper) : base(e, wrapper) { }
+
+        public IEnumerable<Problem> GetProblems(Func<int, Option<ModelEntity.Element>> getElementById)
+        {
+            return from connector in Connectors
+                   where connector.Is(ConnectorStereotypes.AddressedBy)
+                   from source in connector.OppositeEnd(this, getElementById)
+                   from problem in source.Match<Problem>()
+                   select problem;
+        }
     }
 }

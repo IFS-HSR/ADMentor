@@ -73,6 +73,7 @@
     <Compile Include="MDGBuilder\TaggedValue.cs" />
     <Compile Include="MDGBuilder\TaggedValueType.cs" />
     <Compile Include="MenuHandler.cs" />
+    <Compile Include="ValidationHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Interop.EA">

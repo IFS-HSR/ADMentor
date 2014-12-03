@@ -17,6 +17,7 @@ using AdAddIn.ExportProblemSpace;
 using EAAddInFramework.DataAccess;
 using AdAddIn.TechnologyMigration;
 using AdAddIn.Analysis;
+using AdAddIn.Validation;
 
 namespace AdAddIn
 {
@@ -36,7 +37,7 @@ namespace AdAddIn
             return Options.Some(technology);
         }
 
-        public override Option<IEntityWrapper> Bootstrap(IReadableAtom<EA.Repository> eaRepository)
+        public override Tuple<Option<IEntityWrapper>, IEnumerable<ValidationRule>> Bootstrap(IReadableAtom<EA.Repository> eaRepository)
         {
             var entityWrapper = new AdEntityWrapper();
             var entityRepository = new AdRepository(eaRepository, entityWrapper);
@@ -70,7 +71,13 @@ namespace AdAddIn
 
             OnDeleteEntity.Add(updateStateOnRemoveAlternative.AsOnDeleteEntityHandler());
 
-            return Options.Some(entityWrapper);
+            var rules = new []{
+                new ValidationRule(technology.Name, new ValidateProblemOptionComposition(entityRepository).ToValidator())
+            };
+
+            return Tuple.Create(
+                Options.Some(entityWrapper as IEntityWrapper), 
+                rules.AsEnumerable());
         }
     }
 }

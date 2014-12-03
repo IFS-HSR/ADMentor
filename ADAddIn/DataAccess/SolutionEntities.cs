@@ -87,7 +87,7 @@ namespace AdAddIn.DataAccess
         {
             return from connector in Connectors
                    where connector.Is(ConnectorStereotypes.AddressedBy)
-                   from source in connector.Source(getElementById)
+                   from source in connector.OppositeEnd(this, getElementById)
                    from problemOcc in source.Match<ProblemOccurrence>()
                    select problemOcc;
         }

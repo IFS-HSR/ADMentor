@@ -68,6 +68,12 @@ namespace EAAddInFramework
         {
             return cmd.Adapt((ModelEntity entity) => entity.Match<T>());
         }
+
+        public static ICommand<ModelEntity, Option<ValidationMessage>> ToValidator<T>(this ICommand<T, Option<ValidationMessage>> cmd)
+            where T : ModelEntity
+        {
+            return cmd.Adapt((ModelEntity entity) => entity.Match<T>());
+        }
     }
 
     class CommandAdapter<T, R> : ICommand<T, R>
