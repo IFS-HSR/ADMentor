@@ -17,9 +17,10 @@ namespace AdAddIn.ADTechnology
             public static readonly OptionState Tentative = new OptionState("Tentative", Color.Khaki);
             public static readonly OptionState Chosen = new OptionState("Chosen", Color.LightGreen);
             public static readonly OptionState Neglected = new OptionState("Neglected", Color.LightGray);
+            public static readonly OptionState Challenged = new OptionState("Challenged", Color.Khaki);
 
             public static readonly IEnumerable<OptionState> AllStates = new OptionState[] {
-                Eligible, Tentative, Chosen, Neglected
+                Eligible, Tentative, Chosen, Neglected, Challenged
             };
 
             private OptionState(String name, Color color)
@@ -72,7 +73,7 @@ namespace AdAddIn.ADTechnology
         public class ProblemOccurrenceState : Enumeration
         {
             public static readonly ProblemOccurrenceState Open = new ProblemOccurrenceState("Open", Color.LightSalmon);
-            public static readonly ProblemOccurrenceState PartiallySolved = new ProblemOccurrenceState("Partially Solved", Color.LightSkyBlue);
+            public static readonly ProblemOccurrenceState PartiallySolved = new ProblemOccurrenceState("Partially Solved", Color.SandyBrown);
             public static readonly ProblemOccurrenceState Solved = new ProblemOccurrenceState("Solved", Color.LightGreen);
             public static readonly ProblemOccurrenceState NotApplicable = new ProblemOccurrenceState("Not Applicable", Color.LightGray);
 
