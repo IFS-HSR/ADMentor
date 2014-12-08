@@ -91,7 +91,8 @@ namespace AdAddIn.ADTechnology
             type: ConnectorType.Association,
             direction: Direction.SourceToDestination,
             connects: new[]{
-                new Connection(from: SolutionSpace.OptionOccurrence, to: SolutionSpace.OptionOccurrence)
+                new Connection(from: SolutionSpace.OptionOccurrence, to: SolutionSpace.OptionOccurrence),
+                new Connection(from: SolutionSpace.ProblemOccurrence, to: SolutionSpace.ProblemOccurrence)
             });
 
         public static readonly ConnectorStereotype AssessesPositively = new ConnectorStereotype(
