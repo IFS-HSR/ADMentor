@@ -151,7 +151,7 @@
     <Compile Include="UIComponents\FilterTreeView.Designer.cs">
       <DependentUpon>FilterTreeView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Validation\ValidateProblemOptionComposition.cs" />
+    <Compile Include="Validation\ValidateProblemOptionCompositionCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EAAddInFramework\EAAddInFramework.csproj">

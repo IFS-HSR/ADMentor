@@ -72,7 +72,7 @@ namespace AdAddIn
             OnDeleteEntity.Add(updateStateOnRemoveAlternative.AsOnDeleteEntityHandler());
 
             var rules = new []{
-                new ValidationRule(technology.Name, new ValidateProblemOptionComposition(entityRepository).ToValidator())
+                new ValidationRule(technology.Name, new ValidateProblemOptionCompositionCommand(entityRepository).ToValidator())
             };
 
             return Tuple.Create(

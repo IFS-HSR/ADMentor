@@ -58,6 +58,7 @@
     <Compile Include="LabeledTree.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="OptionConverter.cs" />
+    <Compile Include="PatternMatching.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="Unit.cs" />
