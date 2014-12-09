@@ -89,21 +89,8 @@
     <Compile Include="CopyMetadata\UpdateMetadataOfNewElementsCommand.cs" />
     <Compile Include="CopyMetadata\UpdateProblemOccurrenceStateOnAlternativesChanged.cs" />
     <Compile Include="DataAccess\ElementInstantiation.cs" />
-    <Compile Include="DataAccess\ModelFilter.cs" />
     <Compile Include="DataAccess\ProblemSpaceEntities.cs" />
     <Compile Include="DataAccess\SolutionEntities.cs" />
-    <Compile Include="ExportProblemSpace\CreateFilterForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ExportProblemSpace\CreateFilterForm.Designer.cs">
-      <DependentUpon>CreateFilterForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ExportProblemSpace\ElementFilterConfiguration.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ExportProblemSpace\ElementFilterConfiguration.Designer.cs">
-      <DependentUpon>ElementFilterConfiguration.cs</DependentUpon>
-    </Compile>
     <Compile Include="ExportProblemSpace\ExportProblemSpaceCommand.cs" />
     <Compile Include="ExportProblemSpace\SelectExportPathDialog.cs" />
     <Compile Include="ExportProblemSpace\TailorPackageExportForm.cs">
@@ -112,7 +99,6 @@
     <Compile Include="ExportProblemSpace\TailorPackageExportForm.Designer.cs">
       <DependentUpon>TailorPackageExportForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExportProblemSpace\TestFilterConfigurationCommand.cs" />
     <Compile Include="ExportProblemSpace\XmlExporter.cs" />
     <Compile Include="ExportToADRepo\ADRepoClient.cs" />
     <Compile Include="ExportToADRepo\ExportToADRepoCommand.cs" />
@@ -148,12 +134,6 @@
     </Compile>
     <Compile Include="TechnologyMigration\MigrateModelEntities.cs" />
     <Compile Include="TechnologyMigration\Migrator.cs" />
-    <Compile Include="UIComponents\FilterTreeView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UIComponents\FilterTreeView.Designer.cs">
-      <DependentUpon>FilterTreeView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Validation\ValidateConflictingOptionsCommand.cs" />
     <Compile Include="Validation\ValidateProblemOccurrenceStateCommand.cs" />
     <Compile Include="Validation\ValidateProblemOptionCompositionCommand.cs" />
@@ -185,12 +165,6 @@
     <EmbeddedResource Include="Analysis\DisplayMetricsForm.resx">
       <DependentUpon>DisplayMetricsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExportProblemSpace\CreateFilterForm.resx">
-      <DependentUpon>CreateFilterForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExportProblemSpace\ElementFilterConfiguration.resx">
-      <DependentUpon>ElementFilterConfiguration.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ExportProblemSpace\TailorPackageExportForm.resx">
       <DependentUpon>TailorPackageExportForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -203,9 +177,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UIComponents\FilterTreeView.resx">
-      <DependentUpon>FilterTreeView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="admentor.snk" />
     <None Include="app.config" />
