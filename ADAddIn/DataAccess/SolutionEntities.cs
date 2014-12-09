@@ -40,7 +40,7 @@ namespace AdAddIn.DataAccess
             return from connector in Connectors
                    where connector.Is(ConnectorStereotypes.AddressedBy)
                    from target in connector.Target(getElementById)
-                   from optionOcc in target.Match<OptionOccurrence>()
+                   from optionOcc in target.TryCast<OptionOccurrence>()
                    select optionOcc;
         }
 
@@ -88,7 +88,7 @@ namespace AdAddIn.DataAccess
             return from connector in Connectors
                    where connector.Is(ConnectorStereotypes.AddressedBy)
                    from source in connector.OppositeEnd(this, getElementById)
-                   from problemOcc in source.Match<ProblemOccurrence>()
+                   from problemOcc in source.TryCast<ProblemOccurrence>()
                    select problemOcc;
         }
     }

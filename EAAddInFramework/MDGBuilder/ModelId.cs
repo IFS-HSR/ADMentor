@@ -31,7 +31,7 @@ namespace EAAddInFramework.MDGBuilder
 
         public override bool Equals(object obj)
         {
-            return obj.Match<ModelId>().Match(
+            return obj.TryCast<ModelId>().Match(
                 otherId => Technology.Equals(otherId.Technology) && Version.Equals(otherId.Version),
                 () => false);
         }

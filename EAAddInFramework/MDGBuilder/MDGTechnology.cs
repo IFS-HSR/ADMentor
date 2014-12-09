@@ -60,7 +60,7 @@ namespace EAAddInFramework.MDGBuilder
             get
             {
                 return from s in Stereotypes
-                       from c in s.Match<ConnectorStereotype>()
+                       from c in s.TryCast<ConnectorStereotype>()
                        select c;
             }
         }
@@ -70,7 +70,7 @@ namespace EAAddInFramework.MDGBuilder
             get
             {
                 return from s in Stereotypes
-                       from e in s.Match<ElementStereotype>()
+                       from e in s.TryCast<ElementStereotype>()
                        select e;
             }
         }

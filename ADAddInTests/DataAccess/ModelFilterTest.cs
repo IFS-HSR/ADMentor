@@ -43,7 +43,7 @@ namespace ADAddInTests.DataAccess
 
             var res = filter.Replace(original, replacement);
 
-            var firstChild = res.Match<ModelFilter.Composite>().Value.Filters.ElementAt(0);
+            var firstChild = res.TryCast<ModelFilter.Composite>().Value.Filters.ElementAt(0);
 
             Assert.AreEqual(replacement, firstChild);
         }
@@ -69,7 +69,7 @@ namespace ADAddInTests.DataAccess
 
             Assert.IsInstanceOfType(res, typeof(ModelFilter.Or));
 
-            var secondChild = res.Match<ModelFilter.Composite>().Value.Filters.ElementAt(1);
+            var secondChild = res.TryCast<ModelFilter.Composite>().Value.Filters.ElementAt(1);
             Assert.AreEqual(alt, secondChild);
         }
 
@@ -82,7 +82,7 @@ namespace ADAddInTests.DataAccess
             var res = filter.AddAlternative(filter, alt);
 
             Assert.IsInstanceOfType(res, typeof(ModelFilter.Or));
-            var children = res.Match<ModelFilter.Composite>().Value.Filters;
+            var children = res.TryCast<ModelFilter.Composite>().Value.Filters;
             Assert.AreEqual(3, children.Count());
             Assert.AreEqual(alt, children.ElementAt(2));
         }
@@ -97,7 +97,7 @@ namespace ADAddInTests.DataAccess
             var res = filter.AddAlternative(selected, alt);
 
             Assert.IsInstanceOfType(res, typeof(ModelFilter.Or));
-            var children = res.Match<ModelFilter.Composite>().Value.Filters;
+            var children = res.TryCast<ModelFilter.Composite>().Value.Filters;
             Assert.AreEqual(3, children.Count());
             Assert.AreEqual(alt, children.ElementAt(2));
         }
@@ -111,7 +111,7 @@ namespace ADAddInTests.DataAccess
             var res = filter.AddAlternative(filter, alt);
 
             Assert.IsInstanceOfType(res, typeof(ModelFilter.Or));
-            var children = res.Match<ModelFilter.Composite>().Value.Filters;
+            var children = res.TryCast<ModelFilter.Composite>().Value.Filters;
             Assert.AreEqual(2, children.Count());
             Assert.IsInstanceOfType(children.ElementAt(0), typeof(ModelFilter.And));
             Assert.AreEqual(alt, children.ElementAt(1));

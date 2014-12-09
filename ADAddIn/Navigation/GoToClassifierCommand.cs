@@ -43,7 +43,7 @@ namespace AdAddIn.Navigation
         private Option<EA.Element> GetClassifier(Option<ModelEntity> contextItem)
         {
             return from ci in contextItem
-                   from element in ci.Match<ModelEntity.Element>()
+                   from element in ci.TryCast<ModelEntity.Element>()
                    from classifier in Options.Try(() => EARepo.Val.GetElementByID(element.EaObject.ClassifierID))
                    select classifier;
         }

@@ -63,7 +63,7 @@ namespace AdAddIn.ExportProblemSpace
         {
             operatorBox.Items.Clear();
 
-            fieldBox.SelectedItem.Match<Field<String>>()
+            fieldBox.SelectedItem.TryCast<Field<String>>()
                 .Do(selectedField =>
                 {
                     var ops = GetOperators(selectedField);
@@ -82,8 +82,8 @@ namespace AdAddIn.ExportProblemSpace
         {
             valueBox.Items.Clear();
 
-            fieldBox.SelectedItem.Match<Field<String>>()
-                .Zip(operatorBox.SelectedItem.Match<Operator>())
+            fieldBox.SelectedItem.TryCast<Field<String>>()
+                .Zip(operatorBox.SelectedItem.TryCast<Operator>())
                 .ForEach((selectedField, selectedOp) =>
                 {
                     var proposedVals = GetProposedValues(selectedField, selectedOp);

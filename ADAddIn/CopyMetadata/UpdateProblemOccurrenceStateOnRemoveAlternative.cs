@@ -43,11 +43,11 @@ namespace AdAddIn.CopyMetadata
         public ICommand<ModelEntity, DeleteEntity> AsOnDeleteEntityHandler()
         {
             return this.Adapt((ModelEntity entity) => {
-                return entity.Match<OptionOccurrence>().OrElse(() =>
+                return entity.TryCast<OptionOccurrence>().OrElse(() =>
                 {
-                    return from connector in entity.Match<ModelEntity.Connector>()
+                    return from connector in entity.TryCast<ModelEntity.Connector>()
                            from target in connector.Target(Repo.GetElement)
-                           from oo in target.Match<OptionOccurrence>()
+                           from oo in target.TryCast<OptionOccurrence>()
                            select oo;
                 });
             });

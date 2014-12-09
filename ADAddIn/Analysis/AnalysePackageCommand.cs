@@ -43,12 +43,12 @@ namespace AdAddIn.Analysis
             var problemOccsPerOptionOcc = FindTargetsPerSource<OptionOccurrence, ProblemOccurrence>(elements, ConnectorStereotypes.AddressedBy);
 
             var oosPerState = from e in elements
-                              from oo in e.Match<OptionOccurrence>()
+                              from oo in e.TryCast<OptionOccurrence>()
                               group oo by oo.State into g
                               select Metrics.Entry(g.Key.Name, g.Count());
 
             var posPerState = from e in elements
-                              from po in e.Match<ProblemOccurrence>()
+                              from po in e.TryCast<ProblemOccurrence>()
                               group po by po.State into g
                               select Metrics.Entry(g.Key.Name, g.Count());
 
@@ -81,11 +81,11 @@ namespace AdAddIn.Analysis
             where TTarget : ModelEntity.Element
         {
             return (from e in elements
-                    from source in e.Match<TSource>()
+                    from source in e.TryCast<TSource>()
                     let targets = (from c in source.Connectors
                                    where c.Is(connectorStype)
                                    from otherEnd in c.OppositeEnd(source, Repository.GetElement)
-                                   from target in otherEnd.Match<TTarget>()
+                                   from target in otherEnd.TryCast<TTarget>()
                                    select target).Run()
                     select Tuple.Create(source, targets)).Run();
         }

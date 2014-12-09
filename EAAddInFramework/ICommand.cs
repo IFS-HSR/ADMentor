@@ -46,33 +46,33 @@ namespace EAAddInFramework
             where R : class
         {
             return cmd.Adapt((Option<ModelEntity> ci) => from e in ci
-                                                         from t in e.Match<T>()
+                                                         from t in e.TryCast<T>()
                                                          select t);
         }
 
         public static ICommand<ModelEntity, EntityModified> ToEntityCreatedHandler<T>(this ICommand<T, EntityModified> cmd)
             where T : ModelEntity
         {
-            return cmd.Adapt((ModelEntity entity) => entity.Match<T>());
+            return cmd.Adapt((ModelEntity entity) => entity.TryCast<T>());
         }
 
         public static ICommand<ModelEntity, object> ToEntityModifiedHandler<T, R>(this ICommand<T, R> cmd)
             where T : ModelEntity
             where R : class
         {
-            return cmd.Adapt((ModelEntity entity) => entity.Match<T>());
+            return cmd.Adapt((ModelEntity entity) => entity.TryCast<T>());
         }
 
         public static ICommand<ModelEntity, DeleteEntity> ToOnDeleteEntityHandler<T>(this ICommand<T, DeleteEntity> cmd)
             where T : ModelEntity
         {
-            return cmd.Adapt((ModelEntity entity) => entity.Match<T>());
+            return cmd.Adapt((ModelEntity entity) => entity.TryCast<T>());
         }
 
         public static ICommand<ModelEntity, Option<ValidationMessage>> ToValidator<T>(this ICommand<T, Option<ValidationMessage>> cmd)
             where T : ModelEntity
         {
-            return cmd.Adapt((ModelEntity entity) => entity.Match<T>());
+            return cmd.Adapt((ModelEntity entity) => entity.TryCast<T>());
         }
     }
 

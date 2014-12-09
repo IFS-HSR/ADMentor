@@ -62,7 +62,7 @@ namespace AdAddIn.ExportProblemSpace
         private TreeNode[] ToTreeNodes(IEnumerable<IFilter<ModelEntity>> filters)
         {
             return (from filter in filters
-                    select filter.Match<CompositeFilter<ModelEntity>>().Match(
+                    select filter.TryCast<CompositeFilter<ModelEntity>>().Match(
                             composite => ToTreeNode(composite),
                             () => ToTreeNode(filter))).ToArray();
         }
@@ -159,7 +159,7 @@ namespace AdAddIn.ExportProblemSpace
 
         private IFilter<ModelEntity> ToFilter(IFilter<ModelEntity> filter, IEnumerable<TreeNode> nodes)
         {
-            return filter.Match<CompositeFilter<ModelEntity>>().Match(
+            return filter.TryCast<CompositeFilter<ModelEntity>>().Match(
                 compositeFilter =>
                 {
                     var subfilters = from f in compositeFilter.Filters

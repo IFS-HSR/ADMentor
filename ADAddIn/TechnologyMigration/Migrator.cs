@@ -42,7 +42,7 @@ namespace AdAddIn.TechnologyMigration
 
             missingTags.ForEach(missingTag =>
             {
-                var defaultValue = (from defaultableType in missingTag.Type.Match<IDefaultableTaggedValueType>()
+                var defaultValue = (from defaultableType in missingTag.Type.TryCast<IDefaultableTaggedValueType>()
                                     from dv in defaultableType.DefaultValueAsString
                                     select dv);
 

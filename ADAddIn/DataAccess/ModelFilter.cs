@@ -191,7 +191,7 @@ namespace AdAddIn.DataAccess
     {
         public static Option<ModelFilter> FindParent(this ModelFilter root, ModelFilter inner)
         {
-            return root.Match<ModelFilter.Composite>().Match(
+            return root.TryCast<ModelFilter.Composite>().Match(
                 composite =>
                 {
                     if (composite.Filters.Contains(inner)) return Options.Some(root);
@@ -212,7 +212,7 @@ namespace AdAddIn.DataAccess
             if (root.Equals(original))
                 return replacement;
             else
-                return root.Match<ModelFilter.Composite>().Match(
+                return root.TryCast<ModelFilter.Composite>().Match(
                     composite =>
                     {
                         var newChildren = composite.Filters.Select(q => _Replace(q, original, replacement));
@@ -226,23 +226,21 @@ namespace AdAddIn.DataAccess
 
         private static ModelFilter Normalize(ModelFilter filter)
         {
-            return filter.Match<ModelFilter.Composite>().Match(
+            return filter.TryCast<ModelFilter.Composite>().Match(
                 compositeFilter =>
                 {
-                    var children = filter.Match<ModelFilter.Or>().Match(
-                        or => or.Filters.Aggregate(ImmutableList.Create<ModelFilter>(), (acc, child) =>
-                                child.Match<ModelFilter.Or>().Match(
+                    var children = filter.Match<ModelFilter, IImmutableList<ModelFilter>>()
+                        .Case<ModelFilter.Or>(or =>
+                            or.Filters.Aggregate(ImmutableList.Create<ModelFilter>(), (acc, child) =>
+                                child.TryCast<ModelFilter.Or>().Match(
                                     orChild => acc.AddRange((orChild).Filters),
-                                    () => acc.Add(child))),
-                        () =>
-                        {
-                            return filter.Match<ModelFilter.And>().Match(
-                                and => and.Filters.Aggregate(ImmutableList.Create<ModelFilter>(), (acc, child) =>
-                                        child.Match<ModelFilter.And>().Match(
-                                            andChild => acc.AddRange((andChild).Filters),
-                                            () => acc.Add(child))),
-                                () => { throw new ArgumentException(); });
-                        });
+                                    () => acc.Add(child))))
+                        .Case<ModelFilter.And>(and =>
+                            and.Filters.Aggregate(ImmutableList.Create<ModelFilter>(), (acc, child) =>
+                                child.TryCast<ModelFilter.And>().Match(
+                                    andChild => acc.AddRange((andChild).Filters),
+                                    () => acc.Add(child))))
+                        .GetOrThrowNotImplemented();
 
                     var normalizedChildren = children.Select(Normalize);
 
@@ -277,7 +275,7 @@ namespace AdAddIn.DataAccess
             if (filterToRemove.Equals(root))
                 return new ModelFilter.Any();
             else
-                return root.Match<ModelFilter.Composite>().Match(
+                return root.TryCast<ModelFilter.Composite>().Match(
                     comp =>
                     {
                         var newChildren = comp.Filters.SelectMany<ModelFilter, ModelFilter>(f =>

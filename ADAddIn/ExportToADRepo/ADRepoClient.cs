@@ -31,7 +31,7 @@ namespace AdAddIn.ExportToADRepo
 
             var entities = from p in package.SubPackages
                            from e in p.Elements
-                           from entity in e.Match<AdEntity>()
+                           from entity in e.TryCast<AdEntity>()
                            select entity;
 
             var entityIds = (from e in entities

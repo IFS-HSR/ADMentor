@@ -29,7 +29,7 @@ namespace AdAddIn.PopulateDependencies
         public static Option<SolutionInstantiationGraph> Create(ModelEntityRepository repo, SolutionEntity solutionItem)
         {
             return from classifier in solutionItem.GetClassifier(repo.GetElement)
-                   from problemSpaceEntity in classifier.Match<ProblemSpaceEntity>()
+                   from problemSpaceEntity in classifier.TryCast<ProblemSpaceEntity>()
                    let problemSpace = DependencyGraph.Create(repo, problemSpaceEntity, DependencyGraphFilter)
                    let solution = DependencyGraph.Create(repo, solutionItem, DependencyGraphFilter)
                    select new SolutionInstantiationGraph(repo, Compare(problemSpace, solution));

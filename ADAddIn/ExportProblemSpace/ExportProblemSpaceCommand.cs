@@ -40,7 +40,7 @@ namespace AdAddIn.ExportProblemSpace
                             select diagram).Run();
 
             var filters = Filter.Or("", new[]{
-                Filter.And("Elements", e => e.Match<ModelEntity.Element>().IsDefined, new[] {
+                Filter.And("Elements", e => e.TryCast<ModelEntity.Element>().IsDefined, new[] {
                     CreatePropertyFilter("Metatype", elements, e => e.MetaType),
                     CreatePropertyFilter("Type", elements, e => e.Type),
                     CreatePropertyFilter("Stereotype", elements, e => e.Stereotype),
@@ -52,12 +52,12 @@ namespace AdAddIn.ExportProblemSpace
                     CreateTaggedValueFilter(Common.StakeholderRoles, elements),
                     CreateTaggedValueFilter(Common.OwnerRole, elements)
                 }),
-                Filter.And("Diagrams", e => e.Match<ModelEntity.Diagram>().IsDefined, new []{
+                Filter.And("Diagrams", e => e.TryCast<ModelEntity.Diagram>().IsDefined, new []{
                     CreatePropertyFilter("Meta Type", diagrams, d => d.MetaType),
                     CreatePropertyFilter("Type", diagrams, d => d.Type),
                     CreatePropertyFilter("Stereotype", diagrams, d => d.Stereotype)
                 }),
-                Filter.And("Packages", e => e.Match<ModelEntity.Package>().IsDefined, new []{
+                Filter.And("Packages", e => e.TryCast<ModelEntity.Package>().IsDefined, new []{
                     CreateKeywordFilter(packages)
                 })
             });
@@ -156,7 +156,7 @@ namespace AdAddIn.ExportProblemSpace
         private IFilter<ModelEntity> LiftFilter<T>(IFilter<T> filter) where T : ModelEntity
         {
             Func<ModelEntity, bool> accept =
-                me => me.Match<T>().Match(
+                me => me.TryCast<T>().Match(
                     e => filter.Accept(e),
                     () => false);
             return Filter.Create<ModelEntity>(filter.Name, accept);

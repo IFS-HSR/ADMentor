@@ -23,7 +23,7 @@ namespace AdAddIn.DataAccess
             return from connector in Connectors
                    where connector.Is(ConnectorStereotypes.AddressedBy)
                    from source in connector.OppositeEnd(this, getElementById)
-                   from option in source.Match<OptionEntity>()
+                   from option in source.TryCast<OptionEntity>()
                    select option;
         }
     }
@@ -37,7 +37,7 @@ namespace AdAddIn.DataAccess
             return from connector in Connectors
                    where connector.Is(ConnectorStereotypes.AddressedBy)
                    from source in connector.OppositeEnd(this, getElementById)
-                   from problem in source.Match<Problem>()
+                   from problem in source.TryCast<Problem>()
                    select problem;
         }
     }

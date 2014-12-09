@@ -92,7 +92,7 @@ namespace Utils
 
         public override bool Equals(object other)
         {
-            return other.Match<Option<T>>().Match(
+            return other.TryCast<Option<T>>().Match(
                 opt => IsDefined == opt.IsDefined && opt.Match(
                     val => Value.Equals(val),
                     () => true),
@@ -248,7 +248,7 @@ namespace Utils
             });
         }
 
-        public static Option<T> Match<T>(this object o) where T : class
+        public static Option<T> TryCast<T>(this object o) where T : class
         {
             if (o != null && o is T)
                 return Options.Some(o as T);

@@ -16,7 +16,7 @@ namespace AdAddIn.DataAccess
         {
             return base.Instanciate(classifier, package, stereotypes).Select(instance =>
             {
-                instance.Match<AdEntity>().Do(adInstance =>
+                instance.TryCast<AdEntity>().Do(adInstance =>
                 {
                     adInstance.CopyDataFromClassifier(GetElement);
                 });

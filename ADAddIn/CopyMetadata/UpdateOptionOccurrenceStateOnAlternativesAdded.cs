@@ -22,7 +22,7 @@ namespace AdAddIn.CopyMetadata
         public EntityModified Execute(ModelEntity.Connector c)
         {
             (from source in c.Source(Repo.GetElement)
-             from problemOcc in source.Match<ProblemOccurrence>()
+             from problemOcc in source.TryCast<ProblemOccurrence>()
              select problemOcc)
                 .Do(problemOccurrence =>
                  {

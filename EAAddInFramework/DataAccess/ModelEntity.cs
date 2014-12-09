@@ -85,7 +85,7 @@ namespace EAAddInFramework.DataAccess
 
         public override bool Equals(object obj)
         {
-            return obj.Match<ModelEntity>()
+            return obj.TryCast<ModelEntity>()
                 .Select(otherEntity => Equals(otherEntity))
                 .GetOrElse(false);
         }

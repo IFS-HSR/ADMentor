@@ -54,7 +54,7 @@ namespace AdAddIn.ExportProblemSpace
 
         private IEnumerable<string> GetProposedValues(Field<string> selectedField, Operator selectedOperator)
         {
-            return selectedField.Match<Field<String>.Type>()
+            return selectedField.TryCast<Field<String>.Type>()
                 .Match(_ => new[] { "Element", "Package", "Diagram" }, () => Enumerable.Empty<String>());
         }
 
@@ -68,7 +68,7 @@ namespace AdAddIn.ExportProblemSpace
             return this.Adapt((Option<ModelEntity> contextItem) =>
             {
                 return from ci in contextItem
-                       from package in ci.Match<ModelEntity.Package>()
+                       from package in ci.TryCast<ModelEntity.Package>()
                        select package;
             });
         }

@@ -36,7 +36,7 @@ namespace AdAddIn.ExportProblemSpace
         public void Tailor(IEnumerable<ModelEntity> entitiesToExport)
         {
             var connectors = from entity in entitiesToExport
-                             from element in entity.Match<ModelEntity.Element>()
+                             from element in entity.TryCast<ModelEntity.Element>()
                              from connector in element.Connectors
                              from oppositeEnd in connector.OppositeEnd(element, Repo.GetElement)
                              where entitiesToExport.Contains(oppositeEnd)

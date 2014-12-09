@@ -69,7 +69,7 @@ namespace AdAddIn.UIComponents
             node.Text = filter.Name;
             node.Tag = filter;
 
-            var subfilters = from composite in filter.Match<ModelFilter.Composite>()
+            var subfilters = from composite in filter.TryCast<ModelFilter.Composite>()
                              from f in composite.Filters
                              select f;
 

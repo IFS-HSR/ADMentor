@@ -61,7 +61,7 @@ namespace AdAddIn.PopulateDependencies
         {
             return this.Adapt(
                 (ModelEntity entity) =>
-                    from solutionEntity in entity.Match<SolutionEntity>()
+                    from solutionEntity in entity.TryCast<SolutionEntity>()
                     where solutionEntity.IsNew()
                     select solutionEntity);
         }
