@@ -155,6 +155,7 @@
     <Compile Include="UIComponents\FilterTreeView.Designer.cs">
       <DependentUpon>FilterTreeView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Validation\ValidateConflictingOptionsCommand.cs" />
     <Compile Include="Validation\ValidateProblemOccurrenceStateCommand.cs" />
     <Compile Include="Validation\ValidateProblemOptionCompositionCommand.cs" />
   </ItemGroup>
