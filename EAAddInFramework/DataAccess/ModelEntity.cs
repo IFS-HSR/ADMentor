@@ -25,49 +25,16 @@ namespace EAAddInFramework.DataAccess
 
         protected IEntityWrapper Wrapper { get; private set; }
 
-        public R Match<T, R>(Func<T, R> onMatch, Func<R> otherwise) where T : ModelEntity
-        {
-            if (this is T)
-                return onMatch(this as T);
-            else
-                return otherwise();
-        }
-
-        public R Match<T1, T2, R>(Func<T1, R> onMatch1, Func<T2, R> onMatch2, Func<R> otherwise)
-            where T1 : ModelEntity
-            where T2 : ModelEntity
-        {
-            return Match<T1, R>(
-                e => onMatch1(e),
-                () => Match<T2, R>(
-                    e => onMatch2(e),
-                    () => otherwise()));
-        }
-
-        public R Match<T1, T2, T3, T4, R>(Func<T1, R> onMatch1, Func<T2, R> onMatch2, Func<T3, R> onMatch3, Func<T4, R> onMatch4)
-            where T1 : ModelEntity
-            where T2 : ModelEntity
-            where T3 : ModelEntity
-            where T4 : ModelEntity
-        {
-            return Match<T1, R>(
-                e => onMatch1(e),
-                () => Match<T2, R>(
-                    e => onMatch2(e),
-                    () => Match<T3, R>(
-                        e => onMatch3(e),
-                        () => onMatch4(this as T4))));
-        }
-
         public int Id
         {
             get
             {
-                return Match(
-                    (Package p) => p.EaObject.PackageID,
-                    (Diagram d) => d.EaObject.DiagramID,
-                    (Element e) => e.EaObject.ElementID,
-                    (Connector c) => c.EaObject.ConnectorID);
+                return this.Match<ModelEntity, int>()
+                    .Case<Package>(p => p.EaObject.PackageID)
+                    .Case<Diagram>(d => d.EaObject.DiagramID)
+                    .Case<Element>(e => e.EaObject.ElementID)
+                    .Case<Connector>(c => c.EaObject.ConnectorID)
+                    .GetOrThrowNotImplemented();
             }
         }
 
@@ -75,11 +42,12 @@ namespace EAAddInFramework.DataAccess
         {
             get
             {
-                return Match(
-                    (Package p) => p.EaObject.PackageGUID,
-                    (Diagram d) => d.EaObject.DiagramGUID,
-                    (Element e) => e.EaObject.ElementGUID,
-                    (Connector c) => c.EaObject.ConnectorGUID);
+                return this.Match<ModelEntity, String>()
+                    .Case<Package>(p => p.EaObject.PackageGUID)
+                    .Case<Diagram>(d => d.EaObject.DiagramGUID)
+                    .Case<Element>(e => e.EaObject.ElementGUID)
+                    .Case<Connector>(c => c.EaObject.ConnectorGUID)
+                    .GetOrThrowNotImplemented();
             }
         }
 
@@ -112,9 +80,9 @@ namespace EAAddInFramework.DataAccess
         {
             get
             {
-                return Match(
-                    (Package p) => p.AssociatedElement.Select(e => e.Stereotype).GetOrElse(""),
-                    () => (this as dynamic).EaObject.Stereotype as String);
+                return this.Match<ModelEntity, String>()
+                    .Case<Package>(p => p.AssociatedElement.Select(e => e.Stereotype).GetOrElse(""))
+                    .Default(entity => (entity as dynamic).EaObject.Stereotype as String);
             }
         }
 
@@ -122,9 +90,9 @@ namespace EAAddInFramework.DataAccess
         {
             get
             {
-                return Match(
-                    (Package p) => p.AssociatedElement.Select(e => e.Type).GetOrElse(""),
-                    () => (this as dynamic).EaObject.Type as String);
+                return this.Match<ModelEntity, String>()
+                    .Case<Package>(p => p.AssociatedElement.Select(e => e.Type).GetOrElse(""))
+                    .Default(entity => (entity as dynamic).EaObject.Type as String);
             }
         }
 
@@ -132,9 +100,9 @@ namespace EAAddInFramework.DataAccess
         {
             get
             {
-                return Match(
-                    (Package p) => p.AssociatedElement.Select(e => e.MetaType).GetOrElse("") as String,
-                    () => (this as dynamic).EaObject.MetaType as String);
+                return this.Match<ModelEntity, String>()
+                    .Case<Package>(p => p.AssociatedElement.Select(e => e.MetaType).GetOrElse(""))
+                    .Default(entity => (entity as dynamic).EaObject.MetaType as String);
             }
         }
 
@@ -142,21 +110,23 @@ namespace EAAddInFramework.DataAccess
         {
             get
             {
-                return Match(
-                    (Package _) => "Package",
-                    (Diagram _) => "Diagram",
-                    (Element _) => "Element",
-                    (Connector _) => "Connector");
+                return this.Match<ModelEntity, String>()
+                    .Case<Package>(_ => "Package")
+                    .Case<Diagram>(_ => "Diagram")
+                    .Case<Element>(_ => "Element")
+                    .Case<Connector>(_ => "Connector")
+                    .GetOrThrowNotImplemented();
             }
         }
 
         public Option<Package> GetParent(Func<int, Option<Package>> getPackageById)
         {
-            return from id in Match(
-                    (Package p) => p.EaObject.ParentID.AsOption(),
-                    (Element e) => e.EaObject.PackageID.AsOption(),
-                    (Diagram d) => d.EaObject.PackageID.AsOption(),
-                    (Connector _) => Options.None<int>())
+            return from id in this.Match<ModelEntity, Option<int>>()
+                        .Case<Package>(p => p.EaObject.ParentID.AsOption())
+                        .Case<Diagram>(d => d.EaObject.PackageID.AsOption())
+                        .Case<Element>(e => e.EaObject.PackageID.AsOption())
+                        .Case<Connector>(_ => Options.None<int>())
+                        .GetOrThrowNotImplemented()
                    from p in getPackageById(id)
                    select p;
         }
@@ -172,13 +142,14 @@ namespace EAAddInFramework.DataAccess
         {
             get
             {
-                return Match(
-                           (Package p) => from e in p.AssociatedElement
-                                          from c in e.TaggedValuesCollection
-                                          select c,
-                           (Diagram d) => Options.None<EA.Collection>(),
-                           (Element e) => Options.Some(e.EaObject.TaggedValues),
-                           (Connector c) => Options.Some(c.EaObject.TaggedValues));
+                return this.Match<ModelEntity, Option<EA.Collection>>()
+                    .Case<Package>(p => from e in p.AssociatedElement
+                                        from c in e.TaggedValuesCollection
+                                        select c)
+                    .Case<Diagram>(d => Options.None<EA.Collection>())
+                    .Case<Element>(e => Options.Some(e.EaObject.TaggedValues))
+                    .Case<Connector>(c => Options.Some(c.EaObject.TaggedValues))
+                    .GetOrThrowNotImplemented();
             }
         }
 
@@ -234,10 +205,10 @@ namespace EAAddInFramework.DataAccess
         {
             get
             {
-                var element = Match(
-                    (Package p) => p.EaObject.Element.AsOption(),
-                    (Element e) => e.EaObject.AsOption(),
-                    () => Options.None<EA.Element>());
+                var element = this.Match<ModelEntity, Option<EA.Element>>()
+                    .Case<Package>(p => p.EaObject.Element.AsOption())
+                    .Case<Element>(e => e.EaObject.AsOption())
+                    .Default(_ => Options.None<EA.Element>());
 
                 return (from e in element
                         from keyword in e.Tag

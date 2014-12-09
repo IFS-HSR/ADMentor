@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utils;
 
 namespace AdAddIn.TechnologyMigration
 {
@@ -18,10 +19,10 @@ namespace AdAddIn.TechnologyMigration
 
         public IEnumerable<ModelEntity> CollectCandidates(ModelEntity rootEntity)
         {
-            return from candidate in rootEntity.Match(
-                        (ModelEntity.Package p) => CollectChildren(p),
-                        (ModelEntity.Element e) => e.Connectors.Concat(new[] { rootEntity }),
-                        () => new ModelEntity[] { rootEntity })
+            return from candidate in rootEntity.Match<ModelEntity, IEnumerable<ModelEntity>>()
+                        .Case<ModelEntity.Package>(p => CollectChildren(p))
+                        .Case<ModelEntity.Element>(e => e.Connectors.Concat(new[] { rootEntity }))
+                        .Default(entity => new[] { entity })
                    where Migrator.CanMigrate(candidate)
                    select candidate;
         }
