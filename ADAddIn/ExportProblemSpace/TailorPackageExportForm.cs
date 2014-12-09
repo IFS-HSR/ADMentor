@@ -14,10 +14,10 @@ namespace AdAddIn.ExportProblemSpace
 {
     public partial class TailorPackageExportForm : Form
     {
-        private Atom<Func<IFilter<ModelEntity>, LabeledTree<ModelEntity, Unit>>> GetModelHierarchy = new Atom<Func<IFilter<ModelEntity>, LabeledTree<ModelEntity, Unit>>>(null);
-        private Atom<CompositeFilter<ModelEntity>> OriginalFilter = new Atom<CompositeFilter<ModelEntity>>(null);
-        private Atom<IFilter<ModelEntity>> SelectedFilter = new Atom<IFilter<ModelEntity>>(null);
-        private Atom<LabeledTree<ModelEntity, Unit>> ModelHierarchy = new Atom<LabeledTree<ModelEntity, Unit>>(null);
+        private Func<IFilter<ModelEntity>, LabeledTree<ModelEntity, Unit>> GetModelHierarchy = null;
+        private CompositeFilter<ModelEntity> OriginalFilter = null;
+        private IFilter<ModelEntity> SelectedFilter = null;
+        private LabeledTree<ModelEntity, Unit> ModelHierarchy = null;
 
         public TailorPackageExportForm()
         {
@@ -33,8 +33,8 @@ namespace AdAddIn.ExportProblemSpace
         public Option<LabeledTree<ModelEntity, Unit>> SelectFilter(CompositeFilter<ModelEntity> filter,
             Func<IFilter<ModelEntity>, LabeledTree<ModelEntity, Unit>> getModelHierarchy)
         {
-            GetModelHierarchy.Exchange(getModelHierarchy, GetType());
-            OriginalFilter.Exchange(filter, GetType());
+            GetModelHierarchy = getModelHierarchy;
+            OriginalFilter = filter;
 
             filterTreeView.Nodes.Clear();
             var filterNodes = ToTreeNodes(filter.Filters);
@@ -51,7 +51,7 @@ namespace AdAddIn.ExportProblemSpace
             if (result == System.Windows.Forms.DialogResult.OK)
             {
                 var hierarchyRoot = hierarchyTreeView.Nodes[0];
-                return Options.Some(ToHierarchy(ModelHierarchy.Val, hierarchyRoot.Nodes.Cast<TreeNode>()));
+                return Options.Some(ToHierarchy(ModelHierarchy, hierarchyRoot.Nodes.Cast<TreeNode>()));
             }
             else
             {
@@ -111,18 +111,16 @@ namespace AdAddIn.ExportProblemSpace
 
         private void UpdateSelectedFilter()
         {
-            var filter = ToFilter(OriginalFilter.Val, filterTreeView.Nodes.Cast<TreeNode>());
+            var filter = ToFilter(OriginalFilter, filterTreeView.Nodes.Cast<TreeNode>());
 
-            SelectedFilter.Exchange(filter, GetType());
+            SelectedFilter = filter;
         }
 
         private void UpdateModelHierarchy()
         {
             UpdateSelectedFilter();
 
-            var hierarchy = GetModelHierarchy.Val(SelectedFilter.Val);
-
-            ModelHierarchy.Exchange(hierarchy, GetType());
+            ModelHierarchy = GetModelHierarchy(SelectedFilter);
         }
 
         private void UpdateHierarchyTreeView()
@@ -130,7 +128,7 @@ namespace AdAddIn.ExportProblemSpace
             UpdateModelHierarchy();
 
             hierarchyTreeView.Nodes.Clear();
-            hierarchyTreeView.Nodes.Add(ToTreeNode(ModelHierarchy.Val));
+            hierarchyTreeView.Nodes.Add(ToTreeNode(ModelHierarchy));
             hierarchyTreeView.ExpandAll();
             CheckAll(hierarchyTreeView.Nodes);
         }
