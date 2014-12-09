@@ -55,6 +55,10 @@ namespace AdAddIn.ADTechnology
             name: "Revision Date",
             type: TaggedValueTypes.DateTime);
 
+        public static readonly TaggedValue DecisionDate = new TaggedValue(
+            name: "Decision Date",
+            type: TaggedValueTypes.DateTime);
+
         public static readonly TaggedValue OwnerRole = new TaggedValue(
             name: "Owner Role",
             type: TaggedValueTypes.String.WithDefaultValue("Any"));

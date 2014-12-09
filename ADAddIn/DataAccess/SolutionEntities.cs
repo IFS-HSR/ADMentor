@@ -32,6 +32,10 @@ namespace AdAddIn.DataAccess
             set
             {
                 Set(SolutionSpace.ProblemOccurrenceStateTag, value.Name);
+                if (value == SolutionSpace.ProblemOccurrenceState.Solved && Get(Common.DecisionDate).Any(s => s.IsEmpty()))
+                {
+                    Set(Common.DecisionDate, DateTime.Now.ToString("d"));
+                }
             }
         }
 

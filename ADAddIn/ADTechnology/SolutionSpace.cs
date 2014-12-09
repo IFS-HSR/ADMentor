@@ -133,7 +133,8 @@ namespace AdAddIn.ADTechnology
             taggedValues: new[]{
                 ProblemOccurrenceStateTag,
                 Common.DueDate,
-                Common.RevisionDate
+                Common.RevisionDate,
+                Common.DecisionDate
             });
 
         private static String GenerateFillColors(String tagName, IDictionary<String, Color> valueColors)
