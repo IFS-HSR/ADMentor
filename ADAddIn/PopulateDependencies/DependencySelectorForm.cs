@@ -37,14 +37,11 @@ namespace AdAddIn.PopulateDependencies
 
             var result = ShowDialog();
 
-            if (result == System.Windows.Forms.DialogResult.OK)
-            {
-                return Options.Some(MarkSelectedNodes(availableDependencies, dependencyTreeView.Nodes[0]));
-            }
-            else
-            {
-                return Options.None<LabeledTree<ElementInstantiation, ModelEntity.Connector>>();
-            }
+            var markedTree = (result == System.Windows.Forms.DialogResult.OK)
+                .Then(() => MarkSelectedNodes(availableDependencies, dependencyTreeView.Nodes[0]));
+
+            dependencyTreeView.Nodes.Clear();
+            return markedTree;
         }
 
         private LabeledTree<ElementInstantiation, ModelEntity.Connector> MarkSelectedNodes(LabeledTree<ElementInstantiation, ModelEntity.Connector> problemSpace, TreeNode treeNode)

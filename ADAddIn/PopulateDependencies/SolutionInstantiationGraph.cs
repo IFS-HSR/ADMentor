@@ -8,6 +8,7 @@ using Utils;
 using EAAddInFramework;
 using AdAddIn.ADTechnology;
 using EAAddInFramework.DataAccess;
+using System.Threading;
 
 namespace AdAddIn.PopulateDependencies
 {
@@ -146,7 +147,6 @@ namespace AdAddIn.PopulateDependencies
                 });
             });
             Repo.Reload(diagram);
-            Repo.Save(diagram);
 
             return Unit.Instance;
         }
