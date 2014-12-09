@@ -76,7 +76,8 @@ namespace AdAddIn
             var rules = new []{
                 new ValidationRule(technology.Name, new ValidateProblemOptionCompositionCommand(entityRepository).ToValidator()),
                 new ValidationRule(technology.Name, new ValidateProblemOccurrenceStateCommand(entityRepository).ToValidator()),
-                new ValidationRule(technology.Name, new ValidateConflictingOptionsCommand(entityRepository).ToValidator())
+                new ValidationRule(technology.Name, new ValidateConflictingOptionsCommand(entityRepository).ToValidator()),
+                new ValidationRule(technology.Name, migrator.GetValidator())
             };
 
             return Tuple.Create(

@@ -1,4 +1,5 @@
-﻿using EAAddInFramework.DataAccess;
+﻿using EAAddInFramework;
+using EAAddInFramework.DataAccess;
 using EAAddInFramework.MDGBuilder;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using Utils;
 
 namespace AdAddIn.TechnologyMigration
 {
-    public class Migrator
+    public class Migrator : ICommand<ModelEntity, Unit>
     {
         public Migrator(MDGTechnology currentTechnology)
         {
@@ -18,18 +19,20 @@ namespace AdAddIn.TechnologyMigration
 
         public MDGTechnology CurrentTechnology { get; private set; }
 
-        public bool CanMigrate(ModelEntity e)
+        public bool CanExecute(ModelEntity e)
         {
             return GetOutDatedModelId(e).IsDefined;
         }
 
-        public void Migrate(ModelEntity e)
+        public Unit Execute(ModelEntity e)
         {
             GetOutDatedModelId(e).Do(_ =>
             {
                 AddMissingTags(e);
                 UpdateModelId(e);
             });
+
+            return Unit.Instance;
         }
 
         private void AddMissingTags(ModelEntity entity)
@@ -61,6 +64,12 @@ namespace AdAddIn.TechnologyMigration
                    from modelId in ModelId.Parse(raw)
                    where modelId.IsPredecessorOf(CurrentTechnology.ModelId)
                    select modelId;
+        }
+
+        public ICommand<ModelEntity, Option<ValidationMessage>> GetValidator()
+        {
+            return Command.Create<ModelEntity, Option<ValidationMessage>>(e => 
+                this.CanExecute(e).Then(() => ValidationMessage.Warning("Model version not up to date, migration required")));
         }
     }
 }
