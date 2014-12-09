@@ -13,9 +13,9 @@ namespace Utils
             return new NotMatched<TIn, TOut>(source);
         }
 
-        public static TOut GetOrThrowNotImplemented<TIn, TOut>(this MatchResult<TIn, TOut> mr)
+        public static TOut GetOrDefault<TIn, TOut>(this MatchResult<TIn, TOut> mr, Func<TOut> def)
         {
-            return mr.GetOrNone().GetOrElse(() => { throw new NotImplementedException(); });
+            return mr.GetOrNone().GetOrElse(def);
         }
     }
 
@@ -24,6 +24,8 @@ namespace Utils
         MatchResult<TIn, TOut> Case<T>(Func<T, TOut> fn) where T : class, TIn;
 
         Option<TOut> GetOrNone();
+
+        TOut GetOrThrowNotImplemented();
     }
 
     class Matched<TIn, TOut> : MatchResult<TIn, TOut>
@@ -43,6 +45,12 @@ namespace Utils
         public Option<TOut> GetOrNone()
         {
             return Options.Some(Res);
+        }
+
+
+        public TOut GetOrThrowNotImplemented()
+        {
+            return Res;
         }
     }
 
@@ -66,6 +74,11 @@ namespace Utils
         public Option<TOut> GetOrNone()
         {
             return Options.None<TOut>();
+        }
+
+        public TOut GetOrThrowNotImplemented()
+        {
+            throw new NotImplementedException(String.Format("Match is not exhaustive for type {0}", Source.GetType()));
         }
     }
 }

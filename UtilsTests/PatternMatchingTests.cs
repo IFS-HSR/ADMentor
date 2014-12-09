@@ -37,5 +37,34 @@ namespace UtilsTests
 
             Assert.AreEqual(Options.None<String>(), res);
         }
+
+        [TestMethod]
+        public void TestThrowOnFailingPattern()
+        {
+            var i = new A();
+
+            var e = Intercept<NotImplementedException>(() =>
+            {
+                i.Match<I, String>()
+                    .Case((B b) => "b")
+                    .GetOrThrowNotImplemented();
+            });
+
+            Assert.IsTrue(e.Message.Contains(typeof(A).ToString()), "Expected message to contain {0} but got \"{1}\" instead", typeof(A).ToString(), e.Message);
+        }
+
+        private E Intercept<E>(Action act) where E : Exception
+        {
+            try
+            {
+                act();
+            }
+            catch (E e)
+            {
+                return e;
+            }
+            Assert.Fail("Expected exception of type {0} but got none instead", typeof(E));
+            return null;
+        }
     }
 }
