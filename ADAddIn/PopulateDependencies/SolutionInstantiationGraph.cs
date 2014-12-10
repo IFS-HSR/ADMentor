@@ -33,10 +33,10 @@ namespace AdAddIn.PopulateDependencies
                    from problemSpaceEntity in classifier.TryCast<ProblemSpaceEntity>()
                    let problemSpace = DependencyGraph.Create(repo, problemSpaceEntity, DependencyGraphFilter)
                    let solution = DependencyGraph.Create(repo, solutionItem, DependencyGraphFilter)
-                   select new SolutionInstantiationGraph(repo, Compare(problemSpace, solution));
+                   select new SolutionInstantiationGraph(repo, Merge(problemSpace, solution));
         }
 
-        private static DirectedLabeledGraph<ElementInstantiation, ModelEntity.Connector> Compare(
+        private static DirectedLabeledGraph<ElementInstantiation, ModelEntity.Connector> Merge(
             DirectedLabeledGraph<ModelEntity.Element, ModelEntity.Connector> problemSpace,
             DirectedLabeledGraph<ModelEntity.Element, ModelEntity.Connector> solution)
         {
@@ -70,25 +70,24 @@ namespace AdAddIn.PopulateDependencies
         {
             Graph.TraverseEdgesBF((source, edge, target) =>
             {
-                source.Instance.Do(solutionSource =>
-                {
-                    target.Instance.Do(solutionTarget =>
-                    {
-                        edge.GetStereotype(ADTechnology.Technologies.AD.ConnectorStereotypes).Do(stype =>
-                        {
-                            var connectsAlternativeToProblem =
-                                stype == ConnectorStereotypes.AddressedBy && solutionSource is OptionOccurrence;
-                            var alreadyExisting = solutionSource.Connectors.Any(c =>
-                            {
-                                return c.Is(stype) && (c.EaObject.SupplierID == solutionTarget.Id || c.EaObject.ClientID == solutionTarget.Id);
-                            });
+                var connectorData = from connectorSource in source.Instance
+                                    from connectorTarget in target.Instance
+                                    from stype in edge.GetStereotype(ADTechnology.Technologies.AD.ConnectorStereotypes)
+                                    select Tuple.Create(connectorSource, connectorTarget, stype);
 
-                            if (!connectsAlternativeToProblem && !alreadyExisting)
-                            {
-                                Repo.Connect(solutionSource, solutionTarget, stype);
-                            }
-                        });
+                connectorData.ForEach((connectorSource, connectorTarget, stype) =>
+                {
+                    var connectsAlternativeToProblem =
+                        stype == ConnectorStereotypes.AddressedBy && connectorSource is OptionOccurrence;
+                    var alreadyExisting = connectorSource.Connectors.Any(c =>
+                    {
+                        return c.Is(stype) && (c.EaObject.SupplierID == connectorTarget.Id || c.EaObject.ClientID == connectorTarget.Id);
                     });
+
+                    if (!connectsAlternativeToProblem && !alreadyExisting)
+                    {
+                        Repo.Connect(connectorSource, connectorTarget, stype);
+                    }
                 });
             });
             return Unit.Instance;
@@ -124,26 +123,24 @@ namespace AdAddIn.PopulateDependencies
 
             Graph.TraverseEdgesBF((from, via, to) =>
             {
-                var leftHandSiblings = siblings.ContainsKey(from) ? siblings[from] : 0;
+                var leftHandSiblings = siblings.Get(from).GetOrElse(0);
 
-                to.Instance.Do(toInstance =>
+                var objectData = from childInstance in to.Instance
+                                 where !diagram.GetObject(childInstance).IsDefined
+                                 from parentInstance in @from.Instance
+                                 from parentObject in diagram.GetObject(parentInstance)
+                                 select Tuple.Create(parentObject, childInstance);
+
+                objectData.ForEach((parentObject, childInstance) =>
                 {
-                    if (!diagram.GetObject(toInstance).IsDefined)
-                    {
-                        from.Instance.Do(fromInstance =>
-                        {
-                            var parentObject = diagram.GetObject(fromInstance).Value;
+                    var verticalOffset = leftHandSiblings * 110 - 40;
+                    var horizontalOffset = -200 - leftHandSiblings * 20;
 
-                            var verticalOffset = leftHandSiblings * 110 - 40;
-                            var horizontalOffset = -200 - leftHandSiblings * 20;
+                    diagram.AddObject(childInstance,
+                        left: parentObject.EaObject.left + verticalOffset, right: parentObject.EaObject.right + verticalOffset,
+                        top: parentObject.EaObject.top + horizontalOffset, bottom: parentObject.EaObject.bottom + horizontalOffset);
 
-                            diagram.AddObject(toInstance,
-                                left: parentObject.EaObject.left + verticalOffset, right: parentObject.EaObject.right + verticalOffset,
-                                top: parentObject.EaObject.top + horizontalOffset, bottom: parentObject.EaObject.bottom + horizontalOffset);
-
-                            siblings[from] = leftHandSiblings + 1;
-                        });
-                    }
+                    siblings[from] = leftHandSiblings + 1;
                 });
             });
             Repo.Reload(diagram);

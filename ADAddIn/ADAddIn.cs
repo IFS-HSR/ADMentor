@@ -65,7 +65,7 @@ namespace AdAddIn
                 new MenuItem("Export to AD Repo", new ExportToADRepo.ExportToADRepoCommand(entityRepository).ToMenuHandler())));
 
             OnEntityCreated.Add(updateMetadataCommand.ToEntityCreatedHandler());
-            OnEntityCreated.Add(populateDependenciesCommand.AsEntityCreatedHandler());
+            //OnEntityCreated.Add(populateDependenciesCommand.AsEntityCreatedHandler());
             OnEntityCreated.Add(updateStateOnAlternativesAdded.ToEntityCreatedHandler());
 
             OnEntityModified.Add(updateStateOnAlternativesChanged.ToEntityModifiedHandler());

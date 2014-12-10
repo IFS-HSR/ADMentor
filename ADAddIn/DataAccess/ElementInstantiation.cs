@@ -10,8 +10,6 @@ namespace AdAddIn.DataAccess
 {
     public class ElementInstantiation : IEquatable<ElementInstantiation>
     {
-        public ElementInstantiation(ModelEntity.Element element, ModelEntity.Element instance, bool selected = false) : this(element, instance.AsOption(), selected) { }
-
         public ElementInstantiation(ModelEntity.Element element, Option<ModelEntity.Element> instance = null, bool selected = false)
         {
             Element = element;
