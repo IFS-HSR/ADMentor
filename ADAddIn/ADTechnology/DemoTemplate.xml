@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1252"?>
-<XMI xmi.version="1.1" xmlns:UML="omg.org/UML1.3" timestamp="2014-12-02 15:52:00">
+<XMI xmi.version="1.1" xmlns:UML="omg.org/UML1.3" timestamp="2014-12-10 14:46:29">
 	<XMI.header>
 		<XMI.documentation>
 			<XMI.exporter>Enterprise Architect</XMI.exporter>
@@ -165,7 +165,7 @@
 						</UML:Comment>
 						<UML:Package name="Reusable Problem Space" xmi.id="EAPK_29D339A8_CAF7_4702_8F2D_8426FBA8F97B" isRoot="false" isLeaf="false" isAbstract="false" visibility="public">
 							<UML:ModelElement.stereotype>
-								<UML:Stereotype xmi.idref="EAID_65FCF7C7_9CB6_4db8_8612_51F5379FC6AE"/>
+								<UML:Stereotype xmi.idref="EAID_ACF2E133_E61A_4ef9_B543_1E0B6A5A39D7"/>
 							</UML:ModelElement.stereotype>
 							<UML:ModelElement.taggedValue>
 								<UML:TaggedValue tag="parent" value="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472"/>
@@ -242,7 +242,7 @@
 										<UML:TaggedValue tag="privatedata5" value="SX=0;SY=0;EX=0;EY=0;EDGE=3;"/>
 										<UML:TaggedValue tag="virtualInheritance" value="0"/>
 										<UML:TaggedValue tag="mb" value=" &#xA;«adAddressedBy»"/>
-										<UML:TaggedValue tag="XModelId" value="ADMentor:2" xmi.id="EAID_8F9F1376_2F67_1e2f_8790_0628315EF374">
+										<UML:TaggedValue tag="XModelId" value="ADMentor:3" xmi.id="EAID_8F9F1376_2F67_1e2f_8790_0628315EF374">
 											<XMI.extension xmi.extender="Enterprise Architect 2.5">
 												<UML:Comment name="Default: ADMentor:2&#xA;"/>
 											</XMI.extension>
@@ -308,7 +308,7 @@
 										<UML:TaggedValue tag="privatedata5" value="SX=0;SY=0;EX=0;EY=0;EDGE=1;"/>
 										<UML:TaggedValue tag="virtualInheritance" value="0"/>
 										<UML:TaggedValue tag="mb" value=" &#xA;«adAssessesNegatively»"/>
-										<UML:TaggedValue tag="XModelId" value="ADMentor:2" xmi.id="EAID_8F9F1376_497F_4349_8E05_E0722121EC5E">
+										<UML:TaggedValue tag="XModelId" value="ADMentor:3" xmi.id="EAID_8F9F1376_497F_4349_8E05_E0722121EC5E">
 											<XMI.extension xmi.extender="Enterprise Architect 2.5">
 												<UML:Comment name="Default: ADMentor:2&#xA;"/>
 											</XMI.extension>
@@ -337,7 +337,7 @@
 										<UML:TaggedValue tag="tpos" value="0"/>
 										<UML:TaggedValue tag="ea_localid" value="137"/>
 										<UML:TaggedValue tag="ea_eleType" value="element"/>
-										<UML:TaggedValue tag="$ea_classified" value="{E061657A-C1A7-4b72-A706-32FCAD4F87F3}"/>
+										<UML:TaggedValue tag="$ea_classified" value="{3CE97F78-1F81-4a61-8822-AF543BA28ACD}"/>
 										<UML:TaggedValue tag="style" value="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
 										<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={9C0D4E01-1E62-4ecc-B406-16B7B9F3D03E}$XID;$NAM=Stereotypes$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=adProblem;FQName=ADMentor::adProblem;@ENDSTEREO;$DES;$CLT={BA302E2A-6613-409c-A960-7DD5866C55AF}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 									</UML:ModelElement.taggedValue>
@@ -369,7 +369,7 @@
 										<UML:TaggedValue tag="privatedata5" value="SX=0;SY=0;EX=0;EY=0;EDGE=3;"/>
 										<UML:TaggedValue tag="virtualInheritance" value="0"/>
 										<UML:TaggedValue tag="mb" value=" &#xA;«adAddressedBy»"/>
-										<UML:TaggedValue tag="XModelId" value="ADMentor:2" xmi.id="EAID_8F9F1376_2F67_1e2f_8B82_DB0AC15543AE">
+										<UML:TaggedValue tag="XModelId" value="ADMentor:3" xmi.id="EAID_8F9F1376_2F67_1e2f_8B82_DB0AC15543AE">
 											<XMI.extension xmi.extender="Enterprise Architect 2.5">
 												<UML:Comment name="Default: ADMentor:2&#xA;"/>
 											</XMI.extension>
@@ -491,7 +491,7 @@
 												<UML:TaggedValue tag="privatedata5" value="SX=0;SY=0;EX=0;EY=0;EDGE=1;"/>
 												<UML:TaggedValue tag="virtualInheritance" value="0"/>
 												<UML:TaggedValue tag="mb" value=" &#xA;«adAssessesPositively»"/>
-												<UML:TaggedValue tag="XModelId" value="ADMentor:2" xmi.id="EAID_8F9F1376_4E5F_f24e_ADB7_4F5AD1899199">
+												<UML:TaggedValue tag="XModelId" value="ADMentor:3" xmi.id="EAID_8F9F1376_4E5F_f24e_ADB7_4F5AD1899199">
 													<XMI.extension xmi.extender="Enterprise Architect 2.5">
 														<UML:Comment name="Default: ADMentor:2&#xA;"/>
 													</XMI.extension>
@@ -548,7 +548,7 @@
 						</UML:Package>
 						<UML:Package name="My Concrete Project" xmi.id="EAPK_632E5E0F_8C58_4089_80E4_F3FC6638FD5C" isRoot="false" isLeaf="false" isAbstract="false" visibility="public">
 							<UML:ModelElement.stereotype>
-								<UML:Stereotype xmi.idref="EAID_47DD6B73_5322_4480_ACE4_28065F7AA10B"/>
+								<UML:Stereotype xmi.idref="EAID_19EE6357_4993_42dd_9AB1_EB0490188D37"/>
 							</UML:ModelElement.stereotype>
 							<UML:ModelElement.taggedValue>
 								<UML:TaggedValue tag="parent" value="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472"/>
@@ -600,7 +600,7 @@
 												<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={EF43CE2C-71D3-40af-812E-E1DEF223FBA4}$XID;$NAM=Stereotypes$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=adOptionOccurrence;FQName=ADMentor::adOptionOccurrence;@ENDSTEREO;$DES;$CLT={23E845D5-11EB-4851-81C0-80BFD544F3DE}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 											</UML:ModelElement.taggedValue>
 										</UML:ClassifierRole>
-										<UML:AssociationRole xmi.id="EAID_909FB27B_B10F_44ac_936C_10697F4F32E9" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+										<UML:AssociationRole xmi.id="EAID_2EE6AEEE_F6ED_4339_851F_4DC795A6F33E" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
 											<UML:ModelElement.stereotype>
 												<UML:Stereotype name="adAddressedBy"/>
 											</UML:ModelElement.stereotype>
@@ -615,35 +615,146 @@
 												<UML:TaggedValue tag="stereotype" value="adAddressedBy"/>
 												<UML:TaggedValue tag="headStyle" value="0"/>
 												<UML:TaggedValue tag="lineStyle" value="0"/>
-												<UML:TaggedValue tag="ea_localid" value="31"/>
+												<UML:TaggedValue tag="conditional" value=" &#xA;«adAddressedBy»"/>
+												<UML:TaggedValue tag="ea_localid" value="45"/>
 												<UML:TaggedValue tag="ea_sourceName" value="Document Architectural Decisions"/>
 												<UML:TaggedValue tag="ea_targetName" value="AD Mentor"/>
 												<UML:TaggedValue tag="ea_sourceType" value="Object"/>
 												<UML:TaggedValue tag="ea_targetType" value="Object"/>
-												<UML:TaggedValue tag="ea_sourceID" value="145"/>
+												<UML:TaggedValue tag="ea_sourceID" value="162"/>
 												<UML:TaggedValue tag="ea_targetID" value="146"/>
 												<UML:TaggedValue tag="src_visibility" value="Public"/>
 												<UML:TaggedValue tag="src_aggregation" value="1"/>
 												<UML:TaggedValue tag="src_isOrdered" value="false"/>
+												<UML:TaggedValue tag="src_targetScope" value="instance"/>
+												<UML:TaggedValue tag="src_changeable" value="none"/>
 												<UML:TaggedValue tag="src_isNavigable" value="false"/>
-												<UML:TaggedValue tag="src_style" value="Navigable=Unspecified;Owned=0;"/>
+												<UML:TaggedValue tag="src_containment" value="Unspecified"/>
+												<UML:TaggedValue tag="src_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
 												<UML:TaggedValue tag="dst_visibility" value="Public"/>
 												<UML:TaggedValue tag="dst_aggregation" value="0"/>
 												<UML:TaggedValue tag="dst_isOrdered" value="false"/>
+												<UML:TaggedValue tag="dst_targetScope" value="instance"/>
+												<UML:TaggedValue tag="dst_changeable" value="none"/>
 												<UML:TaggedValue tag="dst_isNavigable" value="false"/>
-												<UML:TaggedValue tag="dst_style" value="Navigable=Navigable;Owned=0;"/>
+												<UML:TaggedValue tag="dst_containment" value="Unspecified"/>
+												<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+												<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={4F6DC9F8-B58F-4d53-88DC-B8013C4D5D7F}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=adAddressedBy;FQName=ADMentor::adAddressedBy;@ENDSTEREO;$DES;$CLT={2EE6AEEE-F6ED-4339-851F-4DC795A6F33E}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+												<UML:TaggedValue tag="virtualInheritance" value="0"/>
 												<UML:TaggedValue tag="mb" value=" &#xA;«adAddressedBy»"/>
+												<UML:TaggedValue tag="XModelId" value="ADMentor:3" xmi.id="EAID_8F9F1376_2F67_1e2f_AB96_F68BE59948DA">
+													<XMI.extension xmi.extender="Enterprise Architect 2.5">
+														<UML:Comment name="Default: ADMentor:3&#xA;"/>
+													</XMI.extension>
+												</UML:TaggedValue>
 											</UML:ModelElement.taggedValue>
 											<UML:Association.connection>
-												<UML:AssociationEndRole visibility="public" aggregation="shared" isOrdered="false" isNavigable="false" type="EAID_E061657A_C1A7_4b72_A706_32FCAD4F87F3">
+												<UML:AssociationEndRole visibility="public" aggregation="shared" isOrdered="false" targetScope="instance" changeable="none" isNavigable="false" type="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD">
 													<UML:ModelElement.taggedValue>
-														<UML:TaggedValue tag="sourcestyle" value="Navigable=Unspecified;Owned=0;"/>
+														<UML:TaggedValue tag="containment" value="Unspecified"/>
+														<UML:TaggedValue tag="sourcestyle" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
 														<UML:TaggedValue tag="ea_end" value="source"/>
 													</UML:ModelElement.taggedValue>
 												</UML:AssociationEndRole>
-												<UML:AssociationEndRole visibility="public" aggregation="none" isOrdered="false" isNavigable="true" type="EAID_23E845D5_11EB_4851_81C0_80BFD544F3DE">
+												<UML:AssociationEndRole visibility="public" aggregation="none" isOrdered="false" targetScope="instance" changeable="none" isNavigable="true" type="EAID_23E845D5_11EB_4851_81C0_80BFD544F3DE">
 													<UML:ModelElement.taggedValue>
-														<UML:TaggedValue tag="deststyle" value="Navigable=Navigable;Owned=0;"/>
+														<UML:TaggedValue tag="containment" value="Unspecified"/>
+														<UML:TaggedValue tag="deststyle" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+														<UML:TaggedValue tag="ea_end" value="target"/>
+													</UML:ModelElement.taggedValue>
+												</UML:AssociationEndRole>
+											</UML:Association.connection>
+										</UML:AssociationRole>
+										<UML:ClassifierRole name="Document Architectural Decisions" xmi.id="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD" visibility="public" base="EAID_11111111_5487_4080_A7F4_41526CB0AA00">
+											<UML:ModelElement.stereotype>
+												<UML:Stereotype name="adProblemOccurrence"/>
+											</UML:ModelElement.stereotype>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="isAbstract" value="false"/>
+												<UML:TaggedValue tag="isSpecification" value="false"/>
+												<UML:TaggedValue tag="ea_stype" value="Object"/>
+												<UML:TaggedValue tag="ea_ntype" value="0"/>
+												<UML:TaggedValue tag="version" value="1.0"/>
+												<UML:TaggedValue tag="isActive" value="false"/>
+												<UML:TaggedValue tag="classifier" value="EAID_BA302E2A_6613_409c_A960_7DD5866C55AF"/>
+												<UML:TaggedValue tag="package" value="EAPK_632E5E0F_8C58_4089_80E4_F3FC6638FD5C"/>
+												<UML:TaggedValue tag="classname" value="Document Architectural Decisions"/>
+												<UML:TaggedValue tag="date_created" value="2014-12-10 14:45:11"/>
+												<UML:TaggedValue tag="date_modified" value="2014-12-10 14:45:11"/>
+												<UML:TaggedValue tag="gentype" value="Java"/>
+												<UML:TaggedValue tag="tagged" value="0"/>
+												<UML:TaggedValue tag="package_name" value="My Concrete Project"/>
+												<UML:TaggedValue tag="phase" value="1.0"/>
+												<UML:TaggedValue tag="complexity" value="1"/>
+												<UML:TaggedValue tag="status" value="Proposed"/>
+												<UML:TaggedValue tag="stereotype" value="adProblemOccurrence"/>
+												<UML:TaggedValue tag="tpos" value="0"/>
+												<UML:TaggedValue tag="ea_localid" value="162"/>
+												<UML:TaggedValue tag="ea_eleType" value="element"/>
+												<UML:TaggedValue tag="style" value="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+												<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={277B3D8F-730F-456e-AC71-EF5EFB727FA0}$XID;$NAM=Stereotypes$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=adProblemOccurrence;FQName=ADMentor::adProblemOccurrence;@ENDSTEREO;$DES;$CLT={3CE97F78-1F81-4a61-8822-AF543BA28ACD}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+											</UML:ModelElement.taggedValue>
+										</UML:ClassifierRole>
+										<UML:AssociationRole xmi.id="EAID_3DCDD552_10FA_482a_AB10_5477AB3B7917" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
+											<UML:ModelElement.stereotype>
+												<UML:Stereotype name="adAddressedBy"/>
+											</UML:ModelElement.stereotype>
+											<UML:ModelElement.taggedValue>
+												<UML:TaggedValue tag="style" value="3"/>
+												<UML:TaggedValue tag="ea_type" value="Association"/>
+												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
+												<UML:TaggedValue tag="linemode" value="3"/>
+												<UML:TaggedValue tag="linecolor" value="-1"/>
+												<UML:TaggedValue tag="linewidth" value="0"/>
+												<UML:TaggedValue tag="seqno" value="0"/>
+												<UML:TaggedValue tag="stereotype" value="adAddressedBy"/>
+												<UML:TaggedValue tag="headStyle" value="0"/>
+												<UML:TaggedValue tag="lineStyle" value="0"/>
+												<UML:TaggedValue tag="conditional" value=" &#xA;«adAddressedBy»"/>
+												<UML:TaggedValue tag="ea_localid" value="44"/>
+												<UML:TaggedValue tag="ea_sourceName" value="Document Architectural Decisions"/>
+												<UML:TaggedValue tag="ea_targetName" value="Unstructered Rich Text"/>
+												<UML:TaggedValue tag="ea_sourceType" value="Object"/>
+												<UML:TaggedValue tag="ea_targetType" value="Object"/>
+												<UML:TaggedValue tag="ea_sourceID" value="162"/>
+												<UML:TaggedValue tag="ea_targetID" value="147"/>
+												<UML:TaggedValue tag="src_visibility" value="Public"/>
+												<UML:TaggedValue tag="src_aggregation" value="1"/>
+												<UML:TaggedValue tag="src_isOrdered" value="false"/>
+												<UML:TaggedValue tag="src_targetScope" value="instance"/>
+												<UML:TaggedValue tag="src_changeable" value="none"/>
+												<UML:TaggedValue tag="src_isNavigable" value="false"/>
+												<UML:TaggedValue tag="src_containment" value="Unspecified"/>
+												<UML:TaggedValue tag="src_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+												<UML:TaggedValue tag="dst_visibility" value="Public"/>
+												<UML:TaggedValue tag="dst_aggregation" value="0"/>
+												<UML:TaggedValue tag="dst_isOrdered" value="false"/>
+												<UML:TaggedValue tag="dst_targetScope" value="instance"/>
+												<UML:TaggedValue tag="dst_changeable" value="none"/>
+												<UML:TaggedValue tag="dst_isNavigable" value="false"/>
+												<UML:TaggedValue tag="dst_containment" value="Unspecified"/>
+												<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+												<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={DBDD102C-8936-490f-B915-7424C0D1F556}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=adAddressedBy;FQName=ADMentor::adAddressedBy;@ENDSTEREO;$DES;$CLT={3DCDD552-10FA-482a-AB10-5477AB3B7917}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+												<UML:TaggedValue tag="virtualInheritance" value="0"/>
+												<UML:TaggedValue tag="mb" value=" &#xA;«adAddressedBy»"/>
+												<UML:TaggedValue tag="XModelId" value="ADMentor:3" xmi.id="EAID_8F9F1376_2F67_1e2f_AFD4_11447C5E6C63">
+													<XMI.extension xmi.extender="Enterprise Architect 2.5">
+														<UML:Comment name="Default: ADMentor:3&#xA;"/>
+													</XMI.extension>
+												</UML:TaggedValue>
+											</UML:ModelElement.taggedValue>
+											<UML:Association.connection>
+												<UML:AssociationEndRole visibility="public" aggregation="shared" isOrdered="false" targetScope="instance" changeable="none" isNavigable="false" type="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD">
+													<UML:ModelElement.taggedValue>
+														<UML:TaggedValue tag="containment" value="Unspecified"/>
+														<UML:TaggedValue tag="sourcestyle" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
+														<UML:TaggedValue tag="ea_end" value="source"/>
+													</UML:ModelElement.taggedValue>
+												</UML:AssociationEndRole>
+												<UML:AssociationEndRole visibility="public" aggregation="none" isOrdered="false" targetScope="instance" changeable="none" isNavigable="true" type="EAID_9AEBCBAC_C70F_47c0_B921_8436DA1BF98C">
+													<UML:ModelElement.taggedValue>
+														<UML:TaggedValue tag="containment" value="Unspecified"/>
+														<UML:TaggedValue tag="deststyle" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 														<UML:TaggedValue tag="ea_end" value="target"/>
 													</UML:ModelElement.taggedValue>
 												</UML:AssociationEndRole>
@@ -679,85 +790,6 @@
 												<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={BC6F2BE2-7AE4-4d40-9BBF-1512320FE038}$XID;$NAM=Stereotypes$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=adOptionOccurrence;FQName=ADMentor::adOptionOccurrence;@ENDSTEREO;$DES;$CLT={9AEBCBAC-C70F-47c0-B921-8436DA1BF98C}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
 											</UML:ModelElement.taggedValue>
 										</UML:ClassifierRole>
-										<UML:AssociationRole xmi.id="EAID_6CA33D95_203B_4723_8F7E_66D60CE2A817" visibility="public" isRoot="false" isLeaf="false" isAbstract="false">
-											<UML:ModelElement.stereotype>
-												<UML:Stereotype name="adAddressedBy"/>
-											</UML:ModelElement.stereotype>
-											<UML:ModelElement.taggedValue>
-												<UML:TaggedValue tag="style" value="3"/>
-												<UML:TaggedValue tag="ea_type" value="Association"/>
-												<UML:TaggedValue tag="direction" value="Source -&gt; Destination"/>
-												<UML:TaggedValue tag="linemode" value="3"/>
-												<UML:TaggedValue tag="linecolor" value="-1"/>
-												<UML:TaggedValue tag="linewidth" value="0"/>
-												<UML:TaggedValue tag="seqno" value="0"/>
-												<UML:TaggedValue tag="stereotype" value="adAddressedBy"/>
-												<UML:TaggedValue tag="headStyle" value="0"/>
-												<UML:TaggedValue tag="lineStyle" value="0"/>
-												<UML:TaggedValue tag="ea_localid" value="30"/>
-												<UML:TaggedValue tag="ea_sourceName" value="Document Architectural Decisions"/>
-												<UML:TaggedValue tag="ea_targetName" value="Unstructered Rich Text"/>
-												<UML:TaggedValue tag="ea_sourceType" value="Object"/>
-												<UML:TaggedValue tag="ea_targetType" value="Object"/>
-												<UML:TaggedValue tag="ea_sourceID" value="145"/>
-												<UML:TaggedValue tag="ea_targetID" value="147"/>
-												<UML:TaggedValue tag="src_visibility" value="Public"/>
-												<UML:TaggedValue tag="src_aggregation" value="1"/>
-												<UML:TaggedValue tag="src_isOrdered" value="false"/>
-												<UML:TaggedValue tag="src_isNavigable" value="false"/>
-												<UML:TaggedValue tag="src_style" value="Navigable=Unspecified;Owned=0;"/>
-												<UML:TaggedValue tag="dst_visibility" value="Public"/>
-												<UML:TaggedValue tag="dst_aggregation" value="0"/>
-												<UML:TaggedValue tag="dst_isOrdered" value="false"/>
-												<UML:TaggedValue tag="dst_isNavigable" value="false"/>
-												<UML:TaggedValue tag="dst_style" value="Navigable=Navigable;Owned=0;"/>
-												<UML:TaggedValue tag="mb" value=" &#xA;«adAddressedBy»"/>
-											</UML:ModelElement.taggedValue>
-											<UML:Association.connection>
-												<UML:AssociationEndRole visibility="public" aggregation="shared" isOrdered="false" isNavigable="false" type="EAID_E061657A_C1A7_4b72_A706_32FCAD4F87F3">
-													<UML:ModelElement.taggedValue>
-														<UML:TaggedValue tag="sourcestyle" value="Navigable=Unspecified;Owned=0;"/>
-														<UML:TaggedValue tag="ea_end" value="source"/>
-													</UML:ModelElement.taggedValue>
-												</UML:AssociationEndRole>
-												<UML:AssociationEndRole visibility="public" aggregation="none" isOrdered="false" isNavigable="true" type="EAID_9AEBCBAC_C70F_47c0_B921_8436DA1BF98C">
-													<UML:ModelElement.taggedValue>
-														<UML:TaggedValue tag="deststyle" value="Navigable=Navigable;Owned=0;"/>
-														<UML:TaggedValue tag="ea_end" value="target"/>
-													</UML:ModelElement.taggedValue>
-												</UML:AssociationEndRole>
-											</UML:Association.connection>
-										</UML:AssociationRole>
-										<UML:ClassifierRole name="Document Architectural Decisions" xmi.id="EAID_E061657A_C1A7_4b72_A706_32FCAD4F87F3" visibility="public" base="EAID_11111111_5487_4080_A7F4_41526CB0AA00">
-											<UML:ModelElement.stereotype>
-												<UML:Stereotype name="adProblemOccurrence"/>
-											</UML:ModelElement.stereotype>
-											<UML:ModelElement.taggedValue>
-												<UML:TaggedValue tag="isAbstract" value="false"/>
-												<UML:TaggedValue tag="isSpecification" value="false"/>
-												<UML:TaggedValue tag="ea_stype" value="Object"/>
-												<UML:TaggedValue tag="ea_ntype" value="0"/>
-												<UML:TaggedValue tag="version" value="1.0"/>
-												<UML:TaggedValue tag="isActive" value="false"/>
-												<UML:TaggedValue tag="classifier" value="EAID_BA302E2A_6613_409c_A960_7DD5866C55AF"/>
-												<UML:TaggedValue tag="package" value="EAPK_632E5E0F_8C58_4089_80E4_F3FC6638FD5C"/>
-												<UML:TaggedValue tag="classname" value="Document Architectural Decisions"/>
-												<UML:TaggedValue tag="date_created" value="2014-11-19 14:46:50"/>
-												<UML:TaggedValue tag="date_modified" value="2014-11-25 09:57:26"/>
-												<UML:TaggedValue tag="gentype" value="Java"/>
-												<UML:TaggedValue tag="tagged" value="0"/>
-												<UML:TaggedValue tag="package_name" value="My Concrete Project"/>
-												<UML:TaggedValue tag="phase" value="1.0"/>
-												<UML:TaggedValue tag="complexity" value="1"/>
-												<UML:TaggedValue tag="status" value="Proposed"/>
-												<UML:TaggedValue tag="stereotype" value="adProblemOccurrence"/>
-												<UML:TaggedValue tag="tpos" value="0"/>
-												<UML:TaggedValue tag="ea_localid" value="145"/>
-												<UML:TaggedValue tag="ea_eleType" value="element"/>
-												<UML:TaggedValue tag="style" value="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
-												<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={7E450BF1-D781-4570-9061-68B3EB8DB44E}$XID;$NAM=Stereotypes$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=adProblemOccurrence;FQName=ADMentor::adProblemOccurrence;@ENDSTEREO;$DES;$CLT={E061657A-C1A7-4b72-A706-32FCAD4F87F3}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
-											</UML:ModelElement.taggedValue>
-										</UML:ClassifierRole>
 									</UML:Namespace.ownedElement>
 									<UML:Collaboration.interaction/>
 								</UML:Collaboration>
@@ -765,10 +797,10 @@
 						</UML:Package>
 					</UML:Namespace.ownedElement>
 				</UML:Package>
-				<UML:Stereotype xmi.id="EAID_65FCF7C7_9CB6_4db8_8612_51F5379FC6AE" name="adProblemSpace" isRoot="false" isLeaf="false" isAbstract="false">
+				<UML:Stereotype xmi.id="EAID_ACF2E133_E61A_4ef9_B543_1E0B6A5A39D7" name="adProblemSpace" isRoot="false" isLeaf="false" isAbstract="false">
 					<UML:Stereotype.baseClass>Package</UML:Stereotype.baseClass>
 				</UML:Stereotype>
-				<UML:Stereotype xmi.id="EAID_47DD6B73_5322_4480_ACE4_28065F7AA10B" name="adSolutionSpace" isRoot="false" isLeaf="false" isAbstract="false">
+				<UML:Stereotype xmi.id="EAID_19EE6357_4993_42dd_9AB1_EB0490188D37" name="adSolutionSpace" isRoot="false" isLeaf="false" isAbstract="false">
 					<UML:Stereotype.baseClass>Package</UML:Stereotype.baseClass>
 				</UML:Stereotype>
 			</UML:Namespace.ownedElement>
@@ -778,9 +810,9 @@
 		<UML:TaggedValue tag="Project Stage" xmi.id="EAID_8C7F38AB_DDEF_52dd_ACD5_8C687B589C21" modelElement="EAID_29D339A8_CAF7_4702_8F2D_8426FBA8F97B"/>
 		<UML:TaggedValue tag="Refinement Level" xmi.id="EAID_1056DA85_3549_e135_BEB1_0882BDC12ECC" modelElement="EAID_29D339A8_CAF7_4702_8F2D_8426FBA8F97B"/>
 		<UML:TaggedValue tag="Viewpoint" xmi.id="EAID_14D5A585_48E9_c148_9AB1_32CA949ED607" modelElement="EAID_29D339A8_CAF7_4702_8F2D_8426FBA8F97B"/>
-		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_3E1A_ea3e_8425_FEFA32E207F5" value="ADMentor:2#NOTES#Default: ADMentor:2&#xA;" modelElement="EAID_29D339A8_CAF7_4702_8F2D_8426FBA8F97B"/>
+		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_3E1A_ea3e_8425_FEFA32E207F5" value="ADMentor:3#NOTES#Default: ADMentor:2&#xA;" modelElement="EAID_29D339A8_CAF7_4702_8F2D_8426FBA8F97B"/>
 		<UML:TaggedValue tag="Intellectual Property Rights" xmi.id="EAID_C4207ABC_392C_9939_B3F2_39F82ACDCC74" value="Unrestricted#NOTES#Default: Unrestricted&#xA;" modelElement="EAID_632E5E0F_8C58_4089_80E4_F3FC6638FD5C"/>
-		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_C9E6_39c9_BFD2_EFD0BE17877A" value="ADMentor:2#NOTES#Default: ADMentor:2&#xA;" modelElement="EAID_632E5E0F_8C58_4089_80E4_F3FC6638FD5C"/>
+		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_C9E6_39c9_BFD2_EFD0BE17877A" value="ADMentor:3#NOTES#Default: ADMentor:2&#xA;" modelElement="EAID_632E5E0F_8C58_4089_80E4_F3FC6638FD5C"/>
 		<UML:Diagram name="AD Mentor Demo" xmi.id="EAID_55464598_FDE6_453a_902C_741BCE7C05F6" diagramType="PackageDiagram" owner="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472" toolName="Enterprise Architect 2.5">
 			<UML:ModelElement.taggedValue>
 				<UML:TaggedValue tag="version" value="1.0"/>
@@ -807,7 +839,7 @@
 		</UML:Diagram>
 		<UML:TaggedValue tag="Intellectual Property Rights" xmi.id="EAID_C4207ABC_5AFC_6e5a_B602_9D1626B8456B" value="Unrestricted#NOTES#Default: Unrestricted&#xA;" modelElement="EAID_5C7058CB_DE9F_47d2_8C6E_1DE7BFC75B8A"/>
 		<UML:TaggedValue tag="Knowledge Provenance" xmi.id="EAID_F6250AB1_1311_0f13_BEE4_94B7D2952D15" modelElement="EAID_5C7058CB_DE9F_47d2_8C6E_1DE7BFC75B8A"/>
-		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_E3B6_8ce3_9115_402AB8C107E0" value="ADMentor:2#NOTES#Default: ADMentor:2&#xA;" modelElement="EAID_5C7058CB_DE9F_47d2_8C6E_1DE7BFC75B8A"/>
+		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_E3B6_8ce3_9115_402AB8C107E0" value="ADMentor:3#NOTES#Default: ADMentor:2&#xA;" modelElement="EAID_5C7058CB_DE9F_47d2_8C6E_1DE7BFC75B8A"/>
 		<UML:TaggedValue tag="Intellectual Property Rights" xmi.id="EAID_C4207ABC_91D4_cf91_8291_C1E89CFB012E" value="Unrestricted#NOTES#Default: Unrestricted&#xA;" modelElement="EAID_BA302E2A_6613_409c_A960_7DD5866C55AF"/>
 		<UML:TaggedValue tag="Knowledge Provenance" xmi.id="EAID_F6250AB1_F1E9_72f1_8F2E_186B16DCD14E" modelElement="EAID_BA302E2A_6613_409c_A960_7DD5866C55AF"/>
 		<UML:TaggedValue tag="Organisational Reach" xmi.id="EAID_9E7E425E_3D96_db3d_99CA_23DA73C3EC34" value="Project#NOTES#Values: Global,Organisation,Division,Business Unit,Program,Project,Subproject,Individual&#xA;Default: Project&#xA;" modelElement="EAID_BA302E2A_6613_409c_A960_7DD5866C55AF"/>
@@ -816,10 +848,10 @@
 		<UML:TaggedValue tag="Refinement Level" xmi.id="EAID_1056DA85_E9BD_83e9_B750_4FB3E9D43C07" modelElement="EAID_BA302E2A_6613_409c_A960_7DD5866C55AF"/>
 		<UML:TaggedValue tag="Stakeholder Roles" xmi.id="EAID_2DD9C0DB_BB13_0abb_937C_DAF6F34CF719" value="Any#NOTES#Default: Any&#xA;" modelElement="EAID_BA302E2A_6613_409c_A960_7DD5866C55AF"/>
 		<UML:TaggedValue tag="Viewpoint" xmi.id="EAID_14D5A585_D7DD_70d7_93C2_0A014F5E11E2" modelElement="EAID_BA302E2A_6613_409c_A960_7DD5866C55AF"/>
-		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_BE8E_a9be_9248_61BAF0929076" value="ADMentor:2#NOTES#Default: ADMentor:2&#xA;" modelElement="EAID_BA302E2A_6613_409c_A960_7DD5866C55AF"/>
+		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_BE8E_a9be_9248_61BAF0929076" value="ADMentor:3#NOTES#Default: ADMentor:2&#xA;" modelElement="EAID_BA302E2A_6613_409c_A960_7DD5866C55AF"/>
 		<UML:TaggedValue tag="Intellectual Property Rights" xmi.id="EAID_C4207ABC_5AFC_6e5a_9CFA_4CA8A68B0EFC" value="Unrestricted#NOTES#Default: Unrestricted&#xA;" modelElement="EAID_ED2F388D_EEAB_4818_A8EB_9527350A7161"/>
 		<UML:TaggedValue tag="Knowledge Provenance" xmi.id="EAID_F6250AB1_1311_0f13_9842_F54CBE5F1CC0" modelElement="EAID_ED2F388D_EEAB_4818_A8EB_9527350A7161"/>
-		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_E3B6_8ce3_8939_7A293C30A3CB" value="ADMentor:2#NOTES#Default: ADMentor:2&#xA;" modelElement="EAID_ED2F388D_EEAB_4818_A8EB_9527350A7161"/>
+		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_E3B6_8ce3_8939_7A293C30A3CB" value="ADMentor:3#NOTES#Default: ADMentor:2&#xA;" modelElement="EAID_ED2F388D_EEAB_4818_A8EB_9527350A7161"/>
 		<UML:Diagram name="Reusable Problem Space" xmi.id="EAID_666E3A22_5EC9_4c34_9B8E_410FAABD2D58" diagramType="ActivityDiagram" owner="EAPK_29D339A8_CAF7_4702_8F2D_8426FBA8F97B" toolName="Enterprise Architect 2.5">
 			<UML:ModelElement.taggedValue>
 				<UML:TaggedValue tag="version" value="1.0"/>
@@ -847,20 +879,29 @@
 				<UML:DiagramElement geometry="SX=0;SY=0;EX=0;EY=0;EDGE=1;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_28ECA9E3_9B2B_4af6_9C1D_E611A6FA9AA6" style="Mode=3;EOID=61563BE6;SOID=055ED3CB;Color=-1;LWidth=0;Hidden=0;"/>
 			</UML:Diagram.element>
 		</UML:Diagram>
-		<UML:TaggedValue tag="Option State" xmi.id="EAID_0501AC5A_03C3_0203_87C8_2E0D3D091A3D" value="Tentative#NOTES#Values: Eligible,Tentative,Chosen,Neglected&#xA;Default: Eligible&#xA;" modelElement="EAID_23E845D5_11EB_4851_81C0_80BFD544F3DE"/>
-		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_823F_6a82_B20D_26A1D3534619" value="ADMentor:2#NOTES#Default: ADMentor:2&#xA;" modelElement="EAID_23E845D5_11EB_4851_81C0_80BFD544F3DE"/>
+		<UML:TaggedValue tag="Option State" xmi.id="EAID_0501AC5A_03C3_0203_87C8_2E0D3D091A3D" value="Chosen#NOTES#Values: Eligible,Tentative,Chosen,Neglected&#xA;Default: Eligible&#xA;" modelElement="EAID_23E845D5_11EB_4851_81C0_80BFD544F3DE"/>
+		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_823F_6a82_B20D_26A1D3534619" value="ADMentor:3#NOTES#Default: ADMentor:2&#xA;" modelElement="EAID_23E845D5_11EB_4851_81C0_80BFD544F3DE"/>
+		<UML:TaggedValue tag="Decision Date" xmi.id="EAID_2ACD9EEC_FB4D_21fb_9A0C_1DB0E65A3D35" value="10.12.2014" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
+		<UML:TaggedValue tag="Due Date" xmi.id="EAID_6629859C_4D5D_d94d_939F_54F802A00C9F" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
+		<UML:TaggedValue tag="Intellectual Property Rights" xmi.id="EAID_5A8E82C5_303C_4f6e_A3A5_62BCC5624358" value="Unrestricted" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
+		<UML:TaggedValue tag="Knowledge Provenance" xmi.id="EAID_C9257E45_D837_412f_AFB9_AD4112BCA423" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
+		<UML:TaggedValue tag="Organisational Reach" xmi.id="EAID_B63A855D_EAE6_4550_8FB7_9AEDC8A78D78" value="Project" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
+		<UML:TaggedValue tag="Owner Role" xmi.id="EAID_24DB7487_4198_4e72_A2A8_06202EB705E7" value="Any" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
+		<UML:TaggedValue tag="Problem State" xmi.id="EAID_593DC8D2_A133_60a1_875C_4C2BC8A79B5A" value="Solved#NOTES#Values: Open,Partially Solved,Solved,Not Applicable&#xA;Default: Open&#xA;" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
+		<UML:TaggedValue tag="Project Stage" xmi.id="EAID_CF3178A1_8314_4db1_96C3_63AC482D8C19" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
+		<UML:TaggedValue tag="Refinement Level" xmi.id="EAID_78FFCABA_1085_4a1b_BFB3_DBB783BC11EC" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
+		<UML:TaggedValue tag="Revision Date" xmi.id="EAID_67E197CD_F42E_35f4_9C95_B688AB887191" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
+		<UML:TaggedValue tag="Stakeholder Roles" xmi.id="EAID_05C7114B_0F84_42bb_831F_FB16457F3112" value="Any" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
+		<UML:TaggedValue tag="Viewpoint" xmi.id="EAID_018FCD79_DC8B_45b8_B4EB_B3EA4EB1C61C" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
+		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_CB17_18cb_84AD_B4DE70CC5264" value="ADMentor:3#NOTES#Default: ADMentor:3&#xA;" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
 		<UML:TaggedValue tag="Option State" xmi.id="EAID_0501AC5A_03C3_0203_94A1_5BDA742B56CD" value="Neglected#NOTES#Values: Eligible,Tentative,Chosen,Neglected&#xA;Default: Eligible&#xA;" modelElement="EAID_9AEBCBAC_C70F_47c0_B921_8436DA1BF98C"/>
-		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_823F_6a82_9239_5236DCDD6660" value="ADMentor:2#NOTES#Default: ADMentor:2&#xA;" modelElement="EAID_9AEBCBAC_C70F_47c0_B921_8436DA1BF98C"/>
-		<UML:TaggedValue tag="Due Date" xmi.id="EAID_6629859C_4D5D_d94d_B640_4C1A4058A8B4" modelElement="EAID_E061657A_C1A7_4b72_A706_32FCAD4F87F3"/>
-		<UML:TaggedValue tag="Problem State" xmi.id="EAID_593DC8D2_A133_60a1_9643_1B577FB3C1A0" value="Partially Solved#NOTES#Values: Open,Partially Solved,Solved,Not Applicable&#xA;Default: Open&#xA;" modelElement="EAID_E061657A_C1A7_4b72_A706_32FCAD4F87F3"/>
-		<UML:TaggedValue tag="Revision Date" xmi.id="EAID_67E197CD_F42E_35f4_AA48_B78B6A7E8960" modelElement="EAID_E061657A_C1A7_4b72_A706_32FCAD4F87F3"/>
-		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_CB17_18cb_A240_60461C340E60" value="ADMentor:2#NOTES#Default: ADMentor:2&#xA;" modelElement="EAID_E061657A_C1A7_4b72_A706_32FCAD4F87F3"/>
+		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_823F_6a82_9239_5236DCDD6660" value="ADMentor:3#NOTES#Default: ADMentor:2&#xA;" modelElement="EAID_9AEBCBAC_C70F_47c0_B921_8436DA1BF98C"/>
 		<UML:Diagram name="My Concrete Project" xmi.id="EAID_23EA0E17_D151_46e2_AB19_B3E9A70E9BED" diagramType="ActivityDiagram" owner="EAPK_632E5E0F_8C58_4089_80E4_F3FC6638FD5C" toolName="Enterprise Architect 2.5">
 			<UML:ModelElement.taggedValue>
 				<UML:TaggedValue tag="version" value="1"/>
 				<UML:TaggedValue tag="author" value=""/>
 				<UML:TaggedValue tag="created_date" value="2014-09-22 14:00:57"/>
-				<UML:TaggedValue tag="modified_date" value="2014-11-19 14:52:23"/>
+				<UML:TaggedValue tag="modified_date" value="2014-12-10 14:45:30"/>
 				<UML:TaggedValue tag="package" value="EAPK_632E5E0F_8C58_4089_80E4_F3FC6638FD5C"/>
 				<UML:TaggedValue tag="type" value="Activity"/>
 				<UML:TaggedValue tag="swimlanes" value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;;cls=0;"/>
@@ -868,14 +909,14 @@
 				<UML:TaggedValue tag="tpos" value="0"/>
 				<UML:TaggedValue tag="ea_localid" value="21"/>
 				<UML:TaggedValue tag="EAStyle" value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=800;DocSize.cy=1100;ShowDetails=0;Orientation=P;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
-				<UML:TaggedValue tag="styleex" value="SaveTag=2BD90C7E;ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;MatrixLineWidth=1;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ProfileData=;MDGDgm=ADMentor::SolutionOverview;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;"/>
+				<UML:TaggedValue tag="styleex" value="SaveTag=F0F7A3D8;ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;MatrixLineWidth=1;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ProfileData=;MDGDgm=ADMentor::SolutionOverview;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;"/>
 			</UML:ModelElement.taggedValue>
 			<UML:Diagram.element>
-				<UML:DiagramElement geometry="Left=74;Top=294;Right=174;Bottom=349;" subject="EAID_9AEBCBAC_C70F_47c0_B921_8436DA1BF98C" seqno="1" style="DUID=8EE30370;"/>
-				<UML:DiagramElement geometry="Left=259;Top=294;Right=359;Bottom=349;" subject="EAID_23E845D5_11EB_4851_81C0_80BFD544F3DE" seqno="2" style="DUID=1A23E7C1;"/>
-				<UML:DiagramElement geometry="Left=167;Top=113;Right=267;Bottom=168;" subject="EAID_E061657A_C1A7_4b72_A706_32FCAD4F87F3" seqno="3" style="DUID=F56ED3B2;"/>
-				<UML:DiagramElement geometry="EDGE=3;$LLB=;LLT=;LMT=;LMB=CX=84:CY=13:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=0:DIR=0:ROT=0;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_909FB27B_B10F_44ac_936C_10697F4F32E9" style="Mode=3;EOID=1A23E7C1;SOID=F56ED3B2;Color=-1;LWidth=0;Hidden=0;"/>
-				<UML:DiagramElement geometry="EDGE=3;$LLB=;LLT=;LMT=;LMB=CX=84:CY=13:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=0:DIR=0:ROT=0;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_6CA33D95_203B_4723_8F7E_66D60CE2A817" style="Mode=3;EOID=8EE30370;SOID=F56ED3B2;Color=-1;LWidth=0;Hidden=0;"/>
+				<UML:DiagramElement geometry="Left=162;Top=108;Right=262;Bottom=163;" subject="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD" seqno="1" style="DUID=E04E6D26;"/>
+				<UML:DiagramElement geometry="Left=74;Top=294;Right=174;Bottom=349;" subject="EAID_9AEBCBAC_C70F_47c0_B921_8436DA1BF98C" seqno="2" style="DUID=8EE30370;"/>
+				<UML:DiagramElement geometry="Left=253;Top=296;Right=353;Bottom=351;" subject="EAID_23E845D5_11EB_4851_81C0_80BFD544F3DE" seqno="3" style="DUID=1A23E7C1;"/>
+				<UML:DiagramElement geometry="SX=0;SY=0;EX=0;EY=0;EDGE=3;$LLB=;LLT=;LMT=;LMB=CX=84:CY=13:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=0:DIR=0:ROT=0;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_2EE6AEEE_F6ED_4339_851F_4DC795A6F33E" style="Mode=3;EOID=1A23E7C1;SOID=E04E6D26;Color=-1;LWidth=0;Hidden=0;"/>
+				<UML:DiagramElement geometry="SX=0;SY=0;EX=0;EY=0;EDGE=3;$LLB=;LLT=;LMT=;LMB=CX=84:CY=13:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=0:DIR=0:ROT=0;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_3DCDD552_10FA_482a_AB10_5477AB3B7917" style="Mode=3;EOID=8EE30370;SOID=E04E6D26;Color=-1;LWidth=0;Hidden=0;"/>
 			</UML:Diagram.element>
 		</UML:Diagram>
 	</XMI.content>
