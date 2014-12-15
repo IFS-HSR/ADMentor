@@ -1,6 +1,7 @@
 ﻿using AdAddIn.ADTechnology;
 using AdAddIn.DataAccess;
 using EAAddInFramework;
+using EAAddInFramework.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using Utils;
 
 namespace AdAddIn.Validation
 {
-    public class ValidateConflictingOptionsCommand : ICommand<ProblemOccurrence, Option<ValidationMessage>>
+    public class ValidateConflictingOptionsCommand : ICommand<ModelEntity.Connector, Option<ValidationMessage>>
     {
         private readonly AdRepository Repo;
 
@@ -19,23 +20,21 @@ namespace AdAddIn.Validation
             Repo = repo;
         }
 
-        public Option<ValidationMessage> Execute(ProblemOccurrence po)
+        public Option<ValidationMessage> Execute(ModelEntity.Connector c)
         {
-            var chosenOos = po.GetAlternatives(Repo.GetElement)
-                .Where(oo => oo.State == SolutionSpace.OptionState.Chosen)
-                .Run();
+            var conflictingEnds = from source in c.Source(Repo.GetElement)
+                                  from sourceOpt in source.TryCast<OptionOccurrence>()
+                                  where sourceOpt.State == SolutionSpace.OptionState.Chosen
+                                  from target in c.Target(Repo.GetElement)
+                                  from targetOpt in target.TryCast<OptionOccurrence>()
+                                  where targetOpt.State == SolutionSpace.OptionState.Chosen
+                                  select Tuple.Create(sourceOpt, targetOpt);
 
-            return (from oo in chosenOos
-                    from c in oo.Connectors
-                    where c.Is(ConnectorStereotypes.ConflictsWith)
-                    from otherEnd in c.OppositeEnd(oo, Repo.GetElement)
-                    where chosenOos.Contains(otherEnd)
-                    select otherEnd)
-                    .Any()
-                    .Then(() => ValidationMessage.Error("Conflicting options chosen"));
+            return (c.Is(ConnectorStereotypes.ConflictsWith) && (conflictingEnds).Any()).Then(
+                () => ValidationMessage.Error("Conflicting options chosen"));
         }
 
-        public bool CanExecute(ProblemOccurrence _)
+        public bool CanExecute(ModelEntity.Connector _)
         {
             return true;
         }

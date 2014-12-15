@@ -23,16 +23,16 @@ namespace EAAddInFramework
         private readonly Atom<Option<ContextItemHandler>> contextItemHandler =
             new LoggedAtom<Option<ContextItemHandler>>("ea.contextItemHandler", Options.None<ContextItemHandler>());
 
-        private readonly Atom<Option<MDGTechnology>> technology = 
+        private readonly Atom<Option<MDGTechnology>> technology =
             new LoggedAtom<Option<MDGTechnology>>("ea.addIn.technology", Options.None<MDGTechnology>());
 
-        private readonly Atom<IEntityWrapper> entityWrapper = 
+        private readonly Atom<IEntityWrapper> entityWrapper =
             new LoggedAtom<IEntityWrapper>("ea.addIn.entityWrapper", new EntityWrapper());
 
         private readonly Atom<IEnumerable<ValidationRule>> validationRules =
-            new LoggedAtom<IEnumerable<ValidationRule>>("ea.addIn.validationRules", new ValidationRule[]{});
+            new LoggedAtom<IEnumerable<ValidationRule>>("ea.addIn.validationRules", new ValidationRule[] { });
 
-        private readonly Atom<Option<ValidationHandler>> validationHandler = 
+        private readonly Atom<Option<ValidationHandler>> validationHandler =
             new LoggedAtom<Option<ValidationHandler>>("ea.addIn.validationHandler", Options.None<ValidationHandler>());
 
         public EAAddIn()
@@ -286,7 +286,8 @@ namespace EAAddInFramework
         #endregion
 
         #region validation
-        public void EA_OnInitializeUserRules(EA.Repository repository) {
+        public void EA_OnInitializeUserRules(EA.Repository repository)
+        {
             RepositoryChanged(repository);
 
             logger.Debug("User rules initialization requested");
@@ -317,16 +318,51 @@ namespace EAAddInFramework
             }
         }
 
-        public void EA_OnRunElementRule(EA.Repository repository, string ruleID, EA.Element element) 
+        public void EA_OnRunElementRule(EA.Repository repository, string ruleID, EA.Element element)
         {
             RepositoryChanged(repository);
 
+            RunRule(ruleID, () =>
+            {
+                return entityWrapper.Val.Wrap(element);
+            });
+        }
+
+        public void EA_OnRunPackageRule(EA.Repository repository, string ruleID, long packageID)
+        {
+            RepositoryChanged(repository);
+
+            RunRule(ruleID, () =>
+            {
+                return entityWrapper.Val.Wrap(repository.GetPackageByID((int)packageID));
+            });
+        }
+
+        public void EA_OnRunDiagramRule(EA.Repository repository, string ruleID, long diagramID)
+        {
+            RepositoryChanged(repository);
+
+            RunRule(ruleID, () =>
+            {
+                return entityWrapper.Val.Wrap(repository.GetDiagramByID((int)diagramID));
+            });
+        }
+
+        public void EA_OnRunConnectorRule(EA.Repository repository, string ruleID, long connectorID)
+        {
+            RepositoryChanged(repository);
+
+            RunRule(ruleID, () =>
+            {
+                return entityWrapper.Val.Wrap(repository.GetConnectorByID((int)connectorID));
+            });
+        }
+
+        private void RunRule(String ruleId, Func<ModelEntity> getEntity)
+        {
             validationHandler.Val.Do(handler =>
             {
-                handler.ExecuteRule(ruleID, () =>
-                {
-                    return entityWrapper.Val.Wrap(element);
-                });
+                handler.ExecuteRule(ruleId, getEntity);
             });
         }
         #endregion
