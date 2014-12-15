@@ -23,7 +23,7 @@ namespace AdAddIn.Validation
             var expectedState = po.DeduceState(po.GetAlternatives(Repo.GetElement));
 
             return (po.State != expectedState).Then(() =>
-                ValidationMessage.Error("Inconsistent State"));
+                ValidationMessage.Error("Inconsistent State between Problem Occurrence and associated Option Occurrences"));
         }
 
         public bool CanExecute(ProblemOccurrence _)
