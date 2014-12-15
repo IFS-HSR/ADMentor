@@ -46,11 +46,13 @@ namespace AdAddIn.ExportProblemSpace
                     CreatePropertyFilter("Stereotype", elements, e => e.Stereotype),
                     CreateKeywordFilter(elements),
                     CreateTaggedValueFilter(Common.IntellectualPropertyRights, elements),
+                    CreateTaggedValueFilter(Common.KnowledgeProvenance, elements),
                     CreateTaggedValueFilter(Common.OrganisationalReach, elements),
+                    CreateTaggedValueFilter(Common.OwnerRole, elements),
                     CreateTaggedValueFilter(Common.ProjectStage, elements),
-                    CreateTaggedValueFilter(Common.Viewpoint, elements),
+                    CreateTaggedValueFilter(Common.RefinementLevel, elements),
                     CreateTaggedValueFilter(Common.StakeholderRoles, elements),
-                    CreateTaggedValueFilter(Common.OwnerRole, elements)
+                    CreateTaggedValueFilter(Common.Viewpoint, elements)
                 }),
                 Filter.And("Diagrams", e => e.TryCast<ModelEntity.Diagram>().IsDefined, new []{
                     CreatePropertyFilter("Meta Type", diagrams, d => d.MetaType),
