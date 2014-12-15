@@ -42,7 +42,7 @@
             this.metricsTextBox.Name = "metricsTextBox";
             this.metricsTextBox.ReadOnly = true;
             this.metricsTextBox.Size = new System.Drawing.Size(297, 410);
-            this.metricsTextBox.TabIndex = 0;
+            this.metricsTextBox.TabIndex = 1;
             // 
             // btnOk
             // 
@@ -51,7 +51,7 @@
             this.btnOk.Location = new System.Drawing.Point(234, 429);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 1;
+            this.btnOk.TabIndex = 0;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             // 
