@@ -22,18 +22,17 @@ namespace AdAddIn.Validation
         public Option<ValidationMessage> Execute(ProblemOccurrence po)
         {
             var chosenOos = po.GetAlternatives(Repo.GetElement)
-                .Where(oo => oo.State == SolutionSpace.OptionState.Chosen);
+                .Where(oo => oo.State == SolutionSpace.OptionState.Chosen)
+                .Run();
 
-            return chosenOos
-                .Any(oo =>
-                {
-                    return (from c in oo.Connectors
-                            where c.Is(ConnectorStereotypes.ConflictsWith)
-                            from otherEnd in c.OppositeEnd(oo, Repo.GetElement)
-                            where chosenOos.Contains(otherEnd)
-                            select otherEnd).Any();
-                })
-                .Then(() => ValidationMessage.Error("Conflicting options chosen"));
+            return (from oo in chosenOos
+                    from c in oo.Connectors
+                    where c.Is(ConnectorStereotypes.ConflictsWith)
+                    from otherEnd in c.OppositeEnd(oo, Repo.GetElement)
+                    where chosenOos.Contains(otherEnd)
+                    select otherEnd)
+                    .Any()
+                    .Then(() => ValidationMessage.Error("Conflicting options chosen"));
         }
 
         public bool CanExecute(ProblemOccurrence _)
