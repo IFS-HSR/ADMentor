@@ -84,7 +84,7 @@ namespace EAAddInFramework.MDGBuilder
             }
         }
 
-        IEnumerable<ITaggedValue> TaggedValues
+        public IEnumerable<ITaggedValue> TaggedValues
         {
             get
             {

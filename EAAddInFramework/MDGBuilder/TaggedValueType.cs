@@ -11,6 +11,8 @@ namespace EAAddInFramework.MDGBuilder
 {
     public interface ITaggedValueType
     {
+        String TypeName { get; }
+
         XElement CreateTag(String tagName);
 
         Option<String> CreateTypeDescription();
@@ -124,6 +126,8 @@ namespace EAAddInFramework.MDGBuilder
             DefaultValue = defaultValue ?? Options.None<T>();
         }
 
+        public String TypeName { get { return "Enum"; } }
+
         public IEnumerable<T> Values { get; private set; }
 
         public Option<T> DefaultValue { get; private set; }
@@ -168,6 +172,8 @@ namespace EAAddInFramework.MDGBuilder
         {
             Properties = properties;
         }
+
+        public String TypeName { get { return Properties["Type"]; } }
 
         public IDictionary<string, string> Properties { get; set; }
 

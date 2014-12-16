@@ -39,21 +39,17 @@ namespace AdAddIn.ExportProblemSpace
                             from diagram in descendant.Diagrams
                             select diagram).Run();
 
+            var taggedValueFilters = from tv in Technologies.AD.TaggedValues
+                                     where tv.Type.TypeName.Equals("String") || tv.Type.TypeName.Equals("Enum")
+                                     select CreateTaggedValueFilter(tv, elements);
+
             var filters = Filter.Or("", new[]{
                 Filter.And("Elements", e => e.TryCast<ModelEntity.Element>().IsDefined, new[] {
                     CreatePropertyFilter("Metatype", elements, e => e.MetaType),
                     CreatePropertyFilter("Type", elements, e => e.Type),
                     CreatePropertyFilter("Stereotype", elements, e => e.Stereotype),
-                    CreateKeywordFilter(elements),
-                    CreateTaggedValueFilter(Common.IntellectualPropertyRights, elements),
-                    CreateTaggedValueFilter(Common.KnowledgeProvenance, elements),
-                    CreateTaggedValueFilter(Common.OrganisationalReach, elements),
-                    CreateTaggedValueFilter(Common.OwnerRole, elements),
-                    CreateTaggedValueFilter(Common.ProjectStage, elements),
-                    CreateTaggedValueFilter(Common.RefinementLevel, elements),
-                    CreateTaggedValueFilter(Common.StakeholderRoles, elements),
-                    CreateTaggedValueFilter(Common.Viewpoint, elements)
-                }),
+                    CreateKeywordFilter(elements)
+                }.Concat(taggedValueFilters)),
                 Filter.And("Diagrams", e => e.TryCast<ModelEntity.Diagram>().IsDefined, new []{
                     CreatePropertyFilter("Meta Type", diagrams, d => d.MetaType),
                     CreatePropertyFilter("Type", diagrams, d => d.Type),
@@ -123,7 +119,7 @@ namespace AdAddIn.ExportProblemSpace
             return Filter.Or(name, filters);
         }
 
-        private IFilter<ModelEntity> CreateTaggedValueFilter<T>(TaggedValue taggedValue, IEnumerable<T> allEntities)
+        private IFilter<ModelEntity> CreateTaggedValueFilter<T>(ITaggedValue taggedValue, IEnumerable<T> allEntities)
             where T : ModelEntity
         {
             return CreatePropertyFilter(taggedValue.Name, allEntities, entity => entity.Get(taggedValue).GetOrElse(""));
