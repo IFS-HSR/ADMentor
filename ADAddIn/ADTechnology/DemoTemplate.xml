@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1252"?>
-<XMI xmi.version="1.1" xmlns:UML="omg.org/UML1.3" timestamp="2014-12-10 14:46:29">
+<XMI xmi.version="1.1" xmlns:UML="omg.org/UML1.3" timestamp="2014-12-16 11:32:17">
 	<XMI.header>
 		<XMI.documentation>
 			<XMI.exporter>Enterprise Architect</XMI.exporter>
@@ -165,7 +165,7 @@
 						</UML:Comment>
 						<UML:Package name="Reusable Problem Space" xmi.id="EAPK_29D339A8_CAF7_4702_8F2D_8426FBA8F97B" isRoot="false" isLeaf="false" isAbstract="false" visibility="public">
 							<UML:ModelElement.stereotype>
-								<UML:Stereotype xmi.idref="EAID_ACF2E133_E61A_4ef9_B543_1E0B6A5A39D7"/>
+								<UML:Stereotype xmi.idref="EAID_FE707526_8F28_4ef8_8141_701025802BCF"/>
 							</UML:ModelElement.stereotype>
 							<UML:ModelElement.taggedValue>
 								<UML:TaggedValue tag="parent" value="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472"/>
@@ -239,7 +239,6 @@
 										<UML:TaggedValue tag="ea_sourceID" value="137"/>
 										<UML:TaggedValue tag="ea_targetID" value="138"/>
 										<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={4601D11E-92D2-4319-B689-C9DAF9100B03}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=adAddressedBy;FQName=ADMentor::adAddressedBy;@ENDSTEREO;$DES;$CLT={E29B5BEF-F2DE-46c1-87F1-ABF38EBCE7F4}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
-										<UML:TaggedValue tag="privatedata5" value="SX=0;SY=0;EX=0;EY=0;EDGE=3;"/>
 										<UML:TaggedValue tag="virtualInheritance" value="0"/>
 										<UML:TaggedValue tag="mb" value=" &#xA;«adAddressedBy»"/>
 										<UML:TaggedValue tag="XModelId" value="ADMentor:3" xmi.id="EAID_8F9F1376_2F67_1e2f_8790_0628315EF374">
@@ -305,7 +304,6 @@
 										<UML:TaggedValue tag="dst_containment" value="Unspecified"/>
 										<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
 										<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={4CE3FD50-77A3-4221-900B-7A288B5A6CBC}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=adAssessesNegatively;FQName=ADMentor::adAssessesNegatively;@ENDSTEREO;$DES;$CLT={ED7070D1-9A8A-455e-B55A-E0488DCC8791}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
-										<UML:TaggedValue tag="privatedata5" value="SX=0;SY=0;EX=0;EY=0;EDGE=1;"/>
 										<UML:TaggedValue tag="virtualInheritance" value="0"/>
 										<UML:TaggedValue tag="mb" value=" &#xA;«adAssessesNegatively»"/>
 										<UML:TaggedValue tag="XModelId" value="ADMentor:3" xmi.id="EAID_8F9F1376_497F_4349_8E05_E0722121EC5E">
@@ -366,7 +364,6 @@
 										<UML:TaggedValue tag="ea_sourceID" value="137"/>
 										<UML:TaggedValue tag="ea_targetID" value="139"/>
 										<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={D36A5B1C-1467-4135-B6CA-0A74D5317E1B}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=adAddressedBy;FQName=ADMentor::adAddressedBy;@ENDSTEREO;$DES;$CLT={A2AF1A48-5A09-484e-B58B-099E38F8B53F}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
-										<UML:TaggedValue tag="privatedata5" value="SX=0;SY=0;EX=0;EY=0;EDGE=3;"/>
 										<UML:TaggedValue tag="virtualInheritance" value="0"/>
 										<UML:TaggedValue tag="mb" value=" &#xA;«adAddressedBy»"/>
 										<UML:TaggedValue tag="XModelId" value="ADMentor:3" xmi.id="EAID_8F9F1376_2F67_1e2f_8B82_DB0AC15543AE">
@@ -394,7 +391,7 @@
 								</UML:Association>
 								<UML:Comment xmi.id="EAID_D2D37A06_F3F2_4666_BA0F_3613294B4018" visibility="public" namespace="EAPK_29D339A8_CAF7_4702_8F2D_8426FBA8F97B">
 									<UML:ModelElement.taggedValue>
-										<UML:TaggedValue tag="documentation" value="AD Mentor now also supports QOC-style assessments"/>
+										<UML:TaggedValue tag="documentation" value="AD Mentor also supports QOC-style assessments"/>
 										<UML:TaggedValue tag="isSpecification" value="false"/>
 										<UML:TaggedValue tag="ea_stype" value="Note"/>
 										<UML:TaggedValue tag="ea_ntype" value="0"/>
@@ -402,7 +399,7 @@
 										<UML:TaggedValue tag="isActive" value="false"/>
 										<UML:TaggedValue tag="package" value="EAPK_29D339A8_CAF7_4702_8F2D_8426FBA8F97B"/>
 										<UML:TaggedValue tag="date_created" value="2014-11-19 14:45:01"/>
-										<UML:TaggedValue tag="date_modified" value="2014-11-19 14:48:42"/>
+										<UML:TaggedValue tag="date_modified" value="2014-12-16 11:27:02"/>
 										<UML:TaggedValue tag="gentype" value="&lt;none&gt;"/>
 										<UML:TaggedValue tag="tagged" value="0"/>
 										<UML:TaggedValue tag="package_name" value="Reusable Problem Space"/>
@@ -488,7 +485,6 @@
 												<UML:TaggedValue tag="dst_containment" value="Unspecified"/>
 												<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Unspecified;"/>
 												<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={E7B16E3D-925A-4e7f-8A9B-FAB3A601C3FA}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=adAssessesPositively;FQName=ADMentor::adAssessesPositively;@ENDSTEREO;$DES;$CLT={E1566500-5D27-40b0-BB4E-9FF8DDB7A278}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
-												<UML:TaggedValue tag="privatedata5" value="SX=0;SY=0;EX=0;EY=0;EDGE=1;"/>
 												<UML:TaggedValue tag="virtualInheritance" value="0"/>
 												<UML:TaggedValue tag="mb" value=" &#xA;«adAssessesPositively»"/>
 												<UML:TaggedValue tag="XModelId" value="ADMentor:3" xmi.id="EAID_8F9F1376_4E5F_f24e_ADB7_4F5AD1899199">
@@ -548,7 +544,7 @@
 						</UML:Package>
 						<UML:Package name="My Concrete Project" xmi.id="EAPK_632E5E0F_8C58_4089_80E4_F3FC6638FD5C" isRoot="false" isLeaf="false" isAbstract="false" visibility="public">
 							<UML:ModelElement.stereotype>
-								<UML:Stereotype xmi.idref="EAID_19EE6357_4993_42dd_9AB1_EB0490188D37"/>
+								<UML:Stereotype xmi.idref="EAID_BBFA69C7_8DAD_4576_B93E_A57DC33CBB32"/>
 							</UML:ModelElement.stereotype>
 							<UML:ModelElement.taggedValue>
 								<UML:TaggedValue tag="parent" value="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472"/>
@@ -640,6 +636,7 @@
 												<UML:TaggedValue tag="dst_containment" value="Unspecified"/>
 												<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 												<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={4F6DC9F8-B58F-4d53-88DC-B8013C4D5D7F}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=adAddressedBy;FQName=ADMentor::adAddressedBy;@ENDSTEREO;$DES;$CLT={2EE6AEEE-F6ED-4339-851F-4DC795A6F33E}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+												<UML:TaggedValue tag="privatedata5" value="SX=0;SY=0;EX=0;EY=0;EDGE=3;"/>
 												<UML:TaggedValue tag="virtualInheritance" value="0"/>
 												<UML:TaggedValue tag="mb" value=" &#xA;«adAddressedBy»"/>
 												<UML:TaggedValue tag="XModelId" value="ADMentor:3" xmi.id="EAID_8F9F1376_2F67_1e2f_AB96_F68BE59948DA">
@@ -735,6 +732,7 @@
 												<UML:TaggedValue tag="dst_containment" value="Unspecified"/>
 												<UML:TaggedValue tag="dst_style" value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
 												<UML:TaggedValue tag="$ea_xref_property" value="$XREFPROP=$XID={DBDD102C-8936-490f-B915-7424C0D1F556}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=adAddressedBy;FQName=ADMentor::adAddressedBy;@ENDSTEREO;$DES;$CLT={3DCDD552-10FA-482a-AB10-5477AB3B7917}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+												<UML:TaggedValue tag="privatedata5" value="SX=0;SY=0;EX=0;EY=0;EDGE=3;"/>
 												<UML:TaggedValue tag="virtualInheritance" value="0"/>
 												<UML:TaggedValue tag="mb" value=" &#xA;«adAddressedBy»"/>
 												<UML:TaggedValue tag="XModelId" value="ADMentor:3" xmi.id="EAID_8F9F1376_2F67_1e2f_AFD4_11447C5E6C63">
@@ -797,10 +795,10 @@
 						</UML:Package>
 					</UML:Namespace.ownedElement>
 				</UML:Package>
-				<UML:Stereotype xmi.id="EAID_ACF2E133_E61A_4ef9_B543_1E0B6A5A39D7" name="adProblemSpace" isRoot="false" isLeaf="false" isAbstract="false">
+				<UML:Stereotype xmi.id="EAID_FE707526_8F28_4ef8_8141_701025802BCF" name="adProblemSpace" isRoot="false" isLeaf="false" isAbstract="false">
 					<UML:Stereotype.baseClass>Package</UML:Stereotype.baseClass>
 				</UML:Stereotype>
-				<UML:Stereotype xmi.id="EAID_19EE6357_4993_42dd_9AB1_EB0490188D37" name="adSolutionSpace" isRoot="false" isLeaf="false" isAbstract="false">
+				<UML:Stereotype xmi.id="EAID_BBFA69C7_8DAD_4576_B93E_A57DC33CBB32" name="adSolutionSpace" isRoot="false" isLeaf="false" isAbstract="false">
 					<UML:Stereotype.baseClass>Package</UML:Stereotype.baseClass>
 				</UML:Stereotype>
 			</UML:Namespace.ownedElement>
