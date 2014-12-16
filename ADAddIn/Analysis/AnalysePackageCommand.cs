@@ -52,6 +52,12 @@ namespace AdAddIn.Analysis
                               group po by po.State into g
                               select Metrics.Entry(g.Key.Name, g.Count());
 
+            var valuesPerTag = from tv in Technologies.AD.TaggedValues
+                               where !tv.Type.TypeName.Equals("DateTime")
+                               let stats = ValueOccurrences(tv, elements).ToArray()
+                               where stats.Count() > 0
+                               select Metrics.Category(tv.Name, stats.ToArray());
+
             var metrics = Metrics.Category(package.Name,
                 Metrics.Category("Common",
                     Metrics.Entry("Elements", elements.Count()),
@@ -68,11 +74,21 @@ namespace AdAddIn.Analysis
                     Metrics.Entry("Options per Problem", CreateSummary(optionOccsPerProblemOcc)),
                     Metrics.Entry("Problems per Option", CreateSummary(problemOccsPerOptionOcc)),
                     Metrics.Category("Problem States", posPerState.ToArray()),
-                    Metrics.Category("Option States", oosPerState.ToArray())));
+                    Metrics.Category("Option States", oosPerState.ToArray())),
+                Metrics.Category("Tagged Values", valuesPerTag.ToArray()));
 
             DisplayMetricsForm.Display(metrics);
 
             return Unit.Instance;
+        }
+
+        private IEnumerable<Metric> ValueOccurrences(ITaggedValue tv, IEnumerable<ModelEntity.Element> elements)
+        {
+            return from e in elements
+                   from val in e.Get(tv)
+                   let valOrEmpty = val.Equals("") ? "<empty>" : val
+                   group e by valOrEmpty into g
+                   select Metrics.Entry(g.Key, g.Count());
         }
 
         private IEnumerable<Tuple<TSource, IEnumerable<TTarget>>> FindTargetsPerSource<TSource, TTarget>(

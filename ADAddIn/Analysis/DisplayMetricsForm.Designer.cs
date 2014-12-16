@@ -41,6 +41,7 @@
             this.metricsTextBox.Multiline = true;
             this.metricsTextBox.Name = "metricsTextBox";
             this.metricsTextBox.ReadOnly = true;
+            this.metricsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.metricsTextBox.Size = new System.Drawing.Size(297, 410);
             this.metricsTextBox.TabIndex = 1;
             // 
