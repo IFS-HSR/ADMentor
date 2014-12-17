@@ -14,7 +14,7 @@ using Utils;
 
 namespace AdAddIn.ExportToADRepo
 {
-    public class ADRepoClient
+    public class ADRepoClient : IDisposable
     {
         private readonly HttpClient httpClient;
         private readonly AdRepository repository;
@@ -29,10 +29,10 @@ namespace AdAddIn.ExportToADRepo
         public void ExportPackage(ModelEntity.Package package)
         {
 
-            var entities = from p in package.SubPackages
-                           from e in p.Elements
-                           from entity in e.TryCast<AdEntity>()
-                           select entity;
+            var entities = (from p in package.SubPackages
+                            from e in p.Elements
+                            from entity in e.TryCast<AdEntity>()
+                            select entity).Run();
 
             var entityIds = (from e in entities
                              from remoteId in ExportEntity(e)
@@ -126,6 +126,12 @@ namespace AdAddIn.ExportToADRepo
                     jobj.Add(pair.Key, pair.Value);
                     return jobj;
                 });
+        }
+
+        public void Dispose()
+        {
+            if (httpClient != null)
+                httpClient.Dispose();
         }
     }
 }
