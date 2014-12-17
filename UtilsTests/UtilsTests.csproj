@@ -61,7 +61,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OptionConverterTests.cs" />
     <Compile Include="DirectedLabeledGraphToTreeTests.cs" />
-    <Compile Include="EitherTests.cs" />
     <Compile Include="FilterTests.cs" />
     <Compile Include="MemoizeTests.cs" />
   </ItemGroup>
