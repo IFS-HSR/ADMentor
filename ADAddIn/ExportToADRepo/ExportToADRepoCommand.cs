@@ -24,7 +24,7 @@ namespace AdAddIn.ExportToADRepo
         {
             var adRepoHost = Microsoft.VisualBasic.Interaction.InputBox("ADRepo URL", "Export to ADRepo", "http://localhost:9000/");
 
-            return Options.Try(() => new Uri(adRepoHost)).Match(
+            return Options.Try(() => new Uri(adRepoHost)).Fold(
                 uri =>
                 {
                     using (var client = new ADRepoClient(uri, repository))

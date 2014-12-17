@@ -13,7 +13,7 @@ namespace Utils
             var memo = new Dictionary<T, R>();
             return t =>
             {
-                return Options.Try(() => memo[t]).Match(
+                return Options.Try(() => memo[t]).Fold(
                     r => r,
                     () =>
                     {

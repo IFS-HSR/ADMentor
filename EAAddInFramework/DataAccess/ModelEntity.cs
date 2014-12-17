@@ -133,7 +133,7 @@ namespace EAAddInFramework.DataAccess
 
         public IEnumerable<String> GetPath(Func<int, Option<Package>> getPackageById)
         {
-            return GetParent(getPackageById).Match(
+            return GetParent(getPackageById).Fold(
                 p => p.GetPath(getPackageById).Concat(new[] { Name }),
                 () => new[] { Name });
         }

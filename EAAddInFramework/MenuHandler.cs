@@ -121,7 +121,7 @@ namespace EAAddInFramework
         public bool IsItemEnabled(String parentName, String itemName)
         {
             return GetItem(parentName, itemName, root)
-                .Match(
+                .Fold(
                     item => item.IsEnabled(ContextItem.Val),
                     () => true
                 );

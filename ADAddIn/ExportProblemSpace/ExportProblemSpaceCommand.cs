@@ -154,7 +154,7 @@ namespace AdAddIn.ExportProblemSpace
         private IFilter<ModelEntity> LiftFilter<T>(IFilter<T> filter) where T : ModelEntity
         {
             Func<ModelEntity, bool> accept =
-                me => me.TryCast<T>().Match(
+                me => me.TryCast<T>().Fold(
                     e => filter.Accept(e),
                     () => false);
             return Filter.Create<ModelEntity>(filter.Name, accept);

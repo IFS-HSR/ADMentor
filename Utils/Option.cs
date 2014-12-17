@@ -12,7 +12,7 @@ namespace Utils
     {
         bool IsDefined { get; }
         T Value { get; }
-        T2 Match<T2>(Func<T, T2> then, Func<T2> els);
+        T2 Fold<T2>(Func<T, T2> then, Func<T2> els);
     }
 
     class OptionImpl<T> : Option<T>
@@ -50,7 +50,7 @@ namespace Utils
             }
         }
 
-        public T2 Match<T2>(Func<T, T2> then, Func<T2> els)
+        public T2 Fold<T2>(Func<T, T2> then, Func<T2> els)
         {
             if (isDefined)
                 return then(Value);
@@ -78,22 +78,22 @@ namespace Utils
 
         public override string ToString()
         {
-            return Match(
+            return Fold(
                 v => String.Format("Some({0})", v),
                 () => "None");
         }
 
         public override int GetHashCode()
         {
-            return Match(
+            return Fold(
                 v => (397 + v.GetHashCode()) * 17,
                 () => 0);
         }
 
         public override bool Equals(object other)
         {
-            return other.TryCast<Option<T>>().Match(
-                opt => IsDefined == opt.IsDefined && opt.Match(
+            return other.TryCast<Option<T>>().Fold(
+                opt => IsDefined == opt.IsDefined && opt.Fold(
                     val => Value.Equals(val),
                     () => true),
                 () => false);
@@ -151,7 +151,7 @@ namespace Utils
 
         public static void Match<T>(this Option<T> opt, Action<T> then, Action els)
         {
-            opt.Match(
+            opt.Fold(
                 v =>
                 {
                     then(v);
@@ -166,7 +166,7 @@ namespace Utils
 
         public static R Match<T, U, R>(this Option<Tuple<T, U>> opt, Func<T, U, R> then, Func<R> els)
         {
-            return opt.Match(
+            return opt.Fold(
                 v => then(v.Item1, v.Item2),
                 () => els());
         }
@@ -180,49 +180,49 @@ namespace Utils
 
         public static T GetOrElse<T>(this Option<T> opt, T els)
         {
-            return opt.Match(
+            return opt.Fold(
                 v => v,
                 () => els);
         }
 
         public static T GetOrElse<T>(this Option<T> opt, Func<T> els)
         {
-            return opt.Match(
+            return opt.Fold(
                 v => v,
                 () => els());
         }
 
         public static Option<T> OrElse<T>(this Option<T> opt, Option<T> els)
         {
-            return opt.Match(
+            return opt.Fold(
                 v => opt,
                 () => els);
         }
 
         public static Option<T> OrElse<T>(this Option<T> opt, Func<Option<T>> els)
         {
-            return opt.Match(
+            return opt.Fold(
                 v => opt,
                 () => els());
         }
 
         public static T GetOrDefault<T>(this Option<T> opt)
         {
-            return opt.Match(
+            return opt.Fold(
                 v => v,
                 () => default(T));
         }
 
         public static Option<TResult> Select<T, TResult>(this Option<T> opt, Func<T, TResult> fn)
         {
-            return opt.Match(
+            return opt.Fold(
                 v => Options.Some(fn(v)),
                 () => Options.None<TResult>());
         }
 
         public static Option<TResult> SelectMany<T, TResult>(this Option<T> opt, Func<T, Option<TResult>> fn)
         {
-            return opt.Match(
+            return opt.Fold(
                 v => fn(v),
                 () => Options.None<TResult>());
         }
@@ -230,8 +230,8 @@ namespace Utils
         public static Option<TResult> SelectMany<T, TCollection, TResult>(this Option<T> opt,
             Func<T, Option<TCollection>> fn, Func<T, TCollection, TResult> select)
         {
-            return opt.Match(
-                vColl => fn(vColl).Match(
+            return opt.Fold(
+                vColl => fn(vColl).Fold(
                         vRes => Options.Some(select(vColl, vRes)),
                         () => Options.None<TResult>()),
                 () => Options.None<TResult>());
@@ -300,7 +300,7 @@ namespace Utils
 
         public static T Else<T>(this Option<T> opt, Func<T> els)
         {
-            return opt.Match(
+            return opt.Fold(
                 v => v,
                 () => els());
         }

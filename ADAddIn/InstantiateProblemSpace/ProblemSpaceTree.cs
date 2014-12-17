@@ -84,7 +84,7 @@ namespace AdAddIn.InstantiateProblemSpace
         public ProblemSpaceTree InstantiateSolutionElements(ModelEntityRepository repo)
         {
             var instantiations = from instantiation in ElementInstantiations
-                                 select PackageInstance.Match(
+                                 select PackageInstance.Fold(
                                             (solutionPackage) =>
                                                 instantiation.CreateInstanceIfMissing(repo, solutionPackage),
                                             () => instantiation);

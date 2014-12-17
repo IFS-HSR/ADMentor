@@ -59,7 +59,7 @@ namespace AdAddIn.ExportProblemSpace
 
             (from entity in modelEntities.Concat(diagramEntities)
              // don't remove EA root elements
-             where entity.Attribute("isRoot").AsOption().Match(a => !a.Value.Equals("true"), () => true)
+             where entity.Attribute("isRoot").AsOption().Fold(a => !a.Value.Equals("true"), () => true)
              // don't remove collaboration containers (contain associated package elements and boundary elements)
              where !entity.Attribute("xmi.id").Value.Contains("Collaboration")
              where !keep(ProjectInterface.XMLtoGUID(entity.Attribute("xmi.id").Value))

@@ -27,7 +27,7 @@ namespace AdAddIn.DataAccess
         {
             return Element.Equals(other.Element)
                 && Instance.IsDefined == other.Instance.IsDefined
-                && Instance.Match(e => e.Equals(other.Instance.Value), () => true)
+                && Instance.Fold(e => e.Equals(other.Instance.Value), () => true)
                 && Selected == other.Selected;
         }
 
@@ -38,7 +38,7 @@ namespace AdAddIn.DataAccess
 
         public ElementInstantiation CreateInstanceIfMissing(ModelEntityRepository repo, ModelEntity.Package package)
         {
-            return Instance.Match(
+            return Instance.Fold(
                 _ => this,
                 () => Copy(instance: repo.Instanciate(Element, package, ADTechnology.Technologies.AD.ElementStereotypes)));
         }
