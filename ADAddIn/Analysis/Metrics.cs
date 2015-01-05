@@ -22,6 +22,8 @@ namespace AdAddIn.Analysis
 
     public interface Metric
     {
+        bool IsEmpty { get; }
+
         String ToString(String prefix);
     }
 
@@ -37,6 +39,8 @@ namespace AdAddIn.Analysis
 
         public IEnumerable<Metric> Members { get; private set; }
 
+        public bool IsEmpty { get { return Members.All(m => m.IsEmpty); } }
+
         public override string ToString()
         {
             return ToString("");
@@ -44,7 +48,10 @@ namespace AdAddIn.Analysis
 
         public string ToString(String prefix)
         {
-            return String.Format("{0}{1}:\r\n{2}", prefix, Name, Members.Select(m => m.ToString(prefix + "  ")).Join("\r\n"));
+            var children = from m in Members
+                           where !m.IsEmpty
+                           select m.ToString(prefix + "- ");
+            return String.Format("{0}{1}:\r\n{2}", prefix, Name, children.Join("\r\n"));
         }
     }
 
@@ -59,6 +66,8 @@ namespace AdAddIn.Analysis
         public string Key { get; private set; }
 
         public T Value { get; private set; }
+
+        public bool IsEmpty { get { return false; } }
 
         public override string ToString()
         {

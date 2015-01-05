@@ -88,6 +88,7 @@ namespace AdAddIn.Analysis
                    from val in e.Get(tv)
                    let valOrEmpty = val.Equals("") ? "<empty>" : val
                    group e by valOrEmpty into g
+                   orderby g.Key
                    select Metrics.Entry(g.Key, g.Count());
         }
 
