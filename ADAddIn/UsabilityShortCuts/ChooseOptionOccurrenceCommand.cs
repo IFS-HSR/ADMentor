@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Utils;
 
-namespace AdAddIn.ChooseOptionOccurrence
+namespace AdAddIn.UsabilityShortCuts
 {
     public class ChooseOptionOccurrenceCommand : ICommand<OptionOccurrence, Unit>
     {
