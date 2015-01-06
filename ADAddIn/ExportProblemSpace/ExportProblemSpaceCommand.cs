@@ -97,23 +97,19 @@ namespace AdAddIn.ExportProblemSpace
             return LabeledTree.Node(tree.Label, edges);
         }
 
-        private IFilter<ModelEntity> CreatePropertyFilter<T>(String name, IEnumerable<T> allEntities, Func<T, String> selectProperty) where T : ModelEntity
+        private IFilter<ModelEntity> CreatePropertyFilter<E, Prop>(String name, IEnumerable<E> allEntities, Func<E, Prop> selectProperty, Func<Prop, String> getDescription = null) where E : ModelEntity
         {
-            var values = allEntities.Aggregate(ImmutableHashSet.Create<Option<String>>(),
-                (vs, entity) =>
-                {
-                    var value = selectProperty(entity);
-                    if (value == "")
-                        return vs.Add(Options.None<String>());
-                    else
-                        return vs.Add(Options.Some(value));
-                });
+            getDescription = getDescription.AsOption().GetOrElse(
+                (Prop p) => p.ToString() == "" ? "<empty>" : p.ToString());
+
+            var values = allEntities.Select(selectProperty).Distinct();
 
             var filters = from value in values
-                          orderby value.GetOrElse("")
-                          let filter = Filter.Create<T>(
-                                value.GetOrElse("<empty>"),
-                                entity => selectProperty(entity).Equals(value.GetOrElse("")))
+                          let desc = getDescription(value)
+                          orderby desc
+                          let filter = Filter.Create<E>(
+                                desc,
+                                entity => selectProperty(entity).Equals(value))
                           select LiftFilter(filter);
 
             return Filter.Or(name, filters);
@@ -122,7 +118,11 @@ namespace AdAddIn.ExportProblemSpace
         private IFilter<ModelEntity> CreateTaggedValueFilter<T>(ITaggedValue taggedValue, IEnumerable<T> allEntities)
             where T : ModelEntity
         {
-            return CreatePropertyFilter(taggedValue.Name, allEntities, entity => entity.Get(taggedValue).GetOrElse(""));
+            return CreatePropertyFilter(taggedValue.Name, allEntities, entity => entity.Get(taggedValue),
+                tag => {
+                    var tagOrNone = tag.GetOrElse("<none>");
+                    return tagOrNone == "" ? "<empty>" : tagOrNone;
+                });
         }
 
         private IFilter<ModelEntity> CreateKeywordFilter<T>(IEnumerable<T> allEntities)
