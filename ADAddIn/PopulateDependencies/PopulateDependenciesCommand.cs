@@ -2,7 +2,6 @@
 using AdAddIn.DataAccess;
 using EAAddInFramework;
 using EAAddInFramework.DataAccess;
-using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +13,6 @@ namespace AdAddIn.PopulateDependencies
 {
     class PopulateDependenciesCommand : ICommand<SolutionEntity, EntityModified>
     {
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-
         private readonly ModelEntityRepository Repo;
 
         private readonly IDependencySelector Selector;

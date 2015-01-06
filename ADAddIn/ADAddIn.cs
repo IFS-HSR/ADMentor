@@ -5,7 +5,6 @@ using AdAddIn.PopulateDependencies;
 using AdAddIn.ADTechnology;
 using EAAddInFramework;
 using EAAddInFramework.MDGBuilder;
-using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +23,6 @@ namespace AdAddIn
 {
     public class ADAddIn : EAAddIn
     {
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-
         private static readonly MDGTechnology technology = ADTechnology.Technologies.AD;
 
         public override string AddInName
