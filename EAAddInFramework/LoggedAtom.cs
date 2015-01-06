@@ -9,8 +9,6 @@ namespace EAAddInFramework
 {
     public class LoggedAtom<T> : Atom<T>
     {
-        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-
         public LoggedAtom(String name, T init)
             : base(init)
         {
@@ -19,7 +17,7 @@ namespace EAAddInFramework
 
         public override void Exchange(T v, Type sender)
         {
-            logger.Debug("Set atom {0} to {1} (by {2})", Name, v, sender.FullName);
+            System.Diagnostics.Debug.WriteLine("Set atom {0} to {1} (by {2})", Name, v, sender.FullName);
             base.Exchange(v, sender);
         }
 

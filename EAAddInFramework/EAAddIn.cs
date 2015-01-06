@@ -1,6 +1,5 @@
 ﻿using EAAddInFramework.DataAccess;
 using EAAddInFramework.MDGBuilder;
-using NLog;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -11,8 +10,6 @@ namespace EAAddInFramework
 {
     public abstract class EAAddIn
     {
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-
         private readonly Atom<EA.Repository> eaRepository = new LoggedAtom<EA.Repository>("ea.repository", null);
 
         private readonly MenuHandler menuHandler;
@@ -37,7 +34,6 @@ namespace EAAddInFramework
 
         public EAAddIn()
         {
-            logger.Info("Init add-in {0}", AddInName);
             menuHandler = new MenuHandler(contextItem);
         }
 
@@ -69,8 +65,6 @@ namespace EAAddInFramework
         {
             RepositoryChanged(repository);
 
-            logger.Info("Start add-in {0}", AddInName);
-
             var data = Bootstrap(eaRepository);
 
             data.Item1.Do(wrapper =>
@@ -88,8 +82,6 @@ namespace EAAddInFramework
 
         public void EA_Disconnect()
         {
-            logger.Info("Stop add-In {0}", AddInName);
-            LogManager.Shutdown();
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
@@ -99,8 +91,8 @@ namespace EAAddInFramework
             technology.Exchange(BootstrapTechnology(), GetType());
             return technology.Val.Select(tech =>
                 {
-                    logger.Info("Initialise MDG Technology {0}", tech.ID);
-                    logger.Debug("Technology XML: {0}", tech.ToXml().ToString());
+                    System.Diagnostics.Debug.WriteLine("Initialise MDG Technology {0}", tech.ID);
+                    System.Diagnostics.Debug.WriteLine("Technology XML: {0}", tech.ToXml().ToString());
                     return tech.ToXml().ToString();
                 }).GetOrElse("");
         }
@@ -124,8 +116,6 @@ namespace EAAddInFramework
 
             var itemNames = menuHandler.GetMenuItems(menuName);
 
-            logger.Debug("Define menu entries {0} for parent menu \"{1}\" in {2}",
-                String.Join(", ", itemNames.AsOption().GetOrElse(new string[] { })), menuName, menuLocation);
             return itemNames;
         }
 
@@ -136,8 +126,6 @@ namespace EAAddInFramework
 
             var enabled = menuHandler.IsItemEnabled(menuName, itemName);
 
-            logger.Debug("\"{0}\" in \"{1}\" is enabled = {2}", itemName, menuName, enabled);
-
             isEnabled = enabled;
         }
 
@@ -145,8 +133,6 @@ namespace EAAddInFramework
         {
             RepositoryChanged(repository);
             contextItemHandler.Val.Do(cih => cih.MenuLocationChanged(menuLocation));
-
-            logger.Debug("Handle click on \"{0}\" in \"{1}\"", itemName, menuName);
 
             menuHandler.HandleClick(menuName, itemName);
         }
@@ -178,9 +164,6 @@ namespace EAAddInFramework
         {
             RepositoryChanged(repository);
 
-            logger.Debug("Create element with type = {0}, stereotype = {1}, parentId = {2}, diagramId = {3}",
-                info.ExtractType(), info.ExtractStereotype(), info.ExtractParentId(), info.ExtractDiagramId());
-
             return true;
         }
 
@@ -198,7 +181,6 @@ namespace EAAddInFramework
             RepositoryChanged(repository);
 
             var elementId = info.ExtractElementId();
-            logger.Debug("Element with id {0} created", elementId);
 
             var entityModified = Handle(OnEntityCreated, () => eaRepository.Val.GetElementByID(elementId));
 
@@ -210,7 +192,6 @@ namespace EAAddInFramework
             RepositoryChanged(repository);
 
             var elementId = info.ExtractElementId();
-            logger.Debug("Attempt to delete element with id {0}", elementId);
 
             var deleteElement = Handle(OnDeleteEntity, () => eaRepository.Val.GetElementByID(elementId));
 
@@ -222,7 +203,6 @@ namespace EAAddInFramework
             RepositoryChanged(repository);
 
             var connectorId = info.ExtractConnectorId();
-            logger.Debug("Element with id {0} created", connectorId);
 
             var entityModified = Handle(OnEntityCreated, () => eaRepository.Val.GetConnectorByID(connectorId));
 
@@ -234,7 +214,6 @@ namespace EAAddInFramework
             RepositoryChanged(repository);
 
             var connectorId = info.ExtractConnectorId();
-            logger.Debug("Attempt to delete connector with id {0}", connectorId);
 
             var deleteConnector = Handle(OnDeleteEntity, () => eaRepository.Val.GetConnectorByID(connectorId));
 
@@ -244,8 +223,6 @@ namespace EAAddInFramework
         public void EA_OnNotifyContextItemModified(EA.Repository repository, string guid, EA.ObjectType ot)
         {
             RepositoryChanged(repository);
-
-            logger.Debug("Context item {0} of type {1} modified", guid, ot);
 
             if (ot == EA.ObjectType.otElement)
             {
@@ -258,8 +235,6 @@ namespace EAAddInFramework
             RepositoryChanged(repository);
 
             contextItemHandler.Val.Do(cih => cih.ContextItemChanged(guid, ot));
-
-            logger.Debug("Context item changed to {0} of object type {1}", guid, ot);
         }
 
         /// <summary>
@@ -274,8 +249,6 @@ namespace EAAddInFramework
         {
             RepositoryChanged(repository);
 
-            logger.Debug("Context item {0} of object type {1} double clicked", guid, ot);
-
             if (ot == EA.ObjectType.otElement)
             {
                 //return customDetailViewHandler.CallElementDetailViews(() => eaRepository.Val.GetElementByGuid(guid)).Val;
@@ -289,8 +262,6 @@ namespace EAAddInFramework
         public void EA_OnInitializeUserRules(EA.Repository repository)
         {
             RepositoryChanged(repository);
-
-            logger.Debug("User rules initialization requested");
 
             var projectInterface = repository.GetProjectInterface();
             var categories = (from rule in validationRules.Val

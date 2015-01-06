@@ -148,10 +148,6 @@
     <EmbeddedResource Include="ADTechnology\DemoTemplate.xml" />
     <EmbeddedResource Include="ADTechnology\ProblemSpacePackage.bmp" />
     <EmbeddedResource Include="ADTechnology\SolutionSpacePackage.bmp" />
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
     <EmbeddedResource Include="ADTechnology\Option.bmp" />
     <EmbeddedResource Include="ADTechnology\Problem.bmp" />
     <EmbeddedResource Include="Analysis\DisplayMetricsForm.resx">
@@ -172,9 +168,6 @@
     </EmbeddedResource>
     <None Include="admentor.snk" />
     <None Include="app.config" />
-    <None Include="NLog.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
