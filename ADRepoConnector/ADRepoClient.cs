@@ -9,10 +9,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections.Immutable;
 using Utils;
 
-namespace AdAddIn.ExportToADRepo
+namespace ADRepoConnector
 {
     public class ADRepoClient : IDisposable
     {

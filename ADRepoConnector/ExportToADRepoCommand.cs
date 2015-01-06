@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Utils;
 
-namespace AdAddIn.ExportToADRepo
+namespace ADRepoConnector
 {
     public class ExportToADRepoCommand : ICommand<ModelEntity.Package, Unit>
     {

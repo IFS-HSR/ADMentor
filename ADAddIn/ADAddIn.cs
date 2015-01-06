@@ -62,8 +62,7 @@ namespace AdAddIn
                 new MenuItem("Migrate Element(s) to Current Model Version", new MigrateModelEntities(migrator).ToMenuHandler()),
                 new MenuItem("Choose Selected and Neglect Alternatives", new ChooseOptionOccurrenceCommand(entityRepository, updateStateOnAlternativesChanged).ToMenuHandler()),
                 new MenuItem("Neglect all Alternatives", new NeglectAllOptionsCommand(entityRepository).ToMenuHandler()),
-                new MenuItem("Package Metrics", new AnalysePackageCommand(entityRepository, new DisplayMetricsForm()).ToMenuHandler()),
-                new MenuItem("Export to AD Repo", new ExportToADRepo.ExportToADRepoCommand(entityRepository).ToMenuHandler())));
+                new MenuItem("Package Metrics", new AnalysePackageCommand(entityRepository, new DisplayMetricsForm()).ToMenuHandler())));
 
             OnEntityCreated.Add(updateMetadataCommand.ToEntityCreatedHandler());
             //OnEntityCreated.Add(populateDependenciesCommand.AsEntityCreatedHandler());

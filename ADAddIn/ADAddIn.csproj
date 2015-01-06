@@ -100,8 +100,6 @@
       <DependentUpon>TailorPackageExportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ExportProblemSpace\XmlExporter.cs" />
-    <Compile Include="ExportToADRepo\ADRepoClient.cs" />
-    <Compile Include="ExportToADRepo\ExportToADRepoCommand.cs" />
     <Compile Include="InstantiateProblemSpace\InstantiateProblemSpaceCommand.cs" />
     <Compile Include="InstantiateProblemSpace\ProblemSpaceTree.cs" />
     <Compile Include="InstantiateProblemSpace\InstantiateSolutionForm.cs">
