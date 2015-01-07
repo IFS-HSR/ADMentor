@@ -13,13 +13,5 @@ namespace Utils
         {
             return range.Aggregate(set, (acc, item) => acc.Add(item));
         }
-
-        public static ILookup<K, V> Merge<K, V>(this ILookup<K, V> l, ILookup<K, V> r)
-        {
-            return l.Concat(r)
-                .SelectMany(grp => grp.Select(v => Tuple.Create(grp.Key, v)))
-                .Distinct()
-                .ToLookup(kv => kv.Item1, kv => kv.Item2);
-        }
     }
 }

@@ -43,24 +43,4 @@ namespace AdAddIn.DataAccess
             });
         }
     }
-
-    public static class EntityExtensions
-    {
-        public static IEnumerable<String> CollectTaggedValues(this ModelEntity entity, ITaggedValue tv, Func<int, Option<ModelEntity.Element>> getElementById)
-        {
-            var projectStages = entity.Match<ModelEntity, IEnumerable<String>>()
-                .Case<OptionEntity>(o =>
-                    o.Get(tv)
-                    .Select(v => ImmutableList.Create(v))
-                    .GetOrElse(() => o.GetProblems(getElementById).SelectMany(p => p.CollectTaggedValues(tv, getElementById))))
-                .Case<OptionOccurrence>(o =>
-                    o.Get(tv)
-                    .Select(v => ImmutableList.Create(v))
-                    .GetOrElse(() => o.GetAssociatedProblemOccurrences(getElementById).SelectMany(p => p.CollectTaggedValues(tv, getElementById))))
-                .Case<ModelEntity.Element>(e => e.Get(tv))
-                .Default(_ => Enumerable.Empty<String>());
-
-            return projectStages.Distinct();
-        }
-    }
 }

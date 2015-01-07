@@ -74,12 +74,6 @@
     </Compile>
     <Compile Include="Analysis\Metrics.cs" />
     <Compile Include="ExportProblemSpace\PropertyTree.cs" />
-    <Compile Include="ExportProblemSpace\TailorPropertyTreeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ExportProblemSpace\TailorPropertyTreeForm.Designer.cs">
-      <DependentUpon>TailorPropertyTreeForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="UsabilityShortCuts\ChooseOptionOccurrenceCommand.cs" />
     <Compile Include="CopyMetadata\UpdateOptionOccurrenceStateOnAlternativesAdded.cs" />
     <Compile Include="CopyMetadata\UpdateProblemOccurrenceStateOnRemoveAlternative.cs" />
@@ -162,9 +156,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ExportProblemSpace\TailorPackageExportForm.resx">
       <DependentUpon>TailorPackageExportForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExportProblemSpace\TailorPropertyTreeForm.resx">
-      <DependentUpon>TailorPropertyTreeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InstantiateProblemSpace\InstantiateSolutionForm.resx">
       <DependentUpon>InstantiateSolutionForm.cs</DependentUpon>

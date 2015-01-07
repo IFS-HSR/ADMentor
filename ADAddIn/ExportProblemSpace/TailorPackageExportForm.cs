@@ -1,5 +1,6 @@
 ﻿using EAAddInFramework.DataAccess;
 using System;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -142,15 +143,13 @@ namespace AdAddIn.ExportProblemSpace
 
         private PropertyTree ToHierarchy(PropertyTree tree, IEnumerable<TreeNode> nodes)
         {
-            //var edges = from child in tree.Children
-            //            from node in nodes
-            //            where node.Checked && ReferenceEquals(node.Tag, child)
-            //            let newTarget = ToHierarchy(child, node.Nodes.Cast<TreeNode>())
-            //            select new PropertyTree()
-            //            select LabeledTree.Edge<ModelEntity, Unit>(Unit.Instance, newTarget);
+            var children = from child in tree.Children
+                           from node in nodes
+                           where node.Checked && ReferenceEquals(node.Tag, child)
+                           let subTree = ToHierarchy(child, node.Nodes.Cast<TreeNode>())
+                           select subTree;
 
-            //return LabeledTree.Node(tree.Label, edges);
-            return tree;
+            return new PropertyTree(tree.Entity, tree.Properties, children.ToImmutableList());
         }
 
         private IFilter<PropertyTree> ToFilter(IFilter<PropertyTree> filter, IEnumerable<TreeNode> nodes)
