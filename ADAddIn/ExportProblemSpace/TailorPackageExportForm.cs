@@ -14,10 +14,10 @@ namespace AdAddIn.ExportProblemSpace
 {
     public partial class TailorPackageExportForm : Form
     {
-        private Func<IFilter<ModelEntity>, LabeledTree<ModelEntity, Unit>> GetModelHierarchy = null;
-        private CompositeFilter<ModelEntity> OriginalFilter = null;
-        private IFilter<ModelEntity> SelectedFilter = null;
-        private LabeledTree<ModelEntity, Unit> ModelHierarchy = null;
+        private Func<IFilter<PropertyTree>, PropertyTree> GetModelHierarchy = null;
+        private CompositeFilter<PropertyTree> OriginalFilter = null;
+        private IFilter<PropertyTree> SelectedFilter = null;
+        private PropertyTree ModelHierarchy = null;
 
         public TailorPackageExportForm()
         {
@@ -30,8 +30,8 @@ namespace AdAddIn.ExportProblemSpace
             hierarchyTreeView.AfterCheck += hierarchyTreeView_AfterCheck;
         }
 
-        public Option<LabeledTree<ModelEntity, Unit>> SelectFilter(CompositeFilter<ModelEntity> filter,
-            Func<IFilter<ModelEntity>, LabeledTree<ModelEntity, Unit>> getModelHierarchy)
+        public Option<PropertyTree> SelectFilter(CompositeFilter<PropertyTree> filter,
+            Func<IFilter<PropertyTree>, PropertyTree> getModelHierarchy)
         {
             GetModelHierarchy = getModelHierarchy;
             OriginalFilter = filter;
@@ -39,10 +39,6 @@ namespace AdAddIn.ExportProblemSpace
             filterTreeView.Nodes.Clear();
             var filterNodes = ToTreeNodes(filter.Filters);
             filterTreeView.Nodes.AddRange(filterNodes.ToArray());
-            filterTreeView.Nodes.Cast<TreeNode>().ForEach(node =>
-            {
-                node.Checked = true;
-            });
 
             UpdateHierarchyTreeView();
 
@@ -55,19 +51,19 @@ namespace AdAddIn.ExportProblemSpace
             }
             else
             {
-                return Options.None<LabeledTree<ModelEntity, Unit>>();
+                return Options.None<PropertyTree>();
             }
         }
 
-        private TreeNode[] ToTreeNodes(IEnumerable<IFilter<ModelEntity>> filters)
+        private TreeNode[] ToTreeNodes(IEnumerable<IFilter<PropertyTree>> filters)
         {
             return (from filter in filters
-                    select filter.TryCast<CompositeFilter<ModelEntity>>().Fold(
+                    select filter.TryCast<CompositeFilter<PropertyTree>>().Fold(
                             composite => ToTreeNode(composite),
                             () => ToTreeNode(filter))).ToArray();
         }
 
-        private TreeNode ToTreeNode(CompositeFilter<ModelEntity> filter)
+        private TreeNode ToTreeNode(CompositeFilter<PropertyTree> filter)
         {
             var node = new TreeNode(filter.Name, ToTreeNodes(filter.Filters));
             node.Tag = filter;
@@ -75,7 +71,7 @@ namespace AdAddIn.ExportProblemSpace
             return node;
         }
 
-        private TreeNode ToTreeNode(IFilter<ModelEntity> filter)
+        private TreeNode ToTreeNode(IFilter<PropertyTree> filter)
         {
             var node = new TreeNode(filter.Name);
             node.Tag = filter;
@@ -133,31 +129,33 @@ namespace AdAddIn.ExportProblemSpace
             CheckAll(hierarchyTreeView.Nodes);
         }
 
-        private TreeNode ToTreeNode(LabeledTree<ModelEntity, Unit> tree)
+        private TreeNode ToTreeNode(PropertyTree tree)
         {
-            var node = new TreeNode(tree.Label.ToString());
+            var node = new TreeNode(tree.Entity.ToString());
             node.Tag = tree;
-            var children = from edge in tree.Edges
-                           select ToTreeNode(edge.Target);
+            var children = from child in tree.Children
+                           select ToTreeNode(child);
             node.Nodes.AddRange(children.ToArray());
 
             return node;
         }
 
-        private LabeledTree<ModelEntity, Unit> ToHierarchy(LabeledTree<ModelEntity, Unit> tree, IEnumerable<TreeNode> nodes)
+        private PropertyTree ToHierarchy(PropertyTree tree, IEnumerable<TreeNode> nodes)
         {
-            var edges = from edge in tree.Edges
-                        from node in nodes
-                        where node.Checked && ReferenceEquals(node.Tag, edge.Target)
-                        let newTarget = ToHierarchy(edge.Target, node.Nodes.Cast<TreeNode>())
-                        select LabeledTree.Edge<ModelEntity, Unit>(Unit.Instance, newTarget);
+            //var edges = from child in tree.Children
+            //            from node in nodes
+            //            where node.Checked && ReferenceEquals(node.Tag, child)
+            //            let newTarget = ToHierarchy(child, node.Nodes.Cast<TreeNode>())
+            //            select new PropertyTree()
+            //            select LabeledTree.Edge<ModelEntity, Unit>(Unit.Instance, newTarget);
 
-            return LabeledTree.Node(tree.Label, edges);
+            //return LabeledTree.Node(tree.Label, edges);
+            return tree;
         }
 
-        private IFilter<ModelEntity> ToFilter(IFilter<ModelEntity> filter, IEnumerable<TreeNode> nodes)
+        private IFilter<PropertyTree> ToFilter(IFilter<PropertyTree> filter, IEnumerable<TreeNode> nodes)
         {
-            return filter.TryCast<CompositeFilter<ModelEntity>>().Fold(
+            return filter.TryCast<CompositeFilter<PropertyTree>>().Fold(
                 compositeFilter =>
                 {
                     var subfilters = from f in compositeFilter.Filters
