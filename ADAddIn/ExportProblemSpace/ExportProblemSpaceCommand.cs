@@ -38,8 +38,11 @@ namespace AdAddIn.ExportProblemSpace
             var propertyTree = PropertyTree.Create(package, entity =>
             {
                 var props = new Dictionary<String, IEnumerable<Option<String>>>{
+                    {"Kind", new[]{entity.EntityType.AsOption()}},
                     {"Type", new[]{entity.Type.AsOption()}},
-                    {"Metatype", new[]{entity.MetaType.AsOption()}}
+                    {"Metatype", new[]{entity.MetaType.AsOption()}},
+                    {"Stereotype", new[]{entity.Stereotype.AsOption()}},
+                    {"Keyword", entity.Keywords.Select(kw => kw.AsOption())}
                 };
 
                 filterTags.ForEach(tv =>
