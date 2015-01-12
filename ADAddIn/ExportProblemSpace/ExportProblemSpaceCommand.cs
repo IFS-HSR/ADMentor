@@ -37,9 +37,9 @@ namespace AdAddIn.ExportProblemSpace
 
             var propertyTree = PropertyTree.Create(package, entity =>
             {
-                var props = new Dictionary<String, IEnumerable<String>>{
-                    {"Type", new[]{entity.Type}},
-                    {"Metatype", new[]{entity.MetaType}}
+                var props = new Dictionary<String, IEnumerable<Option<String>>>{
+                    {"Type", new[]{entity.Type.AsOption()}},
+                    {"Metatype", new[]{entity.MetaType.AsOption()}}
                 };
 
                 filterTags.ForEach(tv =>
@@ -53,11 +53,14 @@ namespace AdAddIn.ExportProblemSpace
             var filters = Filter.And("",
                 propertyTree.Properties.ToLookup(p => p.Item1, p => p.Item2).Select(prop =>
                 {
-                    return Filter.Or(prop.Key, prop.Select(value =>
+                    var alternatives = prop.Select(value =>
                     {
-                        return Filter.Create<PropertyTree>(value, pt => pt.Properties.Contains(Tuple.Create(prop.Key, value)));
-                    }));
-                }));
+                        var filterName = value.Select(v => v == "" ? "<empty>" : v).GetOrElse("<none>");
+                        return Filter.Create<PropertyTree>(filterName, pt => pt.Properties.Contains(Tuple.Create(prop.Key, value)));
+                    }).OrderBy(alt => alt.Name);
+
+                    return Filter.Or(prop.Key, alternatives);
+                }).OrderBy(propFilter => propFilter.Name));
 
             FilterForm.SelectFilter(filters, propertyTree.ApplyFilter)
                 .Do(selectedHierarchy =>
@@ -74,23 +77,23 @@ namespace AdAddIn.ExportProblemSpace
 
             return Unit.Instance;
         }
-        public static IImmutableSet<String> CollectTaggedValues(ModelEntity entity, ITaggedValue tv, Func<int, Option<ModelEntity.Element>> getElementById)
+        public static IImmutableSet<Option<String>> CollectTaggedValues(ModelEntity entity, ITaggedValue tv, Func<int, Option<ModelEntity.Element>> getElementById)
         {
-            return entity.Match<ModelEntity, IImmutableSet<String>>()
+            return entity.Match<ModelEntity, IImmutableSet<Option<String>>>()
                 .Case<OptionEntity>(o =>
                     o.Get(tv)
-                    .Select(v => ImmutableHashSet.Create(v))
+                    .Select(v => ImmutableHashSet.Create(Options.Some(v)))
                     .GetOrElse(() => o.GetProblems(getElementById)
                         .SelectMany(p => CollectTaggedValues(p, tv, getElementById))
                         .ToImmutableHashSet()))
                 .Case<OptionOccurrence>(o =>
                     o.Get(tv)
-                    .Select(v => ImmutableHashSet.Create(v))
+                    .Select(v => ImmutableHashSet.Create(Options.Some(v)))
                     .GetOrElse(() => o.GetAssociatedProblemOccurrences(getElementById)
                         .SelectMany(p => CollectTaggedValues(p, tv, getElementById))
                         .ToImmutableHashSet()))
-                .Case<ModelEntity.Element>(e => e.Get(tv).ToImmutableHashSet())
-                .Default(_ => ImmutableHashSet.Create<String>());
+                .Case<ModelEntity.Element>(e => ImmutableHashSet.Create(e.Get(tv)))
+                .Default(_ => ImmutableHashSet.Create<Option<String>>());
         }
 
         public bool CanExecute(ModelEntity.Package _)

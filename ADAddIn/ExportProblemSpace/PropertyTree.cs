@@ -12,7 +12,7 @@ namespace AdAddIn.ExportProblemSpace
 {
     public class PropertyTree
     {
-        public PropertyTree(ModelEntity entity, IImmutableSet<Tuple<String, String>> properties, IImmutableList<PropertyTree> children)
+        public PropertyTree(ModelEntity entity, IImmutableSet<Tuple<String, Option<String>>> properties, IImmutableList<PropertyTree> children)
         {
             Entity = entity;
             Properties = properties;
@@ -21,7 +21,7 @@ namespace AdAddIn.ExportProblemSpace
 
         public ModelEntity Entity { get; private set; }
 
-        public IImmutableSet<Tuple<String, String>> Properties { get; private set; }
+        public IImmutableSet<Tuple<String, Option<String>>> Properties { get; private set; }
 
         public IImmutableList<PropertyTree> Children { get; private set; }
 
@@ -31,7 +31,7 @@ namespace AdAddIn.ExportProblemSpace
                 Entity, Properties, Children.Where(child => f.Accept(child)).Select(child => child.ApplyFilter(f)).ToImmutableList());
         }
 
-        public static PropertyTree Create(ModelEntity e, Func<ModelEntity, IDictionary<String,IEnumerable<String>>> propertiesGetter)
+        public static PropertyTree Create(ModelEntity e, Func<ModelEntity, IDictionary<String,IEnumerable<Option<String>>>> propertiesGetter)
         {
             var pt = Create(e, me =>
             {
@@ -45,7 +45,7 @@ namespace AdAddIn.ExportProblemSpace
             return DeriveDiagramProperties(pt, pt);
         }
 
-        private static PropertyTree Create(ModelEntity e, Func<ModelEntity, IImmutableSet<Tuple<String, String>>> getProperties)
+        private static PropertyTree Create(ModelEntity e, Func<ModelEntity, IImmutableSet<Tuple<String, Option<String>>>> getProperties)
         {
             var children = e.Match<ModelEntity, IEnumerable<PropertyTree>>()
                 .Case<ModelEntity.Package>(p =>
@@ -69,13 +69,13 @@ namespace AdAddIn.ExportProblemSpace
             return pt.Entity.Match<ModelEntity, PropertyTree>()
                 .Case<ModelEntity.Diagram>(d =>{
                     var elementIds = d.Objects.Select(obj => obj.EaObject.ElementID).Run();
-                    var properties = CollectDiagramProperties(root, elementIds);
+                    var properties = CollectProperties(root, elementIds);
                     return new PropertyTree(pt.Entity, properties, pt.Children);
                 })
                 .Default(_ => new PropertyTree(pt.Entity, pt.Properties, pt.Children.Select(child => DeriveDiagramProperties(root, child)).ToImmutableList()));
         }
 
-        private static IImmutableSet<Tuple<String, String>> CollectDiagramProperties(PropertyTree pt, IEnumerable<int> elementIds)
+        private static IImmutableSet<Tuple<String, Option<String>>> CollectProperties(PropertyTree pt, IEnumerable<int> elementIds)
         {
             if (elementIds.Contains(pt.Entity.Id))
             {
@@ -84,8 +84,8 @@ namespace AdAddIn.ExportProblemSpace
             else
             {
                 return pt.Children.Aggregate(
-                    ImmutableHashSet.Create<Tuple<String, String>>(), 
-                    (props, t) => props.Union(CollectDiagramProperties(t, elementIds)));
+                    ImmutableHashSet.Create<Tuple<String, Option<String>>>(), 
+                    (props, t) => props.Union(CollectProperties(t, elementIds)));
             }
         }
 
