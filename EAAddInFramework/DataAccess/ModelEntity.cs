@@ -159,10 +159,9 @@ namespace EAAddInFramework.DataAccess
             {
                 // All tagged values are equal but some are more equal (ConnectorTags)
                 // thats why we have to use dynamic for working with tagged values in a generic way
-                var taggedValues = TaggedValuesCollection
+                return TaggedValuesCollection
                     .Select(tvc => tvc.Cast<dynamic>())
-                    .GetOrElse(Enumerable.Empty<dynamic>());
-                return taggedValues
+                    .GetOrElse(Enumerable.Empty<dynamic>())
                     // in some cases it is possible that an element has multiple tagged values with the same name
                     .DistinctBy(tv => tv.Name)
                     .ToImmutableDictionary(tv => tv.Name as String, tv => tv.Value as String);
@@ -171,7 +170,11 @@ namespace EAAddInFramework.DataAccess
 
         public Option<String> Get(ITaggedValue taggedValue)
         {
-            return TaggedValues.Get(taggedValue.Name);
+            return (from tvc in TaggedValuesCollection
+                    from tv in tvc.Cast<dynamic>()
+                    let name = tv.Name as String
+                    where name.Equals(taggedValue.Name)
+                    select tv.Value as String).FirstOption();
         }
 
         public void Set(ITaggedValue taggedValue, String value)

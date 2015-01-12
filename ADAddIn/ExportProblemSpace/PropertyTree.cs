@@ -31,7 +31,7 @@ namespace AdAddIn.ExportProblemSpace
                 Entity, Properties, Children.Where(child => f.Accept(child)).Select(child => child.ApplyFilter(f)).ToImmutableList());
         }
 
-        public static PropertyTree Create(ModelEntity e, Func<ModelEntity, IDictionary<String,IEnumerable<Option<String>>>> propertiesGetter)
+        public static PropertyTree Create(ModelEntity e, Func<ModelEntity, IDictionary<String, IEnumerable<Option<String>>>> propertiesGetter)
         {
             var pt = Create(e, me =>
             {
@@ -67,7 +67,8 @@ namespace AdAddIn.ExportProblemSpace
         private static PropertyTree DeriveDiagramProperties(PropertyTree root, PropertyTree pt)
         {
             return pt.Entity.Match<ModelEntity, PropertyTree>()
-                .Case<ModelEntity.Diagram>(d =>{
+                .Case<ModelEntity.Diagram>(d =>
+                {
                     var elementIds = d.Objects.Select(obj => obj.EaObject.ElementID).Run();
                     var properties = CollectProperties(root, elementIds);
                     return new PropertyTree(pt.Entity, properties, pt.Children);
@@ -84,12 +85,12 @@ namespace AdAddIn.ExportProblemSpace
             else
             {
                 return pt.Children.Aggregate(
-                    ImmutableHashSet.Create<Tuple<String, Option<String>>>(), 
+                    ImmutableHashSet.Create<Tuple<String, Option<String>>>(),
                     (props, t) => props.Union(CollectProperties(t, elementIds)));
             }
         }
 
-        internal IEnumerable<ModelEntity> AllEntities()
+        public IEnumerable<ModelEntity> AllEntities()
         {
             return (from child in Children
                     from entity in child.AllEntities()

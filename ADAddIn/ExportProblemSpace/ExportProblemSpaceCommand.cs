@@ -38,7 +38,6 @@ namespace AdAddIn.ExportProblemSpace
             var propertyTree = PropertyTree.Create(package, entity =>
             {
                 var props = new Dictionary<String, IEnumerable<Option<String>>>{
-                    {"Kind", new[]{entity.EntityType.AsOption()}},
                     {"Type", new[]{entity.Type.AsOption()}},
                     {"Metatype", new[]{entity.MetaType.AsOption()}},
                     {"Stereotype", new[]{entity.Stereotype.AsOption()}},
@@ -80,7 +79,8 @@ namespace AdAddIn.ExportProblemSpace
 
             return Unit.Instance;
         }
-        public static IImmutableSet<Option<String>> CollectTaggedValues(ModelEntity entity, ITaggedValue tv, Func<int, Option<ModelEntity.Element>> getElementById)
+
+        private static IImmutableSet<Option<String>> CollectTaggedValues(ModelEntity entity, ITaggedValue tv, Func<int, Option<ModelEntity.Element>> getElementById)
         {
             return entity.Match<ModelEntity, IImmutableSet<Option<String>>>()
                 .Case<OptionEntity>(o =>
