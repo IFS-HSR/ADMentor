@@ -78,16 +78,19 @@ namespace AdAddIn.ExportProblemSpace
 
         private static IImmutableSet<Tuple<String, Option<String>>> CollectProperties(PropertyTree pt, IEnumerable<int> elementIds)
         {
-            if (elementIds.Contains(pt.Entity.Id))
-            {
-                return pt.Properties;
-            }
-            else
-            {
-                return pt.Children.Aggregate(
-                    ImmutableHashSet.Create<Tuple<String, Option<String>>>(),
-                    (props, t) => props.Union(CollectProperties(t, elementIds)));
-            }
+            var elementId = pt.Entity.Match<ModelEntity, Option<int>>()
+                .Case<ModelEntity.Package>(p => p.AssociatedElement.Select(e => e.Id))
+                .Default(e => e.Id.AsOption());
+
+            return (from eid in elementId
+                    where elementIds.Contains(eid)
+                    select pt.Properties)
+                    .GetOrElse(() =>
+                    {
+                        return pt.Children.Aggregate(
+                            ImmutableHashSet.Create<Tuple<String, Option<String>>>(),
+                            (props, t) => props.Union(CollectProperties(t, elementIds)));
+                    });
         }
 
         public IEnumerable<ModelEntity> AllEntities()
