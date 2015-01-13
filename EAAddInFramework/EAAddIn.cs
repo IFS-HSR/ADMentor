@@ -26,9 +26,6 @@ namespace EAAddInFramework
         private readonly Atom<IEntityWrapper> entityWrapper =
             new LoggedAtom<IEntityWrapper>("ea.addIn.entityWrapper", new EntityWrapper());
 
-        private readonly Atom<IEnumerable<ValidationRule>> validationRules =
-            new LoggedAtom<IEnumerable<ValidationRule>>("ea.addIn.validationRules", new ValidationRule[] { });
-
         private readonly Atom<Option<ValidationHandler>> validationHandler =
             new LoggedAtom<Option<ValidationHandler>>("ea.addIn.validationHandler", Options.None<ValidationHandler>());
 
@@ -72,7 +69,7 @@ namespace EAAddInFramework
                 entityWrapper.Exchange(wrapper, GetType());
             });
 
-            validationRules.Exchange(data.Item2, GetType());
+            validationHandler.Exchange(Options.Some(new ValidationHandler(eaRepository, data.Item2)), GetType());
 
             var ciHandler = new ContextItemHandler(contextItem, eaRepository, entityWrapper);
             contextItemHandler.Exchange(Options.Some(ciHandler), GetType());
@@ -263,30 +260,30 @@ namespace EAAddInFramework
         {
             RepositoryChanged(repository);
 
-            var projectInterface = repository.GetProjectInterface();
-            var categories = (from rule in validationRules.Val
-                              select rule.Category).Distinct();
-
-            var catToId = ImmutableDictionary.Create<String, String>();
-
-            categories.ForEach(cat =>
+            validationHandler.Val.Do(handler =>
             {
-                var id = projectInterface.DefineRuleCategory(cat);
-                catToId = catToId.Add(cat, id);
+                handler.RegisterRules();
             });
+        }
 
-            var idToRule = ImmutableDictionary.Create<String, ValidationRule>();
+        public void EA_OnStartValidation(EA.Repository repository, object args)
+        {
+            RepositoryChanged(repository);
 
-            validationRules.Val.ForEach(rule =>
+            validationHandler.Val.Do(handler =>
             {
-                var id = projectInterface.DefineRule(catToId[rule.Category], EA.EnumMVErrorType.mvError, "");
-                idToRule = idToRule.Add(id, rule);
+                handler.PrepareRules(args as string[]);
             });
+        }
 
-            if (idToRule.Count > 0)
+        public void EA_OnEndValidation(EA.Repository repository, object args)
+        {
+            RepositoryChanged(repository);
+
+            validationHandler.Val.Do(handler =>
             {
-                validationHandler.Exchange(Options.Some(new ValidationHandler(eaRepository, catToId, idToRule)), GetType());
-            }
+                handler.CleanUpRules(args as string[]);
+            });
         }
 
         public void EA_OnRunElementRule(EA.Repository repository, string ruleID, EA.Element element)

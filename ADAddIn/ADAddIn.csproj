@@ -127,6 +127,8 @@
     <Compile Include="TechnologyMigration\MigrateModelEntities.cs" />
     <Compile Include="TechnologyMigration\Migrator.cs" />
     <Compile Include="UsabilityShortCuts\NeglectAllOptionsCommand.cs" />
+    <Compile Include="Validation\ElementNotUsedDiagramRule.cs" />
+    <Compile Include="Validation\MultipleProblemsAddressedByAnOptionCommand.cs" />
     <Compile Include="Validation\ValidateConflictingOptionsCommand.cs" />
     <Compile Include="Validation\ValidateProblemOccurrenceStateCommand.cs" />
     <Compile Include="Validation\ValidateProblemOptionCompositionCommand.cs" />

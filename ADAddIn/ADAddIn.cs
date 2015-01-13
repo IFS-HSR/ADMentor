@@ -70,10 +70,12 @@ namespace AdAddIn
             OnDeleteEntity.Add(updateStateOnRemoveAlternative.AsOnDeleteEntityHandler());
 
             var rules = new []{
-                new ValidationRule(technology.Name, new ValidateProblemOptionCompositionCommand(entityRepository).ToValidator()),
-                new ValidationRule(technology.Name, new ValidateProblemOccurrenceStateCommand(entityRepository).ToValidator()),
-                new ValidationRule(technology.Name, new ValidateConflictingOptionsCommand(entityRepository).ToValidator()),
-                new ValidationRule(technology.Name, migrator.GetValidator())
+                ValidationRule.FromCommand(technology.Name, new ValidateProblemOptionCompositionCommand(entityRepository)),
+                ValidationRule.FromCommand(technology.Name, new ValidateProblemOccurrenceStateCommand(entityRepository)),
+                ValidationRule.FromCommand(technology.Name, new ValidateConflictingOptionsCommand(entityRepository)),
+                ValidationRule.FromCommand(technology.Name, new MultipleProblemsAddressedByAnOptionCommand(entityRepository)),
+                ValidationRule.FromCommand(technology.Name, migrator.GetValidator()),
+                new ElementNotUsedDiagramRule(technology.Name, entityRepository)
             };
 
             return Tuple.Create(

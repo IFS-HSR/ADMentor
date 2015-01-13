@@ -241,5 +241,21 @@ namespace EAAddInFramework.DataAccess
             package.EaObject.Diagrams.Refresh();
             return Wrapper.Wrap(diagram);
         }
+
+        public IEnumerable<ModelEntity.Package> Packages
+        {
+            get
+            {
+                return Repo.Val.Models.Cast<EA.Package>().Select(p => Wrapper.Wrap(p)).Run();
+            }
+        }
+
+        public IEnumerable<ModelEntity.Package> AllPackages
+        {
+            get
+            {
+                return Packages.SelectMany(p => p.SubPackages);
+            }
+        }
     }
 }
