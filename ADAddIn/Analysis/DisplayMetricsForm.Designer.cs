@@ -28,22 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.metricsTextBox = new System.Windows.Forms.TextBox();
             this.btnOk = new System.Windows.Forms.Button();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
-            // 
-            // metricsTextBox
-            // 
-            this.metricsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.metricsTextBox.Location = new System.Drawing.Point(12, 12);
-            this.metricsTextBox.Multiline = true;
-            this.metricsTextBox.Name = "metricsTextBox";
-            this.metricsTextBox.ReadOnly = true;
-            this.metricsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.metricsTextBox.Size = new System.Drawing.Size(557, 410);
-            this.metricsTextBox.TabIndex = 1;
             // 
             // btnOk
             // 
@@ -56,6 +44,24 @@
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             // 
+            // dataGridView
+            // 
+            this.dataGridView.AllowUserToAddRows = false;
+            this.dataGridView.AllowUserToDeleteRows = false;
+            this.dataGridView.AllowUserToResizeRows = false;
+            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.ColumnHeadersVisible = false;
+            this.dataGridView.Location = new System.Drawing.Point(12, 12);
+            this.dataGridView.Name = "dataGridView";
+            this.dataGridView.ReadOnly = true;
+            this.dataGridView.RowHeadersVisible = false;
+            this.dataGridView.Size = new System.Drawing.Size(557, 411);
+            this.dataGridView.TabIndex = 2;
+            // 
             // DisplayMetricsForm
             // 
             this.AcceptButton = this.btnOk;
@@ -63,18 +69,18 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnOk;
             this.ClientSize = new System.Drawing.Size(581, 464);
+            this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.btnOk);
-            this.Controls.Add(this.metricsTextBox);
             this.Name = "DisplayMetricsForm";
             this.Text = "Package Metrics";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TextBox metricsTextBox;
         private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.DataGridView dataGridView;
     }
 }

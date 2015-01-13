@@ -14,18 +14,13 @@ namespace AdAddIn.Analysis
             return new Category(name, members);
         }
 
-        public static Metric Entry<T>(String key, T value)
+        public static Metric Entry(String key, Object value)
         {
-            return new Entry<T>(key, value);
+            return new Entry(key, value);
         }
     }
 
-    public interface Metric
-    {
-        bool IsEmpty { get; }
-
-        String ToString(String prefix);
-    }
+    public interface Metric { }
 
     public class Category : Metric
     {
@@ -38,45 +33,18 @@ namespace AdAddIn.Analysis
         public string Name { get; private set; }
 
         public IEnumerable<Metric> Members { get; private set; }
-
-        public bool IsEmpty { get { return Members.All(m => m.IsEmpty); } }
-
-        public override string ToString()
-        {
-            return ToString("");
-        }
-
-        public string ToString(String prefix)
-        {
-            var children = from m in Members
-                           where !m.IsEmpty
-                           select m.ToString(prefix + "- ");
-            return String.Format("{0}{1}:\r\n{2}", prefix, Name, children.Join("\r\n"));
-        }
     }
 
-    public class Entry<T> : Metric
+    public class Entry : Metric
     {
-        public Entry(String key, T value)
+        public Entry(String key, Object value)
         {
             Key = key;
-            Value = value;
+            Value = value.ToString();
         }
 
         public string Key { get; private set; }
 
-        public T Value { get; private set; }
-
-        public bool IsEmpty { get { return false; } }
-
-        public override string ToString()
-        {
-            return ToString("");
-        }
-
-        public string ToString(String prefix)
-        {
-            return String.Format("{0}{1}: {2}", prefix, Key, Value.ToString());
-        }
+        public string Value { get; private set; }
     }
 }
