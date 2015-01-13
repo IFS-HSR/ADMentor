@@ -41,7 +41,7 @@ namespace ADMentor.ADTechnology
             name: "adOptionOccurrence",
             displayName: "Option Occurrence",
             type: ElementType.Object,
-            icon: new Icon("AdAddIn.ADTechnology.OptionOccurrence.bmp"),
+            icon: new Icon("ADMentor.ADTechnology.OptionOccurrence.bmp"),
             shapeScript: String.Format(@"
                 shape main{{
 	                h_align = ""center"";
@@ -99,7 +99,7 @@ namespace ADMentor.ADTechnology
             name: "adProblemOccurrence",
             displayName: "Problem Occurrence",
             type: ElementType.Object,
-            icon: new Icon("AdAddIn.ADTechnology.ProblemOccurrence.bmp"),
+            icon: new Icon("ADMentor.ADTechnology.ProblemOccurrence.bmp"),
             shapeScript: String.Format(@"
                 shape main{{
 	                h_align = ""center"";

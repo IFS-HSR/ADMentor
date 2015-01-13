@@ -7,8 +7,8 @@
     <ProjectGuid>{C5700C67-635E-45D0-8A5F-028ED5780A4B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ADMentor</RootNamespace>
-    <AssemblyName>Utils</AssemblyName>
+    <RootNamespace>EAAddInBase.Utils</RootNamespace>
+    <AssemblyName>EAAddInBase.Utils</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

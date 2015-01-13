@@ -15,7 +15,7 @@ namespace ADMentor.ADTechnology
             displayName: "Problem",
             type: ElementType.Class,
             instanceType: SolutionSpace.ProblemOccurrence,
-            icon: new Icon("AdAddIn.ADTechnology.Problem.bmp"),
+            icon: new Icon("ADMentor.ADTechnology.Problem.bmp"),
             shapeScript: @"
                 shape main{
 	                h_align = ""center"";
@@ -51,7 +51,7 @@ namespace ADMentor.ADTechnology
             displayName: "Option",
             type: ElementType.Class,
             instanceType: SolutionSpace.OptionOccurrence,
-            icon: new Icon("AdAddIn.ADTechnology.Option.bmp"),
+            icon: new Icon("ADMentor.ADTechnology.Option.bmp"),
             shapeScript: @"
                 shape main{
 	                h_align = ""center"";

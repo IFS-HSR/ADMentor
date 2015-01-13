@@ -25,17 +25,17 @@ namespace ADMentor.ADTechnology
                             name: "Problem Space",
                             description: "",
                             icon: ModelIcon.ClassModel,
-                            resourceName: "AdAddIn.ADTechnology.ProblemSpaceTemplate.xml"),
+                            resourceName: "ADMentor.ADTechnology.ProblemSpaceTemplate.xml"),
                         new ModelTemplate(
                             name: "Solution Space",
                             description: "",
                             icon: ModelIcon.DeploymentModel,
-                            resourceName: "AdAddIn.ADTechnology.SolutionSpaceTemplate.xml"),
+                            resourceName: "ADMentor.ADTechnology.SolutionSpaceTemplate.xml"),
                         new ModelTemplate(
                             name: "AD Mentor Demo",
                             description: "",
                             icon: ModelIcon.SimpleModel,
-                            resourceName: "AdAddIn.ADTechnology.DemoTemplate.xml")
+                            resourceName: "ADMentor.ADTechnology.DemoTemplate.xml")
                     });
     }
 }

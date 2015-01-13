@@ -21,7 +21,7 @@ using ADMentor.UsabilityShortCuts;
 
 namespace ADMentor
 {
-    public class ADAddIn : EAAddIn
+    public class ADMentorAddIn : EAAddIn
     {
         private static readonly MDGTechnology technology = ADTechnology.Technologies.AD;
 

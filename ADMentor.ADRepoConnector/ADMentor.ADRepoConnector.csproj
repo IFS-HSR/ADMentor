@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ADMentor.ADRepoConnector</RootNamespace>
-    <AssemblyName>ADRepoConnector</AssemblyName>
+    <AssemblyName>ADMentor.ADRepoConnector</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

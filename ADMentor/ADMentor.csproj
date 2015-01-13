@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ADMentor</RootNamespace>
-    <AssemblyName>ADAddIn</AssemblyName>
+    <AssemblyName>ADMentor</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -57,7 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ADAddIn.cs" />
+    <Compile Include="ADMentorAddIn.cs" />
     <Compile Include="ADTechnology\Common.cs" />
     <Compile Include="ADTechnology\ConnectorStereotypes.cs" />
     <Compile Include="ADTechnology\DiagramTypes.cs" />
