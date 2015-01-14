@@ -30,7 +30,7 @@ namespace ADMentor.Analysis
             return (new[] { ToRow(m, prefix) })
                 .Concat(from cat in m.TryCast<Category>()
                         from member in cat.Members
-                        from flatened in Flatten(member, prefix + "- ")
+                        from flatened in Flatten(member, prefix + "* ")
                         select flatened);
         }
 
