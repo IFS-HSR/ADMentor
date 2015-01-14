@@ -41,7 +41,10 @@ namespace ADMentor.ExportProblemSpace
                     {"Type", new[]{entity.Type.AsOption()}},
                     {"Metatype", new[]{entity.MetaType.AsOption()}},
                     {"Stereotype", new[]{entity.Stereotype.AsOption()}},
-                    {"Keyword", entity.Keywords.Select(kw => kw.AsOption())}
+                    {"Keyword", entity.Keywords.Select(kw => kw.AsOption())},
+                    {"Author", new[]{entity.Author}},
+                    {"Version", new[]{entity.Version.AsOption()}},
+                    {"Status", new[]{entity.Status}}
                 };
 
                 filterTags.ForEach(tv =>

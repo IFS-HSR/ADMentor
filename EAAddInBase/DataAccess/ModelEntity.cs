@@ -221,6 +221,35 @@ namespace EAAddInBase.DataAccess
             }
         }
 
+        public Option<String> Author
+        {
+            get
+            {
+                return this.Match<ModelEntity, Option<String>>()
+                    .Case<Package>(p => p.EaObject.Element.AsOption().Select(e => e.Author))
+                    .Default(_ => Options.Some((this as dynamic).EaObject.Author as String));
+            }
+        }
+
+        public Option<String> Status
+        {
+            get
+            {
+                return this.Match<ModelEntity, Option<String>>()
+                    .Case<Diagram>(_ => Options.None<String>())
+                    .Case<Package>(p => p.EaObject.Element.AsOption().Select(e => e.Status))
+                    .Default(_ => Options.Some((this as dynamic).EaObject.Status as String));
+            }
+        }
+
+        public string Version
+        {
+            get
+            {
+                return (this as dynamic).EaObject.Version as String;
+            }
+        }
+
         public String Notes
         {
             get
