@@ -57,7 +57,7 @@ namespace ADMentor
                 new MenuItem("Locate Option/Problem", new GoToClassifierCommand(eaRepository)),
                 new MenuItem("Establish Dependencies from Problem Space", populateDependenciesCommand.ToMenuHandler()),
                 new MenuItem("Migrate Element(s) to Current Model Version", new MigrateModelEntities(migrator).ToMenuHandler()),
-                new MenuItem("Choose Selected and Neglect Alternatives", new ChooseOptionOccurrenceCommand(entityRepository, updateStateOnAlternativesChanged).ToMenuHandler()),
+                new MenuItem("Choose Selected and Neglect not chosen Alternatives", new ChooseOptionOccurrenceCommand(entityRepository, updateStateOnAlternativesChanged).ToMenuHandler()),
                 new MenuItem("Neglect all Alternatives", new NeglectAllOptionsCommand(entityRepository).ToMenuHandler()),
                 new MenuItem("Package Metrics", new AnalysePackageCommand(entityRepository, new DisplayMetricsForm()).ToMenuHandler())));
 
