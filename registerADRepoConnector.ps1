@@ -1,0 +1,1 @@
+New-Item -Path "HKCU:\Software\Sparx Systems\EAAddins" -Name ADRepoConnector -Value "ADMentor.ADRepoConnector.ADRepoConnectorAddIn" -Force

@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8A3EE757-6A07-44A1-95F9-1BAE3F337A4C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EAAddInBase</RootNamespace>
+    <AssemblyName>EAAddInBase</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RegisterForComInterop>true</RegisterForComInterop>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ContextItemHandler.cs" />
+    <Compile Include="DataAccess\DiagramObject.cs" />
+    <Compile Include="DataAccess\EntityWrapper.cs" />
+    <Compile Include="DataAccess\ModelEntity.cs" />
+    <Compile Include="DataAccess\ModelEntityRepository.cs" />
+    <Compile Include="LoggedAtom.cs" />
+    <Compile Include="MDGBuilder\ModelId.cs" />
+    <Compile Include="MDGBuilder\UMLPattern.cs" />
+    <Compile Include="RepositoryUnderTest.cs" />
+    <Compile Include="EAAddIn.cs" />
+    <Compile Include="EventManager.cs" />
+    <Compile Include="EventPropertiesExtensions.cs" />
+    <Compile Include="ICommand.cs" />
+    <Compile Include="MDGBuilder\ConnectorStereotype.cs" />
+    <Compile Include="MDGBuilder\Diagrams.cs" />
+    <Compile Include="MDGBuilder\DiagramTypes.cs" />
+    <Compile Include="MDGBuilder\ElementStereotype.cs" />
+    <Compile Include="MDGBuilder\Enumeration.cs" />
+    <Compile Include="MDGBuilder\Icon.cs" />
+    <Compile Include="MDGBuilder\MDGTechnology.cs" />
+    <Compile Include="MDGBuilder\ModelTemplate.cs" />
+    <Compile Include="MDGBuilder\ShapeScript.cs" />
+    <Compile Include="MDGBuilder\Toolbox.cs" />
+    <Compile Include="MDGBuilder\ToolboxPage.cs" />
+    <Compile Include="MDGBuilder\TaggedValue.cs" />
+    <Compile Include="MDGBuilder\TaggedValueType.cs" />
+    <Compile Include="MenuHandler.cs" />
+    <Compile Include="ValidationHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Interop.EA">
+      <HintPath>..\Interop.EA.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.0.34.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Bcl.Immutable.1.0.34\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EAAddInBase.Utils\EAAddInBase.Utils.csproj">
+      <Project>{c5700c67-635e-45d0-8a5f-028ed5780a4b}</Project>
+      <Name>EAAddInBase.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
