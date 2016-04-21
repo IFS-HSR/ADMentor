@@ -14,8 +14,6 @@
 
 2. Follow the installation wizard.
 
-    Although you have to select an installation folder during the setup, the installation will not create any files in this folder. The setup process only adds the required libraries to the system's Global Assembly Cache and registers the Enterprise Architect Add-In.
-
 ## Model a Reusable Problem Space
 
 ### Create a new Problem Space
