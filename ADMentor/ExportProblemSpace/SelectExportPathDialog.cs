@@ -10,11 +10,12 @@ namespace ADMentor.ExportProblemSpace
 {
     public class SelectExportPathDialog
     {
-        public void WithSelectedFile(Action<Stream> act)
+        public void WithSelectedFile(String fileNamePrefix, Action<Stream> act)
         {
             var dialog = new SaveFileDialog();
 
             dialog.Filter = "XML files (*.xml)|*.xml";
+            dialog.FileName = fileNamePrefix + ".xml";
 
             var res = dialog.ShowDialog();
 

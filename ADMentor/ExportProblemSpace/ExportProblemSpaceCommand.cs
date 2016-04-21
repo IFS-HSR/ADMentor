@@ -73,7 +73,7 @@ namespace ADMentor.ExportProblemSpace
             FilterForm.SelectFilter(filters, propertyTree.ApplyFilter)
                 .Do(selectedHierarchy =>
                 {
-                    ExportFileDialog.WithSelectedFile(outStream =>
+                    ExportFileDialog.WithSelectedFile(package.Name, outStream =>
                     {
                         ExporterFactory.WithXmlExporter(package, exporter =>
                         {
