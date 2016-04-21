@@ -18,6 +18,14 @@
 1. Make sure the "Register for COM interop" checkbox is selected in the "Build" tab of the ADMentor and EAAddInBase project properties
 1. Run `registerADMentor.ps1` as _Administrator_ to register the add-in class as an EA extension (adds required entries to the registry)
 
+## Update Model Templates
+
+1. Modify one of the template models in docs/ModelTemplates.eap.
+2. Right click on the updated template model and select "Import/Export" -> "Export Package to XMI File..."
+3. Select the path of the according template XML (e.g. ADMentor\ADTechnology\DemoTemplate.xml)
+4. Select Export Type XMI 1.1
+5. Run `releases.ps1` to clean up unnecessary meta data in the XMI files.
+
 ## Release a new Version
 
 1. Update `version` and `modelVersion` (if necessary) in `AdAddIn.ADTechnology.Technologies`
