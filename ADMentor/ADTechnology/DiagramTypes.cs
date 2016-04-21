@@ -19,9 +19,9 @@ namespace ADMentor.ADTechnology
 
         public static readonly Diagram QOC = new Diagram(
             name: "QOC",
-            displayName: "Questions, Options and Criterions",
-            description: "Question, Options and Criterions (QOC) Diagrams visualize recurring architectural design problems similar to Problem Space Diagrams." + 
-                         "Additionally, they support detailed assessments based on optional criterions.",
+            displayName: "Questions, Options and Criteria",
+            description: "Question, Options and Criteria (QOC) Diagrams visualize recurring architectural design problems similar to Problem Space Diagrams. " + 
+                         "Additionally, they support detailed visualization based on optional criteria.",
             type: DiagramType.Activity,
             toolbox: Toolboxes.ProblemSpaceTools);
 
