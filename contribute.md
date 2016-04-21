@@ -15,6 +15,7 @@
 1. Right Click on the ADMentor project and choose "Set as StartUp Project"
 1. Open the properties of the ADMentor project and go to the "Debug" tab
 1. Set the path to your EA installation in the "Start external program" field
+1. Make sure the "Register for COM interop" checkbox is selected in the "Build" tab of the ADMentor project properties
 1. Run `registerADMentor.ps1` as _Administrator_ to register the add-in class as an EA extension (adds required entries to the registry)
 
 ## Release a new Version
