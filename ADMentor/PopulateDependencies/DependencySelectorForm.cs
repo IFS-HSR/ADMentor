@@ -33,7 +33,6 @@ namespace ADMentor.PopulateDependencies
         {
             dependencyTreeView.Nodes.Clear();
             dependencyTreeView.Nodes.Add(ToTreeNode(availableDependencies));
-            dependencyTreeView.Nodes.Cast<TreeNode>().ForEach(tn => tn.Expand());
 
             var result = ShowDialog();
 
@@ -51,7 +50,7 @@ namespace ADMentor.PopulateDependencies
 
             return (!problemSpace.Label.Instance.IsDefined && treeNode.Checked)
                 .Then(() => LabeledTree.Node(new ElementInstantiation(problemSpace.Label.Element, selected: true), edges))
-                .Else(() => LabeledTree.Node(problemSpace.Label, edges));
+                .Else(() => LabeledTree.Node(problemSpace.Label.Copy(selected: false), edges));
         }
 
         private TreeNode ToTreeNode(LabeledTree<ElementInstantiation, ModelEntity.Connector> dependencyNode)
@@ -59,6 +58,8 @@ namespace ADMentor.PopulateDependencies
             var node = new TreeNode(dependencyNode.Label.Element.Name, ToTreeNodes(dependencyNode.Edges));
             if (dependencyNode.Label.Instance.IsDefined)
                 node.ForeColor = System.Drawing.SystemColors.GrayText;
+            node.Checked = dependencyNode.Label.Selected;
+            node.Expand();
             return node;
         }
 
@@ -72,6 +73,11 @@ namespace ADMentor.PopulateDependencies
                     : stype.ReverseDisplayName.GetOrElse(stype.DisplayName);
                 var label = String.Format("{0}: {1}", connectorName, edge.Target.Label.Element.Name);
                 var node = new TreeNode(label, ToTreeNodes(edge.Target.Edges));
+                if (edge.Target.Label.Selected)
+                {
+                    node.Checked = true;
+                    node.Expand();
+                }
                 if (edge.Target.Label.Instance.IsDefined)
                     node.ForeColor = System.Drawing.SystemColors.GrayText;
                 return node;

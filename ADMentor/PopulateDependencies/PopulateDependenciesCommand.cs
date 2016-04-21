@@ -36,7 +36,8 @@ namespace ADMentor.PopulateDependencies
                 from currentDiagram in GetCurrentDiagramContaining(solutionEntity)
                 from solution in SolutionInstantiationGraph.Create(Repo, solutionEntity)
                 let solutionTree = solution.Graph.ToTree(DirectedLabeledGraph.TraverseEdgeOnlyOnce<ModelEntity.Connector>())
-                from markedSolutionTree in Selector.GetSelectedDependencies(solutionTree)
+                let preMarkedSolutionTree = SelectRootWithAlternatives(solutionTree)
+                from markedSolutionTree in Selector.GetSelectedDependencies(preMarkedSolutionTree)
                 let markedSolution = solution.WithSelection(markedSolutionTree.NodeLabels)
                 let targetPackage = Repo.FindPackageContaining(solutionEntity)
                 let instantiatedSolution = markedSolution.InstantiateSelectedItems(targetPackage)
@@ -45,6 +46,31 @@ namespace ADMentor.PopulateDependencies
                 select EntityModified.Modified;
 
             return modified.GetOrElse(EntityModified.NotModified);
+        }
+
+        private LabeledTree<ElementInstantiation, ModelEntity.Connector> SelectRootWithAlternatives(LabeledTree<ElementInstantiation, ModelEntity.Connector> root)
+        {
+            var markedRoot = LabeledTree.Node(root.Label.Copy(selected: true), root.Edges);
+            System.Diagnostics.Debug.WriteLine("Select {0}", root.Label.Element.Name);
+            if (markedRoot.Label.Element is Problem)
+            {
+                return markedRoot.TransformTopDown((from, via, to) =>
+                {
+                    if (from == markedRoot.Label && via.Is(ConnectorStereotypes.AddressedBy) && !to.Instance.IsDefined)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Select {0}", to.Element.Name);
+                        return to.Copy(selected: true);
+                    }
+                    else
+                    {
+                        return to;
+                    }
+                });
+            }
+            else
+            {
+                return markedRoot;
+            }
         }
 
         public Boolean CanExecute(SolutionEntity element)
