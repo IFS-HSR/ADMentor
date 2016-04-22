@@ -13,33 +13,48 @@ namespace ADMentor.Analysis
 {
     public partial class DisplayMetricsForm : Form
     {
+        private IEnumerable<MetricEntry> data;
+
         public DisplayMetricsForm()
         {
             InitializeComponent();
         }
 
-        public void Display(Metric data)
+        public void Display(IEnumerable<MetricEntry> data)
         {
-            dataGridView.DataSource = Flatten(data).ToList();
+            this.data = data;
+
+            var categories = (from e in data
+                              group e by e.Category into g
+                              select g.Key).ToArray();
+
+            categoryListBox.Items.AddRange(categories);
+
+            if (categories.Length > 0)
+            {
+                categoryListBox.SetItemChecked(0, true);
+            }
+
+            UpdateDataGrid();
 
             ShowDialog();
         }
 
-        private IEnumerable<Tuple<String, String>> Flatten(Metric m, String prefix = "")
+        private void UpdateDataGrid()
         {
-            return (new[] { ToRow(m, prefix) })
-                .Concat(from cat in m.TryCast<Category>()
-                        from member in cat.Members
-                        from flatened in Flatten(member, prefix + "* ")
-                        select flatened);
+            dataGridView.DataSource =
+                (from e in data
+                 where categoryListBox.CheckedItems.Contains(e.Category)
+                 select e).ToList();
         }
 
-        private Tuple<String, String> ToRow(Metric m, String prefix)
+        private void categoryListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            return m.Match<Metric, Tuple<String, String>>()
-                .Case<Category>(c => Tuple.Create(prefix + c.Name, ""))
-                .Case<Entry>(e => Tuple.Create(prefix + e.Key, e.Value))
-                .GetOrThrowNotImplemented();
+            if (this.Visible)
+            {
+                // Delay execution until CheckedItems have been updated
+                BeginInvoke((MethodInvoker)(() => UpdateDataGrid()));
+            }
         }
     }
 }

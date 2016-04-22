@@ -48,51 +48,61 @@ namespace ADMentor.Analysis
             var oosPerState = from e in elements
                               from oo in e.TryCast<OptionOccurrence>()
                               group oo by oo.State into g
-                              select Metrics.Entry(g.Key.Name, g.Count());
+                              select Tuple.Create(g.Key.Name, g.Count());
 
             var posPerState = from e in elements
                               from po in e.TryCast<ProblemOccurrence>()
                               group po by po.State into g
-                              select Metrics.Entry(g.Key.Name, g.Count());
+                              select Tuple.Create(g.Key.Name, g.Count());
 
             var valuesPerTag = from tv in Technologies.AD.TaggedValues
                                where !tv.Type.TypeName.Equals("DateTime")
-                               let stats = ValueOccurrences(tv, elements).ToArray()
-                               where stats.Count() > 0
-                               select Metrics.Category(tv.Name, stats.ToArray());
+                               from v in ValueOccurrences(tv, elements)
+                               select Tuple.Create(tv.Name, v.Item1, v.Item2);
 
-            var metrics = Metrics.Category(package.Name,
-                Metrics.Category("Common",
-                    Metrics.Entry("Elements", elements.Count()),
-                    Metrics.Entry("Packages", packages.Count()),
-                    Metrics.Entry("Elements per Package", CreateSummary(elementsPerPackage))),
-                Metrics.Category("Problem Space",
-                    Metrics.Entry("Problems", elements.Count(e => e is Problem)),
-                    Metrics.Entry("Options", elements.Count(e => e is OptionEntity)),
-                    Metrics.Entry("Options per Problem", CreateSummary(optionsPerProblem)),
-                    Metrics.Entry("Problems per Option", CreateSummary(problemsPerOption))),
-                Metrics.Category("Solution Space",
-                    Metrics.Entry("Problem Occurrences", elements.Count(e => e is ProblemOccurrence)),
-                    Metrics.Entry("Option Occurrences", elements.Count(e => e is OptionOccurrence)),
-                    Metrics.Entry("Options per Problem", CreateSummary(optionOccsPerProblemOcc)),
-                    Metrics.Entry("Problems per Option", CreateSummary(problemOccsPerOptionOcc)),
-                    Metrics.Category("Problem States", posPerState.ToArray()),
-                    Metrics.Category("Option States", oosPerState.ToArray())),
-                Metrics.Category("Tagged Values", valuesPerTag.ToArray()));
+            var entries =
+                (from e in new[] { 
+                    new MetricEntry("Element", elements.Count()), 
+                    new MetricEntry("Package", packages.Count())
+                 }
+                 select e.Copy(category: "Metadata", @group: "Type")).Concat(
+                 from e in new[] { 
+                     new MetricEntry("Problem", elements.Count(e => e is Problem)),
+                    new MetricEntry("Option", elements.Count(e => e is OptionEntity)),
+                    new MetricEntry("Problem Occurrence", elements.Count(e => e is ProblemOccurrence)),
+                    new MetricEntry("Option Occurrence", elements.Count(e => e is OptionOccurrence))
+                 }
+                 select e.Copy(category: "Metadata", @group: "Element Type")).Concat(
+                 from e in posPerState
+                 select new MetricEntry("Tagged Values", "Problem State", e.Item1, e.Item2)).Concat(
+                 from e in oosPerState
+                 select new MetricEntry("Tagged Values", "Option State", e.Item1, e.Item2)).Concat(
+                 from e in valuesPerTag
+                 select new MetricEntry("Tagged Values", e.Item1, e.Item2, e.Item3)).Concat(
+                 from e in CreateSummary(elementsPerPackage)
+                 select new MetricEntry("Statistics", "Elements per Package", e.Item1, e.Item2)).Concat(
+                 from e in CreateSummary(optionsPerProblem)
+                 select new MetricEntry("Statistics", "Options per Problem", e.Item1, e.Item2)).Concat(
+                 from e in CreateSummary(problemsPerOption)
+                 select new MetricEntry("Statistics", "Problems per Options", e.Item1, e.Item2)).Concat(
+                 from e in CreateSummary(optionOccsPerProblemOcc)
+                 select new MetricEntry("Statistics", "Option Occ. per Problem Occ.", e.Item1, e.Item2)).Concat(
+                 from e in CreateSummary(problemOccsPerOptionOcc)
+                 select new MetricEntry("Statistics", "Problem Occ. per Option Occ.", e.Item1, e.Item2));
 
-            DisplayMetricsForm.Display(metrics);
+            DisplayMetricsForm.Display(entries);
 
             return Unit.Instance;
         }
 
-        private IEnumerable<Metric> ValueOccurrences(TaggedValue tv, IEnumerable<ModelEntity.Element> elements)
+        private IEnumerable<Tuple<String, int>> ValueOccurrences(TaggedValue tv, IEnumerable<ModelEntity.Element> elements)
         {
             return from e in elements
                    from val in e.Get(tv)
                    let valOrEmpty = val.Equals("") ? "<empty>" : val
                    group e by valOrEmpty into g
                    orderby g.Key
-                   select Metrics.Entry(g.Key, g.Count());
+                   select Tuple.Create(g.Key, g.Count());
         }
 
         private IEnumerable<Tuple<TSource, IEnumerable<TTarget>>> FindTargetsPerSource<TSource, TTarget>(
@@ -106,13 +116,17 @@ namespace ADMentor.Analysis
                     select Tuple.Create(source, targets)).Run();
         }
 
-        private String CreateSummary<TKey, TElement>(IEnumerable<Tuple<TKey, IEnumerable<TElement>>> groups)
+        private IEnumerable<Tuple<String, String>> CreateSummary<TKey, TElement>(IEnumerable<Tuple<TKey, IEnumerable<TElement>>> groups)
         {
             Func<Tuple<TKey, IEnumerable<TElement>>, int> selector = (kv) => kv.Item2.Count();
             var data = groups.IsEmpty() ?
                 Tuple.Create("-", "-", "-") :
                 Tuple.Create(groups.Min(selector).ToString(), groups.Average(selector).ToString("N"), groups.Max(selector).ToString());
-            return String.Format("Min {0} / Avg {1} / Max {2}", data.Item1, data.Item2, data.Item3);
+            return new[]{
+                Tuple.Create("Min", data.Item1),
+                Tuple.Create("Avg", data.Item2),
+                Tuple.Create("Max", data.Item3)
+            };
         }
 
         public bool CanExecute(ModelEntity.Package _)

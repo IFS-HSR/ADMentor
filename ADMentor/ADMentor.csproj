@@ -74,7 +74,7 @@
     <Compile Include="Analysis\DisplayMetricsForm.Designer.cs">
       <DependentUpon>DisplayMetricsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Analysis\Metrics.cs" />
+    <Compile Include="Analysis\MetricEntry.cs" />
     <Compile Include="ExportProblemSpace\PropertyTree.cs" />
     <Compile Include="UsabilityShortCuts\ChooseOptionOccurrenceCommand.cs" />
     <Compile Include="CopyMetadata\UpdateOptionOccurrenceStateOnAlternativesAdded.cs" />
