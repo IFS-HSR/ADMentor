@@ -45,16 +45,6 @@ namespace ADMentor.Analysis
             var optionOccsPerProblemOcc = FindTargetsPerSource<ProblemOccurrence, OptionOccurrence>(elements, ConnectorStereotypes.AddressedBy);
             var problemOccsPerOptionOcc = FindTargetsPerSource<OptionOccurrence, ProblemOccurrence>(elements, ConnectorStereotypes.AddressedBy);
 
-            var oosPerState = from e in elements
-                              from oo in e.TryCast<OptionOccurrence>()
-                              group oo by oo.State into g
-                              select Tuple.Create(g.Key.Name, g.Count());
-
-            var posPerState = from e in elements
-                              from po in e.TryCast<ProblemOccurrence>()
-                              group po by po.State into g
-                              select Tuple.Create(g.Key.Name, g.Count());
-
             var valuesPerTag = from tv in Technologies.AD.TaggedValues
                                where !tv.Type.TypeName.Equals("DateTime")
                                from v in ValueOccurrences(tv, elements)
@@ -73,10 +63,6 @@ namespace ADMentor.Analysis
                     new MetricEntry("Option Occurrence", elements.Count(e => e is OptionOccurrence))
                  }
                  select e.Copy(category: "Metadata", @group: "Element Type")).Concat(
-                 from e in posPerState
-                 select new MetricEntry("Tagged Values", "Problem State", e.Item1, e.Item2)).Concat(
-                 from e in oosPerState
-                 select new MetricEntry("Tagged Values", "Option State", e.Item1, e.Item2)).Concat(
                  from e in valuesPerTag
                  select new MetricEntry("Tagged Values", e.Item1, e.Item2, e.Item3)).Concat(
                  from e in CreateSummary(elementsPerPackage)

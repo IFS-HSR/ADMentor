@@ -28,6 +28,7 @@ namespace ADMentor.Analysis
                               group e by e.Category into g
                               select g.Key).ToArray();
 
+            categoryListBox.Items.Clear();
             categoryListBox.Items.AddRange(categories);
 
             if (categories.Length > 0)
