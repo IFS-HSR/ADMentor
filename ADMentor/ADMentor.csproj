@@ -181,6 +181,21 @@
   <ItemGroup>
     <EmbeddedResource Include="ADTechnology\SolvedProblemPattern.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ADTechnology\YStatementSplitPattern.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ADTechnology\YStatementInOptionPattern.xml" />
+    <EmbeddedResource Include="ADTechnology\YStatementInProblemPattern.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ADTechnology\ADRPattern.xml" />
+    <EmbeddedResource Include="ADTechnology\arc42Pattern.xml" />
+    <EmbeddedResource Include="ADTechnology\BredemeyerPattern.xml" />
+    <EmbeddedResource Include="ADTechnology\IBM-UMF-ADPattern.xml" />
+    <EmbeddedResource Include="ADTechnology\IEEE1471Pattern.xml" />
+    <EmbeddedResource Include="ADTechnology\TyreeAkermanPattern.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

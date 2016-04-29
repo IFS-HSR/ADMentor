@@ -80,6 +80,39 @@ namespace ADMentor.ADTechnology
                         new UMLPattern(
                             displayName: "Solved Problem",
                             resourceName: "ADMentor.ADTechnology.SolvedProblemPattern.xml")
+                    }),
+                new ToolboxPage(
+                    name: "DecisionCapturingTemplates",
+                    displayName: "Decision Capturing Templates",
+                    description: "",
+                    patterns: new []{
+                        new UMLPattern(
+                            displayName: "YStatement (split)",
+                            resourceName: "ADMentor.ADTechnology.YStatementSplitPattern.xml"),
+                        new UMLPattern(
+                            displayName: "YStatement (in problem)",
+                            resourceName: "ADMentor.ADTechnology.YStatementInProblemPattern.xml"),
+                        new UMLPattern(
+                            displayName: "YStatement (in option)",
+                            resourceName: "ADMentor.ADTechnology.YStatementInOptionPattern.xml"),
+                        new UMLPattern(
+                            displayName: "ADR (Nygard)",
+                            resourceName: "ADMentor.ADTechnology.ADRPattern.xml"),
+                        new UMLPattern(
+                            displayName: "arc42",
+                            resourceName: "ADMentor.ADTechnology.arc42Pattern.xml"),
+                        new UMLPattern(
+                            displayName: "Bredemeyer",
+                            resourceName: "ADMentor.ADTechnology.BredemeyerPattern.xml"),
+                        new UMLPattern(
+                            displayName: "IBM-UMF-AD",
+                            resourceName: "ADMentor.ADTechnology.IBM-UMF-ADPattern.xml"),
+                        new UMLPattern(
+                            displayName: "IEEE1471",
+                            resourceName: "ADMentor.ADTechnology.IEEE1471Pattern.xml"),
+                        new UMLPattern(
+                            displayName: "Tyree Akerman",
+                            resourceName: "ADMentor.ADTechnology.TyreeAkermanPattern.xml")
                     })
             }
         );

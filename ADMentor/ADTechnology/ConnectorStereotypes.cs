@@ -100,7 +100,7 @@ namespace ADMentor.ADTechnology
             displayName: "Assesses Positively",
             reverseDisplayName: "Positively Assessed By",
             type: ConnectorType.Association,
-            direction: Direction.Unspecified,
+            direction: Direction.SourceToDestination,
             connects: new[]{
                 new Connection(from: ElementType.Requirement.DefaultStereotype, to: ProblemSpace.Option)
             });
@@ -110,7 +110,7 @@ namespace ADMentor.ADTechnology
             displayName: "Assesses Negatively",
             reverseDisplayName: "Negatively Assessed By",
             type: ConnectorType.Dependency,
-            direction: Direction.Unspecified,
+            direction: Direction.SourceToDestination,
             connects: new[]{
                 new Connection(from: ElementType.Requirement.DefaultStereotype, to: ProblemSpace.Option)
             });

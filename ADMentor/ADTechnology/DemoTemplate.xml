@@ -43,8 +43,8 @@
 										<UML:TaggedValue tag="version" value="1.0"/>
 										<UML:TaggedValue tag="isActive" value="false"/>
 										<UML:TaggedValue tag="package" value="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472"/>
-										<UML:TaggedValue tag="date_created" value="2014-07-03 11:35:25"/>
-										<UML:TaggedValue tag="date_modified" value="2014-11-25 09:57:41"/>
+										
+										
 										<UML:TaggedValue tag="gentype" value="Java"/>
 										<UML:TaggedValue tag="tagged" value="0"/>
 										<UML:TaggedValue tag="package2" value="EAID_29D339A8_CAF7_4702_8F2D_8426FBA8F97B"/>
@@ -71,8 +71,8 @@
 										<UML:TaggedValue tag="ea_ntype" value="0"/>
 										<UML:TaggedValue tag="isActive" value="false"/>
 										<UML:TaggedValue tag="package" value="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472"/>
-										<UML:TaggedValue tag="date_created" value="2014-09-22 14:00:56"/>
-										<UML:TaggedValue tag="date_modified" value="2014-11-25 09:57:18"/>
+										
+										
 										<UML:TaggedValue tag="gentype" value="Java"/>
 										<UML:TaggedValue tag="tagged" value="0"/>
 										<UML:TaggedValue tag="package2" value="EAID_632E5E0F_8C58_4089_80E4_F3FC6638FD5C"/>
@@ -100,8 +100,8 @@
 								<UML:TaggedValue tag="version" value="1.0"/>
 								<UML:TaggedValue tag="isActive" value="false"/>
 								<UML:TaggedValue tag="package" value="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472"/>
-								<UML:TaggedValue tag="date_created" value="2014-09-22 14:02:32"/>
-								<UML:TaggedValue tag="date_modified" value="2016-04-21 13:30:30"/>
+								
+								
 								<UML:TaggedValue tag="gentype" value="&lt;none&gt;"/>
 								<UML:TaggedValue tag="tagged" value="0"/>
 								<UML:TaggedValue tag="package_name" value="AD Mentor Demo"/>
@@ -124,8 +124,8 @@
 								<UML:TaggedValue tag="version" value="1.0"/>
 								<UML:TaggedValue tag="isActive" value="false"/>
 								<UML:TaggedValue tag="package" value="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472"/>
-								<UML:TaggedValue tag="date_created" value="2014-07-03 13:39:27"/>
-								<UML:TaggedValue tag="date_modified" value="2014-11-19 14:52:44"/>
+								
+								
 								<UML:TaggedValue tag="gentype" value="&lt;none&gt;"/>
 								<UML:TaggedValue tag="tagged" value="0"/>
 								<UML:TaggedValue tag="package_name" value="AD Mentor Demo"/>
@@ -148,8 +148,8 @@
 								<UML:TaggedValue tag="version" value="1.0"/>
 								<UML:TaggedValue tag="isActive" value="false"/>
 								<UML:TaggedValue tag="package" value="EAPK_5164AAA5_0941_42a2_9351_7F370CEF3472"/>
-								<UML:TaggedValue tag="date_created" value="2014-09-22 14:03:38"/>
-								<UML:TaggedValue tag="date_modified" value="2014-09-22 14:06:57"/>
+								
+								
 								<UML:TaggedValue tag="gentype" value="&lt;none&gt;"/>
 								<UML:TaggedValue tag="tagged" value="0"/>
 								<UML:TaggedValue tag="package_name" value="AD Mentor Demo"/>
@@ -198,8 +198,8 @@
 										<UML:TaggedValue tag="ea_ntype" value="0"/>
 										<UML:TaggedValue tag="version" value="1.0"/>
 										<UML:TaggedValue tag="package" value="EAPK_29D339A8_CAF7_4702_8F2D_8426FBA8F97B"/>
-										<UML:TaggedValue tag="date_created" value="2014-10-06 16:55:39"/>
-										<UML:TaggedValue tag="date_modified" value="2014-12-02 15:49:57"/>
+										
+										
 										<UML:TaggedValue tag="gentype" value="Java"/>
 										<UML:TaggedValue tag="tagged" value="0"/>
 										<UML:TaggedValue tag="package_name" value="Reusable Problem Space"/>
@@ -323,8 +323,8 @@
 										<UML:TaggedValue tag="ea_ntype" value="0"/>
 										<UML:TaggedValue tag="version" value="1.0"/>
 										<UML:TaggedValue tag="package" value="EAPK_29D339A8_CAF7_4702_8F2D_8426FBA8F97B"/>
-										<UML:TaggedValue tag="date_created" value="2014-10-06 16:55:23"/>
-										<UML:TaggedValue tag="date_modified" value="2014-11-25 09:57:45"/>
+										
+										
 										<UML:TaggedValue tag="gentype" value="Java"/>
 										<UML:TaggedValue tag="tagged" value="0"/>
 										<UML:TaggedValue tag="package_name" value="Reusable Problem Space"/>
@@ -398,8 +398,8 @@
 										<UML:TaggedValue tag="version" value="1.0"/>
 										<UML:TaggedValue tag="isActive" value="false"/>
 										<UML:TaggedValue tag="package" value="EAPK_29D339A8_CAF7_4702_8F2D_8426FBA8F97B"/>
-										<UML:TaggedValue tag="date_created" value="2014-11-19 14:45:01"/>
-										<UML:TaggedValue tag="date_modified" value="2016-04-21 13:34:53"/>
+										
+										
 										<UML:TaggedValue tag="gentype" value="&lt;none&gt;"/>
 										<UML:TaggedValue tag="tagged" value="0"/>
 										<UML:TaggedValue tag="package_name" value="Reusable Problem Space"/>
@@ -427,8 +427,8 @@
 												<UML:TaggedValue tag="version" value="1.0"/>
 												<UML:TaggedValue tag="isActive" value="false"/>
 												<UML:TaggedValue tag="package" value="EAPK_29D339A8_CAF7_4702_8F2D_8426FBA8F97B"/>
-												<UML:TaggedValue tag="date_created" value="2014-11-19 14:42:41"/>
-												<UML:TaggedValue tag="date_modified" value="2014-11-25 09:57:51"/>
+												
+												
 												<UML:TaggedValue tag="gentype" value="&lt;none&gt;"/>
 												<UML:TaggedValue tag="tagged" value="0"/>
 												<UML:TaggedValue tag="package_name" value="Reusable Problem Space"/>
@@ -523,8 +523,8 @@
 										<UML:TaggedValue tag="ea_ntype" value="0"/>
 										<UML:TaggedValue tag="version" value="1.0"/>
 										<UML:TaggedValue tag="package" value="EAPK_29D339A8_CAF7_4702_8F2D_8426FBA8F97B"/>
-										<UML:TaggedValue tag="date_created" value="2014-10-06 16:55:52"/>
-										<UML:TaggedValue tag="date_modified" value="2014-11-25 09:57:38"/>
+										
+										
 										<UML:TaggedValue tag="gentype" value="Java"/>
 										<UML:TaggedValue tag="tagged" value="0"/>
 										<UML:TaggedValue tag="package_name" value="Reusable Problem Space"/>
@@ -580,8 +580,8 @@
 												<UML:TaggedValue tag="classifier" value="EAID_ED2F388D_EEAB_4818_A8EB_9527350A7161"/>
 												<UML:TaggedValue tag="package" value="EAPK_632E5E0F_8C58_4089_80E4_F3FC6638FD5C"/>
 												<UML:TaggedValue tag="classname" value="AD Mentor"/>
-												<UML:TaggedValue tag="date_created" value="2014-11-19 14:46:52"/>
-												<UML:TaggedValue tag="date_modified" value="2014-12-02 15:50:22"/>
+												
+												
 												<UML:TaggedValue tag="gentype" value="Java"/>
 												<UML:TaggedValue tag="tagged" value="0"/>
 												<UML:TaggedValue tag="package_name" value="My Concrete Project"/>
@@ -675,8 +675,8 @@
 												<UML:TaggedValue tag="classifier" value="EAID_BA302E2A_6613_409c_A960_7DD5866C55AF"/>
 												<UML:TaggedValue tag="package" value="EAPK_632E5E0F_8C58_4089_80E4_F3FC6638FD5C"/>
 												<UML:TaggedValue tag="classname" value="Document Architectural Decisions"/>
-												<UML:TaggedValue tag="date_created" value="2014-12-10 14:45:11"/>
-												<UML:TaggedValue tag="date_modified" value="2014-12-10 14:45:11"/>
+												
+												
 												<UML:TaggedValue tag="gentype" value="Java"/>
 												<UML:TaggedValue tag="tagged" value="0"/>
 												<UML:TaggedValue tag="package_name" value="My Concrete Project"/>
@@ -770,8 +770,8 @@
 												<UML:TaggedValue tag="classifier" value="EAID_5C7058CB_DE9F_47d2_8C6E_1DE7BFC75B8A"/>
 												<UML:TaggedValue tag="package" value="EAPK_632E5E0F_8C58_4089_80E4_F3FC6638FD5C"/>
 												<UML:TaggedValue tag="classname" value="Unstructered Rich Text"/>
-												<UML:TaggedValue tag="date_created" value="2014-11-19 14:46:52"/>
-												<UML:TaggedValue tag="date_modified" value="2014-12-02 15:48:52"/>
+												
+												
 												<UML:TaggedValue tag="gentype" value="Java"/>
 												<UML:TaggedValue tag="tagged" value="0"/>
 												<UML:TaggedValue tag="package_name" value="My Concrete Project"/>
@@ -877,7 +877,7 @@
 		</UML:Diagram>
 		<UML:TaggedValue tag="Option State" xmi.id="EAID_0501AC5A_03C3_0203_87C8_2E0D3D091A3D" value="Chosen#NOTES#Values: Eligible,Tentative,Chosen,Neglected&#xA;Default: Eligible&#xA;" modelElement="EAID_23E845D5_11EB_4851_81C0_80BFD544F3DE"/>
 		<UML:TaggedValue tag="XModelId" xmi.id="EAID_8F9F1376_823F_6a82_B20D_26A1D3534619" value="ADMentor:3#NOTES#Default: ADMentor:2&#xA;" modelElement="EAID_23E845D5_11EB_4851_81C0_80BFD544F3DE"/>
-		<UML:TaggedValue tag="Decision Date" xmi.id="EAID_2ACD9EEC_FB4D_21fb_9A0C_1DB0E65A3D35" value="10.12.2014" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
+		<UML:TaggedValue tag="Decision Date" xmi.id="" value="" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
 		<UML:TaggedValue tag="Due Date" xmi.id="EAID_6629859C_4D5D_d94d_939F_54F802A00C9F" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
 		<UML:TaggedValue tag="Intellectual Property Rights" xmi.id="EAID_5A8E82C5_303C_4f6e_A3A5_62BCC5624358" value="Unrestricted" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
 		<UML:TaggedValue tag="Knowledge Provenance" xmi.id="EAID_C9257E45_D837_412f_AFB9_AD4112BCA423" modelElement="EAID_3CE97F78_1F81_4a61_8822_AF543BA28ACD"/>
