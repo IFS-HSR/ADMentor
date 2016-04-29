@@ -195,6 +195,15 @@ Perform the following steps to run EA's validation:
 
 5. The validation writes all found issues to the "System Output" tab. This may take several seconds or even minutes, depending on the size of the selected package.
 
+## Generate AD Reports
+
+This repository offers two pre-defined document templates to generate AD reports.
+
+1. Download the [reference file](docs/adReports.xml).
+1. Open "Project" -> "Model Import/Export" -> "Import Reference Data..." in EA.
+1. Select the downloaded reference file, select the "RTF Document Templates" dataset and press "Import".
+1. Press <kbd>F8</kbd> to create reports.
+
 ## FAQ
 
 * __Which versions of Enterprise Architect are supported by the AD Mentor Add-In?__
