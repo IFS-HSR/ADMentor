@@ -199,10 +199,10 @@ Perform the following steps to run EA's validation:
 
 This repository offers two pre-defined document templates to generate AD reports.
 
-1. Download the [reference file](docs/adReports.xml).
+1. Download the [XML reference file](docs/adReports.xml).
 1. Open "Project" -> "Model Import/Export" -> "Import Reference Data..." in EA.
-1. Select the downloaded reference file, select the "RTF Document Templates" dataset and press "Import".
-1. Press <kbd>F8</kbd> to create reports.
+1. Select the downloaded XML reference file, select the "RTF Document Templates" dataset and press "Import".
+1. Press <kbd>F8</kbd> to create reports with one of the imported templates ("ADReportBrief" or "ADReportFull").
 
 ## FAQ
 
