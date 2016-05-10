@@ -47,6 +47,11 @@ namespace ADMentor.Analysis
                 (from e in data
                  where categoryListBox.CheckedItems.Contains(e.Category)
                  select e).ToList();
+
+            dataGridView.Columns.Cast<DataGridViewColumn>().ForEach(c =>
+            {
+                c.MinimumWidth = 60;
+            });
         }
 
         private void categoryListBox_ItemCheck(object sender, ItemCheckEventArgs e)
