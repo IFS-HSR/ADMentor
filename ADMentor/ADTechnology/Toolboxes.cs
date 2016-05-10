@@ -102,14 +102,8 @@ namespace ADMentor.ADTechnology
                             displayName: "arc42",
                             resourceName: "ADMentor.ADTechnology.arc42Pattern.xml"),
                         new UMLPattern(
-                            displayName: "Bredemeyer",
-                            resourceName: "ADMentor.ADTechnology.BredemeyerPattern.xml"),
-                        new UMLPattern(
-                            displayName: "IBM-UMF-AD",
-                            resourceName: "ADMentor.ADTechnology.IBM-UMF-ADPattern.xml"),
-                        new UMLPattern(
-                            displayName: "IEEE1471",
-                            resourceName: "ADMentor.ADTechnology.IEEE1471Pattern.xml"),
+                            displayName: "ISO/IEC/IEEE 42010",
+                            resourceName: "ADMentor.ADTechnology.ISO-IEC-IEEE-42010Pattern.xml"),
                         new UMLPattern(
                             displayName: "Tyree Akerman",
                             resourceName: "ADMentor.ADTechnology.TyreeAkermanPattern.xml")
