@@ -213,6 +213,13 @@ namespace EAAddInBase.Utils
                 () => Options.None<TResult>());
         }
 
+        public static Option<TResult> Flatten<TResult>(this Option<Option<TResult>> opt)
+        {
+            return opt.Fold(
+                v => v,
+                () => Options.None<TResult>());
+        }
+
         public static Option<TResult> SelectMany<T, TCollection, TResult>(this Option<T> opt,
             Func<T, Option<TCollection>> fn, Func<T, TCollection, TResult> select)
         {

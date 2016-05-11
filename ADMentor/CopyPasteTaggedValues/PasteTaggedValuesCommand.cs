@@ -23,14 +23,33 @@ namespace ADMentor.CopyPasteTaggedValues
 
         public Unit Execute(ModelEntity e)
         {
-            Clipboard.Val.ForEach(tv =>
+            var selectedInCurrentDiagram = Repo.GetCurrentDiagram()
+                .SelectMany(currentDiagram => currentDiagram.SelectedEntities(Repo))
+                .ToList();
+
+            if (selectedInCurrentDiagram.IsEmpty())
             {
-                e.Set(tv.Key, tv.Value);
-            });
+                PasteInto(e);
+            }
+            else
+            {
+                selectedInCurrentDiagram.ForEach(selected =>
+                {
+                    PasteInto(selected);
+                });
+            }
 
             Repo.PropagateChanges(e);
 
             return Unit.Instance;
+        }
+
+        private void PasteInto(ModelEntity e)
+        {
+            Clipboard.Val.ForEach(tv =>
+            {
+                e.Set(tv.Key, tv.Value);
+            });
         }
 
         public bool CanExecute(ModelEntity e)

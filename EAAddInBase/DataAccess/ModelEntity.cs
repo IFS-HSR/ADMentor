@@ -201,7 +201,8 @@ namespace EAAddInBase.DataAccess
                         },
                         () =>
                         {
-                            var tv = taggedValues.AddNew(name, "") as EA.TaggedValue;
+                            var tv = taggedValues.AddNew(name, "") as dynamic;
+
                             tv.Value = value;
                             tv.Update();
                             taggedValues.Refresh();
@@ -495,6 +496,14 @@ namespace EAAddInBase.DataAccess
                 EaObject.DiagramObjects.Refresh();
 
                 return Wrapper.Wrap(obj);
+            }
+
+            public IEnumerable<ModelEntity> SelectedEntities(ModelEntityRepository repo)
+            {
+                return EaObject.SelectedObjects.Cast<EA.DiagramObject>()
+                    .SelectMany(obj => repo.GetElement(obj.ElementID))
+                    .Concat<ModelEntity>(
+                        EaObject.SelectedConnector.AsOption().Select(c => Wrapper.Wrap(c)));
             }
         }
     }
