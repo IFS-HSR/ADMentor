@@ -79,6 +79,31 @@ namespace EAAddInBase
         }
     }
 
+    public sealed class Separator : IMenuItem
+    {
+        public string Name
+        {
+            get { return "-"; }
+        }
+
+        public IList<IMenuItem> Children
+        {
+            get { return new List<IMenuItem>(); }
+        }
+
+        public bool IsVisible(Option<ModelEntity> contextItem)
+        {
+            return true;
+        }
+
+        public bool IsEnabled(Option<ModelEntity> contextItem)
+        {
+            return true;
+        }
+
+        public void OnClick(Option<ModelEntity> contextItem) { }
+    }
+
     sealed class MenuHandler
     {
         private readonly IReadableAtom<Option<ModelEntity>> ContextItem;

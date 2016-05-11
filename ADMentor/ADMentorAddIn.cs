@@ -18,6 +18,8 @@ using ADMentor.TechnologyMigration;
 using ADMentor.Analysis;
 using ADMentor.Validation;
 using ADMentor.UsabilityShortCuts;
+using System.Collections.Immutable;
+using ADMentor.CopyPasteTaggedValues;
 
 namespace ADMentor
 {
@@ -41,6 +43,8 @@ namespace ADMentor
             var entityRepository = new AdRepository(eaRepository, entityWrapper);
             var migrator = new Migrator(technology);
 
+            var tvClipboard = new Atom<IImmutableDictionary<String, String>>(ImmutableDictionary.Create<String, String>());
+
             var updateMetadataCommand = new UpdateMetadataOfNewElementsCommand(entityRepository);
             var updateStateOnAlternativesChanged = new UpdateProblemOccurrenceStateOnAlternativesChanged(entityRepository);
             var updateStateOnAlternativesAdded = new UpdateProblemOccurrenceStateOnAlternativesAdded(entityRepository);
@@ -52,20 +56,27 @@ namespace ADMentor
                 entityRepository, new TailorPackageExportForm(), new XmlExporter.Factory(entityRepository, eaRepository), new SelectExportPathDialog());
 
             Register(new Menu(AddInName,
-                new MenuItem("Tailor Problem Space", 
-                    exportProblemSpace.ToMenuHandler()),
-                new MenuItem("Create Solution Space from Problem Space", 
-                    instantiateProblemSpace.ToMenuHandler()),
-                new MenuItem("Locate Option/Problem", 
-                    new GoToClassifierCommand(entityRepository).ToMenuHandler()),
-                new MenuItem("Establish Dependencies from Problem Space", 
-                    populateDependenciesCommand.ToMenuHandler()),
-                new MenuItem("Migrate Element(s) to Current Model Version", 
-                    new MigrateModelEntitiesCommand(migrator).ToMenuHandler()),
+                new MenuItem("Copy Tagged Values",
+                    new CopyTaggedValuesCommand(tvClipboard).ToMenuHandler()),
+                new MenuItem("Paste Tagged Values",
+                    new PasteTaggedValuesCommand(tvClipboard, entityRepository).ToMenuHandler()),
+                new Separator(),
                 new MenuItem("Choose Selected and Neglect not chosen Alternatives",
                     new ChooseOptionOccurrenceCommand<Unit>(entityRepository, updateStateOnAlternativesChanged).ToMenuHandler()),
                 new MenuItem("Neglect all Alternatives",
                     new NeglectAllOptionsCommand(entityRepository).ToMenuHandler()),
+                new Separator(),
+                new MenuItem("Tailor Problem Space",
+                    exportProblemSpace.ToMenuHandler()),
+                new MenuItem("Create Solution Space from Problem Space",
+                    instantiateProblemSpace.ToMenuHandler()),
+                new MenuItem("Locate Option/Problem",
+                    new GoToClassifierCommand(entityRepository).ToMenuHandler()),
+                new MenuItem("Establish Dependencies from Problem Space",
+                    populateDependenciesCommand.ToMenuHandler()),
+                new MenuItem("Migrate Element(s) to Current Model Version",
+                    new MigrateModelEntitiesCommand(migrator).ToMenuHandler()),
+                new Separator(),
                 new MenuItem("Package Metrics",
                     new AnalysePackageCommand(entityRepository, new DisplayMetricsForm()).ToMenuHandler())));
 
@@ -76,7 +87,7 @@ namespace ADMentor
 
             OnDeleteEntity.Add(updateStateOnRemoveAlternative.AsOnDeleteEntityHandler());
 
-            var rules = new []{
+            var rules = new[]{
                 ValidationRule.FromCommand(AddInName, new ValidateProblemOptionCompositionCommand(entityRepository)),
                 ValidationRule.FromCommand(AddInName, new ValidateProblemOccurrenceStateCommand(entityRepository)),
                 ValidationRule.FromCommand(AddInName, new ValidateConflictingOptionsCommand(entityRepository)),
@@ -86,7 +97,7 @@ namespace ADMentor
             };
 
             return Tuple.Create(
-                Options.Some(entityWrapper as IEntityWrapper), 
+                Options.Some(entityWrapper as IEntityWrapper),
                 rules.AsEnumerable());
         }
     }

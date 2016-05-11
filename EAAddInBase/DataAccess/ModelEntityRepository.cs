@@ -41,9 +41,25 @@ namespace EAAddInBase.DataAccess
                    select Wrapper.Wrap(e);
         }
 
-        public void PropagateChanges(ModelEntity.Element element)
+        public void PropagateChanges(ModelEntity entity)
         {
-            Repo.Val.AdviseElementChange(element.EaObject.ElementID);
+            entity.Match<ModelEntity, Unit>()
+                .Case<ModelEntity.Element>(e =>
+                {
+                    Repo.Val.AdviseElementChange(e.Id);
+                    return Unit.Instance;
+                })
+                .Case<ModelEntity.Package>(p =>
+                {
+                    p.AssociatedElement.Do(e => Repo.Val.AdviseElementChange(e.Id));
+                    return Unit.Instance;
+                })
+                .Case<ModelEntity.Connector>(c =>
+                {
+                    Repo.Val.AdviseConnectorChange(c.Id);
+                    return Unit.Instance;
+                })
+                .GetOrNone();
         }
 
         public virtual ModelEntity.Element Create(String name, ElementStereotype stereotype, ModelEntity.Package package)

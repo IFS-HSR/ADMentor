@@ -75,6 +75,14 @@
       <DependentUpon>DisplayMetricsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Analysis\MetricEntry.cs" />
+    <Compile Include="CopyPasteTaggedValues\CopyTaggedValuesCommand.cs" />
+    <Compile Include="CopyPasteTaggedValues\PasteTaggedValuesCommand.cs" />
+    <Compile Include="CopyPasteTaggedValues\SelectTaggedValuesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CopyPasteTaggedValues\SelectTaggedValuesForm.Designer.cs">
+      <DependentUpon>SelectTaggedValuesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExportProblemSpace\PropertyTree.cs" />
     <Compile Include="UsabilityShortCuts\ChooseOptionOccurrenceCommand.cs" />
     <Compile Include="CopyMetadata\UpdateOptionOccurrenceStateOnAlternativesAdded.cs" />
@@ -158,6 +166,9 @@
     <EmbeddedResource Include="Analysis\DisplayMetricsForm.resx">
       <DependentUpon>DisplayMetricsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CopyPasteTaggedValues\SelectTaggedValuesForm.resx">
+      <DependentUpon>SelectTaggedValuesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ExportProblemSpace\TailorPackageExportForm.resx">
       <DependentUpon>TailorPackageExportForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -193,7 +204,7 @@
     <EmbeddedResource Include="ADTechnology\arc42Pattern.xml" />
     <EmbeddedResource Include="ADTechnology\BredemeyerPattern.xml" />
     <EmbeddedResource Include="ADTechnology\IBM-UMF-ADPattern.xml" />
-    <EmbeddedResource Include="ADTechnology\IEEE1471Pattern.xml" />
+    <EmbeddedResource Include="ADTechnology\ISO-IEC-IEEE-42010Pattern.xml" />
     <EmbeddedResource Include="ADTechnology\TyreeAkermanPattern.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -177,7 +177,12 @@ namespace EAAddInBase.DataAccess
                     select tv.Value as String).FirstOption();
         }
 
-        public void Set(TaggedValue taggedValue, String value)
+        public void Set(TaggedValue tv, String value)
+        {
+            Set(tv.Name, value);
+        }
+
+        public void Set(String name, String value)
         {
             TaggedValuesCollection
                 .Do(taggedValues =>
@@ -185,7 +190,7 @@ namespace EAAddInBase.DataAccess
                     // All tagged values are equal but some are more equal (ConnectorTags)
                     // thats why we have to use dynamic for working with tagged values in a generic way
                     (from tv in taggedValues.Cast<dynamic>()
-                     where tv.Name.Equals(taggedValue.Name)
+                     where tv.Name.Equals(name)
                      select tv)
                     .FirstOption()
                     .Fold(
@@ -196,7 +201,7 @@ namespace EAAddInBase.DataAccess
                         },
                         () =>
                         {
-                            var tv = taggedValues.AddNew(taggedValue.Name, "") as EA.TaggedValue;
+                            var tv = taggedValues.AddNew(name, "") as EA.TaggedValue;
                             tv.Value = value;
                             tv.Update();
                             taggedValues.Refresh();
