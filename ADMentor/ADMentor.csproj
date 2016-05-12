@@ -76,13 +76,22 @@
     </Compile>
     <Compile Include="Analysis\MetricEntry.cs" />
     <Compile Include="CopyPasteTaggedValues\CopyTaggedValuesCommand.cs" />
+    <Compile Include="CopyPasteTaggedValues\PackageTree.cs" />
     <Compile Include="CopyPasteTaggedValues\PasteTaggedValuesCommand.cs" />
+    <Compile Include="CopyPasteTaggedValues\PasteTaggedValuesIntoChildrenCommand.cs" />
+    <Compile Include="CopyPasteTaggedValues\SelectDescendantsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CopyPasteTaggedValues\SelectDescendantsForm.Designer.cs">
+      <DependentUpon>SelectDescendantsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CopyPasteTaggedValues\SelectTaggedValuesForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CopyPasteTaggedValues\SelectTaggedValuesForm.Designer.cs">
       <DependentUpon>SelectTaggedValuesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CopyPasteTaggedValues\TaggedValuesClipboard.cs" />
     <Compile Include="ExportProblemSpace\PropertyTree.cs" />
     <Compile Include="UsabilityShortCuts\ChooseOptionOccurrenceCommand.cs" />
     <Compile Include="CopyMetadata\UpdateOptionOccurrenceStateOnAlternativesAdded.cs" />
@@ -165,6 +174,9 @@
     <EmbeddedResource Include="ADTechnology\Problem.bmp" />
     <EmbeddedResource Include="Analysis\DisplayMetricsForm.resx">
       <DependentUpon>DisplayMetricsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CopyPasteTaggedValues\SelectDescendantsForm.resx">
+      <DependentUpon>SelectDescendantsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CopyPasteTaggedValues\SelectTaggedValuesForm.resx">
       <DependentUpon>SelectTaggedValuesForm.cs</DependentUpon>

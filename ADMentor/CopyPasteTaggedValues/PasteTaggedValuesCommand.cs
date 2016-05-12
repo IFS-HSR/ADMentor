@@ -7,15 +7,16 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ADMentor.CopyPasteTaggedValues
 {
     class PasteTaggedValuesCommand : ICommand<ModelEntity, Unit>
     {
-        private readonly IReadableAtom<IImmutableDictionary<string, string>> Clipboard;
+        private readonly IReadableAtom<TaggedValuesClipboard> Clipboard;
         private readonly ModelEntityRepository Repo;
 
-        public PasteTaggedValuesCommand(IReadableAtom<IImmutableDictionary<String, String>> clipboard, ModelEntityRepository repo)
+        public PasteTaggedValuesCommand(IReadableAtom<TaggedValuesClipboard> clipboard, ModelEntityRepository repo)
         {
             Clipboard = clipboard;
             Repo = repo;
@@ -29,32 +30,24 @@ namespace ADMentor.CopyPasteTaggedValues
 
             if (selectedInCurrentDiagram.IsEmpty())
             {
-                PasteInto(e);
+                Clipboard.Val.PasteInto(e);
+                Repo.PropagateChanges(e);
             }
             else
             {
                 selectedInCurrentDiagram.ForEach(selected =>
                 {
-                    PasteInto(selected);
+                    Clipboard.Val.PasteInto(selected);
+                    Repo.PropagateChanges(selected);
                 });
             }
-
-            Repo.PropagateChanges(e);
 
             return Unit.Instance;
         }
 
-        private void PasteInto(ModelEntity e)
-        {
-            Clipboard.Val.ForEach(tv =>
-            {
-                e.Set(tv.Key, tv.Value);
-            });
-        }
-
         public bool CanExecute(ModelEntity e)
         {
-            return !Clipboard.Val.IsEmpty() && !(e is ModelEntity.Diagram);
+            return Clipboard.Val.CanPaste(e);
         }
     }
 }

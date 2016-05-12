@@ -9,9 +9,9 @@ using EAAddInBase.Utils;
 
 namespace EAAddInBase.MDGBuilder
 {
-    public sealed class TaggedValue
+    public sealed class TaggedValueDefinition
     {
-        public TaggedValue(String name, ITaggedValueType type, String description = null)
+        public TaggedValueDefinition(String name, ITaggedValueType type, String description = null)
         {
             Name = name;
             Type = type;

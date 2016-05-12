@@ -86,7 +86,7 @@ namespace ADMentor.ExportProblemSpace
             return Unit.Instance;
         }
 
-        private static IImmutableSet<Option<String>> CollectTaggedValues(ModelEntity entity, TaggedValue tv, Func<int, Option<ModelEntity.Element>> getElementById)
+        private static IImmutableSet<Option<String>> CollectTaggedValues(ModelEntity entity, TaggedValueDefinition tv, Func<int, Option<ModelEntity.Element>> getElementById)
         {
             return entity.Match<ModelEntity, IImmutableSet<Option<String>>>()
                 .Case<OptionEntity>(o =>

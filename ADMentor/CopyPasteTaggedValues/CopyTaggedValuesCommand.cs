@@ -13,10 +13,10 @@ namespace ADMentor.CopyPasteTaggedValues
 {
     class CopyTaggedValuesCommand : ICommand<ModelEntity, Unit>
     {
-        private readonly IWriteableAtom<IImmutableDictionary<string, string>> Clipboard;
+        private readonly IWriteableAtom<TaggedValuesClipboard> Clipboard;
         private readonly SelectTaggedValuesForm Form;
 
-        public CopyTaggedValuesCommand(IWriteableAtom<IImmutableDictionary<String, String>> clipboard)
+        public CopyTaggedValuesCommand(IWriteableAtom<TaggedValuesClipboard> clipboard)
         {
             Clipboard = clipboard;
             Form = new SelectTaggedValuesForm();
@@ -34,7 +34,8 @@ namespace ADMentor.CopyPasteTaggedValues
 
             Form.GetSelected(tvs).Do(selectedTVs =>
             {
-                Clipboard.Exchange(selectedTVs, GetType());
+                var selectedTags = selectedTVs.Select(p => p.Key).ToImmutableHashSet();
+                Clipboard.Exchange(new TaggedValuesClipboard(e, selectedTags), GetType());
             });
 
             return Unit.Instance;

@@ -81,7 +81,7 @@ namespace ADMentor.Analysis
             return Unit.Instance;
         }
 
-        private IEnumerable<Tuple<String, int>> ValueOccurrences(TaggedValue tv, IEnumerable<ModelEntity.Element> elements)
+        private IEnumerable<Tuple<String, int>> ValueOccurrences(TaggedValueDefinition tv, IEnumerable<ModelEntity.Element> elements)
         {
             return from e in elements
                    from val in e.Get(tv)

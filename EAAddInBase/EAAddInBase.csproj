@@ -72,7 +72,7 @@
     <Compile Include="MDGBuilder\ShapeScript.cs" />
     <Compile Include="MDGBuilder\Toolbox.cs" />
     <Compile Include="MDGBuilder\ToolboxPage.cs" />
-    <Compile Include="MDGBuilder\TaggedValue.cs" />
+    <Compile Include="MDGBuilder\TaggedValueDefinition.cs" />
     <Compile Include="MDGBuilder\TaggedValueType.cs" />
     <Compile Include="MenuHandler.cs" />
     <Compile Include="ValidationHandler.cs" />

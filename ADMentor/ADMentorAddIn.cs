@@ -43,7 +43,7 @@ namespace ADMentor
             var entityRepository = new AdRepository(eaRepository, entityWrapper);
             var migrator = new Migrator(technology);
 
-            var tvClipboard = new Atom<IImmutableDictionary<String, String>>(ImmutableDictionary.Create<String, String>());
+            var tvClipboard = new Atom<TaggedValuesClipboard>(new TaggedValuesClipboard());
 
             var updateMetadataCommand = new UpdateMetadataOfNewElementsCommand(entityRepository);
             var updateStateOnAlternativesChanged = new UpdateProblemOccurrenceStateOnAlternativesChanged(entityRepository);
@@ -60,6 +60,8 @@ namespace ADMentor
                     new CopyTaggedValuesCommand(tvClipboard).ToMenuHandler()),
                 new MenuItem("Paste Tagged Values",
                     new PasteTaggedValuesCommand(tvClipboard, entityRepository).ToMenuHandler()),
+                new MenuItem("Paste Tagged Values into Descendant Elements",
+                    new PasteTaggedValuesIntoChildrenCommand(tvClipboard, entityRepository).ToMenuHandler()),
                 new Separator(),
                 new MenuItem("Choose Selected and Neglect not chosen Alternatives",
                     new ChooseOptionOccurrenceCommand<Unit>(entityRepository, updateStateOnAlternativesChanged).ToMenuHandler()),

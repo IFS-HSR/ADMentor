@@ -32,7 +32,7 @@ namespace ADMentor.ADTechnology
             public Color Color { get; private set; }
         }
 
-        public static readonly TaggedValue OptionStateTag = new TaggedValue(
+        public static readonly TaggedValueDefinition OptionStateTag = new TaggedValueDefinition(
             name: "Option State",
             description: "Option State",
             type: TaggedValueTypes.Enum(values: OptionState.AllStates).WithDefaultValue(OptionState.Eligible));
@@ -66,7 +66,7 @@ namespace ADMentor.ADTechnology
                 OptionStateTag.Name),
             width: 100,
             height: 70,
-            taggedValues: new TaggedValue[]{
+            taggedValues: new TaggedValueDefinition[]{
                 OptionStateTag
             });
 
@@ -90,7 +90,7 @@ namespace ADMentor.ADTechnology
             public Color Color { get; private set; }
         }
 
-        public static readonly TaggedValue ProblemOccurrenceStateTag = new TaggedValue(
+        public static readonly TaggedValueDefinition ProblemOccurrenceStateTag = new TaggedValueDefinition(
             name: "Problem State",
             description: "Problem State",
             type: TaggedValueTypes.Enum(values: ProblemOccurrenceState.AllStates).WithDefaultValue(ProblemOccurrenceState.Open));

@@ -168,7 +168,7 @@ namespace EAAddInBase.DataAccess
             }
         }
 
-        public Option<String> Get(TaggedValue taggedValue)
+        public Option<String> Get(TaggedValueDefinition taggedValue)
         {
             return (from tvc in TaggedValuesCollection
                     from tv in tvc.Cast<dynamic>()
@@ -177,7 +177,7 @@ namespace EAAddInBase.DataAccess
                     select tv.Value as String).FirstOption();
         }
 
-        public void Set(TaggedValue tv, String value)
+        public void Set(TaggedValueDefinition tv, String value)
         {
             Set(tv.Name, value);
         }
@@ -208,6 +208,36 @@ namespace EAAddInBase.DataAccess
                             taggedValues.Refresh();
                         });
                 });
+        }
+
+        public bool InsertTaggedValueFrom(ModelEntity sourceEntity, String tagName)
+        {
+            var sourceTag =
+                (from tvs in sourceEntity.TaggedValuesCollection
+                 from tv in tvs.Cast<dynamic>()
+                 where tv.Name.Equals(tagName)
+                 select tv)
+                .FirstOption();
+
+            var targetTag =
+                (from tvs in TaggedValuesCollection
+                 from tv in tvs.Cast<dynamic>()
+                 where tv.Name.Equals(tagName)
+                 select tv)
+                .FirstOption();
+
+            return sourceTag.Zip(targetTag)
+                .Select(sourceWithTarget =>
+                {
+                    var source = sourceWithTarget.Item1;
+                    var target = sourceWithTarget.Item2;
+
+                    target.Value = source.Value;
+                    target.Update();
+
+                    return true;
+                })
+                .GetOrElse(false);
         }
 
         public IImmutableSet<String> Keywords
@@ -292,6 +322,14 @@ namespace EAAddInBase.DataAccess
                     // root models do not have an associated element!
                     return from e in EaObject.Element.AsOption()
                            select Wrapper.Wrap(e);
+                }
+            }
+
+            public IEnumerable<ModelEntity> Entities
+            {
+                get
+                {
+                    return Elements.Concat<ModelEntity>(Diagrams).Concat(Packages);
                 }
             }
 

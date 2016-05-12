@@ -23,7 +23,7 @@ namespace EAAddInBase.MDGBuilder
             ModelTemplates = modelTemplates ?? new ModelTemplate[] { };
 
             ModelId = new ModelId(ID, ModelVersion);
-            ModelIdTag = new TaggedValue("XModelId", TaggedValueTypes.Const(ModelId.ToString()));
+            ModelIdTag = new TaggedValueDefinition("XModelId", TaggedValueTypes.Const(ModelId.ToString()));
         }
 
         public string ID { get; private set; }
@@ -36,7 +36,7 @@ namespace EAAddInBase.MDGBuilder
 
         public ModelId ModelId { get; private set; }
 
-        public TaggedValue ModelIdTag { get; private set; }
+        public TaggedValueDefinition ModelIdTag { get; private set; }
 
         public string Description { get; private set; }
 
@@ -95,7 +95,7 @@ namespace EAAddInBase.MDGBuilder
             }
         }
 
-        public IEnumerable<TaggedValue> TaggedValues
+        public IEnumerable<TaggedValueDefinition> TaggedValues
         {
             get
             {
@@ -107,14 +107,14 @@ namespace EAAddInBase.MDGBuilder
             }
         }
 
-        private class TaggedValueComparer : IEqualityComparer<TaggedValue>
+        private class TaggedValueComparer : IEqualityComparer<TaggedValueDefinition>
         {
-            public bool Equals(TaggedValue x, TaggedValue y)
+            public bool Equals(TaggedValueDefinition x, TaggedValueDefinition y)
             {
                 return x.Name == y.Name;
             }
 
-            public int GetHashCode(TaggedValue obj)
+            public int GetHashCode(TaggedValueDefinition obj)
             {
                 return obj.Name.GetHashCode();
             }

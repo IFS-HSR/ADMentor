@@ -15,8 +15,8 @@ namespace EAAddInBase.MDGBuilder
         public abstract String Name { get; protected set; }
         public abstract String DisplayName { get; protected set; }
         public abstract Enumeration Type { get; protected set; }
-        public abstract IEnumerable<TaggedValue> TaggedValues { get; protected set; }
-        internal abstract XElement ToXml(TaggedValue versionTag);
+        public abstract IEnumerable<TaggedValueDefinition> TaggedValues { get; protected set; }
+        internal abstract XElement ToXml(TaggedValueDefinition versionTag);
     }
 
     public sealed class ElementStereotype : Stereotype
@@ -24,7 +24,7 @@ namespace EAAddInBase.MDGBuilder
         public ElementStereotype(String name, String displayName, ElementType type,
             Icon icon = null,
             String shapeScript = null,
-            IEnumerable<TaggedValue> taggedValues = null,
+            IEnumerable<TaggedValueDefinition> taggedValues = null,
             Color? backgroundColor = null,
             int? width = null,
             int? height = null,
@@ -35,7 +35,7 @@ namespace EAAddInBase.MDGBuilder
             Type = type;
             Icon = icon.AsOption();
             ShapeScript = shapeScript.AsOption();
-            TaggedValues = taggedValues ?? new TaggedValue[] { };
+            TaggedValues = taggedValues ?? new TaggedValueDefinition[] { };
             BackgroundColor = backgroundColor.AsOption();
             Width = width.AsOption();
             Height = height.AsOption();
@@ -52,7 +52,7 @@ namespace EAAddInBase.MDGBuilder
 
         public Option<String> ShapeScript { get; private set; }
 
-        public override IEnumerable<TaggedValue> TaggedValues { get; protected set; }
+        public override IEnumerable<TaggedValueDefinition> TaggedValues { get; protected set; }
 
         public Option<Color> BackgroundColor { get; private set; }
 
@@ -62,7 +62,7 @@ namespace EAAddInBase.MDGBuilder
 
         public Option<ElementStereotype> InstanceType { get; set; }
 
-        internal override XElement ToXml(TaggedValue versionTag)
+        internal override XElement ToXml(TaggedValueDefinition versionTag)
         {
             return new XElement("Stereotype", new XAttribute("name", Name), new XAttribute("metatype", DisplayName),
                 new XAttribute("instanceType", InstanceType.Select(it => it.Name).GetOrElse("")),
@@ -88,7 +88,7 @@ namespace EAAddInBase.MDGBuilder
 
     public sealed class PackageStereotype
     {
-        public PackageStereotype(String name, String displayName, Icon icon = null, IEnumerable<TaggedValue> taggedValues = null,
+        public PackageStereotype(String name, String displayName, Icon icon = null, IEnumerable<TaggedValueDefinition> taggedValues = null,
             Color? backgroundColor = null) {
                 Element = new ElementStereotype(
                     name: name, 

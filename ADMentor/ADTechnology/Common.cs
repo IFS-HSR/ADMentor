@@ -27,51 +27,51 @@ namespace ADMentor.ADTechnology
             private OrganisationalReachValue(String name) : base(name) { }
         }
 
-        public static readonly TaggedValue IntellectualPropertyRights = new TaggedValue(
+        public static readonly TaggedValueDefinition IntellectualPropertyRights = new TaggedValueDefinition(
             name: "Intellectual Property Rights",
             type: TaggedValueTypes.String.WithDefaultValue("Unrestricted"));
 
-        public static readonly TaggedValue OrganisationalReach = new TaggedValue(
+        public static readonly TaggedValueDefinition OrganisationalReach = new TaggedValueDefinition(
             name: "Organisational Reach",
             type: TaggedValueTypes.Enum(OrganisationalReachValue.All).WithDefaultValue(OrganisationalReachValue.Project));
 
-        public static readonly TaggedValue ProjectStage = new TaggedValue(
+        public static readonly TaggedValueDefinition ProjectStage = new TaggedValueDefinition(
             name: "Project Stage",
             type: TaggedValueTypes.String);
 
-        public static readonly TaggedValue Viewpoint = new TaggedValue(
+        public static readonly TaggedValueDefinition Viewpoint = new TaggedValueDefinition(
             name: "Viewpoint",
             type: TaggedValueTypes.String);
 
-        public static readonly TaggedValue KnowledgeProvenance = new TaggedValue(
+        public static readonly TaggedValueDefinition KnowledgeProvenance = new TaggedValueDefinition(
             name: "Knowledge Provenance",
             type: TaggedValueTypes.String);
 
-        public static readonly TaggedValue DueDate = new TaggedValue(
+        public static readonly TaggedValueDefinition DueDate = new TaggedValueDefinition(
             name: "Due Date",
             type: TaggedValueTypes.DateTime);
 
-        public static readonly TaggedValue RevisionDate = new TaggedValue(
+        public static readonly TaggedValueDefinition RevisionDate = new TaggedValueDefinition(
             name: "Revision Date",
             type: TaggedValueTypes.DateTime);
 
-        public static readonly TaggedValue DecisionDate = new TaggedValue(
+        public static readonly TaggedValueDefinition DecisionDate = new TaggedValueDefinition(
             name: "Decision Date",
             type: TaggedValueTypes.DateTime);
 
-        public static readonly TaggedValue OwnerRole = new TaggedValue(
+        public static readonly TaggedValueDefinition OwnerRole = new TaggedValueDefinition(
             name: "Owner Role",
             type: TaggedValueTypes.String.WithDefaultValue("Any"));
 
-        public static readonly TaggedValue StakeholderRoles = new TaggedValue(
+        public static readonly TaggedValueDefinition StakeholderRoles = new TaggedValueDefinition(
             name: "Stakeholder Roles",
             type: TaggedValueTypes.String.WithDefaultValue("All"));
 
-        public static readonly TaggedValue RefinementLevel = new TaggedValue(
+        public static readonly TaggedValueDefinition RefinementLevel = new TaggedValueDefinition(
             name: "Refinement Level",
             type: TaggedValueTypes.String);
 
-        public static readonly TaggedValue RemoteId = new TaggedValue(
+        public static readonly TaggedValueDefinition RemoteId = new TaggedValueDefinition(
             name: "xRemoteId",
             type: TaggedValueTypes.Const(""));
     }

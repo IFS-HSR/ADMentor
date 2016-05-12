@@ -18,7 +18,7 @@ namespace EAAddInBase.MDGBuilder
             IEnumerable<Connection> connects = null,
             Icon icon = null,
             String shapeScript = null,
-            IEnumerable<TaggedValue> taggedValues = null,
+            IEnumerable<TaggedValueDefinition> taggedValues = null,
             Direction direction = null,
             LineStyle lineStyle = null,
             CompositionKind compositionKind = null)
@@ -31,7 +31,7 @@ namespace EAAddInBase.MDGBuilder
                        select c.WithConnectorStereotype(this);
             Icon = icon.AsOption();
             ShapeScript = shapeScript.AsOption();
-            TaggedValues = taggedValues ?? new TaggedValue[] { };
+            TaggedValues = taggedValues ?? new TaggedValueDefinition[] { };
             Direction = direction.AsOption();
             LineStyle = lineStyle.AsOption();
             CompositionKind = compositionKind.AsOption();
@@ -60,7 +60,7 @@ namespace EAAddInBase.MDGBuilder
 
         public Option<String> ShapeScript { get; private set; }
 
-        public override IEnumerable<TaggedValue> TaggedValues { get; protected set; }
+        public override IEnumerable<TaggedValueDefinition> TaggedValues { get; protected set; }
 
         public Option<Direction> Direction { get; private set; }
 
@@ -68,10 +68,10 @@ namespace EAAddInBase.MDGBuilder
 
         public Option<CompositionKind> CompositionKind { get; private set; }
 
-        internal override XElement ToXml(TaggedValue versionTag)
+        internal override XElement ToXml(TaggedValueDefinition versionTag)
         {
             var taggedValues = LineStyle.Select(ls => TaggedValues.Concat(new[] {
-                new TaggedValue(name: "_lineStyle", type: TaggedValueTypes.String.WithDefaultValue(ls.ToString()))
+                new TaggedValueDefinition(name: "_lineStyle", type: TaggedValueTypes.String.WithDefaultValue(ls.ToString()))
             })).GetOrElse(TaggedValues);
 
             return new XElement("Stereotype", new XAttribute("name", Name), new XAttribute("metatype", DisplayName),
