@@ -262,7 +262,7 @@ namespace EAAddInBase.MDGBuilder
         public static readonly ConnectorType NoteLink = new ConnectorType("NoteLink", Direction.SourceToDestination);
         public static readonly ConnectorType ObjectFlow = new ConnectorType("ObjectFlow", Direction.SourceToDestination);
         public static readonly ConnectorType Package = new ConnectorType("Package", Direction.SourceToDestination);
-        public static readonly ConnectorType Realization = new ConnectorType("Realization", Direction.SourceToDestination);
+        public static readonly ConnectorType Realisation = new ConnectorType("Realisation", Direction.SourceToDestination);
         public static readonly ConnectorType Sequence = new ConnectorType("Sequence", Direction.SourceToDestination);
         public static readonly ConnectorType StateFlow = new ConnectorType("StateFlow", Direction.SourceToDestination);
         public static readonly ConnectorType Substitution = new ConnectorType("Substitution", Direction.SourceToDestination);
@@ -273,7 +273,7 @@ namespace EAAddInBase.MDGBuilder
         public static readonly IEnumerable<ConnectorType> All = new[]{
             Abstraction, Aggregation, Assembly, Association, Collaboration, CommunicationPath, Connector, ControlFlow, Delegate,
             Dependency, Deployment, ERLink, Extension, Generalization, InformationFlow, Instantiation, InterruptFlow, Manifest, 
-            Nesting, NoteLink, ObjectFlow, Package, Realization, Sequence, StateFlow, Substitution, TemplateBinding, Usage, UseCase
+            Nesting, NoteLink, ObjectFlow, Package, Realisation, Sequence, StateFlow, Substitution, TemplateBinding, Usage, UseCase
         };
 
         private ConnectorType(string name, Direction defaultDirection)
