@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1252"?>
-<XMI xmi.version="1.1" xmlns:UML="omg.org/UML1.3" timestamp="2016-04-29 16:06:33">
+<XMI xmi.version="1.1" xmlns:UML="omg.org/UML1.3" timestamp="2016-05-24 09:51:16">
 	<XMI.header>
 		<XMI.documentation>
 			<XMI.exporter>Enterprise Architect</XMI.exporter>
@@ -11,12 +11,12 @@
 			<UML:Namespace.ownedElement>
 				<UML:Collaboration xmi.id="EAID_9A173143_AEC7_4bc3_81C9_0C640541A1D3_Collaboration" name="Collaborations">
 					<UML:Namespace.ownedElement>
-						<UML:ClassifierRole name="YStatementContext" xmi.id="EAID_DEC63616_9B90_4323_96D5_D0B4443F4E6E" visibility="public" base="EAID_11111111_5487_4080_A7F4_41526CB0AA00">
+						<UML:ClassifierRole name="Y Problem Occurrence" xmi.id="EAID_DEC63616_9B90_4323_96D5_D0B4443F4E6E" visibility="public" base="EAID_11111111_5487_4080_A7F4_41526CB0AA00">
 							<UML:ModelElement.stereotype>
 								<UML:Stereotype name="adProblemOccurrence"/>
 							</UML:ModelElement.stereotype>
 							<UML:ModelElement.taggedValue>
-								<UML:TaggedValue tag="documentation" value="Y-Statement format: &#xA;&lt;i&gt;In the context of&lt;/i&gt; &amp;lt;use case/user story u&amp;gt;, &lt;i&gt;facing &lt;/i&gt;&amp;lt;concern c&amp;gt; &lt;i&gt;we decided for&lt;/i&gt; &amp;lt;option o&amp;gt; &lt;i&gt;and neglected&lt;/i&gt; &amp;lt;options p, q,, r&amp;gt; &lt;i&gt;to achieve&lt;/i&gt; &amp;lt;quality q&amp;gt;, &lt;i&gt;accepting &lt;/i&gt;&amp;lt;downside d&amp;gt;. &#xA;&#xA;&lt;b&gt;In the context of&lt;/b&gt;&#xA;[TODO]&#xA;&#xA;&lt;b&gt;facing&lt;/b&gt;&#xA;[TODO]&#xA;&#xA;&lt;i&gt;Reference: &lt;/i&gt;The (WH)Y Statement format was originally proposed by O. Zimmermann in his SEI SATURN 2013 presentation (&lt;a href=&quot;$inet://http://resources.sei.cmu.edu/library/asset-view.cfm?assetID=22132&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;u&gt;link&lt;/u&gt;&lt;/font&gt;&lt;/a&gt;) and later also published in an IEEE Software and InfoQ article (&lt;a href=&quot;$inet://http://www.infoq.com/articles/sustainable-architectural-design-decisions&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;u&gt;link&lt;/u&gt;&lt;/font&gt;&lt;/a&gt;). "/>
+								<UML:TaggedValue tag="documentation" value="Y-Statement format: &#xA;&lt;i&gt;In the context of&lt;/i&gt; &amp;lt;use case/user story u&amp;gt;, &lt;i&gt;facing &lt;/i&gt;&amp;lt;concern c&amp;gt; &lt;i&gt;we decided for&lt;/i&gt; &amp;lt;option o&amp;gt; &lt;i&gt;and neglected&lt;/i&gt; &amp;lt;options p, q,, r&amp;gt; &lt;i&gt;to achieve&lt;/i&gt; &amp;lt;quality q&amp;gt;, &lt;i&gt;accepting &lt;/i&gt;&amp;lt;downside d&amp;gt;. &#xA;&#xA;&lt;b&gt;In the context of&lt;/b&gt;&#xA;&#xA;&#xA;&lt;b&gt;facing&lt;/b&gt;&#xA;&#xA;&#xA;&lt;i&gt;Reference: &lt;/i&gt;The (WH)Y Statement format was originally proposed by O. Zimmermann in his SEI SATURN 2013 presentation (&lt;a href=&quot;$inet://http://resources.sei.cmu.edu/library/asset-view.cfm?assetID=22132&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;u&gt;link&lt;/u&gt;&lt;/font&gt;&lt;/a&gt;) and later also published in an IEEE Software and InfoQ article (&lt;a href=&quot;$inet://http://www.infoq.com/articles/sustainable-architectural-design-decisions&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;u&gt;link&lt;/u&gt;&lt;/font&gt;&lt;/a&gt;). "/>
 								<UML:TaggedValue tag="isAbstract" value="false"/>
 								<UML:TaggedValue tag="isSpecification" value="false"/>
 								<UML:TaggedValue tag="ea_stype" value="Object"/>
@@ -57,8 +57,8 @@
 								<UML:TaggedValue tag="lineStyle" value="0"/>
 								<UML:TaggedValue tag="conditional" value=" &#xA;«adAddressedBy»"/>
 								<UML:TaggedValue tag="ea_localid" value="3"/>
-								<UML:TaggedValue tag="ea_sourceName" value="YStatementContext"/>
-								<UML:TaggedValue tag="ea_targetName" value="YStatementDecisionAndRationale"/>
+								<UML:TaggedValue tag="ea_sourceName" value="Y Problem Occurrence"/>
+								<UML:TaggedValue tag="ea_targetName" value="Y Option Occurrence"/>
 								<UML:TaggedValue tag="ea_sourceType" value="Object"/>
 								<UML:TaggedValue tag="ea_targetType" value="Object"/>
 								<UML:TaggedValue tag="ea_sourceID" value="10"/>
@@ -105,12 +105,12 @@
 								</UML:AssociationEndRole>
 							</UML:Association.connection>
 						</UML:AssociationRole>
-						<UML:ClassifierRole name="YStatementDecisionAndRationale" xmi.id="EAID_47B2E125_1334_45c6_8E02_F82180F8DEAF" visibility="public" base="EAID_11111111_5487_4080_A7F4_41526CB0AA00">
+						<UML:ClassifierRole name="Y Option Occurrence" xmi.id="EAID_47B2E125_1334_45c6_8E02_F82180F8DEAF" visibility="public" base="EAID_11111111_5487_4080_A7F4_41526CB0AA00">
 							<UML:ModelElement.stereotype>
 								<UML:Stereotype name="adOptionOccurrence"/>
 							</UML:ModelElement.stereotype>
 							<UML:ModelElement.taggedValue>
-								<UML:TaggedValue tag="documentation" value="Y-Statement format: &#xA;&lt;i&gt;In the context of&lt;/i&gt; &amp;lt;use case/user story u&amp;gt;, &lt;i&gt;facing &lt;/i&gt;&amp;lt;concern c&amp;gt; &lt;i&gt;we decided for&lt;/i&gt; &amp;lt;option o&amp;gt; &lt;i&gt;and neglected&lt;/i&gt; &amp;lt;options p, q,, r&amp;gt; &lt;i&gt;to achieve&lt;/i&gt; &amp;lt;quality q&amp;gt;, &lt;i&gt;accepting &lt;/i&gt;&amp;lt;downside d&amp;gt;.&#xA;&lt;i&gt;&#xA;&lt;/i&gt;&lt;b&gt;we decided for&lt;/b&gt;&#xA;[TOOD]&#xA;&#xA;&lt;b&gt;and neglected&lt;/b&gt;&#xA;[TOOD]&#xA;&#xA;&lt;b&gt;to achieve&lt;/b&gt;&#xA;[TOOD]&#xA;&#xA;&lt;b&gt;accepting that&lt;/b&gt;&#xA;[TOOD]&#xA;&lt;i&gt;&#xA;&lt;/i&gt;&#xA;&lt;i&gt;Reference: &lt;/i&gt;The (WH)Y Statement format was originally proposed by O. Zimmermann in his SEI SATURN 2013 presentation (&lt;a href=&quot;$inet://http://resources.sei.cmu.edu/library/asset-view.cfm?assetID=22132&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;u&gt;link&lt;/u&gt;&lt;/font&gt;&lt;/a&gt;) and later also published in an IEEE Software and  InfoQ article (&lt;a href=&quot;$inet://http://www.infoq.com/articles/sustainable-architectural-design-decisions&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;u&gt;link&lt;/u&gt;&lt;/font&gt;&lt;/a&gt;). "/>
+								<UML:TaggedValue tag="documentation" value="Y-Statement format: &#xA;&lt;i&gt;In the context of&lt;/i&gt; &amp;lt;use case/user story u&amp;gt;, &lt;i&gt;facing &lt;/i&gt;&amp;lt;concern c&amp;gt; &lt;i&gt;we decided for&lt;/i&gt; &amp;lt;option o&amp;gt; &lt;i&gt;and neglected&lt;/i&gt; &amp;lt;options p, q,, r&amp;gt; &lt;i&gt;to achieve&lt;/i&gt; &amp;lt;quality q&amp;gt;, &lt;i&gt;accepting &lt;/i&gt;&amp;lt;downside d&amp;gt;.&#xA;&lt;i&gt;&#xA;&lt;/i&gt;&lt;b&gt;we decided for&lt;/b&gt;&#xA;&#xA;&#xA;&lt;b&gt;and neglected&lt;/b&gt;&#xA;&#xA;&#xA;&lt;b&gt;to achieve&lt;/b&gt;&#xA;&#xA;&#xA;&lt;b&gt;accepting that&lt;/b&gt;&#xA;&#xA;&lt;i&gt;&#xA;&lt;/i&gt;&#xA;&lt;i&gt;Reference: &lt;/i&gt;The (WH)Y Statement format was originally proposed by O. Zimmermann in his SEI SATURN 2013 presentation (&lt;a href=&quot;$inet://http://resources.sei.cmu.edu/library/asset-view.cfm?assetID=22132&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;u&gt;link&lt;/u&gt;&lt;/font&gt;&lt;/a&gt;) and later also published in an IEEE Software and  InfoQ article (&lt;a href=&quot;$inet://http://www.infoq.com/articles/sustainable-architectural-design-decisions&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;u&gt;link&lt;/u&gt;&lt;/font&gt;&lt;/a&gt;). "/>
 								<UML:TaggedValue tag="isAbstract" value="false"/>
 								<UML:TaggedValue tag="isSpecification" value="false"/>
 								<UML:TaggedValue tag="ea_stype" value="Object"/>
@@ -139,7 +139,7 @@
 				</UML:Collaboration>
 			</UML:Namespace.ownedElement>
 		</UML:Model>
-		<UML:TaggedValue tag="Decision Date" xmi.id="" value="" modelElement="EAID_DEC63616_9B90_4323_96D5_D0B4443F4E6E"/>
+		<UML:TaggedValue tag="Decision Date" xmi.id="EAID_2ACD9EEC_FB4D_21fb_833C_55E48CAF89E3" value="" modelElement="EAID_DEC63616_9B90_4323_96D5_D0B4443F4E6E"/>
 		<UML:TaggedValue tag="Due Date" xmi.id="EAID_6629859C_4D5D_d94d_A60B_A35E0745918A" modelElement="EAID_DEC63616_9B90_4323_96D5_D0B4443F4E6E"/>
 		<UML:TaggedValue tag="Problem State" xmi.id="EAID_593DC8D2_A133_60a1_A5BE_9DDB111DD8D2" value="Solved#NOTES#Values: Open,Partially Solved,Solved,Not Applicable&#xA;Default: Open&#xA;" modelElement="EAID_DEC63616_9B90_4323_96D5_D0B4443F4E6E"/>
 		<UML:TaggedValue tag="Revision Date" xmi.id="EAID_67E197CD_F42E_35f4_8720_5B6ECD3E1DCB" modelElement="EAID_DEC63616_9B90_4323_96D5_D0B4443F4E6E"/>
@@ -151,66 +151,66 @@
 				<UML:TaggedValue tag="version" value="1.0"/>
 				<UML:TaggedValue tag="author" value=""/>
 				<UML:TaggedValue tag="created_date" value="2016-04-29 15:50:07"/>
-				<UML:TaggedValue tag="modified_date" value="2016-04-29 16:03:49"/>
+				<UML:TaggedValue tag="modified_date" value="2016-04-29 16:08:58"/>
 				<UML:TaggedValue tag="package" value="EAPK_9A173143_AEC7_4bc3_81C9_0C640541A1D3"/>
 				<UML:TaggedValue tag="type" value="Activity"/>
 				<UML:TaggedValue tag="swimlanes" value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;;cls=0;"/>
 				<UML:TaggedValue tag="matrixitems" value="locked=false;matrixactive=false;swimlanesactive=true;width=1;"/>
 				<UML:TaggedValue tag="ea_localid" value="3"/>
 				<UML:TaggedValue tag="EAStyle" value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=795;DocSize.cy=1138;ShowDetails=0;Orientation=P;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
-				<UML:TaggedValue tag="styleex" value="SaveTag=BA69316F;ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;MatrixLineWidth=1;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ProfileData=;MDGDgm=ADMentor::SolutionOverview;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;"/>
+				<UML:TaggedValue tag="styleex" value="SaveTag=DA95A2FF;ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;MatrixLineWidth=1;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ProfileData=;MDGDgm=ADMentor::SolutionOverview;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;"/>
 			</UML:ModelElement.taggedValue>
 			<UML:Diagram.element>
 				<UML:DiagramElement geometry="Left=195;Top=291;Right=285;Bottom=341;imgL=11;imgT=173;imgR=101;imgB=223;" subject="EAID_47B2E125_1334_45c6_8E02_F82180F8DEAF" seqno="1" style="DUID=509FF853;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/>
 				<UML:DiagramElement geometry="Left=199;Top=123;Right=289;Bottom=173;imgL=15;imgT=5;imgR=105;imgB=55;" subject="EAID_DEC63616_9B90_4323_96D5_D0B4443F4E6E" seqno="2" style="DUID=C0F9965D;NSL=0;BCol=-1;BFol=-1;LCol=-1;LWth=-1;fontsz=0;bold=0;black=0;italic=0;ul=0;charset=0;pitch=0;"/>
-				<UML:DiagramElement geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_ECF28200_6901_4a92_8C4E_B72AF984D50D" style=";Hidden=0;"/>
+				<UML:DiagramElement geometry="EDGE=3;$LLB=;LLT=;LMT=;LMB=CX=84:CY=13:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=0:DIR=0:ROT=0;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_ECF28200_6901_4a92_8C4E_B72AF984D50D" style="Mode=3;EOID=509FF853;SOID=C0F9965D;Color=-1;LWidth=0;Hidden=0;"/>
 			</UML:Diagram.element>
 		</UML:Diagram>
 	</XMI.content>
 	<XMI.difference/>
 	<XMI.extensions xmi.extender="Enterprise Architect 2.5">
-		<EAStub xmi.id="EAID_DEC63616_9B90_4323_96D5_D0B4443F4E6E" name="YStatementContext" UMLType="Object"/>
-		<EAStub xmi.id="EAID_47B2E125_1334_45c6_8E02_F82180F8DEAF" name="YStatementDecisionAndRationale" UMLType="Object"/>
+		<EAStub xmi.id="EAID_DEC63616_9B90_4323_96D5_D0B4443F4E6E" name="Y Problem Occurrence" UMLType="Object"/>
+		<EAStub xmi.id="EAID_47B2E125_1334_45c6_8E02_F82180F8DEAF" name="Y Option Occurrence" UMLType="Object"/>
 		<EAModel.paramSub/>
 		<UMLPattern name="YStatementSplit" category="Basic Patterns" version="1.0" notes="">
 			<UMLPattern.PromptList>
-				<Element name="YStatementDecisionAndRationale:Object" guid="EAID_47B2E125_1334_45c6_8E02_F82180F8DEAF" id="11" prompt="yes" link="no" classifier="no" type="no">
-					<Comment comment="Y-Statement format: &#xA;&lt;i&gt;In the context of&lt;/i&gt; &amp;lt;use case/user story u&amp;gt;, &lt;i&gt;facing &lt;/i&gt;&amp;lt;concern c&amp;gt; &lt;i&gt;we decided for&lt;/i&gt; &amp;lt;option o&amp;gt; &lt;i&gt;and neglected&lt;/i&gt; &amp;lt;options p, q,, r&amp;gt; &lt;i&gt;to achieve&lt;/i&gt; &amp;lt;quality q&amp;gt;, &lt;i&gt;accepting &lt;/i&gt;&amp;lt;downside d&amp;gt;.&#xA;&lt;i&gt;&#xA;&lt;/i&gt;&lt;b&gt;we decided for&lt;/b&gt;&#xA;[TOOD]&#xA;&#xA;&lt;b&gt;and neglected&lt;/b&gt;&#xA;[TOOD]&#xA;&#xA;&lt;b&gt;to achieve&lt;/b&gt;&#xA;[TOOD]&#xA;&#xA;&lt;b&gt;accepting that&lt;/b&gt;&#xA;[TOOD]&#xA;&lt;i&gt;&#xA;&lt;/i&gt;&#xA;&lt;i&gt;Reference: &lt;/i&gt;The (WH)Y Statement format was originally proposed by O. Zimmermann in his SEI SATURN 2013 presentation (&lt;a href=&quot;$inet://http://resources.sei.cmu.edu/library/asset-view.cfm?assetID=22132&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;u&gt;link&lt;/u&gt;&lt;/font&gt;&lt;/a&gt;) and later also published in an IEEE Software and  InfoQ article (&lt;a href=&quot;$inet://http://www.infoq.com/articles/sustainable-architectural-design-decisions&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;u&gt;link&lt;/u&gt;&lt;/font&gt;&lt;/a&gt;). ">
+				<Element name="Y Option Occurrence:Object" guid="EAID_47B2E125_1334_45c6_8E02_F82180F8DEAF" id="11" prompt="yes" link="no" classifier="no" type="no">
+					<Comment comment="Y-Statement format: &#xA;&lt;i&gt;In the context of&lt;/i&gt; &amp;lt;use case/user story u&amp;gt;, &lt;i&gt;facing &lt;/i&gt;&amp;lt;concern c&amp;gt; &lt;i&gt;we decided for&lt;/i&gt; &amp;lt;option o&amp;gt; &lt;i&gt;and neglected&lt;/i&gt; &amp;lt;options p, q,, r&amp;gt; &lt;i&gt;to achieve&lt;/i&gt; &amp;lt;quality q&amp;gt;, &lt;i&gt;accepting &lt;/i&gt;&amp;lt;downside d&amp;gt;.&#xA;&lt;i&gt;&#xA;&lt;/i&gt;&lt;b&gt;we decided for&lt;/b&gt;&#xA;&#xA;&#xA;&lt;b&gt;and neglected&lt;/b&gt;&#xA;&#xA;&#xA;&lt;b&gt;to achieve&lt;/b&gt;&#xA;&#xA;&#xA;&lt;b&gt;accepting that&lt;/b&gt;&#xA;&#xA;&lt;i&gt;&#xA;&lt;/i&gt;&#xA;&lt;i&gt;Reference: &lt;/i&gt;The (WH)Y Statement format was originally proposed by O. Zimmermann in his SEI SATURN 2013 presentation (&lt;a href=&quot;$inet://http://resources.sei.cmu.edu/library/asset-view.cfm?assetID=22132&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;u&gt;link&lt;/u&gt;&lt;/font&gt;&lt;/a&gt;) and later also published in an IEEE Software and  InfoQ article (&lt;a href=&quot;$inet://http://www.infoq.com/articles/sustainable-architectural-design-decisions&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;u&gt;link&lt;/u&gt;&lt;/font&gt;&lt;/a&gt;). ">
 						<![CDATA[Y-Statement format: 
 <i>In the context of</i> &lt;use case/user story u&gt;, <i>facing </i>&lt;concern c&gt; <i>we decided for</i> &lt;option o&gt; <i>and neglected</i> &lt;options p, q,, r&gt; <i>to achieve</i> &lt;quality q&gt;, <i>accepting </i>&lt;downside d&gt;.
 <i>
 </i><b>we decided for</b>
-[TOOD]
+
 
 <b>and neglected</b>
-[TOOD]
+
 
 <b>to achieve</b>
-[TOOD]
+
 
 <b>accepting that</b>
-[TOOD]
+
 <i>
 </i>
 <i>Reference: </i>The (WH)Y Statement format was originally proposed by O. Zimmermann in his SEI SATURN 2013 presentation (<a href="$inet://http://resources.sei.cmu.edu/library/asset-view.cfm?assetID=22132"><font color="#0000ff"><u>link</u></font></a>) and later also published in an IEEE Software and  InfoQ article (<a href="$inet://http://www.infoq.com/articles/sustainable-architectural-design-decisions"><font color="#0000ff"><u>link</u></font></a>). ]]>
 					</Comment>
 				</Element>
-				<Element name="YStatementContext:Object" guid="EAID_DEC63616_9B90_4323_96D5_D0B4443F4E6E" id="10" prompt="yes" link="no" classifier="no" type="no">
-					<Comment comment="Y-Statement format: &#xA;&lt;i&gt;In the context of&lt;/i&gt; &amp;lt;use case/user story u&amp;gt;, &lt;i&gt;facing &lt;/i&gt;&amp;lt;concern c&amp;gt; &lt;i&gt;we decided for&lt;/i&gt; &amp;lt;option o&amp;gt; &lt;i&gt;and neglected&lt;/i&gt; &amp;lt;options p, q,, r&amp;gt; &lt;i&gt;to achieve&lt;/i&gt; &amp;lt;quality q&amp;gt;, &lt;i&gt;accepting &lt;/i&gt;&amp;lt;downside d&amp;gt;. &#xA;&#xA;&lt;b&gt;In the context of&lt;/b&gt;&#xA;[TODO]&#xA;&#xA;&lt;b&gt;facing&lt;/b&gt;&#xA;[TODO]&#xA;&#xA;&lt;i&gt;Reference: &lt;/i&gt;The (WH)Y Statement format was originally proposed by O. Zimmermann in his SEI SATURN 2013 presentation (&lt;a href=&quot;$inet://http://resources.sei.cmu.edu/library/asset-view.cfm?assetID=22132&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;u&gt;link&lt;/u&gt;&lt;/font&gt;&lt;/a&gt;) and later also published in an IEEE Software and InfoQ article (&lt;a href=&quot;$inet://http://www.infoq.com/articles/sustainable-architectural-design-decisions&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;u&gt;link&lt;/u&gt;&lt;/font&gt;&lt;/a&gt;). ">
+				<Element name="Y Problem Occurrence:Object" guid="EAID_DEC63616_9B90_4323_96D5_D0B4443F4E6E" id="10" prompt="yes" link="no" classifier="no" type="no">
+					<Comment comment="Y-Statement format: &#xA;&lt;i&gt;In the context of&lt;/i&gt; &amp;lt;use case/user story u&amp;gt;, &lt;i&gt;facing &lt;/i&gt;&amp;lt;concern c&amp;gt; &lt;i&gt;we decided for&lt;/i&gt; &amp;lt;option o&amp;gt; &lt;i&gt;and neglected&lt;/i&gt; &amp;lt;options p, q,, r&amp;gt; &lt;i&gt;to achieve&lt;/i&gt; &amp;lt;quality q&amp;gt;, &lt;i&gt;accepting &lt;/i&gt;&amp;lt;downside d&amp;gt;. &#xA;&#xA;&lt;b&gt;In the context of&lt;/b&gt;&#xA;&#xA;&#xA;&lt;b&gt;facing&lt;/b&gt;&#xA;&#xA;&#xA;&lt;i&gt;Reference: &lt;/i&gt;The (WH)Y Statement format was originally proposed by O. Zimmermann in his SEI SATURN 2013 presentation (&lt;a href=&quot;$inet://http://resources.sei.cmu.edu/library/asset-view.cfm?assetID=22132&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;u&gt;link&lt;/u&gt;&lt;/font&gt;&lt;/a&gt;) and later also published in an IEEE Software and InfoQ article (&lt;a href=&quot;$inet://http://www.infoq.com/articles/sustainable-architectural-design-decisions&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;u&gt;link&lt;/u&gt;&lt;/font&gt;&lt;/a&gt;). ">
 						<![CDATA[Y-Statement format: 
 <i>In the context of</i> &lt;use case/user story u&gt;, <i>facing </i>&lt;concern c&gt; <i>we decided for</i> &lt;option o&gt; <i>and neglected</i> &lt;options p, q,, r&gt; <i>to achieve</i> &lt;quality q&gt;, <i>accepting </i>&lt;downside d&gt;. 
 
 <b>In the context of</b>
-[TODO]
+
 
 <b>facing</b>
-[TODO]
+
 
 <i>Reference: </i>The (WH)Y Statement format was originally proposed by O. Zimmermann in his SEI SATURN 2013 presentation (<a href="$inet://http://resources.sei.cmu.edu/library/asset-view.cfm?assetID=22132"><font color="#0000ff"><u>link</u></font></a>) and later also published in an IEEE Software and InfoQ article (<a href="$inet://http://www.infoq.com/articles/sustainable-architectural-design-decisions"><font color="#0000ff"><u>link</u></font></a>). ]]>
 					</Comment>
 				</Element>
 			</UMLPattern.PromptList>
-			<UMLPattern.PreviewImage xmlns:dt="urn:schemas-microsoft-com:datatypes" dt:dt="bin.base64" cx="3878" cy="8037">AQAAAGwAAADo////AwAAAIkAAADjAAAAAAAAAAAAAAAmDwAAZR8AACBFTUYAAAEADHgAAK0F
+			<UMLPattern.PreviewImage xmlns:dt="urn:schemas-microsoft-com:datatypes" dt:dt="bin.base64" cx="3878" cy="8037">AQAAAGwAAAAJAAAAAwAAAG4AAADjAAAAAAAAAAAAAAAmDwAAZR8AACBFTUYAAAEAYHoAAM8F
 AAAEAAAAAAAAAAAAAAAAAAAAgAcAALAEAAClAgAApwEAAAAAAAAAAAAAAAAAANVVCgCldQYA
 RgAAACwAAAAgAAAARU1GKwFAAQAcAAAAEAAAAAIQwNsBAAAAYAAAAGAAAABGAAAA+AAAAOwA
 AABFTUYrHkAFAAwAAAAAAAAAKkAAACQAAAAYAAAAAACAPwAAAAAAAAAAAACAvwAAAAAAAAAA
@@ -316,10 +316,10 @@ EAAAAAQAAAACAAAAJAAAACQAAAAAAIA9AAAAAAAAAAAAAIA9AAAAAAAAAAACAAAAXwAAADgA
 AAABAAAAOAAAAAAAAAA4AAAAAAAAAAAQAQAQAAAAAAAAAMC/wAAAAAAAAAAAAAAAAAAlAAAA
 DAAAAAEAAAAlAAAADAAAAAUAAIBWAAAALAAAABAAAAAGAAAAbgAAADwAAAAEAAAA8AOAAMAG
 EALwA6ADIAEQAiUAAAAMAAAABwAAgCUAAAAMAAAAAAAAgCQAAAAkAAAAAACAQQAAAAAAAAAA
-AACAQQAAAAAAAAAAAgAAACgAAAAMAAAAAQAAAEYAAACkAAAAmAAAAEVNRisIQAABWAAAAEwA
+AACAQQAAAAAAAAAAAgAAACgAAAAMAAAAAQAAAEYAAACkAAAAmAAAAEVNRisIQAMBWAAAAEwA
 AAACEMDbBAAAAAQAAAAAAAAAAABHQwAALcMAALZCAABMQn3Iff+Q7pD/fch9/5DukP8DAAAA
 AAAAAAAAAD8AAIA/kO6Q/5DukP99yH3/CEABAywAAAAgAAAAAhDA2wQAAAAAQAAA9ACF/yEB
-bP/0AFP/xwBs/wABAQEUQAEAEAAAAAQAAAAAAAAAIQAAAAgAAAA7AAAACAAAABMAAAAMAAAA
+bP/0AFP/xwBs/wABAQEUQAEAEAAAAAQAAAADAAAAIQAAAAgAAAA7AAAACAAAABMAAAAMAAAA
 AQAAACQAAAAkAAAAAACAPQAAAAAAAAAAAACAPQAAAAAAAAAAAgAAAFYAAAAsAAAAAAAAAAAA
 AAD//////////wQAAADAA1AAkAbgAcADcAPwAOABJAAAACQAAAAAAIBBAAAAAAAAAAAAAIBB
 AAAAAAAAAAACAAAAPAAAAAgAAABDAAAADAAAAAEAAAATAAAADAAAAAEAAAAlAAAADAAAAAgA
@@ -441,11 +441,11 @@ AAAQAAAAGwMAAHIEAAAJAAAAEAAAAGAAAABgAAAACwAAABAAAABgAAAAoP///x8AAAAYAAAA
 ZAAAAGQAAABkAAAAZAAAAAwAAAAQAAAASP///4r///8SAAAADAAAAAEAAAAZAAAADAAAAP//
 /wBSAAAAcAEAAAEAAAD2////AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAUAQQBSAEkAQQBMAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AADM4x8DAAAAAAAAAADjkLB21bksAfwwCmlsV4YM8bksAQAAAAB4fY4cDOR8dxzngH/G4Hx3
-lAFWCwAAVgtBoCoB/DAKaRwABgBeAHMAeOMfA/y9QAD8MAppeH2OHB0ABABeAHMACGhFKvDn
-HwO403wMAAAAAAgAAAAAAAAAAAAAADj5hSpIAHwMXAF8DHh9jhw41HwMAAAAAMjiHwNc4x8D
-ZOQfA0VYgXcY1+ML/v///wzkfHdy4Xx3xuB8dwAAAACwxlsBMAK3dogUQACI/BsqUH2OHAEA
-AABwfY4ckOMfA6PgfHd4fY4cMmxbdbDGWwFwfY4cpOMfA70U6HZkdgAIAAAAACUAAAAMAAAA
+AADM4x8DAAAAAAAAAADjkLB21bksAV0QCvP8V2MM8bksAQAAAADIkScuDOR8d9U3BvLG4Hx3
+lAFtDAAAbQxBoCoBXRAK83IAGgC82MfHeOMfA/y9QABdEArzyJEnLnMAHAC82MfHwPeGH/Dn
+HwPoO1oMAAAAAAgAAAAAAAAAAAAAANAl+zBIAFkMXAFZDMiRJy5oPFoMAAAAAMjiHwNc4x8D
+ZOQfA0VYgXfRB2WG/v///wzkfHdy4Xx3xuB8dwAAAACwxlsBMAK3dogUQACYXpQp4JAnLgEA
+AADAkScukOMfA6PgfHfIkScuMmxbdbDGWwHAkScupOMfA70U6HZkdgAIAAAAACUAAAAMAAAA
 AQAAABgAAAAMAAAAAAAAAB4AAAAYAAAAxwAAAIX///8hAQAAU////0sAAAAQAAAAAAAAAAUA
 AAAKAAAAEAAAALgAAACK////DAAAABAAAAAAAAAAAAAAAEYAAAAcAAAAEAAAAEVNRisEQAAA
 DAAAAAAAAAAKAAAAEAAAAAAAAAAAAAAAEQAAAAwAAAABAAAADAAAABAAAAAAAAAAAAAAABEA
@@ -457,329 +457,340 @@ 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
-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
+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
-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
+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
+CAAAgFYAAAAwAAAAPgAAALAAAAA/AAAA4AAAAAUAAAA+ALAAPgDiAD8A4gA/ALAAPgCwACUA
+AAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAAC9vb0A
+AAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAAPwAAALAAAABAAAAA4AAAAAUA
+AAA/ALAAPwDiAEAA4gBAALAAPwCwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAA
+AgAAACcAAAAYAAAAAgAAAAAAAAC8vLwAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYA
+AAAwAAAAQAAAALAAAABCAAAA4AAAAAUAAABAALAAQADiAEIA4gBCALAAQACwACUAAAAMAAAA
+CAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAAC7u7sAAAAAACUA
+AAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAAQgAAALAAAABDAAAA4AAAAAUAAABCALAA
+QgDiAEMA4gBDALAAQgCwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcA
+AAAYAAAAAgAAAAAAAAC7ursAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAA
+QwAAALAAAABEAAAA4AAAAAUAAABDALAAQwDiAEQA4gBEALAAQwCwACUAAAAMAAAACAAAgCUA
+AAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAAC6uroAAAAAACUAAAAMAAAA
+AgAAACUAAAAMAAAACAAAgFYAAAAwAAAARAAAALAAAABFAAAA4AAAAAUAAABEALAARADiAEUA
+4gBFALAARACwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAA
+AgAAAAAAAAC6uboAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAARQAAALAA
+AABGAAAA4AAAAAUAAABFALAARQDiAEYA4gBGALAARQCwACUAAAAMAAAACAAAgCUAAAAMAAAA
+AAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAAC5uLkAAAAAACUAAAAMAAAAAgAAACUA
+AAAMAAAACAAAgFYAAAAwAAAARgAAALAAAABHAAAA4AAAAAUAAABGALAARgDiAEcA4gBHALAA
+RgCwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAA
+AAC4uLgAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAARwAAALAAAABIAAAA
+4AAAAAUAAABHALAARwDiAEgA4gBIALAARwCwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgA
+AAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAAC4t7gAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAA
+CAAAgFYAAAAwAAAASAAAALAAAABJAAAA4AAAAAUAAABIALAASADiAEkA4gBJALAASACwACUA
+AAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAAC3t7cA
+AAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAASQAAALAAAABKAAAA4AAAAAUA
+AABJALAASQDiAEoA4gBKALAASQCwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAA
+AgAAACcAAAAYAAAAAgAAAAAAAAC2trYAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYA
+AAAwAAAASgAAALAAAABLAAAA4AAAAAUAAABKALAASgDiAEsA4gBLALAASgCwACUAAAAMAAAA
+CAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAAC2tbYAAAAAACUA
+AAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAASwAAALAAAABMAAAA4AAAAAUAAABLALAA
+SwDiAEwA4gBMALAASwCwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcA
+AAAYAAAAAgAAAAAAAAC1tbUAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAA
+TAAAALAAAABNAAAA4AAAAAUAAABMALAATADiAE0A4gBNALAATACwACUAAAAMAAAACAAAgCUA
+AAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAAC0tLQAAAAAACUAAAAMAAAA
+AgAAACUAAAAMAAAACAAAgFYAAAAwAAAATQAAALAAAABPAAAA4AAAAAUAAABNALAATQDiAE8A
+4gBPALAATQCwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAA
+AgAAAAAAAACzs7MAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAATwAAALAA
+AABQAAAA4AAAAAUAAABPALAATwDiAFAA4gBQALAATwCwACUAAAAMAAAACAAAgCUAAAAMAAAA
+AAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAACzsrMAAAAAACUAAAAMAAAAAgAAACUA
+AAAMAAAACAAAgFYAAAAwAAAAUAAAALAAAABRAAAA4AAAAAUAAABQALAAUADiAFEA4gBRALAA
+UACwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAA
+AACysbIAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAAUQAAALAAAABTAAAA
+4AAAAAUAAABRALAAUQDiAFMA4gBTALAAUQCwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgA
+AAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAACxsLEAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAA
+CAAAgFYAAAAwAAAAUwAAALAAAABUAAAA4AAAAAUAAABTALAAUwDiAFQA4gBUALAAUwCwACUA
+AAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAACwsLAA
+AAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAAVAAAALAAAABVAAAA4AAAAAUA
+AABUALAAVADiAFUA4gBVALAAVACwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAA
+AgAAACcAAAAYAAAAAgAAAAAAAACwr7AAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYA
+AAAwAAAAVQAAALAAAABWAAAA4AAAAAUAAABVALAAVQDiAFYA4gBWALAAVQCwACUAAAAMAAAA
+CAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAACvr68AAAAAACUA
+AAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAAVgAAALAAAABXAAAA4AAAAAUAAABWALAA
+VgDiAFcA4gBXALAAVgCwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcA
+AAAYAAAAAgAAAAAAAACurq4AAAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAA
+VwAAALAAAABYAAAA4AAAAAUAAABXALAAVwDiAFgA4gBYALAAVwCwACUAAAAMAAAACAAAgCUA
+AAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAACtra0AAAAAACUAAAAMAAAA
+AgAAACUAAAAMAAAACAAAgFYAAAAwAAAAWAAAALAAAABaAAAA4AAAAAUAAABYALAAWADiAFoA
+4gBaALAAWACwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAA
+AgAAAAAAAACsrKwAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAAWgAAALAA
+AABbAAAA4AAAAAUAAABaALAAWgDiAFsA4gBbALAAWgCwACUAAAAMAAAACAAAgCUAAAAMAAAA
+AAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAACrq6sAAAAAACUAAAAMAAAAAgAAACUA
+AAAMAAAACAAAgFYAAAAwAAAAWwAAALAAAABdAAAA4AAAAAUAAABbALAAWwDiAF0A4gBdALAA
+WwCwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAA
+AACqqqoAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAAXQAAALAAAABeAAAA
+4AAAAAUAAABdALAAXQDiAF4A4gBeALAAXQCwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgA
+AAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAACpqakAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAA
+CAAAgFYAAAAwAAAAXgAAALAAAABgAAAA4AAAAAUAAABeALAAXgDiAGAA4gBgALAAXgCwACUA
+AAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAACoqKgA
+AAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAAYAAAALAAAABiAAAA4AAAAAUA
+AABgALAAYADiAGIA4gBiALAAYACwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAA
+AgAAACcAAAAYAAAAAgAAAAAAAACnp6cAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYA
+AAAwAAAAYgAAALAAAABkAAAA4AAAAAUAAABiALAAYgDiAGQA4gBkALAAYgCwACUAAAAMAAAA
+CAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAACmpqYAAAAAACUA
+AAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAAZAAAALAAAABlAAAA4AAAAAUAAABkALAA
+ZADiAGUA4gBlALAAZACwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACcA
+AAAYAAAAAgAAAAAAAAClpaUAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAACAAAgFYAAAAwAAAA
+ZQAAALAAAABmAAAA4AAAAAUAAABlALAAZQDiAGYA4gBmALAAZQCwACUAAAAMAAAACAAAgCUA
+AAAMAAAAAAAAgCgAAAAMAAAAAgAAACcAAAAYAAAAAgAAAAAAAACkpKQAAAAAACUAAAAMAAAA
+AgAAACUAAAAMAAAACAAAgFYAAAAwAAAAZgAAALAAAABmAAAA4AAAAAUAAABmALAAZgDiAGgA
+4gBoALAAZgCwACUAAAAMAAAACAAAgCUAAAAMAAAAAAAAgCgAAAAMAAAAAgAAACUAAAAMAAAA
+BwAAgCIAAAAMAAAA/////0YAAADEAAAAuAAAAEVNRisIQAICPAAAADAAAAACEMDbAAAAAI4A
+AAAAAAAAAACAPwIAAAACAAAAAQAAAAAAAAACEMDbAAAAAMC/wP8IQAEDaAAAAFwAAAACEMDb
+EAAAAABAAAAfAc7+HwHU/hgB2v4QAdr+1QDa/s0A2v7GANT+xgDO/sYAtf7GAK7+zQCp/tUA
+qf4QAan+GAGp/h8Brv4fAbX+AAMDAwEDAwMBAwMDAQMDgxVAAQAQAAAABAAAAAIAAAAkAAAA
+JAAAAAAAgD0AAAAAAAAAAAAAgD0AAAAAAAAAAAIAAABfAAAAOAAAAAIAAAA4AAAAAAAAADgA
+AAAAAAAAABABABAAAAAAAAAAwL/AAAAAAAAAAAAAAAAAACUAAAAMAAAAAgAAACUAAAAMAAAA
+BQAAgDsAAAAIAAAAGwAAABAAAABwBgAAwAsAAFgAAAAoAAAAAAAAAAAAAAD//////////wMA
 AABwBmALAAYAC4AFAAs2AAAAEAAAANABAAAACwAAWAAAACgAAAAAAAAAAAAAAP//////////
 AwAAAFABAAvgAGAL4ADACzYAAAAQAAAA4AAAAFANAABYAAAAKAAAAAAAAAAAAAAA////////
 //8DAAAA4ADADVABEA7QARAONgAAABAAAACABQAAEA4AAFgAAAAoAAAAAAAAAAAAAAD/////
-/////wMAAAAABhAOcAbADXAGUA09AAAACAAAACQAAAAkAAAAAACAQQAAAAAAAAAAAACAQQAA
-AAAAAAAAAgAAADwAAAAIAAAAQwAAAAwAAAABAAAAEwAAAAwAAAABAAAAJQAAAAwAAAAIAACA
-JwAAABgAAAACAAAAAAAAAMC/wAAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAA
-AAAOAAAAsAAAADwAAADgAAAABQAAAA4AsAAOAOIAPADiADwAsAAOALAAJQAAAAwAAAAIAACA
-JQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAL++vwAAAAAAJQAAAAwA
-AAACAAAAJQAAAAwAAAAIAACAVgAAADAAAAA8AAAAsAAAAD4AAADgAAAABQAAADwAsAA8AOIA
-PgDiAD4AsAA8ALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgA
-AAACAAAAAAAAAL69vgAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAAA+AAAA
-sAAAAD8AAADgAAAABQAAAD4AsAA+AOIAPwDiAD8AsAA+ALAAJQAAAAwAAAAIAACAJQAAAAwA
-AAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAL29vQAAAAAAJQAAAAwAAAACAAAA
-JQAAAAwAAAAIAACAVgAAADAAAAA/AAAAsAAAAEAAAADgAAAABQAAAD8AsAA/AOIAQADiAEAA
-sAA/ALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAA
-AAAAALy8vAAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABAAAAAsAAAAEIA
-AADgAAAABQAAAEAAsABAAOIAQgDiAEIAsABAALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACA
-KAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAALu7uwAAAAAAJQAAAAwAAAACAAAAJQAAAAwA
-AAAIAACAVgAAADAAAABCAAAAsAAAAEMAAADgAAAABQAAAEIAsABCAOIAQwDiAEMAsABCALAA
-JQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAALu6
-uwAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABDAAAAsAAAAEQAAADgAAAA
-BQAAAEMAsABDAOIARADiAEQAsABDALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwA
-AAACAAAAJwAAABgAAAACAAAAAAAAALq6ugAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACA
-VgAAADAAAABEAAAAsAAAAEUAAADgAAAABQAAAEQAsABEAOIARQDiAEUAsABEALAAJQAAAAwA
-AAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAALq5ugAAAAAA
-JQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABFAAAAsAAAAEYAAADgAAAABQAAAEUA
-sABFAOIARgDiAEYAsABFALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAA
-JwAAABgAAAACAAAAAAAAALm4uQAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAA
-AABGAAAAsAAAAEcAAADgAAAABQAAAEYAsABGAOIARwDiAEcAsABGALAAJQAAAAwAAAAIAACA
-JQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAALi4uAAAAAAAJQAAAAwA
-AAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABHAAAAsAAAAEgAAADgAAAABQAAAEcAsABHAOIA
-SADiAEgAsABHALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgA
-AAACAAAAAAAAALi3uAAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABIAAAA
-sAAAAEkAAADgAAAABQAAAEgAsABIAOIASQDiAEkAsABIALAAJQAAAAwAAAAIAACAJQAAAAwA
-AAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAALe3twAAAAAAJQAAAAwAAAACAAAA
-JQAAAAwAAAAIAACAVgAAADAAAABJAAAAsAAAAEoAAADgAAAABQAAAEkAsABJAOIASgDiAEoA
-sABJALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAA
-AAAAALa2tgAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABKAAAAsAAAAEsA
-AADgAAAABQAAAEoAsABKAOIASwDiAEsAsABKALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACA
-KAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAALa1tgAAAAAAJQAAAAwAAAACAAAAJQAAAAwA
-AAAIAACAVgAAADAAAABLAAAAsAAAAEwAAADgAAAABQAAAEsAsABLAOIATADiAEwAsABLALAA
-JQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAALW1
-tQAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABMAAAAsAAAAE0AAADgAAAA
-BQAAAEwAsABMAOIATQDiAE0AsABMALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwA
-AAACAAAAJwAAABgAAAACAAAAAAAAALS0tAAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACA
-VgAAADAAAABNAAAAsAAAAE8AAADgAAAABQAAAE0AsABNAOIATwDiAE8AsABNALAAJQAAAAwA
-AAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAALOzswAAAAAA
-JQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABPAAAAsAAAAFAAAADgAAAABQAAAE8A
-sABPAOIAUADiAFAAsABPALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAA
-JwAAABgAAAACAAAAAAAAALOyswAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAA
-AABQAAAAsAAAAFEAAADgAAAABQAAAFAAsABQAOIAUQDiAFEAsABQALAAJQAAAAwAAAAIAACA
-JQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAALKxsgAAAAAAJQAAAAwA
-AAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABRAAAAsAAAAFMAAADgAAAABQAAAFEAsABRAOIA
-UwDiAFMAsABRALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgA
-AAACAAAAAAAAALGwsQAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABTAAAA
-sAAAAFQAAADgAAAABQAAAFMAsABTAOIAVADiAFQAsABTALAAJQAAAAwAAAAIAACAJQAAAAwA
-AAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAALCwsAAAAAAAJQAAAAwAAAACAAAA
-JQAAAAwAAAAIAACAVgAAADAAAABUAAAAsAAAAFUAAADgAAAABQAAAFQAsABUAOIAVQDiAFUA
-sABUALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAA
-AAAAALCvsAAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABVAAAAsAAAAFYA
-AADgAAAABQAAAFUAsABVAOIAVgDiAFYAsABVALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACA
-KAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAK+vrwAAAAAAJQAAAAwAAAACAAAAJQAAAAwA
-AAAIAACAVgAAADAAAABWAAAAsAAAAFcAAADgAAAABQAAAFYAsABWAOIAVwDiAFcAsABWALAA
-JQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAK6u
-rgAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABXAAAAsAAAAFgAAADgAAAA
-BQAAAFcAsABXAOIAWADiAFgAsABXALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwA
-AAACAAAAJwAAABgAAAACAAAAAAAAAK2trQAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACA
-VgAAADAAAABYAAAAsAAAAFoAAADgAAAABQAAAFgAsABYAOIAWgDiAFoAsABYALAAJQAAAAwA
-AAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAKysrAAAAAAA
-JQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABaAAAAsAAAAFsAAADgAAAABQAAAFoA
-sABaAOIAWwDiAFsAsABaALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAA
-JwAAABgAAAACAAAAAAAAAKurqwAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAA
-AABbAAAAsAAAAF0AAADgAAAABQAAAFsAsABbAOIAXQDiAF0AsABbALAAJQAAAAwAAAAIAACA
-JQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAKqqqgAAAAAAJQAAAAwA
-AAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABdAAAAsAAAAF4AAADgAAAABQAAAF0AsABdAOIA
-XgDiAF4AsABdALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgA
-AAACAAAAAAAAAKmpqQAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABeAAAA
-sAAAAGAAAADgAAAABQAAAF4AsABeAOIAYADiAGAAsABeALAAJQAAAAwAAAAIAACAJQAAAAwA
-AAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAKioqAAAAAAAJQAAAAwAAAACAAAA
-JQAAAAwAAAAIAACAVgAAADAAAABgAAAAsAAAAGIAAADgAAAABQAAAGAAsABgAOIAYgDiAGIA
-sABgALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAA
-AAAAAKenpwAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABiAAAAsAAAAGQA
-AADgAAAABQAAAGIAsABiAOIAZADiAGQAsABiALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACA
-KAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAKampgAAAAAAJQAAAAwAAAACAAAAJQAAAAwA
-AAAIAACAVgAAADAAAABkAAAAsAAAAGUAAADgAAAABQAAAGQAsABkAOIAZQDiAGUAsABkALAA
-JQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAKWl
-pQAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABlAAAAsAAAAGYAAADgAAAA
-BQAAAGUAsABlAOIAZgDiAGYAsABlALAAJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwA
-AAACAAAAJwAAABgAAAACAAAAAAAAAKSkpAAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACA
-VgAAADAAAABmAAAAsAAAAGYAAADgAAAABQAAAGYAsABmAOIAaADiAGgAsABmALAAJQAAAAwA
-AAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJQAAAAwAAAAHAACAIgAAAAwAAAD/////
-RgAAAMQAAAC4AAAARU1GKwhAAgI8AAAAMAAAAAIQwNsAAAAAjgAAAAAAAAAAAIA/AgAAAAIA
-AAABAAAAAAAAAAIQwNsAAAAAwL/A/whAAQNoAAAAXAAAAAIQwNsQAAAAAEAAAB8Bzv4fAdT+
-GAHa/hAB2v7VANr+zQDa/sYA1P7GAM7+xgC1/sYArv7NAKn+1QCp/hABqf4YAan+HwGu/h8B
-tf4AAwMDAQMDAwEDAwMBAwODFUABABAAAAAEAAAAAgAAACQAAAAkAAAAAACAPQAAAAAAAAAA
-AACAPQAAAAAAAAAAAgAAAF8AAAA4AAAAAgAAADgAAAAAAAAAOAAAAAAAAAAAEAEAEAAAAAAA
-AADAv8AAAAAAAAAAAAAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAFAACAOwAAAAgAAAAbAAAA
-EAAAAHAGAADACwAAWAAAACgAAAAAAAAAAAAAAP//////////AwAAAHAGYAsABgALgAUACzYA
-AAAQAAAA0AEAAAALAABYAAAAKAAAAAAAAAAAAAAA//////////8DAAAAUAEAC+AAYAvgAMAL
-NgAAABAAAADgAAAAUA0AAFgAAAAoAAAAAAAAAAAAAAD//////////wMAAADgAMANUAEQDtAB
-EA42AAAAEAAAAIAFAAAQDgAAWAAAACgAAAAAAAAAAAAAAP//////////AwAAAAAGEA5wBsAN
-cAZQDT0AAAAIAAAAPAAAAAgAAABAAAAAGAAAAAwAAACuAAAAaQAAAOMAAAAlAAAADAAAAAcA
-AIAlAAAADAAAAAAAAIAkAAAAJAAAAAAAgEEAAAAAAAAAAAAAgEEAAAAAAAAAAAIAAAAoAAAA
-DAAAAAIAAABGAAAA4AAAANQAAABFTUYrCEAAAVgAAABMAAAAAhDA2wQAAAAEAAAAAAAAAAAA
-Q0MAAKrDAAC0QgAASEJ9yH3/kO6Q/33Iff+Q7pD/AwAAAAAAAAAAAAA/AACAP5DukP+Q7pD/
-fch9/whAAQNoAAAAXAAAAAIQwNsQAAAAAEAAABwB0f4cAdf+FQHd/g0B3f7SAN3+ygDd/sMA
-1/7DANH+wwC4/sMAsf7KAKz+0gCs/g0BrP4VAaz+HAGx/hwBuP4AAwMDAQMDAwEDAwMBAwOD
-FEABABAAAAAEAAAAAAAAACEAAAAIAAAAOwAAAAgAAAATAAAADAAAAAEAAAAkAAAAJAAAAAAA
-gD0AAAAAAAAAAAAAgD0AAAAAAAAAAAIAAAAbAAAAEAAAAEAGAACQCwAAWAAAACgAAAAAAAAA
-AAAAAP//////////AwAAAEAGMAvQBdAKUAXQCjYAAAAQAAAAoAEAANAKAABYAAAAKAAAAAAA
-AAAAAAAA//////////8DAAAAIAHQCrAAMAuwAJALNgAAABAAAACwAAAAIA0AAFgAAAAoAAAA
-AAAAAAAAAAD//////////wMAAACwAJANIAHgDaAB4A02AAAAEAAAAFAFAADgDQAAWAAAACgA
-AAAAAAAAAAAAAP//////////AwAAANAF4A1ABpANQAYgDT0AAAAIAAAAJAAAACQAAAAAAIBB
-AAAAAAAAAAAAAIBBAAAAAAAAAAACAAAAPAAAAAgAAABDAAAADAAAAAEAAAATAAAADAAAAAEA
-AAAlAAAADAAAAAgAAIAnAAAAGAAAAAIAAAAAAAAAkO6QAAAAAAAlAAAADAAAAAIAAAAlAAAA
-DAAAAAgAAIBWAAAAMAAAAAsAAACtAAAAOQAAAN0AAAAFAAAACwCtAAsA3wA5AN8AOQCtAAsA
-rQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAA
-kO2QAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAADkAAACtAAAAOgAAAN0A
-AAAFAAAAOQCtADkA3wA6AN8AOgCtADkArQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAA
-DAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAj+yPAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgA
-AIBWAAAAMAAAADoAAACtAAAAOwAAAN0AAAAFAAAAOgCtADoA3wA7AN8AOwCtADoArQAlAAAA
-DAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAj+uPAAAA
-AAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAADsAAACtAAAAPAAAAN0AAAAFAAAA
-OwCtADsA3wA8AN8APACtADsArQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIA
-AAAnAAAAGAAAAAIAAAAAAAAAj+qPAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAA
-MAAAADwAAACtAAAAPQAAAN0AAAAFAAAAPACtADwA3wA9AN8APQCtADwArQAlAAAADAAAAAgA
-AIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAjuqOAAAAAAAlAAAA
-DAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAD0AAACtAAAAPgAAAN0AAAAFAAAAPQCtAD0A
-3wA+AN8APgCtAD0ArQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAA
-GAAAAAIAAAAAAAAAjumOAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAD4A
-AACtAAAAPwAAAN0AAAAFAAAAPgCtAD4A3wA/AN8APwCtAD4ArQAlAAAADAAAAAgAAIAlAAAA
-DAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAjeiNAAAAAAAlAAAADAAAAAIA
-AAAlAAAADAAAAAgAAIBWAAAAMAAAAD8AAACtAAAAQAAAAN0AAAAFAAAAPwCtAD8A3wBAAN8A
-QACtAD8ArQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIA
-AAAAAAAAjeeNAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAEAAAACtAAAA
-QQAAAN0AAAAFAAAAQACtAEAA3wBBAN8AQQCtAEAArQAlAAAADAAAAAgAAIAlAAAADAAAAAAA
-AIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAjOeMAAAAAAAlAAAADAAAAAIAAAAlAAAA
-DAAAAAgAAIBWAAAAMAAAAEEAAACtAAAAQgAAAN0AAAAFAAAAQQCtAEEA3wBCAN8AQgCtAEEA
-rQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAA
-jOaMAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAEIAAACtAAAAQwAAAN0A
-AAAFAAAAQgCtAEIA3wBDAN8AQwCtAEIArQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAA
-DAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAi+WLAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgA
-AIBWAAAAMAAAAEMAAACtAAAARAAAAN0AAAAFAAAAQwCtAEMA3wBEAN8ARACtAEMArQAlAAAA
-DAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAi+SLAAAA
-AAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAEQAAACtAAAARQAAAN0AAAAFAAAA
-RACtAEQA3wBFAN8ARQCtAEQArQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIA
-AAAnAAAAGAAAAAIAAAAAAAAAiuOKAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAA
-MAAAAEUAAACtAAAARwAAAN0AAAAFAAAARQCtAEUA3wBHAN8ARwCtAEUArQAlAAAADAAAAAgA
-AIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAiuKKAAAAAAAlAAAA
-DAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAEcAAACtAAAASAAAAN0AAAAFAAAARwCtAEcA
-3wBIAN8ASACtAEcArQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAA
-GAAAAAIAAAAAAAAAieGJAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAEgA
-AACtAAAASQAAAN0AAAAFAAAASACtAEgA3wBJAN8ASQCtAEgArQAlAAAADAAAAAgAAIAlAAAA
-DAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAieCJAAAAAAAlAAAADAAAAAIA
-AAAlAAAADAAAAAgAAIBWAAAAMAAAAEkAAACtAAAASgAAAN0AAAAFAAAASQCtAEkA3wBKAN8A
-SgCtAEkArQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIA
-AAAAAAAAid+JAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAEoAAACtAAAA
-SwAAAN0AAAAFAAAASgCtAEoA3wBLAN8ASwCtAEoArQAlAAAADAAAAAgAAIAlAAAADAAAAAAA
-AIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAiN6IAAAAAAAlAAAADAAAAAIAAAAlAAAA
-DAAAAAgAAIBWAAAAMAAAAEsAAACtAAAATAAAAN0AAAAFAAAASwCtAEsA3wBMAN8ATACtAEsA
-rQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAA
-iN2IAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAEwAAACtAAAATQAAAN0A
-AAAFAAAATACtAEwA3wBNAN8ATQCtAEwArQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAA
-DAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAiNyIAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgA
-AIBWAAAAMAAAAE0AAACtAAAATgAAAN0AAAAFAAAATQCtAE0A3wBOAN8ATgCtAE0ArQAlAAAA
-DAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAh9uHAAAA
-AAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAE4AAACtAAAAUAAAAN0AAAAFAAAA
-TgCtAE4A3wBQAN8AUACtAE4ArQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIA
-AAAnAAAAGAAAAAIAAAAAAAAAhtqGAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAA
-MAAAAFAAAACtAAAAUQAAAN0AAAAFAAAAUACtAFAA3wBRAN8AUQCtAFAArQAlAAAADAAAAAgA
-AIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAhtmGAAAAAAAlAAAA
-DAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAFEAAACtAAAAUgAAAN0AAAAFAAAAUQCtAFEA
-3wBSAN8AUgCtAFEArQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAA
-GAAAAAIAAAAAAAAAhdiFAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAFIA
-AACtAAAAUwAAAN0AAAAFAAAAUgCtAFIA3wBTAN8AUwCtAFIArQAlAAAADAAAAAgAAIAlAAAA
-DAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAhdeFAAAAAAAlAAAADAAAAAIA
-AAAlAAAADAAAAAgAAIBWAAAAMAAAAFMAAACtAAAAVAAAAN0AAAAFAAAAUwCtAFMA3wBUAN8A
-VACtAFMArQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIA
-AAAAAAAAhNaEAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAFQAAACtAAAA
-VQAAAN0AAAAFAAAAVACtAFQA3wBVAN8AVQCtAFQArQAlAAAADAAAAAgAAIAlAAAADAAAAAAA
-AIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAhNWEAAAAAAAlAAAADAAAAAIAAAAlAAAA
-DAAAAAgAAIBWAAAAMAAAAFUAAACtAAAAVgAAAN0AAAAFAAAAVQCtAFUA3wBWAN8AVgCtAFUA
-rQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAA
-g9WDAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAFYAAACtAAAAVwAAAN0A
-AAAFAAAAVgCtAFYA3wBXAN8AVwCtAFYArQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAA
-DAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAg9SDAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgA
-AIBWAAAAMAAAAFcAAACtAAAAWAAAAN0AAAAFAAAAVwCtAFcA3wBYAN8AWACtAFcArQAlAAAA
-DAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAg9ODAAAA
-AAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAFgAAACtAAAAWQAAAN0AAAAFAAAA
-WACtAFgA3wBZAN8AWQCtAFgArQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIA
-AAAnAAAAGAAAAAIAAAAAAAAAgtOCAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAA
-MAAAAFkAAACtAAAAWgAAAN0AAAAFAAAAWQCtAFkA3wBaAN8AWgCtAFkArQAlAAAADAAAAAgA
-AIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAgtKCAAAAAAAlAAAA
-DAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAFoAAACtAAAAWwAAAN0AAAAFAAAAWgCtAFoA
-3wBbAN8AWwCtAFoArQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAA
-GAAAAAIAAAAAAAAAgdGBAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAFsA
-AACtAAAAXAAAAN0AAAAFAAAAWwCtAFsA3wBcAN8AXACtAFsArQAlAAAADAAAAAgAAIAlAAAA
-DAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIAAAAAAAAAgdCBAAAAAAAlAAAADAAAAAIA
-AAAlAAAADAAAAAgAAIBWAAAAMAAAAFwAAACtAAAAXQAAAN0AAAAFAAAAXACtAFwA3wBdAN8A
-XQCtAFwArQAlAAAADAAAAAgAAIAlAAAADAAAAAAAAIAoAAAADAAAAAIAAAAnAAAAGAAAAAIA
-AAAAAAAAgM+AAAAAAAAlAAAADAAAAAIAAAAlAAAADAAAAAgAAIBWAAAAMAAAAF0AAACtAAAA
-XgAAAN0AAAAFAAAAXQCtAF0A3wBeAN8AXgCtAF0ArQAlAAAADAAAAAgAAIAlAAAADAAAAAAA
-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
+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
+JQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAI/sjwAAAAAAJQAAAAwA
+AAACAAAAJQAAAAwAAAAIAACAVgAAADAAAAA6AAAArQAAADsAAADdAAAABQAAADoArQA6AN8A
+OwDfADsArQA6AK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgA
+AAACAAAAAAAAAI/rjwAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAAA7AAAA
+rQAAADwAAADdAAAABQAAADsArQA7AN8APADfADwArQA7AK0AJQAAAAwAAAAIAACAJQAAAAwA
+AAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAI/qjwAAAAAAJQAAAAwAAAACAAAA
+JQAAAAwAAAAIAACAVgAAADAAAAA8AAAArQAAAD0AAADdAAAABQAAADwArQA8AN8APQDfAD0A
+rQA8AK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAA
+AAAAAI7qjgAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAAA9AAAArQAAAD4A
+AADdAAAABQAAAD0ArQA9AN8APgDfAD4ArQA9AK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACA
+KAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAI7pjgAAAAAAJQAAAAwAAAACAAAAJQAAAAwA
+AAAIAACAVgAAADAAAAA+AAAArQAAAD8AAADdAAAABQAAAD4ArQA+AN8APwDfAD8ArQA+AK0A
+JQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAI3o
+jQAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAAA/AAAArQAAAEAAAADdAAAA
+BQAAAD8ArQA/AN8AQADfAEAArQA/AK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwA
+AAACAAAAJwAAABgAAAACAAAAAAAAAI3njQAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACA
+VgAAADAAAABAAAAArQAAAEEAAADdAAAABQAAAEAArQBAAN8AQQDfAEEArQBAAK0AJQAAAAwA
+AAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAIznjAAAAAAA
+JQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABBAAAArQAAAEIAAADdAAAABQAAAEEA
+rQBBAN8AQgDfAEIArQBBAK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAA
+JwAAABgAAAACAAAAAAAAAIzmjAAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAA
+AABCAAAArQAAAEMAAADdAAAABQAAAEIArQBCAN8AQwDfAEMArQBCAK0AJQAAAAwAAAAIAACA
+JQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAIvliwAAAAAAJQAAAAwA
+AAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABDAAAArQAAAEQAAADdAAAABQAAAEMArQBDAN8A
+RADfAEQArQBDAK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgA
+AAACAAAAAAAAAIvkiwAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABEAAAA
+rQAAAEUAAADdAAAABQAAAEQArQBEAN8ARQDfAEUArQBEAK0AJQAAAAwAAAAIAACAJQAAAAwA
+AAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAIrjigAAAAAAJQAAAAwAAAACAAAA
+JQAAAAwAAAAIAACAVgAAADAAAABFAAAArQAAAEcAAADdAAAABQAAAEUArQBFAN8ARwDfAEcA
+rQBFAK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAA
+AAAAAIriigAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABHAAAArQAAAEgA
+AADdAAAABQAAAEcArQBHAN8ASADfAEgArQBHAK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACA
+KAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAInhiQAAAAAAJQAAAAwAAAACAAAAJQAAAAwA
+AAAIAACAVgAAADAAAABIAAAArQAAAEkAAADdAAAABQAAAEgArQBIAN8ASQDfAEkArQBIAK0A
+JQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAIng
+iQAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABJAAAArQAAAEoAAADdAAAA
+BQAAAEkArQBJAN8ASgDfAEoArQBJAK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwA
+AAACAAAAJwAAABgAAAACAAAAAAAAAInfiQAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACA
+VgAAADAAAABKAAAArQAAAEsAAADdAAAABQAAAEoArQBKAN8ASwDfAEsArQBKAK0AJQAAAAwA
+AAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAIjeiAAAAAAA
+JQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABLAAAArQAAAEwAAADdAAAABQAAAEsA
+rQBLAN8ATADfAEwArQBLAK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAA
+JwAAABgAAAACAAAAAAAAAIjdiAAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAA
+AABMAAAArQAAAE0AAADdAAAABQAAAEwArQBMAN8ATQDfAE0ArQBMAK0AJQAAAAwAAAAIAACA
+JQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAIjciAAAAAAAJQAAAAwA
+AAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABNAAAArQAAAE4AAADdAAAABQAAAE0ArQBNAN8A
+TgDfAE4ArQBNAK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgA
+AAACAAAAAAAAAIfbhwAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABOAAAA
+rQAAAFAAAADdAAAABQAAAE4ArQBOAN8AUADfAFAArQBOAK0AJQAAAAwAAAAIAACAJQAAAAwA
+AAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAIbahgAAAAAAJQAAAAwAAAACAAAA
+JQAAAAwAAAAIAACAVgAAADAAAABQAAAArQAAAFEAAADdAAAABQAAAFAArQBQAN8AUQDfAFEA
+rQBQAK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAA
+AAAAAIbZhgAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABRAAAArQAAAFIA
+AADdAAAABQAAAFEArQBRAN8AUgDfAFIArQBRAK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACA
+KAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAIXYhQAAAAAAJQAAAAwAAAACAAAAJQAAAAwA
+AAAIAACAVgAAADAAAABSAAAArQAAAFMAAADdAAAABQAAAFIArQBSAN8AUwDfAFMArQBSAK0A
+JQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAIXX
+hQAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABTAAAArQAAAFQAAADdAAAA
+BQAAAFMArQBTAN8AVADfAFQArQBTAK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwA
+AAACAAAAJwAAABgAAAACAAAAAAAAAITWhAAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACA
+VgAAADAAAABUAAAArQAAAFUAAADdAAAABQAAAFQArQBUAN8AVQDfAFUArQBUAK0AJQAAAAwA
+AAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAITVhAAAAAAA
+JQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABVAAAArQAAAFYAAADdAAAABQAAAFUA
+rQBVAN8AVgDfAFYArQBVAK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAA
+JwAAABgAAAACAAAAAAAAAIPVgwAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAA
+AABWAAAArQAAAFcAAADdAAAABQAAAFYArQBWAN8AVwDfAFcArQBWAK0AJQAAAAwAAAAIAACA
+JQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAIPUgwAAAAAAJQAAAAwA
+AAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABXAAAArQAAAFgAAADdAAAABQAAAFcArQBXAN8A
+WADfAFgArQBXAK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgA
+AAACAAAAAAAAAIPTgwAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABYAAAA
+rQAAAFkAAADdAAAABQAAAFgArQBYAN8AWQDfAFkArQBYAK0AJQAAAAwAAAAIAACAJQAAAAwA
+AAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAILTggAAAAAAJQAAAAwAAAACAAAA
+JQAAAAwAAAAIAACAVgAAADAAAABZAAAArQAAAFoAAADdAAAABQAAAFkArQBZAN8AWgDfAFoA
+rQBZAK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAA
+AAAAAILSggAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABaAAAArQAAAFsA
+AADdAAAABQAAAFoArQBaAN8AWwDfAFsArQBaAK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACA
+KAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAIHRgQAAAAAAJQAAAAwAAAACAAAAJQAAAAwA
+AAAIAACAVgAAADAAAABbAAAArQAAAFwAAADdAAAABQAAAFsArQBbAN8AXADfAFwArQBbAK0A
+JQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAIHQ
+gQAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABcAAAArQAAAF0AAADdAAAA
+BQAAAFwArQBcAN8AXQDfAF0ArQBcAK0AJQAAAAwAAAAIAACAJQAAAAwAAAAAAACAKAAAAAwA
+AAACAAAAJwAAABgAAAACAAAAAAAAAIDPgAAAAAAAJQAAAAwAAAACAAAAJQAAAAwAAAAIAACA
+VgAAADAAAABdAAAArQAAAF4AAADdAAAABQAAAF0ArQBdAN8AXgDfAF4ArQBdAK0AJQAAAAwA
+AAAIAACAJQAAAAwAAAAAAACAKAAAAAwAAAACAAAAJwAAABgAAAACAAAAAAAAAIDOgAAAAAAA
+JQAAAAwAAAACAAAAJQAAAAwAAAAIAACAVgAAADAAAABeAAAArQAAAF8AAADdAAAABQAAAF4A
+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
-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
-AAAUAAAA</UMLPattern.PreviewImage>
+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
+EAAAABQAAAA=</UMLPattern.PreviewImage>
 		</UMLPattern>
 	</XMI.extensions>
 </XMI>

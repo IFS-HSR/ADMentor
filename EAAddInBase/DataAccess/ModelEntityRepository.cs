@@ -58,8 +58,7 @@ namespace EAAddInBase.DataAccess
                 {
                     Repo.Val.AdviseConnectorChange(c.Id);
                     return Unit.Instance;
-                })
-                .GetOrNone();
+                });
         }
 
         public virtual ModelEntity.Element Create(String name, ElementStereotype stereotype, ModelEntity.Package package)
