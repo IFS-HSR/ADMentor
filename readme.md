@@ -16,6 +16,7 @@ The current version of AD Mentor is available at [the release page](https://gith
 
 * [User Guide](userGuide.md)
 * [Information for Contributors](contribute.md)
+* [ADMentor Decision Model](docs/ADMentor.eap)
 * [License](LICENSE)
 
 ## Acknowledgment
