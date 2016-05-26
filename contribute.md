@@ -9,14 +9,14 @@
 ## Set up the Project
 
 1. Checkout the ADMentor repository
-1. Copy `Interop.EA.dll` from your local Enterprise Architect installation to the repository root folder
+1. Copy `Interop.EA.dll` from your local Enterprise Architect installation to the root folder of the checked out repository
 1. Start Visual Studio as _Administrator_
-1. Open the ADMentor solution
-1. Right Click on the ADMentor project and choose "Set as StartUp Project"
+1. Open the ADMentor solution (`ADMentor.sln` in root folder of repository) 
+1. Right click on the ADMentor project and choose "Set as StartUp Project"
 1. Open the properties of the ADMentor project and go to the "Debug" tab
-1. Set the path to your EA installation in the "Start external program" field
+1. Set the path to the executable in your EA installation in the "Start external program" field
 1. Make sure the "Register for COM interop" checkbox is selected in the "Build" tab of the ADMentor and EAAddInBase project properties
-1. Run `registerADMentor.ps1` as _Administrator_ to register the add-in class as an EA extension (adds required entries to the registry)
+1. Run the PowerShell command  `registerADMentor.ps1` as _Administrator_ to register the add-in class as an EA extension (adds required entries to the registry)
 
 ## Update Model Templates
 
