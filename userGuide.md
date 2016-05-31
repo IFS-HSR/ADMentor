@@ -8,6 +8,10 @@
 
 * Microsoft .NET Framework 4.5 (Download at http://www.microsoft.com/en-us/download/details.aspx?id=30653%20)
 
+<!---
+Hwardware requirement: about 3MB of disk space (no need to mention)
+-->
+
 ### Installation
 
 1. Execute "ADSetup.msi".
