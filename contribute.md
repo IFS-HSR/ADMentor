@@ -24,7 +24,7 @@
 2. Right click on the updated template model and select "Import/Export" -> "Export Package to XMI File..."
 3. Select the path of the according template XML (e.g. ADMentor\ADTechnology\DemoTemplate.xml)
 4. Select Export Type XMI 1.1
-5. Run `releases.ps1` to clean up unnecessary meta data in the XMI files.
+5. Run `release.ps1` to clean up unnecessary meta data in the XMI files.
 
 ## Release a new Version
 
