@@ -229,6 +229,10 @@ This repository offers two pre-defined document templates to generate AD reports
 * __How can I find problem occurrences that have been created from the problems in my problem space?__
 
     Right click on the problem in question and select "Find in all Diagrams" (Ctrl + U).
+    
+* __Can I capture Architectural Decisions at the code level as well (rather than in a modeling tool)?__
+
+    Have a look at this project, which suggests to use AOP for this purpose: https://github.com/koppor/embedded-adl 
 
 ## Known Limitations and Issues (ADMentor Version 1.2)
 
