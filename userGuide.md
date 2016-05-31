@@ -110,6 +110,8 @@ And finally, there is an additional rule, that an Option derives properties from
 You can also automatically add instances of related Problems/Options to existing Solution Space items: Right click on an Option/Problem Occurrence in a Solution Space diagram and choose the "Extensions" -> "AD Mentor" -> "Establish Dependencies from Problem Space" menu item.
 
 This will open the "Populate Dependencies Wizard". You can use this wizard to create instances of related elements from the Problem Space in the Solution. When you select related elements and press "Create", AD Mentor automatically instantiates them accordingly and adds the new instances to the currently open diagram.
+
+ADMentor 1.2 also supports the creation of problem occurrence-option occurrence pairs via EA patterns (which are available via the "Decision Capturing Patterns" section of the solution space(overview diagram toolbox).
  
 ### Automatically Instantiate a Complete Problem Space into a new Solution
 
