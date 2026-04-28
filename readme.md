@@ -1,6 +1,6 @@
 # AD Mentor
 
-[AD Mentor](http://www.ifs.hsr.ch/ADMentor-Tool.13201.0.html) brings support for the AD modeling language for architectural decisions introduced in the IEEE/IFIP WICSA 2015 paper [Architectural Decision Guidance across Projects](10.1109/wicsa.2015.29) [[pdf](https://ozimmer.ch/assets/admentor-wicsa2015ubmissionv11nc.pdf)].
+[AD Mentor](http://www.ifs.hsr.ch/ADMentor-Tool.13201.0.html) brings support for the AD modeling language for architectural decisions introduced in the IEEE/IFIP WICSA 2015 paper [Architectural Decision Guidance across Projects](https://doi.org/10.1109/wicsa.2015.29) [[pdf](https://ozimmer.ch/assets/admentor-wicsa2015ubmissionv11nc.pdf)].
 
 <img src="docs/sampleModel.png" height="250" alt="Example AD model">
 
