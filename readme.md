@@ -1,6 +1,6 @@
 # AD Mentor
 
-[AD Mentor](http://www.ifs.hsr.ch/ADMentor-Tool.13201.0.html) brings support for the AD modeling language for architectural decisions introduced in the IEEE/IFIP WICSA 2015 paper [Architectural Decision Guidance across Projects](http://www.ifs.hsr.ch/fileadmin/user_upload/customers/ifs.hsr.ch/Home/projekte/ADMentor-WICSA2015ubmissionv11nc.pdf).
+[AD Mentor](http://www.ifs.hsr.ch/ADMentor-Tool.13201.0.html) brings support for the AD modeling language for architectural decisions introduced in the IEEE/IFIP WICSA 2015 paper [Architectural Decision Guidance across Projects](10.1109/wicsa.2015.29) [[pdf](https://ozimmer.ch/assets/admentor-wicsa2015ubmissionv11nc.pdf)].
 
 <img src="docs/sampleModel.png" height="250" alt="Example AD model">
 
@@ -23,4 +23,4 @@ The current version of AD Mentor is available at [the release page](https://gith
 
 The research that lead to the development of ADMentor was supported by an ABB Research Grant 2014.
 
-<a href="http://www.abb.com"><img src="http://www02.abb.com/global/abbzh/abbzh255.nsf/images/ABB_logos/$FILE/ABB2ClaimR_rgb300_10mm.png" height="60"></a>
+<a href="http://www.abb.com"><img src="https://upload.wikimedia.org/wikipedia/commons/0/00/ABB_logo.svg" height="60"></a>
